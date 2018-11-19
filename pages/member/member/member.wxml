@@ -1,0 +1,245 @@
+<scroll-view>
+  <view class="motify {{prompt==''?'hide':''}}">
+    <icon class="i show_type warning" type='warn' size='25' color='#FFF'></icon>
+    <view class="motify-inner">{{prompt}}</view>
+  </view>
+  <view class='member_top'>
+
+    <view class='member_head'>
+      <view class="member_info_head">
+        <block wx:if='{{integralConfig.sign_integral == 1}}'>
+          <view class="span signin {{isSign==1?'yes':'no'}}" catchtap="{{isSign==1?'':'signIn'}}">{{isSign==1?'已签到':'签到'}}</view>
+        </block>
+        <view class="member_info_face"  wx:if='{{unregistered==1 || tel==""}}'>
+          <button class="login" catchtap='Crossroad'>
+
+          </button>
+        </view>
+
+                <view class="member_face"  wx:if='{{unregistered==0 && tel!=""}}'>
+    <image id='user_head_img' src='{{heder_img?heder_img:member_info.user_info.user_headimg}}' mode='widthFix'             catchtap='listClick' data-url="member/personaldata/personaldata" binderror='errorHeadImg'>
+          </image>
+        </view>
+      </view>
+    </view>
+
+    <!-- <view class='info-content-top'>
+      <text catchtap='listClick' data-url="member/balancewater/balancewater">余额</text>
+      <text>{{member_info.member_name}}</text>
+      <text catchtap='listClick' data-url="member/integralwater/integralwater">积分</text>
+    </view> -->
+     <view class='info-content-bottom'>
+      <view  data-url="member/balancewater/balancewater">
+        <!-- <view>{{member_info.balance}}</view> -->
+        <!-- catchtap='listClick' -->
+      </view> 
+      <view class="member-name" wx:if='{{unregistered==1 || tel==""}}'>
+        <button class="level" catchtap='Crossroad'>点击头像登录</button>
+         <image src="https://static.bonnieclyde.cn/48-48.png" style="width:48rpx;height:48rpx;display:block;" wx:if="{{is_vip==1}}"></image> 
+      </view>
+          <view class="member-ns" wx:if='{{unregistered==0 && tel!=""}}'>
+        <view class="level">{{wx_name?wx_name:member_info.member_name}}</view>
+         <image src="https://static.bonnieclyde.cn/48-48.png" style="width:48rpx;height:48rpx;display:block;" wx:if="{{is_vip==1}}"></image> 
+      </view>
+       <view  data-url="member/integralwater/integralwater">
+       <!-- catchtap='listClick' -->
+        <!-- <view>{{member_info.point}}</view> -->
+      </view> 
+     </view>  
+  </view>
+ 
+
+<!-- 会员  -->
+
+           <!-- <view class='control' style='margin-bottom:20rpx;' wx:if="{{is_vip==1}}">
+
+    <view class='control_l_content selected'>
+      会员于{{vip_validity}}前有效
+    </view>
+    <view class="control_all_order"  catchtap='toMemberZone' data-url="order/myorderlist/myorderlist">
+      会员专区
+    </view>
+  </view>
+
+  <view class='control' style='margin-bottom:20rpx;' wx:else>
+    <view class='control_l_content selected'>
+      会员尊享特权
+    </view>
+    <view class="control_all_order"  catchtap='toPayMember' data-url="order/myorderlist/myorderlist">
+      成为会员
+    </view>
+  </view>             -->
+ 
+<!-- <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"> 你好</button>  -->
+
+  <view class='control'>
+    <view class='control_l_content selected'>
+      普通订单
+    </view>
+    <view class="control_all_order"  catchtap='listClick' data-url="order/myorderlist/myorderlist">
+      查看全部订单
+    </view>
+  </view>
+   <!-- <button open-type="getUserInfo" bindgetuserinfo="bindgetuserinfo">点击刷新个人信息</button>  -->
+  <view class='member-nav'>
+    <view class="member-nav_item" catchtap='listClick' data-url='order/myorderlist/myorderlist?status=1'>
+      <image src='/images/member/pay.png'/>
+         <view wx:if="{{unregistered==0 && tel!=''}}">
+       <view class="tips {{unpaidOrder>0?'':'hide'}}">{{unpaidOrder}}</view>
+      </view>
+      <text>待付款</text>
+    </view>
+    <view class="member-nav_item" catchtap='listClick' data-url='order/myorderlist/myorderlist?status=2'>
+      <image src='/images/member/send.png'/>
+        <view wx:if="{{unregistered==0 && tel!=''}}">
+      <view class="tips {{shipmentPendingOrder>0?'':'hide'}}">{{shipmentPendingOrder}}</view>
+      </view>
+      <text>待发货</text>
+    </view>
+    <view class="member-nav_item" catchtap='listClick' data-url='order/myorderlist/myorderlist?status=3'>
+      <image src='/images/member/recieve.png'/>
+       <view wx:if="{{unregistered==0 && tel!=''}}">
+      <view class="tips {{goodsNotReceivedOrder>0?'':'hide'}}">{{goodsNotReceivedOrder}}</view>
+      </view>
+      <text>待收货</text>
+    </view>
+    <view class="member-nav_item" catchtap='listClick' data-url='order/myorderlist/myorderlist?status=4'>
+      <image src='/images/member/received.png'/>
+      <view class="tips hide">1</view>
+      <text>已收货</text>
+    </view>
+    <view class="member-nav_item" catchtap='listClick' data-url='order/myorderlist/myorderlist?status=5'>
+      <image src='/images/member/reback.png'/>
+      <view wx:if="{{unregistered==0 && tel!=''}}">
+      <view class="tips {{refundOrder>0?'':'hide'}}">{{refundOrder}}</view>
+      </view>
+      <text>退款/售后</text>
+    </view>
+  </view>
+
+  <block wx:if='{{is_support_pintuan == 1 || is_open_virtual_goods == 1}}'>
+    <view class='member_middle_spac'></view>
+    <view class="member_menu_list">
+      <view class='ul'>
+
+        <block wx:if='{{is_open_virtual_goods == 1}}'>
+          <view class="li" catchtap='listClick' data-url="order/myvirtualorderlist/myvirtualorderlist">
+            <image class='menu_virtual_order' src='/images/member/menu_virtual_order.png'/>
+            <view class="span menu-title">虚拟订单</view>
+          </view>
+        </block>
+
+      </view>
+    </view>
+  </block>
+
+  <view class='member_middle_spac'></view>
+  <view class='member_list'>
+    <view class='ul'>
+      <view class='li'>
+        <view class="a member_list_item" catchtap='listClick' data-url="member/personaldata/personaldata">
+          <image src='/images/member/icon_personal.png'/>
+          <view class='span'>个人资料</view>
+        </view>
+      </view>
+
+      <block wx:if='{{is_open_virtual_goods == 1}}'>
+        <view class='li'>
+          <view class="a member_list_item" catchtap='listClick' data-url="order/myvirtualorderlist/myvirtualorderlist">
+            <image src='/images/member/icon_virtual_orders.png'/>
+            <view class='span'>虚拟订单</view>
+          </view>
+        </view>
+      </block>
+
+      <view class='li'>
+        <view class="a member_list_item" catchtap='listClick' data-url="member/memberaddress/memberaddress?flag=1      ">
+          <image src='/images/member/icon_address.png'/>
+          <view class='span'>收货地址</view>
+        </view>
+      </view>
+
+      <view class='li'>
+        <view class="a member_list_item" catchtap='listClick' data-url="member/membercoupon/membercoupon">
+          <image src='/images/member/icon_memberCoupon.png'/>
+          <view class='span'>优惠券</view>
+        </view>
+      </view>
+
+      <block wx:if='{{is_open_virtual_goods == 1}}'>
+        <view class='li'>
+          <view class="a member_list_item" catchtap='listClick' data-url="verification/myVirtualCode/myVirtualCode">
+            <image src='/images/member/icon_myVirtualCode.png'/>
+            <view class='span'>我的虚拟码</view>
+          </view>
+        </view>
+      </block>
+
+      <view class='li'>
+        <view class="a member_list_item" catchtap='listClick' data-url="member/mycollection/mycollection">
+          <image src='/images/member/icon_myCollection.png'/>
+          <view class='span'>我的收藏</view>
+        </view>
+      </view>
+
+      <block wx:if='{{is_verification == 1}}'>
+        <view class='li'>
+          <view class="a member_list_item" catchtap='listClick' data-url="verification/verificationplatform/verificationplatform">
+            <image src='/images/member/icon_virtualGoods.png'/>
+            <view class='span'>核销台</view>
+          </view>
+        </view>
+      </block>
+
+      <view class='li'>
+        <view class="a member_list_item" catchtap='listClick' data-url="member/newmypath/newmypath">
+          <image src='/images/member/icon_newMyPath.png'/>
+          <view class='span'>我的足迹</view>
+        </view>
+      </view>
+           <view class='li'>
+        <view class="a member_list_item" catchtap='listClick' data-url="member/givingRecords/givingRecords">
+          <image src='http://video.ushopal.com/WechatIMG73.png'/>
+          <view wx:if="{{unregistered==0 && tel!=''}}">
+          <view class="list {{giftGiveOrder>0?'':'hide'}}"></view>
+          </view>
+          <view class='span'>我的礼物</view>
+        </view> 
+         </view>  
+               <view class='li' wx:if='{{(distributor_type==2||distributor_type==3||distributor_type==4) && tel!=""}}'>
+        <view class="a member_list_item" catchtap='listClick' data-url="member/kol/kol">
+          <image src='https://static.bonnieclyde.cn/WIMG23.png'/>
+          <view class='span'>极选师</view>
+        </view> 
+     </view>
+ 
+       <!-- <view class='li'>
+        <view class="a member_list_item" catchtap='listClick' data-url="member/givingRecords/givingRecords">
+          <image src='http://video.ushopal.com/WechatIMG73.png'/>
+          <view class='span'>礼物记录</view>
+        </view> 
+         </view>  -->
+    </view>
+
+    
+<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+    <!-- 登录弹出框 -->
+    <view class="modal-dialog" wx:if="{{showModal}}">
+  <view class="gift_title">手机号授权绑定成功
+  </view>
+  <view class="modal-footer">
+   <button  class="btn-confirm"  data-status="confirm" open-type="getUserInfo" bindgetuserinfo="bindgetuserinfo">确   定</button>
+  </view> 
+</view>
+  </view>
+   <!-- 选择登录方式  -->
+   <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{Choice}}"></view>
+  <view class="modal-dialog" wx:if="{{Choice}}">
+     <view class="gift_title">您未登录!
+          </view>
+     <button  class="btn-common"  open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" >微信登录</button>
+    <button  class="btn-common"  data-status="mobile"  catchtap='Branch'>手机号登录</button>
+   <button  class="btn-common"  data-status="no" catchtap='Branch'>暂不登录</button>
+   </view>
+   <!-- 选择登录方式   end-->
+</scroll-view>

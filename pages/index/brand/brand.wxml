@@ -1,0 +1,73 @@
+<!-- //品牌 -->
+
+<scroll-view>
+  <!-- 搜索框 -->
+  <view class='first-search'>
+    <view class='search-box'>
+      <image src='/images/goods/search_icon_2.png' class="search-button" catchtap='toSearch'/>
+      <input type="text" class="search-input" bindinput='searchInput' placeholder="按照商品关键字搜索" bindconfirm='toSearch' />
+    </view>
+  </view>
+
+  <!-- 选择按钮 -->
+  <view class='btn-all'>
+    <view class="{{isActive==2?'brand-btn':'brand-btn brand-btn-active'}}" catchtap='toCheckActive' data-id='1'>品牌</view>
+    <view class="{{isActive==2?'goods-btn goods-btn-active':'goods-btn'}}" catchtap='toCheckActive' data-id='2'>商品</view>
+  </view>
+
+  <!-- 主内容 -->
+  <!-- 品牌 -->
+  <view class='brand-container' wx:if='{{isActive==1}}'>
+    <view style='padding:0 20rpx 0;'>
+      <image src='{{brand.pic}}' mode='widthFix' style='width:100%;display:block;' lazy-load='true'></image>
+    </view>
+    <view class='brand-detail'>
+        <block wx:for='{{brand.data}}' wx:key='' wx:for-item='brands' wx:for-index='index'>
+          <view class='brand-detail-item' catchtap='toBrand' data-data='{{brands}}' data-id="{{brands.brand_id}}" data-title='{{brands.brand_name}}'
+        data-show="{{brands.is_show}}">
+            <image src="{{brands.brand_ads}}" mode='widthFix' lazy-load='true'></image>
+          </view>
+        </block>
+    </view>
+  </view>
+
+  <!-- 商品 -->
+  <view class='goods-container' wx:if='{{isActive==2}}'>
+    <scroll-view scroll-x class="goods-detail-nav {{isFixed==1?'fixed':''}}" style='height:90rpx;'>
+      <block wx:for='{{category_list}}' wx:key='' wx:for-item='category'>
+        <text class="nav-item {{category.select==2?'nav-item-active':''}}" catchtap="selectCate" catchtap='selectCheck' data-id='{{category.category_id}}'>{{category.category_name}}</text>
+      </block>
+    </scroll-view>
+
+    <view class="goods-detail {{isFixed==1?'fixed-detail':''}}">
+      <view style='padding:20rpx;' wx:if='{{category_pic}}'>
+        <image src='{{category_pic}}' mode='widthFix' style='width:100%;display:block;' lazy-load='true'></image>
+      </view>
+      <view class='body'>
+        <!-- <view class='goods-title'>NB</view> -->
+        <block wx:for='{{category_goods}}' wx:key='' wx:for-item='shops' wx:for-index='index'>
+          <view class='goods_all' catchtap='listClick' data-title='{{shops.goods_name}}' data-url='/goods/goodsdetail/goodsdetail?goods_id={{shops.goods_id}}&&goods_name={{shops.goods_name}}'>
+            <view class="all-box">
+              <image src='{{shops.pic_cover_small}}' mode='widthFix' lazy-load='true'></image>
+              <view class="shop-detail">
+                <text  decode="true" class="title">
+                  <!-- <block wx:for='{{shops.gorup_list}}' wx:key='' wx:for-item='vo'>
+                    <i class="goods_tab">{{vo.group_name}}</i>
+                  </block> -->{{shops.goods_name}}
+                </text>
+                <view class="shop-detail-price">
+                  <text>￥{{shops.promotion_price}}</text>
+                  <view style='text-decoration:line-through;color:#d7d7d7;font-size:12px;' wx:if="{{shops.market_price - shops.promotion_price > 0}}">￥{{shops.market_price}}</view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+
+</scroll-view> 
+
+
+

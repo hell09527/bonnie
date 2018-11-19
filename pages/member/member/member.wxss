@@ -1,0 +1,511 @@
+
+scroll-view{
+  background: #F3F3F3;
+}
+.member_top {
+ background: url('https://static.bonnieclyde.cn/%E8%83%8C%E6%99%AF2.jpg') no-repeat;
+  width: 100%;
+  height:300rpx;
+  overflow: hidden;
+  border: none;
+  background-size: 100% auto;
+  position: relative;
+  padding-bottom:35px;
+
+}
+.signin {
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 14px;
+  padding: 2px 9px;
+  float: left;
+  position: absolute;
+  left: 20px;
+  top: 9px;
+}
+
+.no {
+  color: #F93F40;
+  background: yellow;
+  border: 1px solid yellow;
+}
+
+.member_info_head {
+  margin: 20px 0 0px 0;
+  position: relative;
+}
+
+.member_info_face {
+  top: 6px;
+  height: 79px;
+  border-radius: 50%;
+  width: 79px;
+  margin: auto;
+  display: block;
+  text-align: center;
+  line-height: 79px;
+  overflow: hidden;
+}
+
+
+.member_face{
+    top: 6px;
+  height: 60px;
+  border-radius: 50%;
+  width: 60px;
+  margin: auto;
+  display: block;
+  text-align: center;
+  line-height: 60px;
+  overflow: hidden;
+  box-shadow:0px 8px 20px rgba(0, 0, 0, 0.4);
+}
+.member_info_face image{
+  vertical-align: middle;
+}
+
+#user_head_img{
+  width: 60px;
+}
+
+.account_management {
+  float: right;
+  position: absolute;
+  right: 25px;
+  font-size: 13px;
+  top: 5px;
+  color: #fff;
+  line-height: 8px;
+}
+
+.account_management:after{
+  position: absolute;
+  content: '';
+  top: 8px;
+  bottom: 0;
+  width: 7px;
+  height: 7px;
+  right: -12px;
+  border-top: 1px solid #FFF;
+  border-right: 1px solid #FFF;
+  transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.member_foot {
+  width: 100%;
+  height: 20px;
+  background-size: 100% 20px;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex;
+}
+
+.info-content-top {
+  width: 90%;
+  margin: 0 5%;
+  text-align: center;
+  font-size: 12px;
+  color: #fff;
+  line-height: 20px;
+}
+
+.info-content-bottom {
+  width: 90%;
+  margin: 0 5%;
+  text-align: center;
+  font-size: 12px;
+  color: #fff;
+  line-height: 20px;
+}
+
+.info-content-bottom view{
+  font-size: 20px;
+  color: yellow;
+  text-align: center;
+  line-height: 30px;
+}
+
+.info-content-bottom view .level {
+  padding: 0 5px;
+  border-radius: 3px;
+  background: none;
+  color: #fff;
+  font-size: 13px;
+  letter-spacing:3px;
+
+ 
+}
+button::after{
+ border:none;
+}
+
+.info-content-top text {
+  width: 30%;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  display: inline-block;
+  font-size: 13px;
+}
+
+.info-content-bottom text {
+  display: inline-block;
+  font-size: 20px;
+  color: yellow;
+  text-align: center;
+  width: 30%;
+  height: 30px;
+  line-height: 30px;
+}
+
+.control {
+  margin-top: 0 !important;
+  padding: 5px 8px 0px 8px;
+  overflow: hidden;
+  border-bottom: 1px solid #e6e3e3;
+  background: #fff;
+}
+
+.control_l_content {
+  float: left;
+  line-height: 40px;
+  font-size: 14px;
+  margin-left: 5px;
+  font-weight: nomarl;
+}
+
+.control_l_content.selected {
+  color: #000000;
+}
+
+.control_all_order {
+  overflow: hidden;
+  display: block;
+  float: right;
+  line-height: 40px;
+  position: relative;
+  color: #999;
+  font-size: 14px;
+}
+
+.control_all_order:after{
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 5px;
+  border-top: 1px solid #999;
+  border-right: 1px solid #999;
+  transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.member-nav {
+  margin: 0 0 0 0;
+  border: 0;
+  padding: 0;
+}
+
+.member-nav_item {
+  position: relative;
+  float: left;
+  width: 20%;
+  text-align: center;
+  margin-bottom: 0px;
+  background: #fff;
+  padding: 10px 0;
+}
+
+.navigator_a{
+  height: 100%;
+}
+
+.member-nav_item image {
+  width: 25px;
+  height: 25px;
+}
+
+.member-nav_item text {
+  font-size: 12px;
+  margin-top: 6px;
+  display: inline-block;
+  width: 100%;
+}
+
+.member_middle_spac {
+  height: 10px;
+  width: 100%;
+  background-color: #f3f3f3;
+  clear:both;
+}
+
+.member_list {
+  list-style-type: none;
+  margin-bottom: 60px;
+  background: none;
+  background-color: #fff;
+  padding: 15px 0 5px 0;
+  font-size: 14px;
+  overflow: hidden;
+}
+
+.tips{
+  width: 16px;
+  height: 16px;
+  background: #000;
+  border: 1px solid #000;
+  border-radius: 50%;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  color: #fff;
+  position: absolute;
+  z-index: 10;
+  right: 10px;
+  top: 6px;
+}
+.list{
+  width: 10px;
+  height: 10px;
+  background: #000;
+  border: 1px solid #000;
+  border-radius: 50%;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  color: #fff;
+  position: absolute;
+  z-index: 10;
+  left:111rpx;
+  top: 2px;
+}
+
+.yes {
+  color: yellow;
+  border: 1px solid yellow;
+}
+
+.member_list .ul {
+  width: 100%;
+  background-color: #fff;
+  margin: 0;
+  font-size: 14px;
+  overflow: hidden;
+}
+
+.member_list .ul .li {
+  width: 25%;
+  display: block;
+  float: left;
+  position: relative;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.member_list .ul .li .a {
+  display: block;
+  max-width: 80px;
+  margin: 0 auto;
+}
+
+.member_list .ul .li .a image{
+  display: block;
+  width: 25.6px;
+  height: 25.6px;
+  margin: 3.2px auto;
+}
+
+.member_list .ul .li .a .span {
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+  padding: 0 5px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.member_menu_list {
+  margin: 0;
+  padding: 0 10px;
+  background: #fff;
+}
+
+.member_menu_list .ul {
+  width: 100%;
+}
+
+.member_menu_list .ul .li {
+  position: relative;
+  line-height: 25px;
+  padding: 10px 0px;
+  border-bottom: 1px solid #eee;
+}
+
+.member_menu_list .ul .li image {
+  width: 20px;
+  height: 20px;
+  vertical-align: top;
+  margin-right: 7px;
+  position: relative;
+  top: 2px;
+}
+
+.member_menu_list .ul .li .span.menu-title {
+  font-size: 14px;
+  color: #333;
+}
+
+.member_menu_list .ul .li:after{
+  position: absolute;
+  content: '';
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  right: 3px;
+  border-top: 1px solid #999;
+  border-right: 1px solid #999;
+  transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+.member-name{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.member-ns{
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
+.login{
+  width: 79px;
+  height: 79px;
+ background: url('https://static.bonnieclyde.cn/%E5%A4%B4%E5%83%8F2.png') no-repeat;
+ background-size: 79px 79px;
+ font-size:12px;
+line-height:79px;
+box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+/* 新用户登录弹出框样式 */
+.modal-mask {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.7;
+  overflow: hidden;
+  z-index: 9000;
+  color: #fff;
+}
+.modal-dialog {
+  width: 80%;
+  overflow: hidden;
+  position: fixed;
+  top:30%;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: #f9f9f9;
+  margin: auto;
+  border-radius: 10rpx;
+}
+.modal-title {
+  padding-top: 20rpx;
+  font-size: 36rpx;
+  color: #030303;
+  text-align: center;
+}
+
+.modal-title-desc{
+  font-size:24rpx;
+  color:gray;
+}
+
+.modal-content {
+  padding: 50rpx 32rpx;
+  border-top:1rpx solid #DDDDDD;
+  border-bottom:1rpx solid #DDDDDD;
+}
+
+.modal-content .flex-wrp .flex-item{
+  margin-bottom:10rpx;
+}
+.modal-input {
+  display: flex;
+  background: #fff;
+  border: 2rpx solid #ddd;
+  border-radius: 4rpx;
+  font-size: 28rpx;
+}
+
+
+.input {
+  width: 100%;
+  height: 82rpx;
+  font-size: 28rpx;
+  line-height: 28rpx;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+  color: #333;
+}
+
+input-holder {
+  color: #666;
+  font-size: 28rpx;
+}
+
+.modal-footer {
+  display: flex;
+  flex-direction: row;
+  height: 86rpx;
+  border-top: 1px solid #dedede;
+  font-size: 34rpx;
+  line-height: 86rpx;
+}
+
+
+.btn-confirm {
+  width: 100%;
+  color: #3BBB4A;
+  font-weight:900;
+  text-align: center;
+  font-size:16px;
+  border:none;
+  border-radius:0;
+  line-height:36px;
+  border-left: 1px solid #dedede;
+}
+
+.gift_title{
+  width: 80%;
+  height:50px;
+line-height:50px;
+  text-align: center;
+  margin:0  auto;
+  font-size:15px;
+ color:#000;
+ margin-bottom:10px;
+}
+.btn-common{
+  width: 100%;
+  color: #3BBB4A;
+  font-weight:900;
+  text-align: center;
+  font-size:16px;
+  border:none;
+  border-radius:0;
+  line-height:36px;
+}

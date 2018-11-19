@@ -1,0 +1,341 @@
+<scroll-view bindtap = "handletap" bindtouchstart = "handletouchtart" bindtouchend="handletouchend" bindtouchmove="handletouchmove" class="scroll-view">
+
+  <view class='backgroundImage'>
+    <image src="https://static.bonnieclyde.cn/WechatIMG2.png"></image>
+  </view> 
+   <view class="{{isIphoneX?'linkCon':isFix==1?'fix':'no-fix'}}">
+   <image src="https://static.bonnieclyde.cn/527-%E9%A6%96%E9%A1%B5-01_02.jpg" style="width:100%;height:68rpx;"  lazy-load='true'> </image>
+  </view>
+<form bindsubmit='songGift' report-submit="true">
+ <!-- <input ></input>  -->
+<!-- <button class="form-button"> -->
+  <view class="motify {{prompt==''?'hide':''}}">
+    <icon class="i show_type warning" type='warn' size='25'color='#fff' ></icon>
+    <view class="motify-inner">{{prompt}}</view>
+  </view>
+  <!-- <block wx:if='{{is_login == 0}}'>
+    <image class='load_img' src='https://static.bonnieclyde.cn/icon01.gif'></image>
+  </block> -->
+  <view class="com-content" style="margin-top:68rpx">
+
+          <!-- <button catchtap='UK'>礼物专区</button>     -->
+
+        <!-- <button catchtap='UC'>极选师申请</button> -->
+        <!--  <button catchtap='UZ'>赠送记录</button> -->
+
+    <!-- 轮播图 -->
+ <!-- <block wx:if='{{imgUrls[0] != undefined}}'>
+      <view class="index_slide">
+        <swiper indicator-dots="{{indicatorDots}}" indicator-color='{{indicatorColor}}' indicator-active-color='{{indicatorActiveColor}}' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular='{{circular}}' class='index-swiper'>
+          <block wx:for="{{imgUrls}}" wx:key="">
+            <swiper-item>
+              <image src="{{item.adv_image}}" class="slide-image" catchtap='toSwiperDetail' data-url='{{item.adv_url}}'/>
+            </swiper-item>
+          </block>
+        </swiper>
+      </view>
+    </block>    -->
+     <!-- 小样 -->
+<!-- <block wx:for='{{small_sample_list}}' wx:key='' wx:for-item='shops' wx:for-index='index'>
+<view  class='{{index==0?"he":" "}} a' catchtap='listClick' data-has="{{shops.hasTarget}}"  data-id="{{shops.id}}"   data-url='/goods/goodsdetail/goodsdetail?goods_id={{shops.goods_id}}&&goods_name={{shops.goods_name}}'>
+  <image    class="galley"  src="{{shops.pic_cover_big}}" mode="widthFix"> </image>
+</view>
+</block> -->
+
+    <!-- 公告 -->
+    <view class="hot {{index_notice[0]==undefined?'hide':''}}">
+      <view class="notice-img">
+        <view class='a'>
+          <image src="/images/index/H.png"></image>
+        </view>
+      </view>
+      <view class='swiper'>
+        <swiper class="dowebok str_wrap noStop" vertical='true' autoplay='true' interval='3500' duration='2000' circular='true'>
+          <block wx:if="{{index_notice.length == 1}}">
+            <swiper-item catchtap='noticeContent' data-id='{{index_notice[0].id}}'>
+              <view class="str_move str_origin">{{index_notice[0].notice_title}}</view>
+            </swiper-item>
+            <swiper-item catchtap='noticeContent' data-id='{{index_notice[0].id}}'>
+              <view class="str_move str_origin">{{index_notice[0].notice_title}}</view>
+            </swiper-item>
+          </block>
+          <block wx:else>
+            <block wx:for='{{index_notice}}' wx:key='sort' wx:for-item='notice'>
+              <swiper-item catchtap='noticeContent' data-id='{{notice.id}}'>
+                <view class="str_move str_origin">{{notice.notice_title}}</view>
+              </swiper-item>
+            </block>
+          </block>
+        </swiper>
+      </view>
+    </view>
+    <!-- 优惠券领取 -->
+     <!-- <view class="coupon-container {{coupon_list[0]==undefined?'hide':''}}">
+       <view class="coupon-title">
+        <image src="/images/index/coupon_title_bg.png" mode='widthFix'/>
+      </view>
+      <view class="coupon-all">
+        <block wx:for='{{coupon_list}}' wx:key='' wx:for-item='coupon' wx:for-index='index'>
+          <view class="receive-coupons {{coupon.status==0?'gray':''}}" catchtap='toReceivePopup' data-id='{{coupon.coupon_type_id}}' data-index='{{index}}'>
+            <image src='/images/index/index_coupon_bg.png'/>
+            <view class="big money-number">￥{{coupon.money}}</view>
+            <view class="p explanation">满{{coupon.at_least}}可用</view>
+            <view class="span get">领取</view>
+          </view>
+        </block>
+      </view>
+    </view>   -->
+    <!-- 限时折扣 -->
+     <!-- <view class="group-list-box {{discount_list[0]==undefined?'hide':''}}">
+      <view class="controltype" catchtap='listClick' data-url='/index/discount/discount'>
+        <view class="span title">
+          <image src='/images/index/recommended.png'/>
+          限时折扣
+        </view>
+      </view>
+      <view class="discount-list">
+        <view class='ul'>
+          <block wx:for='{{discount_list}}' wx:key='' wx:for-item='discount' wx:for-index='index'>
+            <view class='li {{index==discount_list.length-1&&(index+1)%2>0&&index!=0?"one":""}} {{index==discount_list.length-1&&index==0?"one":""}}' catchtap='listClick' data-url='/goods/goodsdetail/goodsdetail?goods_id={{discount.goods_id}}&&goods_name={{discount.goods_name}}'>
+              <view class='a'>
+                <view class="goods_info">
+                  <view class="p discount-title">
+                    <image src='/images/index/discount_icon.png'/>
+                    限时折扣
+                  </view>
+                  <view class="time remaining_time">
+                    <block wx:if="{{timer_array[index].end == 0}}">
+                      <view class="span day">{{timer_array[index].day}}天</view>
+                      <view class="span hours">{{timer_array[index].hour}}</view>
+                      <view class='em'>:</view>
+                      <view class="span min">{{timer_array[index].minute}}</view>
+                      <view class='em'>:</view>
+                      <view class="span seconds">{{timer_array[index].second}}</view>
+                    </block>
+                    <block wx:else>
+                      <view class="span">活动已结束！</view>
+                    </block>
+                  </view>
+                  <view class="p goods_name">{{discount.goods_name}}</view>
+                  <view class="span goods_price">
+                    <view class='i'>￥{{discount.promotion_price}}</view>
+                  </view>
+                </view>
+              </view>
+              <view class="goods_pic">
+                <view class='a'></view>
+                <view class='a'>
+                  <image binderror='errorDiscountImg' data-index='{{index}}' src="{{discount.picture.pic_cover_small}}" lazy-load='true' mode='widthFix'/>
+                </view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>  -->
+    <!-- 标签版块 -->
+    <block wx:for='{{goods_platform_lists}}' wx:key='' wx:for-item='list'>
+      <view class="controltype {{list.goods_list.length==0?'hide':''}}">
+        <view class='div'></view>
+        <view class="span control_l_content">{{list.group_name}}</view>
+      </view>
+      <view class="section members_goodspic">
+        <view class='ul' wx:for='{{list.goods_list}}' wx:key='' wx:for-item='goods'>
+          <view class="li gooditem">
+            <view class="imgs">
+              <view class='a'  catchtap='listClick' data-url='/goods/goodsdetail/goodsdetail?goods_id={{goods.goods_id}}&&goods_name={{goods.goods_name}}'>
+                <image class="lazy" lazy-load="true" src="{{goods.pic_cover_small}}"></image>
+              </view>
+            </view>
+           </view>
+        </view>
+      </view>
+    </block>
+
+    <view class="bodyBox">
+
+<image src="https://static.bonnieclyde.cn/WechatIM19.jpeg" mode='widthFix' style='width:750rpx;'></image>
+
+<image src="https://static.bonnieclyde.cn/WechatIM23.png" mode='widthFix' style='margin:60rpx 20rpx;width:710rpx;'></image>
+
+<view wx:if='{{shop}}'>
+<!--最新话题  -->
+ <image src="https://static.bonnieclyde.cn/Wecha.png" mode='widthFix' style='margin:60rpx 20rpx 0;width:710rpx;' wx:if="{{lastOne.pic}}"></image>
+ <view style='position: relative;margin:60rpx 0 30rpx;' catchtap='listClick' data-id="{{lastOne.id}}" data-title="{{lastOne.title}}" wx:if="{{lastOne.pic}}">
+  <button  form-type='submit' class="form-button" style='margin:0 20rpx;width:710rpx;box-shadow: 4px 5px 10px rgba(0,0,0,0.7);'>
+  <image src="{{lastOne.pic}}" mode='widthFix' style='width:710rpx;'></image>
+  <view class='lase-shuffing-mask' style='padding:0 30rpx;font-size:16px;height:140rpx;'>
+    <text>{{lastOne.title}}</text>  
+    <image src='/images/index/right.png'></image>
+  </view>
+  </button>
+ </view>
+ <!-- 往期话题 -->
+<scroll-view class='indexShop-swiper' scroll-x>
+  <block wx:for='{{activities}}' wx:key='' wx:for-item='shops' wx:for-index='index'>
+      <view class='shop-shuffing-item' catchtap='listClick' data-id="{{shops.id}}" data-title="{{shops.title}}" > 
+      <button  form-type='submit' class="form-button"> 
+        <image src="{{shops.pic}}" style="height:292rpx;width:520rpx;"> </image> 
+        <view class='lase-shuffing-mask'>
+          <text>{{shops.title}}</text>  
+          <image  class="small" style='width:16rpx;'
+ src='/images/index/right.png'  mode="widthFix"></image>
+        </view>
+        </button> 
+      </view>
+  </block>
+  <view class='shop-shuffing-item' catchtap='toTopicList'> 
+      <button  form-type='submit' class="form-button"> 
+        <image src="https://static.bonnieclyde.cn/We22.jpeg" style="height:292rpx;width:520rpx;"> </image> 
+        </button> 
+      </view>
+</scroll-view> 
+
+ 
+<!-- <scroll-view class="evaluation-box" wx:if="{{activities_list.length>=2}}"  scroll-x>
+  <block wx:for='{{activities_list}}' wx:key='' wx:for-item='shops' wx:for-index='index'>
+      <view class='shuffing-item' catchtap='listClick' data-title="{{shops.goods_name}}" data-url='/goods/goodsdetail/goodsdetail?goods_id={{shops.pid}}&&goods_name={{shops.goods_info.goods_name}}'> 
+      <button  form-type='submit' class="form-button"> 
+        <image src="{{shops.pic_pro}}" style="width:270rpx;height:270rpx;display:block;"> </image>
+        <view class='shuffing-mask'>
+          <text>{{shops.title_pro}}</text>  
+        </view>
+        </button> 
+      </view>
+  </block>
+</scroll-view>  -->
+
+<!--往期话题  -->
+ <!-- <image src="https://static.bonnieclyde.cn/Title-4@2x.png" mode='widthFix'  style='margin:60rpx 20rpx 0;width:710rpx;'></image> -->
+
+
+<!--新品推荐  -->
+ <image src="https://static.bonnieclyde.cn/Title@2x.png" mode='widthFix' style='margin:60rpx 20rpx 0;width:710rpx;'></image>
+<scroll-view class="indexLast-swiper" scroll-x>
+  <block wx:for='{{new_pro}}' wx:key='' wx:for-item='shops' wx:for-index='index'>
+      <view class='last-shuffing-item' catchtap='listClick' data-title='{{shops.goods_name}}' data-types='{{shops.source_type}}' data-code='{{shops.material_code}}'data-url='/goods/goodsdetail/goodsdetail?goods_id={{shops.goods_id}}&&goods_name={{shops.goods_name}}'> 
+      <button  form-type='submit' class="form-button"> 
+        <image src="{{shops.new_pic}}" style="width:560rpx;height:560rpx;display:block;"> </image>
+        </button> 
+      </view>
+  </block>
+</scroll-view> 
+
+ <!-- //品牌 -->
+ <!-- <image class="a" src="https://static.bonnieclyde.cn/Title-5@2x.png" mode='widthFix'style='margin:60rpx 20rpx 0;width:710rpx;'></image>
+<view class="brand-image">
+<block wx:for='{{brand}}' wx:key='' wx:for-item='brands' wx:for-index='index'>
+  <view class='a' catchtap='toBrand' data-data='{{brands}}' data-id="{{brands.brand_id}}" data-title='{{brands.brand_name}}'
+ data-show="{{brands.is_show}}">
+      <button  form-type='submit' class="form-button"> 
+    <view>
+      <image  class='a' src="{{brands.brand_ads}}" mode='widthFix'></image>
+    </view>
+        </button> 
+  </view>
+</block>
+</view> -->
+
+<image src="https://static.bonnieclyde.cn/Title-1@2x.png" mode='widthFix' style='margin:60rpx 20rpx 40rpx;width:710rpx;'></image>
+  <block wx:for='{{shop}}' wx:key='' wx:for-item='shops' wx:for-index='index'>
+<!-- <view  wx:if="{{index==0}}"   class='{{index==0?"heder":" "}} a uo' catchtap='listClick' data-has="{{shops.hasTarget}}" data-x="{{ shops.hasExtra }}" data-id="{{shops.id}}"  data-title="{{shops.title}}" data-url='/goods/goodsdetail/goodsdetail?goods_id={{shops.goodsId}}&&goods_name={{shops.goodsTitle}}'>
+ <button  form-type='submit' class="form-button">
+  <image src="{{shops.imgUrl?shops.imgUrl:shops.pic}}" mode="widthFix" style="width:100%" wx:if="{{shops.imgUrl || shops.pic}}"> </image>
+   </button>
+</view> -->
+<!-- <view class="all"> -->
+    <!-- <view  wx:if="{{index==1}}"  class='{{index==0?"heder":" "}} focus' catchtap='listClick' data-has="{{shops.hasTarget}}" data-x="{{ shops.hasExtra }}" data-id="{{shops.id}}"  data-title="{{shops.title}}" data-url='/goods/goodsdetail/goodsdetail?goods_id={{shops.goodsId}}&&goods_name={{shops.goodsTitle}}'>
+ <button  form-type='submit' class="form-button" class="ask">
+  <image src="{{shops.imgUrl?shops.imgUrl:shops.pic}}" mode="widthFix" style="width:100%" wx:if="{{shops.imgUrl || shops.pic}}"> </image>
+   </button>
+</view> -->
+    <!-- <view  wx:if="{{index==2}}"  class='{{index==0?"heder":" "}} b focus' catchtap='listClick' data-has="{{shops.hasTarget}}" data-x="{{ shops.hasExtra }}" data-id="{{shops.id}}"  data-title="{{shops.title}}" data-url='/goods/goodsdetail/goodsdetail?goods_id={{shops.goodsId}}&&goods_name={{shops.goodsTitle}}'>
+ <button  form-type='submit' class="form-button" class="ask">
+  <image src="{{shops.imgUrl?shops.imgUrl:shops.pic}}" mode="widthFix" style="width:100%" wx:if="{{shops.imgUrl || shops.pic}}"> </image>
+   </button>
+</view>
+</view> -->
+<!-- wx:if="{{index>2}}"  -->
+<view  wx:if="{{index>1&&index<12}}"  class='{{index==0?"heder":" "}} a uo' catchtap='listClick' data-has="{{shops.hasTarget}}" data-x="{{ shops.hasExtra }}" data-id="{{shops.id}}" data-title="{{shops.goodsTitle?shops.goodsTitle:shops.title}}" data-types='{{shops.sourceType}}' data-code='{{shops.materialCode}}' data-url='/goods/goodsdetail/goodsdetail?goods_id={{shops.goodsId}}&&goods_name={{shops.goodsTitle}}'>
+ <button  form-type='submit' class="form-button">
+  <image src="{{shops.imgUrl?shops.imgUrl:shops.pic}}" mode="widthFix" style="width:100%" wx:if="{{shops.imgUrl || shops.pic}}"> </image>
+   </button>
+</view>
+</block>
+
+
+<!--top10  -->
+<!-- <view catchtap='toTopic'>
+<button  form-type='submit' class="form-button" style='margin:60rpx 20rpx 0;width:710rpx;'>
+  <image src="{{topShopsIcon}}" mode='widthFix' style='width:710rpx;' ></image>
+  </button>
+</view>
+<scroll-view class="evaluation-box" scroll-x>
+  <block wx:for='{{top_list}}' wx:key='' wx:for-item='shops' wx:for-index='index'>
+      <view class='shuffing-item' catchtap='listClick' data-url='/goods/goodsdetail/goodsdetail?goods_id={{shops.goods_id}}&&goods_name={{shops.goods_name}}'> 
+      <button  form-type='submit' class="form-button"> 
+        <image src="{{shops.last_picture}}" style="width:270rpx;height:270rpx;display:block;"> </image>
+        <view class='shuffing-mask'>
+          <text>{{shops.introduction}}</text>  
+        </view>
+        </button> 
+      </view>
+  </block>
+</scroll-view>  -->
+
+
+<!--商品列表  -->
+ <image src="https://static.bonnieclyde.cn/Title-6@2x.png" mode='widthFix' style='margin:100rpx 20rpx 0;width:710rpx;'></image>
+  <view class="body">
+  <block wx:for='{{index_goods_list}}' wx:key='' wx:for-item='shops' wx:for-index='index'>
+    <view  class='goods_all' catchtap='listClick' data-title='{{shops.goods_name}}' data-types='{{shops.source_type}}' data-code='{{shops.material_code}}' data-url='/goods/goodsdetail/goodsdetail?goods_id={{shops.goods_id}}&&goods_name={{shops.goods_name}}'>
+      <view class="all-box">
+        <image src="{{shops.pic_cover_big}}" mode="widthFix"></image>
+        <view class="shop-detail">
+          <text  decode="true" class="title">
+          <block wx:for='{{shops.gorup_list}}' wx:key='' wx:for-item='vo'>
+            <i class="goods_tab">{{vo.group_name}}</i>
+          </block>{{shops.goods_name}}</text>
+          <view class="shop-detail-price">
+            <text>￥{{shops.promotion_price}}</text>
+            <view style='text-decoration:line-through;color:#d7d7d7;font-size:12px;' wx:if="{{shops.market_price - shops.promotion_price > 0}}">￥{{shops.market_price}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>   
+
+</view>
+     </view>
+</view>  
+<!-- 旋转木马 -->
+ <!-- <view class="swiper-container">
+ <swiper class='swiperClass' autoplay='{{false}}' indicator-color="#a39f99" indicator-active-color="#f49641"   interval="2000" duration="1000" previous-margin="50px" next-margin="50px" circular bindchange="bindchange" style='height: {{swiperHeight}}px'>
+ <block wx:for="{{shop}}" wx:for-item='shops' wx:key="{{index}}">
+ <swiper-item>
+ <image  catchtap='listClick' data-has="{{shops.hasTarget}}" data-x="{{ shops.hasExtra }}" data-id="{{shops.id}}"  data-title="{{shops.title}}" data-url='/goods/goodsdetail/goodsdetail?goods_id={{shops.goodsId}}&&goods_name={{shops.goodsTitle}}'
+ src="{{shops.imgUrl?shops.imgUrl:shops.pic}}" class="slide-image {{swiperIndex == index ? 'active' : 'quiet'}}" mode="widthFix">
+ </image>
+ </swiper-item>
+ </block>
+ </swiper>
+   <view class="dots">
+    <block wx:for="{{shop}}" wx:key="{{index}}">
+      <view class="dot{{index == swiperIndex ? ' active' : ''}}"></view>
+    </block>
+  </view>
+</view>   -->
+<!-- indicator-dots
+
+<!-- 底部图片 -->
+<!-- <image src="https://static.bonnieclyde.cn/shouye-20180611_20.jpg" mode="widthFix" style="width:750rpx"> </image> -->
+ <!-- 定位客服 -->
+ <!-- <button class="a new-btn buy-cart" open-type="contact" session-from="weapp" class="{{isHide==0?'yuan':'hide-kf'}}">
+     <view><image src="https://static.bonnieclyde.cn/icon111.jpg"  mode='widthFix' ></image></view>
+   </button> -->
+
+
+ <image src="https://static.bonnieclyde.cn/WechatI3.png" mode='widthFix' style='margin:100rpx auto;display:block;width:300rpx;position: relative;'></image>
+ </form>
+</scroll-view>

@@ -1,0 +1,13 @@
+
+  <view class='backgroundImage'>
+    <image src="https://static.bonnieclyde.cn/WechatIMG2.png"></image>
+  </view> 
+<block wx:for='{{activities}}' wx:key='' wx:for-item='shops' wx:for-index='index'>
+<view style='position: relative;margin:40rpx 20rpx;z-index:10;box-shadow:4px 5px 10px rgba(0,0,0,0.7);' catchtap='toDetail' data-id="{{shops.id}}" data-title="{{shops.title}}">
+  <image src="{{shops.pic}}" mode='widthFix' style='width:710rpx;display:block;border-radius:2px'></image>
+  <view class='lase-shuffing-mask' style='padding:0 30rpx;'>
+    <text>{{shops.title}}</text>  
+    <image src='/images/index/right.png'></image>
+  </view>
+ </view>
+ </block>

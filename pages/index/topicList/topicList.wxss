@@ -1,0 +1,45 @@
+/* pages/index/topicList/topicList.wxss */
+page{
+  background: #333;
+}
+.backgroundImage{
+  position: fixed;
+  z-index: 0;
+  width:100%;
+  height:100%;
+  top:0;
+}
+.backgroundImage>image{
+  width:100%;
+  height:100%;
+}
+.lase-shuffing-mask{
+  position: absolute;
+  bottom: 0;
+  width:100%;
+  display: flex;
+  justify-content: space-between;
+  background: linear-gradient(transparent,rgba(0,0,0,0.5));
+  color:#fff;
+  padding:0 20rpx;
+  font-size: 16px;
+  height: 140rpx;
+  align-items: center;
+}
+.lase-shuffing-mask>text{
+  width:80%;
+  line-height: 40rpx;
+  text-align:left;
+  display: block; 
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space:pre-line;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.lase-shuffing-mask>image{
+  width:18rpx;
+  height:34rpx;
+}
