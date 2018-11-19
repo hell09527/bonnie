@@ -35,13 +35,13 @@
 </block>
 </scroll-view>
 
-<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+<view class="ck-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
     <!-- 登录弹出框 -->
-    <view class="modal-dialog" wx:if="{{showModal}}">
+    <view class="ck-dialog" wx:if="{{showModal}}">
  
-  <view class="gift_title">手机号授权绑定成功
+  <view class="ck-title">手机号授权绑定成功
   </view>
-  <view class="modal-footer">
+  <view class="ck-footer">
    <button  class="btn-confirm"  data-status="confirm" open-type="getUserInfo" bindgetuserinfo="bindgetuserinfo">确   定</button>
   </view> 
 </view>
@@ -51,12 +51,12 @@
             </button> -->
 <view class="yuan1"  catchtap='Backindex'>去送礼</view>
    <!-- 选择登录方式  -->
-   <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{Choice}}"></view>
-  <view class="modal-dialog" wx:if="{{Choice}}">
-     <view class="gift_title">您未登录!
-          </view>
+   <view class="login-modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{Choice}}"></view>
+  <view class="login-modal-dialog" wx:if="{{Choice}}">
+    <view class="gift_title">请登录...</view>
+    <view class="gift-text">请你先登录，才可以同步个人数据！</view>
      <button  class="btn-common"  open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" >微信登录</button>
     <button  class="btn-common"  data-status="mobile"  catchtap='Branch'>手机号登录</button>
-   <button  class="btn-common"  data-status="no" catchtap='Branch'>暂不登录</button>
+   <button  class="btn-common"  data-status="no" catchtap='Branch' style='background:transparent;font-size:14px;'>暂不登录</button>
    </view>
    <!-- 选择登录方式   end-->

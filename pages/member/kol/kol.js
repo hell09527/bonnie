@@ -24,6 +24,9 @@ Page({
      
 
     isCode:1,   //小程序码切换
+    user_headimg:'',   //头像
+    star_num:'',   //星级
+    member_name:'',   //kol名字
   },
 
   onLoad: function () {
@@ -54,7 +57,7 @@ Page({
         let standard_rate = res.data.standard_rate * 100;
         
         let star_name_start =  res.data.star_name_start == '' ? '0星' : res.data.star_name_start;
-        console.log(standard_rate)
+        let star_num = parseInt(star_name_start)
         that.setData({
           sum_one: res.data.sum_one.toFixed(2),
           sum_two: res.data.sum_two.toFixed(2),
@@ -67,7 +70,9 @@ Page({
           star_name_start: star_name_start,
           star_name_end: res.data.star_name_end,
           quarter_goods_money_sum: res.data.quarter_goods_money_sum.toFixed(2),
+          bonus: res.data.bonus.toFixed(2),
           standard_rate: standard_rate,
+          star_num,
           // sum_five: res.data.sum_five.toFixed(2)
         })
       }
@@ -132,6 +137,23 @@ Page({
       }
     })
 
+    // 
+    app.sendRequest({
+      url: "api.php?s=member/getMemberDetail",
+      success: function (res) {
+        let data = res.data
+        if (res.code == 0) {
+          let member_info = data;
+          let img = member_info.user_info.user_headimg;
+          let user_headimg = app.IMG(img); //图片路径处理
+          let member_name = member_info.member_name
+          that.setData({
+            user_headimg,
+            member_name
+          })
+        }
+      }
+    })
 
   },
   onReady: function () {

@@ -10,38 +10,55 @@
   </view>
 <block>
   <block>
-    <view    wx:if='{{_no== 0}}' class="slick">
-      <view class="bcg">
-        <view class="yu_title">
-          <view class="yu_s">累计获得分润(元)</view>
-          <view class="show_yuan">{{sum_one}}</view>
+    <view wx:if='{{_no== 0}}' class="slick">
+      <view class='bcg-box'>
+        <view class="bcg">
+          <view class='headimg'>
+            <image src='{{user_headimg}}' mode='widthFix' />
+          </view>
+          <view class='stat-num'>
+            <block wx:for='{{star_num}}'>
+              <image src='/images/member/star.png' mode='widthFix' />
+            </block>
+            <block wx:for='{{3-star_num}}'>
+              <image src='/images/member/no-star.png' mode='widthFix' />
+            </block>
+          </view>
+          <view class="yu_title">
+            <view class="yu_s">累计获得分润</view>
+            <view class="show_yuan">￥{{sum_one}}</view>
+          </view>
+          <!-- <view class="synthesize">
+            <view class="explain"> 累计商品成交金额  (元) </view>
+            <view class='Mm'>{{sum_five}}</view>
+          </view> -->
+          <view class="x_fen">
+            <view class="li">待结算
+              <view class="price">{{sum_two}}</view>
+            </view>
+            <view class="li sk">待出账
+              <view class="price">{{sum_three}}</view>
+            </view>
+            <view class="li">已出账
+              <view class="price">{{sum_four}}</view>
+            </view>
+          </view>
+        </view> 
+        <image src='{{user_headimg}}' mode='widthFix' class='headimg-background' wx:if='{{user_headimg}}'/>
+        <view class='kol_name' wx:if='{{user_headimg}}'>
+          {{member_name}}
         </view>
-        <!-- <view class="synthesize">
-          <view class="explain"> 累计商品成交金额  (元) </view>
-          <view class='Mm'>{{sum_five}}</view>
-        </view> -->
-        <view class="x_fen">
-          <view class="li">待结算 (元)
-            <view class="price">{{sum_two}}</view>
-          </view>
-          <view class="li sk">待出账 (元)
-            <view class="price">{{sum_three}}</view>
-          </view>
-          <view class="li">已出账 (元)
-            <view class="price">{{sum_four}}</view>
-          </view>
-        </view>
-      </view>  
+      </view> 
 
 <!-- 新加极选师星级 start -->
 <view class='repertoire'>
 
-   <view class='rank'>
+   <!-- <view class='rank'>
 <view class="select">
 极选师星级:
 </view>
 <view class="grade"> {{star_name_start}}</view>
-</view>
+</view> -->
 
 
 <view class='big_coin'>
@@ -57,41 +74,46 @@
 <view class='namey'>累计成交订单</view>
 <view class='namey'>累计成交金额</view>
 </view>
-  <progress   class='extent' percent="{{standard_rate}}"   color='#CC9933'/>
+  <!-- <progress   class='extent' percent="{{standard_rate}}"   color='#CC9933'/> -->
 
-  <view class='dec'>
+  <!-- <view class='dec'>
  <view class="record_l">
   {{star_name_start}}
    </view>
    <view class="record_r">
    {{star_name_end}}
    </view>
-  </view>
-
-
-<view class='xuans'>
- <view class='c_money'>本期商品成交金额:</view>
-  <view class='edu'> {{quarter_goods_money_sum}}</view>
-  <view class='yuane' >(元)</view>
+  </view> -->
 </view>
- 
- <!-- <view class='xus'>
- <view class='x_money'>星级额外奖励金额:</view>
-  <view class='edo'>  {{bonus}} </view>
-  <view  class='yuane'  >(元)</view>
-</view> -->
+
+<view class='moneyBox'>
+  <view class='xuans'>
+    <view class='c_money'>
+      <image src='/images/member/issueMonay.png' mode='widthFix' style='width:18px;margin-right:26rpx'/>
+      <view>本期商品成交金额</view>
+    </view>
+    <view class='edu'> ￥{{quarter_goods_money_sum}}</view>
+  </view>
+  
+  <view class='xuans'>
+    <view class='c_money'>
+      <image src='/images/member/additionalMonay.png' mode='widthFix' style='width:22px;'/>      
+      <view>星级额外奖励金额</view>
+    </view>
+    <view class='edu'>  ￥{{bonus}} </view>
+  </view>
 </view>
 
 <!-- 新加极选师星级 end -->
 
 
                            <!-- 分润规则说明  start-->
- <view class="show" catchtap='open'>
-        <view class='run' style='color:#000;font-size:17px;line-height:24px; margin-right:10rpx; margin-top:28rpx; float:left;'>
-极选师规则说明</view>
-<image class="direction {{ rotate ? 'rotate':''}}" src='https://static.bonnieclyde.cn/WechatIMG240.png'></image>
-        
-      </view>
+  <view class="show" catchtap='open'>
+    <view class='run'>极选师规则说明</view>
+    <image class="direction rotate" src='https://static.bonnieclyde.cn/WechatIMG240.png'></image>      
+  </view>
+
+
       <view class="template {{ temp ? 'open':''}}">
         <view class="explains">
         普通会员通过极选师推广链接购买商品，极选师将获得商品售出价格指定比例的分润。</view>

@@ -307,3 +307,118 @@ strong, b {
   font-size:12px
 }
 
+
+/* 新用户登录弹出框样式 */
+.login-modal-mask {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.7;
+  overflow: hidden;
+  z-index: 9000;
+  color: #fff;
+  padding:20rpx 0;
+}
+.login-modal-dialog {
+  width: 600rpx;
+  overflow: hidden;
+  position: fixed;
+  top:30%;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  padding:40rpx 40rpx 0;
+  margin: auto;
+  border-radius: 10rpx;
+  background: url('https://static.bonnieclyde.cn/background@2x.png') no-repeat;
+  background-size: 100% 100%;
+}
+.btn-common{
+  width: 100%;
+  color: #fff;
+  font-weight:900;
+  text-align: center;
+  font-size:16px;
+  border:none;
+  border-radius:0;
+  line-height:35px;
+  background: #000;
+  margin-bottom: 20rpx;
+}
+
+.gift_title{
+  width: 80%;
+  height:80rpx;
+line-height:80rpx;
+  text-align: center;
+  margin:0  auto;
+  font-size:24px;
+  font-weight: bold;
+ color:#000;
+}
+.gift-text{
+  font-size: 14px;
+  color:#535353;
+  text-align: center;
+  margin:10rpx 0 30rpx;
+}
+
+/* 新用户登录弹出框样式 */
+.ck-mask {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.7;
+  overflow: hidden;
+  z-index: 9000;
+  color: #fff;
+}
+.ck-dialog {
+  width: 80%;
+  overflow: hidden;
+  position: fixed;
+  top:30%;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: #d5d5d5;
+  margin: auto;
+  border-radius: 10rpx;
+  padding:40rpx;
+}
+.ck-title {
+  margin:10rpx 0 20rpx;
+  font-size: 18px;
+  color: #333;
+  text-align: center;
+}
+
+.ck-title-desc{
+  font-size:24rpx;
+  color:gray;
+}
+
+.ck-content {
+  padding: 50rpx 32rpx;
+  border-top:1rpx solid #DDDDDD;
+  border-bottom:1rpx solid #DDDDDD;
+}
+
+.ck-footer {
+  padding:20rpx 0 0;
+}
+.btn-confirm{
+  height: 70rpx;
+  line-height: 70rpx;
+  color:#fff;
+  background: #000;
+  width:100%;
+  border-radius: 0;
+  font-size: 16px;
+}

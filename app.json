@@ -65,6 +65,7 @@
     "pages/member/givingDetail/givingDetail",
     "pages/member/receiveDetail/receiveDetail",
     "pages/member/kolApply/kolApply",
+    "pages/member/inpurchasing/inpurchasing",
     "pages/member/kolSuccess/kolSuccess",
     "pages/order/myvirtualorderlist/myvirtualorderlist",
     "pages/order/myorderlist/myorderlist",

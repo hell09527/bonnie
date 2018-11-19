@@ -169,7 +169,6 @@ scroll-view .canvas {
    margin: 0 auto;
 }
 .cf-container{
-  height: 35px;
   top: 0;
   width: 100%;
   z-index: 6;
@@ -189,91 +188,137 @@ scroll-view .canvas {
   top: 0;
   white-space: nowrap;
   z-index: 5;
+  display: table;
   -webkit-overflow-scrolling: touch;
   margin-left: 0.1rem;
   margin-right: 0.1rem;
   font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 1.25rem;
   list-style-position: outside;
   font-family: inherit;
+  width:100%;
 }
 
 .cf-container .cf-tab-item{
-  display: inline;
   margin-left: 0px;
   padding: 0px;
   line-height: 32px;
   text-align: center;
+  float: left;
+  width:25%;
 }
 
 .cf-tab-item .a{
   color: #707070;
   font-size: 14px;
   display: block;
-  width: 25%;
-  float: left;
+  width: 80%;
+  margin:0 auto;
 }
 
 .cf-container .cf-tab-item.select .a{
-  border-bottom: 2px solid #FF6600;
-  padding-bottom: 0px;
-  color: #F15050;
+  border-bottom: 2px solid #000;
+  color: #000;
 }
 
 .cf-tab-item .last-child{
   width: 20%;
 }
+.bcg-box{
+  position: relative;
+  background: rgba(0,0,0,0.4);
+  overflow: hidden;
+}
 .bcg{
-     width: 100%;
-     height: 180px;
-     z-index: 999;
+  width: 100%;
+  z-index: 999;
+  position: relative;
+  background: rgba(0,0,0,0.4);
+  padding-top: 20rpx;
+}
+.headimg-background{
+  position: absolute;
+  top:0;
+  left: 0;
+  width:100%;
+  z-index: 99;
+  filter: blur(20px) grayscale(100%);
+}
+.kol_name{
+  position:absolute;
+  left:-40rpx;
+  top:100rpx;
+  border-radius: 30rpx;
+  height: 60rpx;
+  background: rgba(0,0,0,0.5);
+  z-index: 100;
+  line-height: 60rpx;
+  padding:0 20rpx 0 60rpx;
+  color:#fff;
+}
+.headimg{
+  width:150rpx;
+  height:150rpx;
+  margin:0 auto;
+  border-radius: 50%;
+  box-shadow:0px 8px 20px rgba(0, 0, 0, 0.4)
+}
+.headimg>image{
+  width:100%;
+  height:150rpx;
+  border-radius: 50%;
+  display: block;
+  background: #d8d8d8;
+}
+.stat-num{
+  margin:20rpx auto 0;
+}
+.stat-num image{
+  width:40rpx;
+  height:40rpx;
+  margin:10rpx 6rpx;
 }
 .yu_title{
-     width: 100%;
-     height: 120px;
-    padding-top: 20px;
-     background-color:#FAA99A;
+  width: 100%;
+  margin-top: 20rpx;
 }
 .yu_s{
-       font-size: 12px;
-      font-weight: 700;
-        color:#fff;
-      text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color:#fff;
+  text-align: center;
+
 } 
 .show_yuan{
-     font-weight: 700;
-     margin-top: 10px;
-      font-size: 30px;
-        color:#fff;
-      text-align: center;
+  font-weight: 700;
+  font-size: 36px;
+  color:#edc481;
+  text-align: center;
 }
 .x_fen{
-   width: 100%;
-      background-color: #fff;
-      height: 60px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 40rpx 0;
 }
 .x_fen .li{
-     width: 33.3%;
-     height: 60px;
-    font-size: 11px;
-      padding-top: 10px;
-      float: left;
-       text-align: center;
-      color: #fff;
-        background-color: #F17C67;
+  font-size: 16px;
+  text-align: center;
+  color: #fff;
+  width:33%;
 }
-/* .x_fen .sk{
-     width: 32.7%;
-  border-left: 1px solid #fff; 
-  border-right: 1px solid #fff;
-} */
+.x_fen .sk{
+  border-left: 1px solid rgba(0,0,0,0.3); 
+  border-right: 1px solid rgba(0,0,0,0.3);
+}
 .price{
   margin-top: 6px;
   font-size: 14px;
 }
 .slick{
    text-align: center;
+  background: url('https://static.bonnieclyde.cn/8138945F-2DE9-4790-A9DF-873F8BDAFADE@2x.png') no-repeat;
+  background-size: 100% 100%;
+  height: 100%;
 }
 .nav_qr{
   margin:40rpx;
@@ -453,14 +498,16 @@ font-size: 12px;
   padding-left: 20rpx;
    padding-right: 20rpx;
   width: 100%;
-  height:80rpx;
-  background-color: rgba(255, 255, 255, 1);
-  /* display: flex; */
-  /* justify-content: flex-end; */
+  margin:40rpx 0;
+}
+.run{
+  color:#808080;
+  font-size:14px;
+  line-height:20px;
+  text-align: center;
 }
 .direction{
-  float: right;
-  margin-top:40rpx;
+  margin:0 auto;
   width:34rpx;
   height:34rpx;
 }
@@ -516,25 +563,23 @@ color:#fff;
   display: inline-block;
 }
 .big_coin{
-display: flex;
- flex-direction: row;
- flex-wrap: wrap;
-    width: 95%;
-
-
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
 }
 .coin{
   width: 25%;
- color:#CC9933 ;
+ color:#000 ;
 font-size:14px;
 
 }
 .dish_name{
-display: flex;
- flex-direction: row;
- flex-wrap: wrap;
-  width: 95%;
- margin:18rpx 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  margin:18rpx 0;
 }
 .rank{
   font-size: 12px;
@@ -544,10 +589,12 @@ display: flex;
 .namey{
     width: 25%;
     font-size:12px;
+    color:#808080;
 }
 .repertoire{
-  padding-left: 30rpx;
-  padding-right:30rpx;
+  margin: 0 30rpx;
+  padding:30rpx 0;
+  border-bottom: 1px solid #cfcfcf;
 }
 .record_l{
   height: 28rpx;
@@ -568,65 +615,48 @@ display: flex;
   height: 20px;
   margin-bottom:50rpx;
   margin-left:10rpx;
-margin-right:10rpx;
-
+  margin-right:10rpx;
 }
   
-    .xuans{
-      text-align: right;
-    }
-    .c_money{
-      display: inline-block;
-      font-size:12px;
-
-    }
-    .edu{
-        display: inline-block;
-         color:#CC9933 ;
-         font-size:17px;
-          margin-left:10rpx;
-      margin-right:10rpx;
-    }
-    .xus{
-  text-align: right;
-    }
-    .x_money{
-display: inline-block;
-font-size:12px;
-
-    }
-    .edo{
- display: inline-block;
-         color:#CC9933 ;
-         font-size:17px;
-          margin-left:10rpx;
-      margin-right:10rpx;
-    }
-    .yuane{
-      display: inline-block;
-      font-size:12px;
-     
-    }
-
-
+.moneyBox{
+  padding:0 30rpx;
+}
+.xuans{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 90rpx;
+  border-bottom: 1px solid #cfcfcf;
+}
+.c_money image{
+  margin-right: 20rpx;
+}
+.c_money{
+  font-size:14px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.edu{
+  color:#CC9933 ;
+  font-size:14px;
+}
 
   /* 极选师规则说明css */
-  .tables {
+.tables {
   border: 1px solid #f1f1f1;
   margin-top:40rpx;
-margin-bottom:40rpx;
+  margin-bottom:40rpx;
 }
 .trs {
   display: flex;
   width: 100%;
-
- 
   align-items: center;
 }
 .tds {
-    width:40%;
-   padding-left:30rpx; 
-    text-align: left;
+  width:40%;
+  padding-left:30rpx; 
+  text-align: left;
 }
 .bg-w{
   background: snow;

@@ -115,5 +115,10 @@ Page({
     }
     app.clicked(that, 'listClickFlag');
     wx.navigateTo({ url: '/pages/' + data_url });
+  },
+
+
+  toInpurchasing:function(){
+    wx.navigateTo({ url: '/pages/member/inpurchasing/inpurchasing'});
   }
 })

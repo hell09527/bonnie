@@ -119,13 +119,13 @@
                 </view>
             </view>
         </block>
-        <view class="hr with-margin-l"></view>
+        <!-- <view class="hr with-margin-l"></view>
         <view class="stock-detail">
             <view class='span first'>销量：{{goods_info.sales}}笔</view>
             <view class='span'>运费：{{goods_info.shipping_fee_id==0?'免邮':goods_info.shipping_fee_name}}</view>
-            <!-- 点击：{{goods_info.clicks}} -->
+            点击：{{goods_info.clicks}}
             <view class='span last'></view>
-        </view>
+        </view> -->
     </view>
     <view class="hr with-margin-l"></view>
     <view class="hr divider-line"></view>
@@ -230,7 +230,8 @@
     <!-- 已选择 -->
     <block wx:if='goods_info.goods_pintuan == undefined'>
         <block wx:if='{{goods_info.goods_pintuan.is_open != 1}}'>
-            <view class="price_postage" id="theSelected" catchtap='Examine' data-type='buy'>
+        <!-- catchtap='Examine' -->
+            <view class="price_postage" id="theSelected"  catchtap="{{tel!=''?'Examine':''}}" data-type='buy'>
                 <view class='span left'>已选择</view>
                 <view class="span selected">{{sku_info.sku_name}} 　{{goodsNum}}件</view>
                 <image class="i jiantou" src='/images/goods/assistant_right.png'></image>
@@ -257,7 +258,6 @@
     </block>
     <block wx:if='{{goods_info.source_type >1}}'>
         <view class="DMSbuy">
-
             <view class="say">说明:</view>
             <view class="bao">
                 <view class="circle"></view>
@@ -535,7 +535,7 @@
     <view class='span hide' id="addcart_way">
         <view class='i'></view>
     </view>
-    <view class="s-buy {{sBuy==1?'':'hide'}}" id="s_buy">
+    <view class="s-buy {{sBuy==1?'':'hide'}}" wx:if="{{ unregistered==0 && tel!=''}}"   id="s_buy">
         <view class="popup hide" id="popup"></view>
         <view class="ul s-buy-ul">
             <view class="li s-buy-pro">
@@ -585,9 +585,9 @@
         <view class="ul s-buy-ul">
             <view class="s-buy-btn">
             <block wx:if='{{flys==0}}'>
-                <block wx:if="{{popUp==1}}">
+                <block wx:if="{{popUp==1 }}">
                  <block wx:if='{{buyButtonStatus==0}}'>
-                    <button class="buy-s" catchtap="addCart" open-type="getPhoneNumber">加入购物车</button>
+                    <button class="buy-s" catchtap="addCart" >加入购物车</button>
                 </block>
                 <view class="a btn spk {{buyButtonStatus==0?'':'hide'}} {{stock==0?'disabled':''}} {{goods_info.state==0?'disabled':''}}"
                       id="submit_ok"
@@ -717,11 +717,11 @@
     </view>
 
  <!-- 承接获取手机号到获取个人信息登录弹出框 -->
-<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
-  <view class="modal-dialog" wx:if="{{showModal}}">
-     <view class="gift_title">手机号授权绑定成功
+<view class="ck-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+  <view class="ck-dialog" wx:if="{{showModal}}">
+     <view class="ck-title">手机号授权绑定成功
           </view>
-  <view class="modal-footer">
+  <view class="ck-footer">
     <!-- <button class="btn-cancel"  data-status="cancel" open-type="getUserInfo" bindgetuserinfo="bindgetuserinfo">拒绝</button> -->
    <button  class="btn-confirm"  data-status="confirm" open-type="getUserInfo" bindgetuserinfo="bindgetuserinfo">确   定</button>
   </view> 
@@ -729,13 +729,13 @@
  <!-- 承接获取手机号到获取个人信息登录弹出框  end-->
 
  <!-- 选择登录方式  -->
-<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{Choice}}"></view>
-  <view class="modal-dialog" wx:if="{{Choice}}">
-     <view class="gift_title">您未登录!
-          </view>
-     <button  class="btn-common" data-status="weixin"  catchtap='Branch' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" >微信登录</button>
+<view class="login-modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{Choice}}"></view>
+  <view class="login-modal-dialog" wx:if="{{Choice}}">
+    <view class="gift_title">请登录...</view>
+    <view class="gift-text">请你先登录，才可以同步个人数据！</view>
+    <button  class="btn-common" data-status="weixin"  catchtap='Branch' open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" >微信登录</button>
     <button  class="btn-common"  data-status="mobile"  catchtap='Branch'>手机号登录</button>
-   <button  class="btn-common"  data-status="no" catchtap='Branch'>暂不登录</button>
-</view>
+    <button  class="btn-common"  data-status="no" catchtap='Branch' style='background:transparent;font-size:14px;'>暂不登录</button>
+  </view>
   <!-- 选择登录方式   end-->
 </view>

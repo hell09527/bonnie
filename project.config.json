@@ -9,8 +9,8 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.2.5",
-	"appid": "wxd145d8a6e951dd1b",
-	"projectname": "BC1",
+	"appid": "wxba4f30503c1ea656",
+	"projectname": "BCdev002",
 	"isGameTourist": false,
 	"condition": {
 		"search": {
@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 10,
+			"current": 11,
 			"list": [
 				{
 					"id": -1,
@@ -97,7 +97,12 @@
 					"name": "购物清单",
 					"pathName": "pages/goods/shareRepertoire/shareRepertoire",
 					"query": "share_li=90:1:0.01,89:1:0.01&tag=2&store=0&distributor_type=0"
-
+				},
+				{
+					"id": 11,
+					"name": "kol",
+					"pathName": "pages/member/member/member",
+					"query": ""
 				}
 			]
 		}
