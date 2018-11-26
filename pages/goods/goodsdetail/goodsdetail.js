@@ -64,6 +64,7 @@ Page({
     tel:'',//是否绑定手机号
     showModal:false,
     Choice: false,
+    is_employee:'',    //是否为员工
   },
     //测试数据
   last:function(){
@@ -80,14 +81,11 @@ Page({
   onLoad: function (options) {
     let that = this;
     let flys = options.fly;
-
-  
-
- if(options.uid) {
-    console.log('options.uid', options.uid)
-    app.globalData.identifying = options.uid;
-    app.globalData.breakpoint = options.breakpoint;
-  }
+    if(options.uid) {
+      console.log('options.uid', options.uid)
+      app.globalData.identifying = options.uid;
+      app.globalData.breakpoint = options.breakpoint;
+    }
     // 判断用户进页面的方式 
     if (options.goods_id) {
       let goods_id = options.goods_id;
@@ -228,14 +226,13 @@ Page({
           let updata = that.data.unregistered;
           updata = app.globalData.unregistered;
           console.log(updata, 'updata', '134')
-
-          console.log(tel)
           // console.log(app.globalData.is_vip)
           that.setData({
             is_vip: is_vip,
             tel: tel,
             distributor_type,
-            unregistered: updata
+            unregistered: updata,
+            is_employee: data.is_employee,
           })
         }
       }
@@ -252,7 +249,8 @@ Page({
     let attr_value_items_format = '';
     let member_price = 0.00;
     let base = that.data.Base;
-
+    let is_employee = that.data.is_employee;
+    console.log(is_employee)
 
        // 更新登录数据
     // let times = 0;
@@ -420,7 +418,8 @@ Page({
             imgUrls[index].pic_cover_mid = app.IMG(img);
           }
           let goods_info = data;
-          // console.log(goods_info)
+          let is_inside_sell = goods_info.is_inside_sell;
+          console.log(goods_info)
           goods_info.img_list[0].pic_cover_micro = app.IMG(goods_info.img_list[0].pic_cover_micro);
           goods_info.picture_detail.pic_cover_micro = app.IMG(goods_info.picture_detail.pic_cover_micro);
           goods_info.picture_detail.pic_cover_small = app.IMG(goods_info.picture_detail.pic_cover_small);
@@ -452,8 +451,8 @@ Page({
             current_time: data.current_time,
             goodsNum: goodsNum,
             brand_id: brand_id ,
-            sum
-
+            sum,
+            is_inside_sell,
           });
 
           //限时折扣计时
@@ -1146,6 +1145,8 @@ Page({
     let that = this;
     let addCartFlag = that.data.addCartFlag;
     let goods_info = that.data.goods_info;
+    let is_employee = that.data.is_employee;
+    let is_inside_sell = that.data.is_inside_sell;
     let purchase_num = goods_info.purchase_num;
     let count = that.data.goodsNum;
     let max_buy = parseInt(goods_info.max_buy);
@@ -1171,96 +1172,63 @@ Page({
    
    
    
-
-    let public_cart=""
+// 判断传的价格是什么
+    var public_cart=""
     if (app.globalData.is_vip==1){
       public_cart = that.data.vip_price
       // console.log(public_cart, 1111)
-      let cart_detail = {
-        shop_id: 0,
-        shop_name: 'shopal',
-        trueId: that.data.goods_info.goods_id,
-        goods_name: that.data.goods_info.goods_name,
-        count: count,
-        select_skuid: that.data.sku_id,
-        select_skuName: that.data.sku_info.sku_name,
-        price: public_cart,
-        cost_price: that.data.sku_info.cost_price,
-        picture: that.data.goods_info.picture
-      };
-      cart_detail = JSON.stringify(cart_detail);
-
-      app.sendRequest({
-        url: 'api.php?s=goods/addCart',
-        data: {
-          cart_detail: cart_detail,
-        },
-        success: function (res) {
-          let code = res.code;
-          let data = res.data;
-          if (code == 0) {
-            if (data.code > 0) {
-              app.showBox(that, '加入购物车成功')
-              purchase_num = parseInt(purchase_num) + parseInt(count);
-              let d = {};
-              let parm = "goods_info." + purchase_num;
-              d[parm] = purchase_num;
-
-              that.setData(d);
-              that.popupClose();
-              app.restStatus(that, 'addCartFlag');
-            } else {
-              app.showBox(that, data.message)
-              app.restStatus(that, 'addCartFlag');
-            }
-          }
-        }
-      });
+    } else if (is_employee == 1 && is_inside_sell == 1){
+      public_cart = goods_info.promotion_price < goods_info.inside_price ? goods_info.promotion_price : goods_info.inside_price
+      // public_cart = that.data.member_price
+      // console.log(public_cart,2222)
     }else{
       public_cart=  goods_info.promotion_price < goods_info.price ? goods_info.promotion_price : goods_info.price 
       // public_cart = that.data.member_price
       // console.log(public_cart,2222)
-      let cart_detail = {
-        shop_id: 0,
-        shop_name: 'shopal',
-        trueId: that.data.goods_info.goods_id,
-        goods_name: that.data.goods_info.goods_name,
-        count: count,
-        select_skuid: that.data.sku_id,
-        select_skuName: that.data.sku_info.sku_name,
-        price: public_cart,
-        cost_price: that.data.sku_info.cost_price,
-        picture: that.data.goods_info.picture
-      };
-      cart_detail = JSON.stringify(cart_detail);
-      app.sendRequest({
-        url: 'api.php?s=goods/addCart',
-        data: {
-          cart_detail: cart_detail,
-        },
-        success: function (res) {
-          let code = res.code;
-          let data = res.data;
-          if (code == 0) {
-            if (data.code > 0) {
-              app.showBox(that, '加入购物车成功')
-              purchase_num = parseInt(purchase_num) + parseInt(count);
-              let d = {};
-              let parm = "goods_info." + purchase_num;
-              d[parm] = purchase_num;
+    }
 
-              that.setData(d);
-              that.popupClose();
-              app.restStatus(that, 'addCartFlag');
-            } else {
-              app.showBox(that, data.message)
-              app.restStatus(that, 'addCartFlag');
-            }
+
+    var cart_detail = {
+      shop_id: 0,
+      shop_name: 'shopal',
+      trueId: that.data.goods_info.goods_id,
+      goods_name: that.data.goods_info.goods_name,
+      count: count,
+      select_skuid: that.data.sku_id,
+      select_skuName: that.data.sku_info.sku_name,
+      price: public_cart,
+      cost_price: that.data.sku_info.cost_price,
+      picture: that.data.goods_info.picture
+    };
+    console.log(cart_detail)
+    cart_detail = JSON.stringify(cart_detail);
+
+    app.sendRequest({
+      url: 'api.php?s=goods/addCart',
+      data: {
+        cart_detail: cart_detail,
+      },
+      success: function (res) {
+        let code = res.code;
+        let data = res.data;
+        if (code == 0) {
+          if (data.code > 0) {
+            app.showBox(that, '加入购物车成功')
+            purchase_num = parseInt(purchase_num) + parseInt(count);
+            let d = {};
+            let parm = "goods_info." + purchase_num;
+            d[parm] = purchase_num;
+
+            that.setData(d);
+            that.popupClose();
+            app.restStatus(that, 'addCartFlag');
+          } else {
+            app.showBox(that, data.message)
+            app.restStatus(that, 'addCartFlag');
           }
         }
-      });
-
-    }
+      }
+    });
 
   
 
@@ -1419,10 +1387,13 @@ Page({
           mobileIv: e.detail.iv
         },
         success: function (res) {
+          that.setData({
+            Choice: false
+          })
              if(res.code==0){
              that.setData({
                tel: res.data.user_tel,
-                 Choice: false
+               Choice: false
              })
             
               
@@ -1594,12 +1565,13 @@ Page({
     let tag = "buy_now";
     let sku_list = sku_id + ':' + goods_num;
     let source_type = goods_info.source_type;
-    // console.log(source_type)
+    let is_inside = goods_info.is_inside_sell;
     let goods_type = goods_info.goods_type;
+    console.log(sku_list, goods_type, source_type)
     
     if(that.data.flys==0){
       wx.navigateTo({
-        url: '/pages/order/paymentorder/paymentorder?tag=' + 1 + '&sku=' + sku_list + '&goods_type=' + goods_type + '&source_type=' + source_type + '&order_type=0',
+        url: '/pages/order/paymentorder/paymentorder?tag=' + 1 + '&sku=' + sku_list + '&goods_type=' + goods_type + '&source_type=' + source_type + '&order_type=0' + '&is_inside=' + is_inside,
       })
     } else {
       wx.navigateTo({

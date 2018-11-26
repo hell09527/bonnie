@@ -403,13 +403,11 @@ line-height:80rpx;
   font-size:24rpx;
   color:gray;
 }
-
 .ck-content {
   padding: 50rpx 32rpx;
   border-top:1rpx solid #DDDDDD;
   border-bottom:1rpx solid #DDDDDD;
 }
-
 .ck-footer {
   padding:20rpx 0 0;
 }

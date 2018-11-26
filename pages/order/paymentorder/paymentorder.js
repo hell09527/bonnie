@@ -99,6 +99,8 @@ Page({
         let tag = options.tag;
         let cart_list = options.cart_list;
         let share_last = options.share_last;
+      let is_inside = options.is_inside
+      console.log(is_inside);
       
         let base = app.globalData.siteBaseUrl;
         let defaultImg = app.globalData.defaultImg;
@@ -131,7 +133,7 @@ Page({
             tag,
         })
 
-        if (tag == 1) {
+        if (tag == 1) {   //立即购买
             tag = 'buy_now';
             let sku = options.sku;
             let goods_type = options.goods_type;
@@ -144,8 +146,9 @@ Page({
                 order_type: options.order_type
             })
         } else if (tag == 2) {
-            tag = 'cart';
+            tag = 'cart';    //购物车
             let cart_list = options.cart_list
+          console.log(cart_list)
             let source_type = options.type;
             that.setData({
               order_source_type: source_type,
@@ -154,7 +157,7 @@ Page({
               order_type: options.order_type
             })
         } else if (tag == 3) {
-            tag = 'combination_packages';
+            tag = 'combination_packages';    //
             let sku = options.sku;
             let goods_type = options.goods_type;
             let combo_id = options.combo_id;
@@ -167,7 +170,7 @@ Page({
                 order_type: options.order_type
             })
         } else if (tag == 4) {
-            tag = 'groupbuy';
+            tag = 'groupbuy';      //套餐购买
             let sku = options.sku;
             let goods_type = options.goods_type;
             that.setData({
@@ -176,7 +179,7 @@ Page({
                 order_type: options.order_type
             })
         } else if(tag==5){
-          tag = 'share_buy';
+          tag = 'share_buy';       //分享购买
           let share_last = options.share_last;
           console.log('share_last', share_last)
           let source_type = options.type;
@@ -205,6 +208,7 @@ Page({
             copyRight: copyRight,
             balance: balance,
             order_invoice_money: order_invoice_money,
+          is_inside,
         })
     },
   /**
@@ -478,6 +482,7 @@ Page({
             return false;
         }
 
+      console.log(parm)
         app.sendRequest({
             url: 'api.php?s=order/getOrderData',
             data: parm,
@@ -1544,7 +1549,8 @@ console.log(data);
                 store_id: app.globalData.store_id,
                 from_type: that.data.order_type,
                 count_money: that.data.count_money,
-                uid:that.data.uid
+                uid:that.data.uid,
+              is_inside: that.data.is_inside ? that.data.is_inside:0,
             },
             success: function (res) {
                 let code = res.code;

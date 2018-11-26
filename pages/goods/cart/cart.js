@@ -32,8 +32,18 @@ Page({
       total_price: 0,
       total_num: 0
     },
+    carts_3_info: {   // 内购跨境 当订单同时包含内购跨境商品和内购大贸商品时
+      total_price: 0,
+      total_num: 0
+    },
+    carts_4_info: {   // 内购普通 当订单同时包内购含跨境商品和内购大贸商品时
+      total_price: 0,
+      total_num: 0
+    },
     check_1_carts: [],  // 选中的大贸商品列表
     check_2_carts: [],  // 选中的跨境商品列表
+    check_3_carts: [],  // 选中的内购跨境商品列表
+    check_4_carts: [],  // 选中的内购普通商品列表
     send_type: 2,    // 多类型订单时 选择发送类型 1 大贸 2跨境
     // 选中列表
     unselected_list: [],
@@ -139,24 +149,43 @@ Page({
    */
   hideModal: function () {
     this.setData({
-      showModal: false
+      showModal: false,
+      insideModal: true
     });
   },
   /**
    * 对话框取消按钮点击事件
    */
   onCancel: function () {
-    this.hideModal();
+    this.setData({
+      showModal: false,
+      insideModal: false
+    });
   },
   /**
    * 对话框确认按钮点击事件
    */
   onConfirm: function () {
     var slist = [];
+    console.log(this.data.send_type)
+    var goods_type = 1;
+    var is_inside = 0;   //是否为内购商品
     if (this.data.send_type == 1) {
       slist = this.data.check_1_carts;
+      goods_type=1;
+      is_inside=0;
     } else if (this.data.send_type == 2) {
       slist = this.data.check_2_carts;
+      goods_type = 2;
+      is_inside=0;
+    } else if (this.data.send_type == 3) {
+      slist = this.data.check_3_carts;
+      goods_type = 2;
+      is_inside=1;
+    } else if (this.data.send_type == 4) {
+      slist = this.data.check_4_carts;
+      goods_type = 1;
+      is_inside=1;
     }
 
     var carts_list = '';
@@ -169,10 +198,9 @@ Page({
         carts_list += ',' + v.cart_id;
       }
     });
-    // console.log(carts_list)
-    //carts_list = this.data.carts_list;
+    console.log(slist, carts_list, goods_type, is_inside)
     wx.navigateTo({
-      url: '/pages/order/paymentorder/paymentorder?cart_list=' + carts_list + '&tag=2' + '&type=' + this.data.send_type,
+      url: '/pages/order/paymentorder/paymentorder?cart_list=' + carts_list + '&tag=2' + '&type=' + goods_type + '&is_inside=' + is_inside
     })
 
     this.hideModal();
@@ -230,6 +258,7 @@ GWC_reuse:function(){
             }
           }
         }
+
 
         // console.log(data[0])
         // console.log(data)
@@ -304,8 +333,18 @@ GWC_reuse:function(){
         total_price: 0,
         total_num: 0
       },
+      carts_3_info: {   // 跨境 当订单同时包含跨境商品和大贸商品时
+        total_price: 0,
+        total_num: 0
+      },
+      carts_4_info: {   // 跨境 当订单同时包含跨境商品和大贸商品时
+        total_price: 0,
+        total_num: 0
+      },
       check_1_carts: [],  // 选中的大贸商品列表
       check_2_carts: [],   // 选中的跨境商品列表
+      check_3_carts:[],   //内购跨境商品列表
+      check_4_carts:[],   //内购普通商品列表
       send_type: 2,    // 多类型订单时 选择发送类型 1 大贸 2跨境
     });
 
@@ -791,14 +830,19 @@ GWC_reuse:function(){
   settlement: function (event) {
     let that = this;
     let cart_list = that.data.cart_list;
+    // console.log(cart_list)
     let type = 1;
     let settlementFlag = that.data.settlementFlag;
     let carts_list = '';
 
-    let cart_1 = [];
-    let cart_2 = [];
-    let carts_1 = ''; // 大贸
-    let carts_2 = ''; // 跨境
+    let cart_1 = [];   //普通商品列表
+    let cart_2 = [];   //跨境商品列表
+    let cart_3 = [];   //内购跨境商品列表
+    let cart_4 = [];   //内购普通商品列表
+    let carts_1 = ''; // 大贸购物车id字符串
+    let carts_2 = ''; // 跨境购物车id字符串
+    let carts_3 = ''; // 内购跨境购物车id字符串
+    let carts_4 = ''; // 内购普通购物车id字符串
 
     if (settlementFlag == 1) {
       return false;
@@ -806,14 +850,22 @@ GWC_reuse:function(){
 
     var total_price_1 = 0;
     var total_price_2 = 0;
+    var total_price_3 = 0;
+    var total_price_4 = 0;
     var total_num_1 = 0;
     var total_num_2 = 0;
+    var total_num_3 = 0;
+    var total_num_4 = 0;
+    var p=0;
+    var is_inside=0;   //是否为内购商品
+    // console.log(p)
     for (let index in cart_list) {
       for (let key in cart_list[index]) {
         let cart_id = cart_list[index][key].cart_id;
         if (cart_list[index][key].status == 1) {
-          // 大贸
-          if (cart_list[index][key].source_type == 1) {
+          // 大贸普通商品
+          if (cart_list[index][key].source_type == 1 && cart_list[index][key].is_inside == 0) {
+            p++;
             if (carts_1 == '') {
               carts_1 = cart_id;
             } else {
@@ -822,8 +874,9 @@ GWC_reuse:function(){
             total_price_1 += parseFloat(cart_list[index][key].num) * parseFloat(cart_list[index][key].price)
             total_num_1 += cart_list[index][key].num
             cart_1.push(cart_list[index][key]);
-            // 跨境
-          } else if (cart_list[index][key].source_type == 2) {
+          } else if (cart_list[index][key].source_type == 2 && cart_list[index][key].is_inside == 0) {
+            // 跨境普通商品
+            p++;
             if (carts_2 == '') {
               carts_2 = cart_id;
             } else {
@@ -832,6 +885,30 @@ GWC_reuse:function(){
             total_price_2 += parseFloat(cart_list[index][key].num) * parseFloat(cart_list[index][key].price)
             total_num_2 += cart_list[index][key].num
             cart_2.push(cart_list[index][key]);
+          } else if (cart_list[index][key].source_type == 2 && cart_list[index][key].is_inside == 1) {
+            // 跨境内购商品
+            p++;
+            is_inside=1;
+            if (carts_3 == '') {
+              carts_3 = cart_id;
+            } else {
+              carts_3 += ',' + cart_id;
+            }
+            total_price_3 += parseFloat(cart_list[index][key].num) * parseFloat(cart_list[index][key].price)
+            total_num_3 += cart_list[index][key].num
+            cart_3.push(cart_list[index][key]);
+          } else if (cart_list[index][key].source_type == 1 && cart_list[index][key].is_inside == 1) {
+            //大贸内购商品
+            p++;
+            is_inside=1;
+            if (carts_4 == '') {
+              carts_4 = cart_id;
+            } else {
+              carts_4 += ',' + cart_id;
+            }
+            total_price_4 += parseFloat(cart_list[index][key].num) * parseFloat(cart_list[index][key].price)
+            total_num_4 += cart_list[index][key].num
+            cart_4.push(cart_list[index][key]);
           }
 
           if (carts_list == '') {
@@ -843,10 +920,26 @@ GWC_reuse:function(){
       }
     }
 
-    if (carts_1 != '' && carts_2 != '') {
+    var arr=[];  //判断商品类型包含几种
+    if (cart_1.length>0){
+      arr.push(cart_1);
+    } 
+    if (cart_2.length > 0){
+      arr.push(cart_2);
+    }
+    if (cart_3.length > 0){
+      arr.push(cart_3);
+    }
+    if (cart_4.length > 0) {
+      arr.push(cart_4);
+    }
+    console.log(arr)
+    if (arr.length>=2) {
       this.setData({
         check_1_carts: cart_1,
         check_2_carts: cart_2,
+        check_3_carts: cart_3,
+        check_4_carts: cart_4,
         carts_1_info: {
           total_price: total_price_1,
           total_num: total_num_1,
@@ -855,6 +948,15 @@ GWC_reuse:function(){
           total_price: total_price_2,
           total_num: total_num_2,
         },
+        carts_3_info: {
+          total_price: total_price_3,
+          total_num: total_num_3,
+        },
+        carts_4_info: {
+          total_price: total_price_4,
+          total_num: total_num_4,
+        },
+        is_inside,
       });
       this.showDialogBtn();
       return;
@@ -863,10 +965,19 @@ GWC_reuse:function(){
 
     app.clicked(that, 'settlementFlag');
     var goods_type = 1;
-    if (cart_2 != '') goods_type = 2;
+    if (cart_2 != '') {
+      goods_type = 2;
+      is_inside=0;
+    } else if (cart_3 != '') {
+      goods_type = 2;
+      is_inside = 1;
+    } else if(cart_4 != '') {
+      goods_type = 1;
+      is_inside = 1;
+    }
     let checkout = that.data.check_all
     // console.log(checkout)
-    if (cart_2 == '' && cart_1 == '') {
+    if (cart_2 == '' && cart_1 == '' && cart_3 == '' && cart_4 == '') {
       wx.showToast({
         title: '未选择商品',
         icon: 'loading',
@@ -877,7 +988,7 @@ GWC_reuse:function(){
       })
     } else {
       wx.navigateTo({
-        url: '/pages/order/paymentorder/paymentorder?cart_list=' + carts_list + '&tag=2' + '&type=' + goods_type + '&order_type=0',
+        url: '/pages/order/paymentorder/paymentorder?cart_list=' + carts_list + '&tag=2' + '&type=' + goods_type + '&order_type=0' + '&is_inside=' + is_inside,
       })
 
     }

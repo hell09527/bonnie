@@ -98,15 +98,25 @@
             </button>
         </view>
         <view class="price_wrap">
-            <view class="span price">
-                ￥{{goods_info.promotion_price< goods_info.price?goods_info.promotion_price:goods_info.price}}
-        <block wx:if='{{sum==1}}'>
-            <text class="sos" id="priceTitle" wx:if="{{goods_info.market_price - goods_info.price > 0}}">￥{{goods_info.market_price}}</text>
-        </block>
+
+            <view class="span price" wx:if='{{is_employee==1&&is_inside_sell==1}}'>
+                ￥{{goods_info.promotion_price< goods_info.inside_price?goods_info.promotion_price:goods_info.inside_price}}
+              <block wx:if='{{sum==1}}'>
+                  <text class="sos" id="priceTitle" wx:if="{{goods_info.market_price - goods_info.price > 0}}">￥{{goods_info.market_price}}</text>
+              </block>
                 <!-- <block wx:if='{{goods_info.point_exchange_type == 1}}'>
                     <view class='span point'>+{{goods_info.point_exchange}}积分</view>
                 </block> -->
             </view>
+            <view class="span price" wx:else>￥{{goods_info.promotion_price< goods_info.price?goods_info.promotion_price:goods_info.price}}
+              <block wx:if='{{sum==1}}'>
+                <text class="sos" id="priceTitle" wx:if="{{goods_info.market_price - goods_info.price > 0}}">￥{{goods_info.market_price}}</text>
+              </block>
+              <!-- <block wx:if='{{goods_info.point_exchange_type == 1}}'>
+                <view class='span point'>+{{goods_info.point_exchange}}积分</view>
+              </block> -->
+            </view>
+
                 <view class="span flag" style='color:#CC9933' id="priceDis" wx:if="{{goods_info.vip_price>0}}">会员价:￥{{goods_info.vip_price}}
 </view>   
         </view>
@@ -546,7 +556,10 @@
                 <view class="pro-info">
                 <!-- {{buyButtonStatus==3||buyButtonStatus==4?goods_info.goods_pintuan.tuangou_money:member_price}} -->
                     <text decode="{{true}}" class="p name">{{goods_info.goods_name}}</text>
-                    <view class="p pro-price" id="price">
+                    <view class="p pro-price" id="price"  wx:if='{{is_employee==1&&is_inside_sell==1}}'>
+                        ￥{{goods_info.promotion_price< goods_info.inside_price?goods_info.promotion_price:goods_info.inside_price}}
+                    </view>
+                    <view class="p pro-price" id="price"  wx:else>
                         ￥{{goods_info.promotion_price< goods_info.price?goods_info.promotion_price:goods_info.price}}
                     </view>
                       <view   style='color:#CC9933' wx:if="{{goods_info.vip_price>0}}">会员价:￥{{goods_info.vip_price}}</view>  

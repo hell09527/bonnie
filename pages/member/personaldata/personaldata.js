@@ -45,7 +45,8 @@ Page({
           let user_info = data.user_info;
           user_info.user_headimg = app.IMG(user_info.user_headimg); //图片路径处理
           that.setData({
-            user_info: user_info
+            user_info: user_info,
+            is_employee: data.is_employee
           })
         }
       }

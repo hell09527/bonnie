@@ -76,9 +76,12 @@
 
 .btn-confirm {
   width: 50%;
-  color: #000;
+  color: #fff;
   font-weight:900;
   text-align: center;
+  height:86rpx;
+  line-height:86rpx;
+  font-size: 14px;
 }
 
 .goods-type-icon{

@@ -1,5 +1,5 @@
 <scroll-view>
-      <button catchtap='last'>我的清单</button>  
+      <!-- <button catchtap='last'>我的清单</button>   -->
     <view class="motify {{prompt==''?'hide':''}}">
         <icon class="i show_type warning" type='warn' size='25' color='#FFF'></icon>
         <view class="motify-inner">{{prompt}}</view>
@@ -154,33 +154,43 @@
     </block>
 </scroll-view>
 <!--<button class="show-btn" bindtap="showDialogBtn">弹窗</button>-->
-<!--弹窗-->
+<!--是否为跨境弹窗-->
 <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
 <view class="modal-dialog" wx:if="{{showModal}}">
-    <view class="modal-title">
-        <span>您选中的商品包含国际跨境商品</span>
-        <view class="modal-title-desc">需要和其它商品分开结算</view>
-    </view>
-    <view class="modal-content">
-        <radio-group class="radio-group" bindchange="inputChange">
-            <view class="flex-wrp" style="flex-direction:column;">
-                <view class="flex-item bc_green">
-                    <label class="radio">
-                        <radio color="black" value="2" checked/> 跨境商品{{carts_2_info.total_num}}件 共计 ¥ {{carts_2_info.total_price}}
-                    </label>
-                </view>
-                <view class="flex-item bc_red">
-                    <label class="radio">
-                        <radio color="black" value="1" /> 普通商品{{carts_1_info.total_num}}件 共计 ¥ {{carts_1_info.total_price}}
-                    </label>
-                </view>
-            </view>
-        </radio-group>
-    </view>
-    <view class="modal-footer">
-        <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
-        <view  class="btn-confirm" bindtap="onConfirm" data-status="confirm">确定</view>
-    </view>
+  <view class="modal-title">
+    <span>您选中的商品包含国际跨境商品</span>
+    <view class="modal-title-desc">需要和其它商品分开结算</view>
+  </view>
+  <view class="modal-content">
+    <radio-group class="radio-group" bindchange="inputChange">
+      <view class="flex-wrp" style="flex-direction:column;">
+        <view class="flex-item bc_green" wx:if='{{check_2_carts.length>0}}'>
+          <label class="radio">
+            <radio color="black" value="2" checked/> 跨境商品{{carts_2_info.total_num}}件 共计 ¥ {{carts_2_info.total_price}}
+          </label>
+        </view>
+        <view class="flex-item bc_red" wx:if='{{check_1_carts.length>0}}'>
+          <label class="radio">
+            <radio color="black" value="1" /> 普通商品{{carts_1_info.total_num}}件 共计 ¥ {{carts_1_info.total_price}}
+          </label>
+        </view>
+        <view class="flex-item bc_red" wx:if='{{check_3_carts.length>0}}'>
+          <label class="radio">
+            <radio color="black" value="3" /> 内购跨境商品{{carts_3_info.total_num}}件 共计 ¥ {{carts_3_info.total_price}}
+          </label>
+        </view>
+        <view class="flex-item bc_red" wx:if='{{check_4_carts.length>0}}'>
+          <label class="radio">
+            <radio color="black" value="4" /> 内购普通商品{{carts_4_info.total_num}}件 共计 ¥ {{carts_4_info.total_price}}
+          </label>
+        </view>
+      </view>
+    </radio-group>
+  </view>
+  <view class="modal-footer">
+    <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+    <view  class="btn-confirm" bindtap="onConfirm" data-status="confirm">确定    </view>
+  </view>
 </view>
  
 
