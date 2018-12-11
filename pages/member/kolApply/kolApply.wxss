@@ -1,4 +1,7 @@
 /* pages/member/kolApply/kolApply.wxss */
+page{
+  background: #fff;
+}
 .title-nav{
   padding:20rpx 0;
 }
@@ -24,12 +27,14 @@
   height: 12rpx;
 }
 .nav-circle-item{
-  width: 24rpx;
-  height: 24rpx;
+  width: 22rpx;
+  height: 22rpx;
   border-radius: 50%;
-  background: #aaaaaa;
+  border:1px solid #aaaaaa;
+  background: #fff;
 }
 .nav-circle-active{
+  border:1px solid #000;
   background: #000;
 }
 
@@ -124,13 +129,22 @@
   padding:20rpx 40rpx;
   width:100%;
 }
+.hobby>view{
+  box-sizing: border-box;
+  margin:40rpx 0;
+}
+.hobby>view .table-text{
+  line-height: 30px;
+  font-size: 14px;
+  text-align: left;
+}
 .realname-card{
   align-items: center;
   display: flex;
   justify-content: flex-start;
   margin:30rpx 0;
 }
-.hobby>view,.realname>view{
+.realname>view{
   display: flex;
   justify-content: space-around;
   margin:30rpx 0;
@@ -144,6 +158,7 @@
   width:100%;
   border:1px solid #bbbbbb;
   padding: 3px;
+  box-sizing: border-box;
 }
 .hobby-btn{
   display: flex;
@@ -190,19 +205,32 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
+  position: relative;
+  z-index: 10;
 }
 .identityCard_del{
+  position: absolute;
+  right: 20rpx;
+  bottom: 60rpx;
+  z-index: 100;
   width:64rpx;
   height: 64rpx;
   margin-left: 40rpx;
 }
 .identityCard_item{
-  width:480rpx;
-  height: 272rpx;
-  border:1px solid #ccc;
+  width:660rpx;
+  height: 360rpx;
   margin-bottom: 40rpx;
   display: flex;
   align-items: center;
+}
+.FilePaths{
+  background: url('https://static.bonnieclyde.cn/%E7%85%A7%E7%89%87%E5%B1%95%E4%BD%8D%E5%9B%BE@2x.png') no-repeat;
+  background-size: 100% 100%;
+}
+.recitePaths{
+  background: url('https://static.bonnieclyde.cn/%E5%B1%95%E4%BD%8D%E5%9B%BE-2@2x.png') no-repeat;
+  background-size: 100% 100%;
 }
 .paths{
   width:100%;
@@ -218,22 +246,24 @@
 /* 结算信息 */
 .bankCard{
   flex:1;
-  width:480rpx;
-  height: 272rpx;
+  width:660rpx;
+  height: 360rpx;
   text-align: center;
-  border:1px solid #ccc;
 }
 .bankCard-image{
   width:100%;
   height:100%;
 }
 .backCard-text{
-  margin-top:100rpx;
+  width:100%;
+  height:100%;
+  background: url('https://static.bonnieclyde.cn/%E5%B1%95%E4%BD%8D%E5%9B%BE-3@2x.png') no-repeat;
+  background-size: 100% 100%;
 }
 
 /* 自我介绍 */
 .myInfor>view{
-  margin:20rpx 0;
+  margin:40rpx 0;
 }
 .myInfor-text{
   line-height: 25px;
@@ -242,7 +272,7 @@
   width:100%;
   border-bottom:1px solid #bbbbbb;
   padding:0 10rpx;
-  line-height: 40rpx;
+  line-height: 30px;
 }
 .myInfor-btn{
   display:flex;
@@ -290,4 +320,3 @@
   margin: 15px 0;
   line-height: 1.5;
 }
-

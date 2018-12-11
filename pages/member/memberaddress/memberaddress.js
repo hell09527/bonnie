@@ -53,7 +53,6 @@ Page({
           that.setData({
             address_list: address_list
           });
-          console.log(res);
         }
       }
     })
@@ -114,17 +113,17 @@ Page({
           that.setData({
             address_list: address_list
           });
-          if (that.data.info == 1 || that.data.info == 2){
-            wx.navigateBack({
-              delta: 1
+
+          var pages = getCurrentPages(); // 获取页面栈
+          var prevPage = pages[pages.length - 2]; // 上一个页面
+          if (prevPage.data.member_address){
+            prevPage.setData({
+              member_address: address_list[key]
             })
-          }else{
-            // if (getCurrentPages().length >= 4) { }
-              wx.navigateBack({
-                delta: 1
-              })
-            
           }
+          wx.navigateBack({
+            delta: 1
+          })
          
         }
       }

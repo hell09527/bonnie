@@ -77,6 +77,7 @@
     "pages/order/orderexpress/orderexpress",
     "pages/order/reviewcommodity/reviewcommodity",
     "pages/order/reviewagain/reviewagain",
+    "pages/order/amendAdder/amendAdder",
     "pages/pay/getpayvalue/getpayvalue",
     "pages/pay/paycallback/paycallback",
     "pages/verification/verificationplatform/verificationplatform",

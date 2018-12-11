@@ -24,22 +24,22 @@
   <view class='basic-infor' wx:if='{{isShow==1}}'>
     <view style='margin:20rpx 0;'>
       <view class='realname-title'>上传您的身份证正反面照片</view>
-      <view class='titel-bottom'>（仅作为身份证认证需要）</view>
+      <view class='titel-bottom'>（仅作为认证需要）</view>
     </view>
     <view class='identityCard'>
       <view class="identityCard_item_box">
         <view class="identityCard_item">
           <image src="{{FilePaths}}" mode="aspectFill" class="paths" wx:if='{{FilePaths}}' catchtap='preivewImg' data-img='{{FilePaths}}'/>
-          <view class="imgs" bindtap="frontimage" wx:else>人像面</view>
+          <view class="imgs FilePaths" bindtap="frontimage" wx:else></view>
         </view>
-        <image src='http://video.ushopal.com/deeps.png' wx:if='{{FilePaths}}' class='identityCard_del' catchtap='toDelImg' data-img='face'/>
+        <image src='https://static.bonnieclyde.cn/%E5%88%A0%E9%99%A4ICON@2x.png' wx:if='{{FilePaths}}' class='identityCard_del' catchtap='toDelImg' data-img='face'/>
       </view>
       <view class="identityCard_item_box">
         <view class="identityCard_item">
           <image src="{{recitePaths}}" mode="aspectFill" class="paths" wx:if='{{recitePaths}}' catchtap='preivewImg' data-img='{{recitePaths}}'/>
-          <view class="imgs" bindtap="reciteimage" wx:else>国徽面</view>
+          <view class="imgs recitePaths" bindtap="reciteimage" wx:else></view>
         </view>
-        <image src='http://video.ushopal.com/deeps.png' wx:if='{{recitePaths}}' class='identityCard_del' catchtap='toDelImg' data-img='back'/>
+        <image src='https://static.bonnieclyde.cn/%E5%88%A0%E9%99%A4ICON@2x.png' wx:if='{{recitePaths}}' class='identityCard_del' catchtap='toDelImg' data-img='back'/>
       </view>
     </view>
     <!-- <view class='identityCard' wx:if='{{FilePaths||recitePaths}}'>
@@ -115,15 +115,15 @@
   <view class='hobby' wx:if='{{isShow==2}}'>
     <view>
       <view class='table-text'>教育经历</view>
-      <textarea placeholder="请填写您的教育经历(10个字符以上)" class='table-textarea' bindinput='educationValue' value='{{listData.educational_experience}}'/>
+      <textarea placeholder="请填写您的教育经历(10个字符以上)" placeholder-style='line-height:200rpx;color:#808080' class='table-textarea' bindinput='educationValue' value='{{listData.educational_experience}}'/>
     </view> 
     <view>
       <view class='table-text'>工作经历</view>
-      <textarea placeholder="请填写您的工作经历(10个字符以上)" class='table-textarea' bindinput='joinValue' value='{{listData.work_experience}}'/>
+      <textarea placeholder="请填写您的工作经历(10个字符以上)" placeholder-style='line-height:200rpx;color:#808080' class='table-textarea' bindinput='joinValue' value='{{listData.work_experience}}'/>
     </view>
     <view>
       <view class='table-text'>爱好特长</view>
-      <textarea placeholder="请填写您的爱好特长(10个字符以上)" class='table-textarea' bindinput='hobbyValue' value='{{listData.hobbies}}'/>
+      <textarea placeholder="请填写您的爱好特长(10个字符以上)" placeholder-style='line-height:200rpx;color:#808080' class='table-textarea' bindinput='hobbyValue' value='{{listData.hobbies}}'/>
     </view>
     <view class='hobby-btn'>
       <view class='hobby-preo-btn' catchtap='topreo' data-index='1'>上一步</view>
@@ -141,11 +141,9 @@
         <view class="bankCard">
           <image src="{{bankCardImage}}" mode="aspectFill" class="bankCard-image" wx:if='{{bankCardImage}}' catchtap='preivewImg' data-img='{{bankCardImage}}'/>
           <view class="backCard-text" bindtap="cardimage" wx:else>
-            <view>点击上传照片</view>
-            <view style='color:#aaa;'>（上传带有银行账号的一面）</view>
           </view>
         </view>
-        <image src='http://video.ushopal.com/deeps.png' wx:if='{{bankCardImage}}' class='identityCard_del' catchtap='toDelImg' data-img='bankCard'/>
+        <image src='https://static.bonnieclyde.cn/%E5%88%A0%E9%99%A4ICON@2x.png' wx:if='{{bankCardImage}}' class='identityCard_del' catchtap='toDelImg' data-img='bankCard' style='bottom:20rpx;'/>
       </view>
     </view>
     <!-- <view class='realname-card' wx:if='{{bankCardImage}}'>
@@ -176,15 +174,15 @@
   <view class='myInfor' wx:if='{{isShow==4}}'>
     <view>
       <view class='myInfor-text'>流量入口及销售方向</view>
-      <textarea class='table-textarea' bindinput='describe1Value' value='{{listData.describe1}}' placeholder="(10个字符以上)"/>
+      <textarea class='table-textarea' bindinput='describe1Value' value='{{listData.describe1}}' placeholder="(10个字符以上)" placeholder-style='line-height:200rpx;color:#808080'/>
     </view> 
     <view>
       <view class='myInfor-text'>你眼中的Bonnie&Clyde</view>
-      <textarea class='table-textarea'  bindinput='describe2Value' value='{{listData.describe2}}' placeholder="(10个字符以上)"/>
+      <textarea class='table-textarea'  bindinput='describe2Value' value='{{listData.describe2}}' placeholder="(10个字符以上)" placeholder-style='line-height:200rpx;color:#808080'/>
     </view>
     <view>
       <view class='myInfor-text'>为何选择做极选师</view>
-      <textarea class='table-textarea'  bindinput='describe3Value' value='{{listData.describe3}}' placeholder="(10个字符以上)"/>
+      <textarea class='table-textarea'  bindinput='describe3Value' value='{{listData.describe3}}' placeholder="(10个字符以上)" placeholder-style='line-height:200rpx;color:#808080'/>
     </view>
     <view>
       <view class='myInfor-text'>未来三个月预估销售额（元）</view>
@@ -195,10 +193,10 @@
         <image></image>同意协议
       </view>
     </view> -->
-    <view class='myInfor-btn'>
+    <view class='hobby-btn'>
       <view class='hobby-preo-btn' catchtap='topreo' data-index='3'>上一步</view>
       <form bindsubmit="toApply" report-submit="true">
-          <button class='hobby-next-btn'  formType="submit">申请成为极选师</button>
+          <button class='hobby-next-btn'  formType="submit">提交申请</button>
       </form>
       <!-- <view class='hobby-next-btn' catchtap='toApply'>申请成为极选师</view> -->
     </view>

@@ -21,6 +21,7 @@ Page({
     evaluationAgainFlag: 0,
     aClickFlag: 0,
     payFlag: 0,
+    address:[],   //收货地址
   },
 
   /**
@@ -499,6 +500,27 @@ Page({
 
     wx.navigateTo({
       url: '/pages/order/reviewagain/reviewagain?id=' + order_id,
+    })
+  },
+
+  // 跳转修改地址页面
+  amendAddress:function(e){
+    var order_no = e.currentTarget.dataset.no;
+    var index = e.currentTarget.dataset.index;
+    var order_list = this.data.order_list;
+    var address = {};
+    address.address = order_list[index].receiver_address;
+    address.city = order_list[index].receiver_city;
+    address.city_name = order_list[index].receiver_city_name;
+    address.district = order_list[index].receiver_district;
+    address.district_name = order_list[index].receiver_district_name;
+    address.mobile = order_list[index].receiver_mobile;
+    address.name = order_list[index].receiver_name;
+    address.province = order_list[index].receiver_province;
+    address.province_name = order_list[index].receiver_province_name;
+    address.zip = order_list[index].receiver_zip;
+    wx.navigateTo({
+      url: '/pages/order/amendAdder/amendAdder?order_no=' + order_no+'&address='+JSON.stringify(address),
     })
   },
 

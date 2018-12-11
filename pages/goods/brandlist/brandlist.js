@@ -67,10 +67,14 @@ Page({
       if (store_id == 0){
         console.log("********kol_idj", kol_id);
         app.globalData.kol_id = kol_id;
-    }else{
+    }
+    
+     else{
         console.log("********st_idj", store_id);
         app.globalData.store_id = store_id;
     }
+
+
 
 
       if (app.globalData.token && app.globalData.token != '') {
@@ -83,6 +87,7 @@ Page({
             that.PP_reuse();
           }
         }
+        
       }
 
       that.setData({

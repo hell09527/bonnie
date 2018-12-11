@@ -60,11 +60,13 @@ Page({
     confirmSpellFlag: 0,
     flys:0, //判断是不是礼物专区商品
     is_vip: 0 ,//判断是否是vip
-    // unregistered: 0, //是否注册(1未注册, 0已注册)
+    unregistered: 0, //是否注册(1未注册, 0已注册)
     tel:'',//是否绑定手机号
     showModal:false,
     Choice: false,
     is_employee:'',    //是否为员工
+    curr_id: '',   //当前打开的视频id
+    point:0
   },
     //测试数据
   last:function(){
@@ -203,7 +205,17 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+    this.VideoContext = wx.createVideoContext('myVideo')
+  },
+  videoPlay(e) {
+    this.setData({
+      curr_id: e.currentTarget.dataset.id,
+    })
+   this.VideoContext.play();
+    console.log(this.VideoContext)
+    // VideoContext.play()
+ 
+    console.log(888888888888)
   },
 
   XXS_reuse:function(){
@@ -225,7 +237,7 @@ Page({
           console.log(tel)
           let updata = that.data.unregistered;
           updata = app.globalData.unregistered;
-          console.log(updata, 'updata', '134')
+          console.log(updata, 'updata', '134',data.is_employee)
           // console.log(app.globalData.is_vip)
           that.setData({
             is_vip: is_vip,
@@ -443,7 +455,7 @@ Page({
           }
 
           let brand_id = data.brand_id 
-          console.log(brand_id )
+          console.log(brand_id, goods_info.promotion_price ,goods_info.inside_price)
           that.setData({
             goods_info: goods_info,
             detail_id: detail_id,
@@ -568,7 +580,7 @@ Page({
   Crossroad:function(){
      let _that=this;
     _that.setData({
-      Choice:true
+      Choice:true,
     })
   },
   plusXing(str, frontLen) {
@@ -914,6 +926,11 @@ Page({
       let popUp = 3
       let type = event.currentTarget.dataset.type;
       let status = 0;
+
+
+    this.setData({
+      point:1
+    })
       let animation = wx.createAnimation({
         duration: 3000,
         timingFunction: 'ease-in',
@@ -978,6 +995,7 @@ Page({
       popupShow: 0,
       serviceShow: 0,
       maskShow: 0,
+      point:0,
       ladderPreferentialShow: 0,
     })
   },
@@ -1150,6 +1168,8 @@ Page({
     let purchase_num = goods_info.purchase_num;
     let count = that.data.goodsNum;
     let max_buy = parseInt(goods_info.max_buy);
+        
+       
    
     let stock = parseInt(goods_info.stock);
 
@@ -1507,9 +1527,8 @@ Page({
    * 购买下一步
    */
   buyNext: function(event){
-    let that = this;
-   
     
+    let that = this;
     let sku_id = that.data.sku_id;
     let stock = that.data.stock;
     let goods_num = parseInt(that.data.goodsNum);

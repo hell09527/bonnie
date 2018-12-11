@@ -5,7 +5,8 @@
 		"es6": true,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true
+		"newFeature": true,
+		"uglifyFileName": true
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.2.5",
@@ -101,7 +102,7 @@
 				{
 					"id": 11,
 					"name": "kol",
-					"pathName": "pages/member/inpurchasing/inpurchasing",
+					"pathName": "pages/member/member/member",
 					"query": ""
 				}
 			]
