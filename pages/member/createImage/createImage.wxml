@@ -1,0 +1,83 @@
+<!-- pages/member/createImage/createImage.wxml -->
+<scroll-view>
+  <view class='app'>
+    <!-- <image src="{{imgUrl}}" data-index='{{index}}' data-img='{{imgUrl}}' mode='widthFix' catchtap='preivewImg'></image>
+<image src="{{codeUrl}}" data-index='{{index}}' data-img='{{codeUrl}}' mode='widthFix' catchtap='preivewImg'></image> -->
+    <!-- <view class="bg"> -->
+    <!-- <canvas canvas-id="shareCanvas" class="canvas"></canvas> -->
+    <canvas wx:if="{{ts==3}}" style="width:{{setfixW}}px;margin:0 auto; height:{{imgUrlH}}px" canvas-id="shareCanvas"></canvas>
+    <view class='shuck'>
+      <image wx:if="{{ts==2}}" src="{{saveImg}}" data-index='{{index}}' data-img='{{saveImg}}' style="width:{{setfixW}}px;margin:0 auto; height:{{imgUrlH}}px" catchtap='preivewImg'></image>
+      <image wx:if="{{ts==1}}" src="{{imgUrl}}" data-index='{{index}}' data-img='{{imgUrl}}' mode='widthFix' catchtap='preivewImg'></image>
+      <image wx:if="{{ts==0}}" src="https://static.bonnieclyde.cn/youhuiquan-1.jpg" data-index='{{index}}' data-img='https://static.bonnieclyde.cn/youhuiquan-1.jpg' mode='widthFix' catchtap='preivewImg'></image>
+    </view>
+    <!-- <button catchtap='Casedown'>合成图片</button>
+   <button catchtap='saVe'>下载到本地</button> -->
+    <!-- </view> -->
+    <!-- <view class="canvas-box">
+  <canvas  hidden="{{canvasHidden}}" style="width: 686rpx;height: 686rpx;background:#f1f1f1;" canvas-id="mycanvas"/>
+</view> -->
+    <!-- 固定操作页 -->
+    <view class='fixaction'>
+      <view class='ul'>
+        <view class='li'>
+          <view class='countermand' catchtap='countermand'>取消</view>
+        </view>
+        <view class='li' catchtap='uploading'>图片</view>
+        <view class='li' catchtap='example'>模版</view>
+        <view class='li' catchtap='commodity'>商品</view>
+        <view class='li'>
+          <view class='achieve' catchtap='achieve'>完成</view>
+        </view>
+      </view>
+    </view>
+    <!-- 选择商品 -->
+    <view class='mimi' wx:if="{{lucency}}" catchtap='popupClose'></view>
+    <view class="choose_shop" wx:if="{{lucency}}">
+      <scroll-view scroll-x class="goods-detail-nav" style='height:90rpx;'>
+        <block wx:for='{{category_list}}' wx:key='' wx:for-item='category'>
+          <view class="nav-item {{category.select==2?'nav-item-active':''}}" catchtap="selectCate" catchtap='selectCheck' data-id='{{category.category_id}}'>
+            {{category.category_name}}
+          </view>
+        </block>
+      </scroll-view>
+      <view class="goods-detail">
+        <scroll-view class='body' scroll-y>
+          <!-- <view class='goods-title'>NB</view> -->
+          <block wx:for='{{category_goods}}' wx:key='' wx:for-item='shops' wx:for-index='index'>
+            <view class='goods_all' catchtap='Chooseshop' data-i="{{shops.goods_id}}" data-title='{{shops.goods_name}}' data-url='/goods/goodsdetail/goodsdetail?goods_id={{shops.goods_id}}&&goods_name={{shops.goods_name}}'>
+              <view class="all-box">
+                <image src="{{shops.pic_cover_small}}" mode="widthFix"></image>
+                <view class="shop-detail">
+                  <text decode="true" class="title">
+                    <block wx:for='{{shops.group_query}}' wx:key='' wx:for-item='vo'>
+                      <text class="i goods_tab">{{shops.group_name}}</text>
+                    </block>
+                    {{shops.goods_name}}
+                  </text>
+                  <image src='/images/goods/cartp2.png' mode='widthFix' wx:if="{{shops.selected}}" class="selected"></image>
+                  <!-- <view class="shop-detail-price">
+                  <text>￥{{shops.promotion_price}}</text>
+                  <view style='text-decoration:line-through;color:#d7d7d7;font-size:12px;' wx:if="{{shops.market_price - shops.promotion_price > 0}}">￥{{shops.market_price}}</view>
+             </view> -->
+                </view>
+              </view>
+            </view>
+          </block>
+        </scroll-view>
+      </view>
+      <!-- </view> -->
+    </view>
+    <!-- 完成后的下载到本地 -->
+    <view class='mimi' wx:if="{{windUp}}" catchtap='popupClose'></view>
+    <view wx:if="{{windUp}}" class="windUp">
+      <!-- height:512px; -->
+      <scroll-view scroll-y class="roll" style="height:{{windowHeight}}px;">
+        <image wx:if="{{ts==2}}" src="{{saveImg}}" data-index='{{index}}' data-img='{{saveImg}}' style="width:{{setfixW}}px;margin:0 auto; height:{{imgUrlH}}px" catchtap='preivewImg'></image>
+        <!-- <image wx:if="{{ts==2}}" src="{{imgUrl}}" data-index='{{index}}' data-img='{{imgUrl}}' mode='widthFix' catchtap='preivewImg' ></image> -->
+        <view class='photoAlbum' catchtap='saVe'>保存到相册</view>
+        <view class='photoAlbum' catchtap='Close'>退出</view>
+      </scroll-view>
+    </view>
+  </view>
+</scroll-view>

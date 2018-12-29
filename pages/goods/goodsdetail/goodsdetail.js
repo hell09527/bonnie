@@ -60,13 +60,14 @@ Page({
     confirmSpellFlag: 0,
     flys:0, //判断是不是礼物专区商品
     is_vip: 0 ,//判断是否是vip
-    unregistered: 0, //是否注册(1未注册, 0已注册)
+    // unregistered: 0, //是否注册(1未注册, 0已注册)
     tel:'',//是否绑定手机号
     showModal:false,
     Choice: false,
     is_employee:'',    //是否为员工
     curr_id: '',   //当前打开的视频id
-    point:0
+    point:0,
+    layout: false,
   },
     //测试数据
   last:function(){
@@ -123,9 +124,20 @@ Page({
 
     }  
 
+    // 是否授权数据更新
+    let updata = that.data.unregistered
+    updata = app.globalData.unregistered;
+
+    console.log(updata, 'updata')
+    that.setData({
+      unregistered:app.globalData.unregistered
+    });
+    
+
       if (app.globalData.token && app.globalData.token != '') {
         //判断是否是付费会员的接口
         that.XXS_reuse();
+    
       } else {
         app.employIdCallback = employId => {
           if (employId != '') {
@@ -154,16 +166,16 @@ Page({
 
   //  极选师扫码12小时内有分销来源
 
-    // let timestamp = Date.parse(new Date);
-    // if (app.globalData.identifying != 0) {
-    //   let overtime = timestamp + 43200000;
-    //   console.log(timestamp)
-    //   let uid = app.globalData.identifying;
-    //   let breakpoint = app.globalData.breakpoint
-    //   wx.setStorageSync('breakpoint', breakpoint);
-    //   wx.setStorageSync('uid', uid)
-    //   wx.setStorageSync('overtime', overtime);
-    // }
+    let timestamp = Date.parse(new Date);
+    if (app.globalData.identifying != 0) {
+      let overtime = timestamp + 43200000;
+      console.log(timestamp)
+      let uid = app.globalData.identifying;
+      let breakpoint = app.globalData.breakpoint
+      wx.setStorageSync('breakpoint', breakpoint);
+      wx.setStorageSync('uid', uid)
+      wx.setStorageSync('overtime', overtime);
+    }
 
 
 
@@ -186,7 +198,6 @@ Page({
    
 
 
-
     that.setData({
       Base: siteBaseUrl,
       defaultImg: defaultImg,
@@ -199,6 +210,7 @@ Page({
    this.setData({
   showModal: false,
   Choice: false,
+  layout: false,
 })
   },
   /**
@@ -214,7 +226,6 @@ Page({
    this.VideoContext.play();
     console.log(this.VideoContext)
     // VideoContext.play()
- 
     console.log(888888888888)
   },
 
@@ -347,27 +358,27 @@ Page({
 
 
     //判断是否是付费会员
-//     let is_vip = app.globalData.is_vip;
-//     that.setData({
-//       is_vip
-//     })
-//     if (app.globalData.distributor_type!=0){
+    let is_vip = app.globalData.is_vip;
+    that.setData({
+      is_vip
+    })
+    if (app.globalData.distributor_type!=0){
 
-//     }else{
-//       let timestamp = Date.parse(new Date);
-//       let breakpoints = wx.getStorageSync('breakpoint');
-//       console.log(breakpoints, 'breakpoints')
-//       let uids = wx.getStorageSync('uid')
-//       console.log(uids, 'uids')
-//       let overtimes = wx.getStorageSync('overtime');
-//       if (timestamp < overtimes) {
-//         console.log(211111)
-//         app.globalData.identifying = uids;
-//         app.globalData.breakpoint = breakpoints;
-//       } else {
-//         console.log(333333)
-//       }
-// }
+    }else{
+      let timestamp = Date.parse(new Date);
+      let breakpoints = wx.getStorageSync('breakpoint');
+      console.log(breakpoints, 'breakpoints')
+      let uids = wx.getStorageSync('uid')
+      console.log(uids, 'uids')
+      let overtimes = wx.getStorageSync('overtime');
+      if (timestamp < overtimes) {
+        console.log(211111)
+        app.globalData.identifying = uids;
+        app.globalData.breakpoint = breakpoints;
+      } else {
+        console.log(333333)
+      }
+}
 
 
     app.restStatus(that, 'comboFlag');
@@ -561,7 +572,8 @@ Page({
     let branch = e.currentTarget.dataset.status;
  if (branch == "mobile"){
       _that.setData({
-        Choice: false
+        Choice: false,
+        layout: false,
       })
       wx.navigateTo({
         url: '/pages/member/updatemobile/updatemobile?cho=1',
@@ -571,10 +583,6 @@ Page({
         Choice: false
       })
      }
-
-
-
-
   },
    /**触发*/
   Crossroad:function(){
@@ -1395,7 +1403,7 @@ Page({
       console.log(that.data.unregistered)
       
       //判断是否继续弹出获取个人信息弹窗
-   if (that.data.unregistered==0){
+      if (app.globalData.unregistered==0){
       wx.login({
     success: function (res){
       let coco=res.code;
@@ -1415,8 +1423,6 @@ Page({
                tel: res.data.user_tel,
                Choice: false
              })
-            
-              
              }
 
         }
@@ -1453,67 +1459,120 @@ Page({
       console.log(res.detail.userInfo.nickName)
       let heder_img = res.detail.userInfo.avatarUrl
       let wx_name = res.detail.userInfo.nickName
-
-
+      let branch = res.currentTarget.dataset.status;
       this.setData({
         showModal: false,
+        Choice: false
       })
+      console.log(branch, 'branch ')
+      if (branch == "mobile") {
+        this.setData({
+          layout: true,
 
-      wx.login({
-        success: function (res) {
-          let coco = res.code;
-          app.sendRequest({
-            url: 'api.php?s=Login/getWechatEncryptInfo',
-            data: {
-              code: coco,
-              encryptedData: encryptedData,
-              iv: iv
-            },
-            success: function (res) {
-              if (res.code == 0) {
-                let lpl = res.data.token;
-                app.globalData.openid = res.data.openid;
-                app.globalData.token = res.data.token;
-                that.setData({
-                  unregistered: 0,
-                })
-                wx.login({
-                  success: function (res) {
-                    let coco = res.code;
-                    app.sendRequest({
-                      url: 'api.php?s=Login/getWechatMobile',
-                      data: {
-                        code: coco,
-                        mobileEncryptedData: that.data.setEncryptedData,
-                        mobileIv: that.data.setIv,
-                        token: lpl
-                      },
-                      success: function (res) {
-                        if (res.code == 0) {
-                          that.setData({
-                            tel: res.data.user_tel
-                          })
+        })
 
+        wx.login({
+          success: function (res) {
+            let coco = res.code;
+            app.sendRequest({
+              url: 'api.php?s=Login/getWechatEncryptInfo',
+              data: {
+                code: coco,
+                encryptedData: encryptedData,
+                iv: iv
+              },
+              success: function (res) {
+                if (res.code == 0) {
+                  let lpl = res.data.token;
+                  app.globalData.openid = res.data.openid;
+                  app.globalData.token = res.data.token;
+                  that.setData({
+                    unregistered: 0,
+                    wx_name: wx_name,
+                    heder_img
+                  })
 
-                        }
+                
 
-                      }
-                    });
-                  }
-                })
-
-
+                }
 
               }
+            });
+          }
+        })
 
-            }
-          });
-        }
-      })
+
+
+
+
+      } else {
+        wx.login({
+          success: function (res) {
+            let coco = res.code;
+            app.sendRequest({
+              url: 'api.php?s=Login/getWechatEncryptInfo',
+              data: {
+                code: coco,
+                encryptedData: encryptedData,
+                iv: iv
+              },
+              success: function (res) {
+                if (res.code == 0) {
+                  let lpl = res.data.token;
+                  app.globalData.openid = res.data.openid;
+                  app.globalData.token = res.data.token;
+                  that.setData({
+                    unregistered: 0,
+                    wx_name: wx_name,
+                    heder_img
+                  })
+                  wx.login({
+                    success: function (res) {
+                      let coco = res.code;
+                      app.sendRequest({
+                        url: 'api.php?s=Login/getWechatMobile',
+                        data: {
+                          code: coco,
+                          mobileEncryptedData: that.data.setEncryptedData,
+                          mobileIv: that.data.setIv,
+                          token: lpl
+                        },
+                        success: function (res) {
+
+                          
+                          if (res.code == 0) {
+                            that.setData({
+                              unregistered: 0,
+                              wx_name: wx_name,
+                              tel: res.data.user_tel,
+                              heder_img
+                            })
+
+                          }
+                        }
+                      });
+                    }
+                  })
+
+
+
+                }
+
+              }
+            });
+          }
+        })
+      }
+
+
+
+
+
 
     } else {
       this.setData({
         showModal: false,
+
       })
     }
 

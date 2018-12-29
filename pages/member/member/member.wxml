@@ -1,3 +1,5 @@
+<import src="/templates/dataLogin-template/dataLogin.wxml" />
+
 <scroll-view>
   <view class="motify {{prompt==''?'hide':''}}">
     <icon class="i show_type warning" type='warn' size='25' color='#FFF'></icon>
@@ -15,7 +17,6 @@
 
           </button>
         </view>
-
                 <view class="member_face"  wx:if='{{unregistered==0 && tel!=""}}'>
     <image id='user_head_img' src='{{heder_img?heder_img:member_info.user_info.user_headimg}}' mode='widthFix'             catchtap='listClick' data-url="member/personaldata/personaldata" binderror='errorHeadImg'>
           </image>
@@ -206,12 +207,12 @@
           <view class='span'>我的礼物</view>
         </view> 
          </view>  
-               <view class='li' wx:if='{{(distributor_type==2||distributor_type==3||distributor_type==4) && tel!=""}}'>
+               <!-- <view class='li' wx:if='{{(distributor_type==2||distributor_type==3||distributor_type==4) && tel!=""}}'>
         <view class="a member_list_item" catchtap='listClick' data-url="member/kol/kol">
           <image src='https://static.bonnieclyde.cn/WIMG23.png'/>
           <view class='span'>极选师</view>
         </view> 
-     </view>
+     </view> -->
  
        <!-- <view class='li'>
         <view class="a member_list_item" catchtap='listClick' data-url="member/givingRecords/givingRecords">
@@ -220,26 +221,32 @@
         </view> 
          </view>  -->
     </view>
-
-    
-<view class="ck-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
-    <!-- 登录弹出框 -->
-    <view class="ck-dialog" wx:if="{{showModal}}">
-  <view class="ck-title">手机号授权绑定成功
-  </view>
-  <view class="ck-footer">
-   <button  class="btn-confirm"  data-status="confirm" open-type="getUserInfo" bindgetuserinfo="bindgetuserinfo">确   定</button>
-  </view> 
+<template is="dataLogin" data="{{showModal,Choice,layout}}" />
 </view>
+
+<!-- 极选师功能目录 -->
+  <view class='member_list {{ distributor_type ==0 ?"Permissions": ""}}' wx:if='{{tel!=""}}'>
+    <view class='ul'>
+      <block wx:if='{{(distributor_type!=0 &&distributor_type!=1)}}'>
+        <view class='li'>
+      <view class="a member_list_item" catchtap='listClick' data-url="member/kol/kol">
+          <image src='https://static.bonnieclyde.cn/WIMG23.png' />
+          <view class='span'>极选师</view>
+        </view>
+        </view>
+      </block>
+      <block >
+        <view class='li' wx:if='{{distributor_type!=0}}'>
+    
+          <view class="a member_list_item" catchtap='listClick'     data-url="member/posterList/posterList">
+            <image src='https://static.bonnieclyde.cn/plot.png' />
+            <view class='span'>海报制作</view>
+          </view>
+        </view>
+      </block>
+   
+  
+
+    </view>
   </view>
-   <!-- 选择登录方式  -->
-   <view class="login-modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{Choice}}"></view>
-  <view class="login-modal-dialog" wx:if="{{Choice}}">
-    <view class="gift_title">请登录...</view>
-    <view class="gift-text">请你先登录，才可以同步个人数据！</view>
-     <button  class="btn-common"  open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" >微信登录</button>
-    <button  class="btn-common"  data-status="mobile"  catchtap='Branch'>手机号登录</button>
-   <button  class="btn-common"  data-status="no" catchtap='Branch' style='background:transparent;font-size:14px;'>暂不登录</button>
-   </view>
-   <!-- 选择登录方式   end-->
 </scroll-view>

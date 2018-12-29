@@ -67,6 +67,7 @@ Page({
     app.restStatus(that, 'evaluationAgainFlag');
     app.restStatus(that, 'aClickFlag');
     app.restStatus(that, 'payFlag');
+
     app.sendRequest({
       url: 'api.php?s=order/getOrderList',
       data: {
@@ -74,9 +75,9 @@ Page({
       },
       success: function (res) {
         let code = res.code;
-
         if (code == 0) {
           let order_list = res.data.data;
+
           for (let index in order_list){
             order_list[index].create_time = time.formatTime(order_list[index].create_time,'Y-M-D h:m:s');
             //图片处理
@@ -90,6 +91,9 @@ Page({
             order_list: order_list,
             page: page
           })
+          // for (var i = 0; i < order_list.length;i++){
+          //   order_list[i].
+          // }
         }
         console.log(res)
       }

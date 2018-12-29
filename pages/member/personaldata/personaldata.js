@@ -9,6 +9,7 @@ Page({
     defaultImg: '',
     user_info: {},
     listClickFlag: 0,
+    isInside:0,   //是否有内购活动
   },
   /**
    * 生命周期函数--监听页面加载
@@ -20,6 +21,19 @@ Page({
     that.setData({
       Base: base,
       defaultImg: defaultImg,
+    })
+
+    app.sendRequest({
+      url: "api.php?s=/goods/checkNeiGou",
+      method: "POST",
+      success: function (res) {
+        console.log(res);
+        if (res.data.code != -10) {
+          that.setData({
+            isInside: 1,
+          })
+        }
+      }
     })
   },
   /**

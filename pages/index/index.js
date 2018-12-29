@@ -1,5 +1,4 @@
 const app = getApp()
-
 Page({
   data: {
     prompt: '',
@@ -17,7 +16,7 @@ Page({
     mei_alls: '',  //某一个品牌的商品
     webSiteInfo: {},//小程序基本配置
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-     //轮播图属性
+    //轮播图属性
     imgUrls: [],
     indicatorDots: true,
     autoplay: true,
@@ -40,11 +39,11 @@ Page({
     model: false,
     is_vip: 0,  //是否是vip
     isHide: 0,  //客服按钮是否影藏
-    brand:[],//品牌数据
-    isFix:0,  //顶部导航固定否
+    brand: [],//品牌数据
+    isFix: 0,  //顶部导航固定否
     swiperIndex: 0,//这里不写第一次启动展示的时候会有问题
-    title:'',//页面名
-    user_tel:''//手机号码
+    title: '',//页面名
+    user_tel: ''//手机号码
   },
   //事件处理函数
   bindViewTap: function () {
@@ -58,37 +57,37 @@ Page({
     //   url: '/pages/goods/shareRepertoire/shareRepertoire?share_li=90:1:0.01,89:1:0.01&tag=2&store=0',
     // })
     wx.navigateTo({
-      url: "/pages/member/kolApply/kolApply",
-      // url: "/pages/member/kolSuccess/kolSuccess",
+      // url: "/pages/member/kolApply/kolApply",
+      url: "/pages/member/kol/kolbill/kolbill",
     })
 
   },
   onLoad: function (options) {
     let that = this;
-  
-      if(options.uid){
-         // 这个字段是转发过后承载uid     identifying
-        app.globalData.identifying = options.uid;
-        app.globalData.breakpoint = options.breakpoint;
-        console.log('ui', options.breakpoint);
-        console.log('u', options.uid);
-      }
-        if (options.scene) {
-          // 扫码进入
-          var scene = decodeURIComponent(options.scene);
-          let store_id = scene.split('&')[0];
-          let kol_id = scene.split('&')[1];
 
-          console.log("********kol_id", kol_id);
-          console.log("********store_id", store_id);
-          if (store_id == 0){
-            app.globalData.kol_id = kol_id;
-            console.log("********kol_idj", kol_id);
-         }else{
-            app.globalData.store_id = store_id;
-            console.log("********store_idj", store_id);
-         }
-        }
+    if (options.uid) {
+      // 这个字段是转发过后承载uid     identifying
+      app.globalData.identifying = options.uid;
+      app.globalData.breakpoint = options.breakpoint;
+      console.log('ui', options.breakpoint);
+      console.log('u', options.uid);
+    }
+    if (options.scene) {
+      // 扫码进入
+      var scene = decodeURIComponent(options.scene);
+      let store_id = scene.split('&')[0];
+      let kol_id = scene.split('&')[1];
+
+      console.log("********kol_id", kol_id);
+      console.log("********store_id", store_id);
+      if (store_id == 0) {
+        app.globalData.kol_id = kol_id;
+        console.log("********kol_idj", kol_id);
+      } else {
+        app.globalData.store_id = store_id;
+        console.log("********store_idj", store_id);
+      }
+    }
 
 
 
@@ -144,7 +143,7 @@ Page({
     //  获取最新话题
     app.sendRequest({
       url: "api.php?s=/activity/hotTopic",
-      data: { limit:1},
+      data: { limit: 1 },
       method: 'POST',
       success: function (res) {
         console.log(res.data);
@@ -195,7 +194,7 @@ Page({
         for (let index in shop) {
           let img = shop[index].imgUrl;
           shop[index].imgUrl = app.IMG(img);
-        } 
+        }
         that.setData({
           shop: shop
         })
@@ -249,7 +248,7 @@ Page({
   },
 
   //获取会员所有信息
-  SY_reuse:function(){
+  SY_reuse: function () {
     let that = this;
     app.sendRequest({
       url: "api.php?s=member/getMemberDetail",
@@ -292,7 +291,7 @@ Page({
   toSwiperDetail: function (event) {
     let url = event.currentTarget.dataset.url;
     wx.navigateTo({
-      url: '/'+url,
+      url: '/' + url,
     })
   },
 
@@ -314,7 +313,7 @@ Page({
     //     app.globalData.scanCode = scanCode;
     //   } else {
     //     console.log(333333);
-     
+
     //   }
     // }
 
@@ -332,7 +331,7 @@ Page({
   onShareAppMessage: function () {
     let title = 'BonnieClyde';
     let uid = app.globalData.uid;
-    if (app.globalData.distributor_type == 0){
+    if (app.globalData.distributor_type == 0) {
       return {
         title: 'BonnieClyde',
         path: '/pages/index/index',
@@ -347,7 +346,7 @@ Page({
       wx.showShareMenu({
         title: title
       })
-    } 
+    }
     else {
       return {
         title: 'BonnieClyde',
@@ -365,7 +364,7 @@ Page({
         title: title
       })
     }
-    
+
 
 
 
@@ -423,10 +422,10 @@ Page({
     let hasTarget = event.currentTarget.dataset.has;
     let x = event.currentTarget.dataset.x;
     // let goodsId = event.currentTarget.dataset.goodsid;
-    let types = event.currentTarget.dataset.types==1?'大贸':'跨境';
+    let types = event.currentTarget.dataset.types == 1 ? '大贸' : '跨境';
     let code = event.currentTarget.dataset.code;
     let projectData = {
-      id:event.currentTarget.dataset.id,
+      id: event.currentTarget.dataset.id,
       title: event.currentTarget.dataset.title,
     }
     let listClickFlag = that.data.listClickFlag;
@@ -440,7 +439,7 @@ Page({
 
     // 跳转活动详情页
     if (projectData.id) {
-      app.aldstat.sendEvent('首页 '+title+'活动');
+      app.aldstat.sendEvent('首页 ' + title + '活动');
       wx.navigateTo({
         url: '/pages/index/projectIndex/projectIndex?data=' + JSON.stringify(projectData),
       })
@@ -453,8 +452,8 @@ Page({
       return false;
     } else {
       console.log('首页 ' + title + '(' + types + '-' + code + ')');
-      app.aldstat.sendEvent('首页 '+title+'('+types+'-'+code+')');
-   
+      app.aldstat.sendEvent('首页 ' + title + '(' + types + '-' + code + ')');
+
       wx.navigateTo({
         url: '/pages' + url,
       })
@@ -688,7 +687,7 @@ Page({
           let four_list = data.four_list;
           let block_list = data.block_list;
           let top_list = data.top_goods_list;
-          let index_goods_list = data.index_goods_list; 
+          let index_goods_list = data.index_goods_list;
           let new_pro = data.new_pro;
           let small_sample_list = data.small_sample_list;
           let exponent = "";
@@ -744,7 +743,7 @@ Page({
             top_list: top_list,  //Top10
             index_goods_list: index_goods_list,   //商品列表
             new_pro: new_pro,   //新品推荐
-            topShopsIcon:data.icon,
+            topShopsIcon: data.icon,
             coupon_list: data.coupon_list,
             discount_list: discount_list,
             small_sample_list: small_sample_list,
@@ -850,7 +849,7 @@ Page({
     let that = this
     // let out_trade_no = that.data.out_trade_no
     wx.request({
-      url: app.globalData.siteBaseUrl+'api.php?s=order/getTrialGoodsTemplate',
+      url: app.globalData.siteBaseUrl + 'api.php?s=order/getTrialGoodsTemplate',
       data: {
         openid: app.globalData.openid,
         formid: event.detail.formId,
@@ -878,8 +877,8 @@ Page({
   // 滑动移动事件
   handletouchmove: function (event) {
     var touchMove = this.data.touchMove;
-    console.log(touchMove,event.touches[0].clientY)
-    if (touchMove - event.touches[0].clientY<0){
+    console.log(touchMove, event.touches[0].clientY)
+    if (touchMove - event.touches[0].clientY < 0) {
       // console.log("向下滑了");
       this.setData({
         isFix: 0,
@@ -913,7 +912,8 @@ Page({
     // console.log(e.detail.current)
     this.setData({
       swiperCurrent: e.detail.current
-    })}
+    })
+  }
 
 
 

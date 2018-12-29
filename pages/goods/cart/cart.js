@@ -52,9 +52,9 @@ Page({
     region: [
       { id: 3104, name: '焦阳阳' },
       { id: '', name: '未指定' },
-         ],
-    personnel:'',
-     Carrier:''    // 分销者ID
+    ],
+    personnel: '',
+    Carrier: ''    // 分销者ID
   },
   // 测试数据
   last: function () {
@@ -81,7 +81,7 @@ Page({
       }
     }
     wx.navigateTo({
-      url: '/pages/goods/shareRepertoire/shareRepertoire?share_li=' + share_li + '&tag=2' + '&store=' + store+'&uid=' + uid + '&breakpoint=1',
+      url: '/pages/goods/shareRepertoire/shareRepertoire?share_li=' + share_li + '&tag=2' + '&store=' + store + '&uid=' + uid + '&breakpoint=1',
     })
   },
   /**
@@ -98,41 +98,41 @@ Page({
       times
     });
 
-  //   let timestamp = Date.parse(new Date);
-  //   if (app.globalData.identifying!=0){
-  //     let overtime = timestamp + 43200000;
-  //     console.log(timestamp)
-  //     let uid = app.globalData.identifying;
-  //     let breakpoint = app.globalData.breakpoint
-  //     wx.setStorageSync('breakpoint', breakpoint);
-  //     wx.setStorageSync('uid', uid)
-  //     wx.setStorageSync('overtime', overtime);
-  //  }
+    //   let timestamp = Date.parse(new Date);
+    //   if (app.globalData.identifying!=0){
+    //     let overtime = timestamp + 43200000;
+    //     console.log(timestamp)
+    //     let uid = app.globalData.identifying;
+    //     let breakpoint = app.globalData.breakpoint
+    //     wx.setStorageSync('breakpoint', breakpoint);
+    //     wx.setStorageSync('uid', uid)
+    //     wx.setStorageSync('overtime', overtime);
+    //  }
 
-  //   if (app.globalData.distributor_type != 0){
-  //     let breakpoints = wx.getStorageSync('breakpoint');
-  //     console.log(breakpoints, 'breakpoints')
-  //     let uids = wx.getStorageSync('uid')
-  //     console.log(uids, 'uids')
-  //     let overtimes = wx.getStorageSync('overtime');
-  //     if (timestamp < overtimes) {
-  //       console.log(211111)
-  //       app.globalData.identifying = uids;
+    //   if (app.globalData.distributor_type != 0){
+    //     let breakpoints = wx.getStorageSync('breakpoint');
+    //     console.log(breakpoints, 'breakpoints')
+    //     let uids = wx.getStorageSync('uid')
+    //     console.log(uids, 'uids')
+    //     let overtimes = wx.getStorageSync('overtime');
+    //     if (timestamp < overtimes) {
+    //       console.log(211111)
+    //       app.globalData.identifying = uids;
 
-  //       app.globalData.breakpoint = breakpoints;
-  //     } else {
-  //       console.log(333333)
-  //     }
-  //   }else{
+    //       app.globalData.breakpoint = breakpoints;
+    //     } else {
+    //       console.log(333333)
+    //     }
+    //   }else{
 
-  //   }
+    //   }
 
-    
- 
- 
+
+
+
   },
 
-  
+
   showDialogBtn: function () {
     this.setData({
       showModal: true
@@ -172,20 +172,20 @@ Page({
     var is_inside = 0;   //是否为内购商品
     if (this.data.send_type == 1) {
       slist = this.data.check_1_carts;
-      goods_type=1;
-      is_inside=0;
+      goods_type = 1;
+      is_inside = 0;
     } else if (this.data.send_type == 2) {
       slist = this.data.check_2_carts;
       goods_type = 2;
-      is_inside=0;
+      is_inside = 0;
     } else if (this.data.send_type == 3) {
       slist = this.data.check_3_carts;
       goods_type = 2;
-      is_inside=1;
+      is_inside = 1;
     } else if (this.data.send_type == 4) {
       slist = this.data.check_4_carts;
       goods_type = 1;
-      is_inside=1;
+      is_inside = 1;
     }
 
     var carts_list = '';
@@ -218,89 +218,89 @@ Page({
     // })
   },
 
-GWC_reuse:function(){
-  let that = this;
-  let siteBaseUrl = app.globalData.siteBaseUrl;
-  app.sendRequest({
-    url: 'api.php?s=goods/cart',
-    data: {},
-    success: function (res) {
-      let code = res.code;
-      let total_price = 0.00;
-      if (code == 0) {
-        let data = res.data;
-        // console.log(data)
-        for (let index in data) {
-          for (let key in data[index]) {
-            data[index][key].isTouchMove = false //默认全隐藏删除
-            if (that.in_array(data[index][key].cart_id, that.data.unselected_list)) {
-              data[index][key].status = 0;
-              that.setData({
-                check_all: 0,
-              });
-            } else {
-              data[index][key].status = 1;
-            }
+  GWC_reuse: function () {
+    let that = this;
+    let siteBaseUrl = app.globalData.siteBaseUrl;
+    app.sendRequest({
+      url: 'api.php?s=goods/cart',
+      data: {},
+      success: function (res) {
+        let code = res.code;
+        let total_price = 0.00;
+        if (code == 0) {
+          let data = res.data;
+          // console.log(data)
+          for (let index in data) {
+            for (let key in data[index]) {
+              data[index][key].isTouchMove = false //默认全隐藏删除
+              if (that.in_array(data[index][key].cart_id, that.data.unselected_list)) {
+                data[index][key].status = 0;
+                that.setData({
+                  check_all: 0,
+                });
+              } else {
+                data[index][key].status = 1;
+              }
 
-            let promotion_price = parseFloat(data[index][key].promotion_price);
-            let num = parseInt(data[index][key].num);
-            if (data[index][key].status == 1) {
-              total_price = parseFloat(total_price) + parseFloat(promotion_price * num);
-            }
+              let promotion_price = parseFloat(data[index][key].promotion_price);
+              let num = parseInt(data[index][key].num);
+              if (data[index][key].status == 1) {
+                total_price = parseFloat(total_price) + parseFloat(promotion_price * num);
+              }
 
-            //图片处理
-            if (data[index][key].picture_info != undefined && data[index][key].picture_info != null) {
-              let img = data[index][key].picture_info.pic_cover_small;
-              data[index][key].picture_info.pic_cover_small = app.IMG(img);
-            } else {
-              data[index][key].picture_info = {};
-              data[index][key].picture_info.pic_cover_small = '';
+              //图片处理
+              if (data[index][key].picture_info != undefined && data[index][key].picture_info != null) {
+                let img = data[index][key].picture_info.pic_cover_small;
+                data[index][key].picture_info.pic_cover_small = app.IMG(img);
+              } else {
+                data[index][key].picture_info = {};
+                data[index][key].picture_info.pic_cover_small = '';
+              }
             }
           }
+
+
+          // console.log(data[0])
+          // console.log(data)
+          that.setData({
+            Base: siteBaseUrl,
+            cart_list: data,
+            total_price: total_price.toFixed(2),
+            //check_all: 1,
+            edit: 0,
+            is_checked: 1
+          });
         }
-
-
-        // console.log(data[0])
-        // console.log(data)
-        that.setData({
-          Base: siteBaseUrl,
-          cart_list: data,
-          total_price: total_price.toFixed(2),
-          //check_all: 1,
-          edit: 0,
-          is_checked: 1
-        });
+        // console.log(res);
       }
-      // console.log(res);
-    }
-  })
+    })
 
 
-  app.sendRequest({
-    url: "api.php?s=member/getMemberDetail",
-    success: function (res) {
-      let data = res.data;
-      console.log(res);
-      if (res.code == 0) {
-        let is_vip = data.is_vip;
-        app.globalData.is_vip = data.is_vip;
-        app.globalData.distributor_type = data.distributor_type;
-        let distributor_type = data.distributor_type;
-        app.globalData.uid = data.uid;
-        app.globalData.vip_gift = data.vip_gift;
-        app.globalData.vip_goods = data.vip_goods;
-        app.globalData.vip_overdue_time = data.vip_overdue_time;
-        let tel = data.user_info.user_tel;
-        console.log(tel)
-        that.setData({
-          is_vip: is_vip,
-          tel: tel,
-          distributor_type
-        })
+    app.sendRequest({
+      url: "api.php?s=member/getMemberDetail",
+      success: function (res) {
+        let data = res.data;
+        console.log(res);
+        if (res.code == 0) {
+          let is_vip = data.is_vip;
+          app.globalData.is_vip = data.is_vip;
+          app.globalData.distributor_type = data.distributor_type;
+          let distributor_type = data.distributor_type;
+          app.globalData.uid = data.uid;
+          app.globalData.vip_gift = data.vip_gift;
+          app.globalData.vip_goods = data.vip_goods;
+          app.globalData.vip_overdue_time = data.vip_overdue_time;
+          let tel = data.user_info.user_tel;
+          console.log(tel)
+          that.setData({
+            is_vip: is_vip,
+            tel: tel,
+            distributor_type
+          })
+        }
       }
-    }
-  })
-},
+    })
+  },
   /**
    * 生命周期函数--监听页面显示
    */
@@ -315,7 +315,7 @@ GWC_reuse:function(){
     console.log(updata)
     console.log(distributor_type, uid)
 
-  
+
 
     that.setData({
       is_vip,
@@ -343,8 +343,8 @@ GWC_reuse:function(){
       },
       check_1_carts: [],  // 选中的大贸商品列表
       check_2_carts: [],   // 选中的跨境商品列表
-      check_3_carts:[],   //内购跨境商品列表
-      check_4_carts:[],   //内购普通商品列表
+      check_3_carts: [],   //内购跨境商品列表
+      check_4_carts: [],   //内购普通商品列表
       send_type: 2,    // 多类型订单时 选择发送类型 1 大贸 2跨境
     });
 
@@ -369,7 +369,7 @@ GWC_reuse:function(){
 
       }
     }
-   
+
   },
   /**
    * 生命周期函数--监听页面隐藏
@@ -823,6 +823,18 @@ GWC_reuse:function(){
     })
   },
 
+  // 
+  tonavigate:function(){
+    wx.navigateToMiniProgram({
+      appId: 'wx56c8f077de74b07c',
+      path: '/open/function-introduction/function-introduction',
+      envVersion: 'trial',
+      success(res) {
+        // 打开成功
+      }
+    })
+  },
+
 
   /**
    * 结算
@@ -856,8 +868,8 @@ GWC_reuse:function(){
     var total_num_2 = 0;
     var total_num_3 = 0;
     var total_num_4 = 0;
-    var p=0;
-    var is_inside=0;   //是否为内购商品
+    var p = 0;
+    var is_inside = 0;   //是否为内购商品
     // console.log(p)
     for (let index in cart_list) {
       for (let key in cart_list[index]) {
@@ -888,7 +900,7 @@ GWC_reuse:function(){
           } else if (cart_list[index][key].source_type == 2 && cart_list[index][key].is_inside == 1) {
             // 跨境内购商品
             p++;
-            is_inside=1;
+            is_inside = 1;
             if (carts_3 == '') {
               carts_3 = cart_id;
             } else {
@@ -898,9 +910,10 @@ GWC_reuse:function(){
             total_num_3 += cart_list[index][key].num
             cart_3.push(cart_list[index][key]);
           } else if (cart_list[index][key].source_type == 1 && cart_list[index][key].is_inside == 1) {
+
             //大贸内购商品
             p++;
-            is_inside=1;
+            is_inside = 1;
             if (carts_4 == '') {
               carts_4 = cart_id;
             } else {
@@ -919,22 +932,29 @@ GWC_reuse:function(){
         }
       }
     }
+    // console.log(carts_list);
 
-    var arr=[];  //判断商品类型包含几种
-    if (cart_1.length>0){
+
+    //判断商品类型包含几种 
+    var arr = [];
+    if (cart_1.length > 0) {
       arr.push(cart_1);
-    } 
-    if (cart_2.length > 0){
+    }
+    if (cart_2.length > 0) {
       arr.push(cart_2);
     }
-    if (cart_3.length > 0){
+    if (cart_3.length > 0) {
       arr.push(cart_3);
     }
     if (cart_4.length > 0) {
       arr.push(cart_4);
     }
-    console.log(arr)
-    if (arr.length>=2) {
+
+    console.log(arr);
+
+
+    if (arr.length >= 2) {
+
       this.setData({
         check_1_carts: cart_1,
         check_2_carts: cart_2,
@@ -967,11 +987,11 @@ GWC_reuse:function(){
     var goods_type = 1;
     if (cart_2 != '') {
       goods_type = 2;
-      is_inside=0;
+      is_inside = 0;
     } else if (cart_3 != '') {
       goods_type = 2;
       is_inside = 1;
-    } else if(cart_4 != '') {
+    } else if (cart_4 != '') {
       goods_type = 1;
       is_inside = 1;
     }
@@ -987,6 +1007,8 @@ GWC_reuse:function(){
         settlementFlag: 0
       })
     } else {
+      console.log(carts_list);
+      
       wx.navigateTo({
         url: '/pages/order/paymentorder/paymentorder?cart_list=' + carts_list + '&tag=2' + '&type=' + goods_type + '&order_type=0' + '&is_inside=' + is_inside,
       })
@@ -1086,9 +1108,8 @@ GWC_reuse:function(){
   onShareAppMessage: function () {
     let that = this;
     let cart_list = that.data.cart_list
-    // let times = that.data.times 
     let uid = app.globalData.uid;
-   
+
     let share_li = '';
     let tag = "";
     let store = app.globalData.store_id
@@ -1098,7 +1119,6 @@ GWC_reuse:function(){
           let sku_id = cart_list[index][key].sku_id;
           let num = cart_list[index][key].num;
           let price = cart_list[index][key].promotion_price;
-
           let share_list = sku_id + ':' + num + ':' + price;
           if (share_li == '') {
             share_li = share_list
@@ -1107,11 +1127,12 @@ GWC_reuse:function(){
           }
         }
       }
-
     }
+
+
     let GWC_share_url = '/pages/goods/shareRepertoire/shareRepertoire?share_li=' + share_li + '&tag=2' + '&store=' + store + '&distributor_type=' + that.data.distributor_type;
-    console.log(share_li)
-    if (that.data.distributor_type == 0){
+
+    if (that.data.distributor_type == 0) {
       return {
         imageUrl: 'https://static.bonnieclyde.cn/hui.jpg',
         title: ' 分享给你的购物清单',
@@ -1125,9 +1146,10 @@ GWC_reuse:function(){
           app.showBox(that, '分享失败');
         }
       }
-    } else if (that.data.Carrier!=''){
-      
+    } else if (that.data.Carrier != '') {
+
       let carrier = that.data.Carrier;
+
       return {
         imageUrl: 'https://static.bonnieclyde.cn/hui.jpg',
         title: ' 分享给你的购物清单',
@@ -1141,8 +1163,8 @@ GWC_reuse:function(){
           app.showBox(that, '分享失败');
         }
       }
-    
-    }else{
+
+    } else {
       return {
         imageUrl: 'https://static.bonnieclyde.cn/hui.jpg',
         title: ' 分享给你的购物清单',
@@ -1156,7 +1178,7 @@ GWC_reuse:function(){
           app.showBox(that, '分享失败');
         }
       }
-    } 
+    }
 
 
   },
@@ -1179,7 +1201,7 @@ GWC_reuse:function(){
   },
   //滑动事件处理
   touchmove: function (e) {
-        var that = this,
+    var that = this,
       index = e.currentTarget.dataset.index,//当前索引
       startX = that.data.startX,//开始X坐标
       startY = that.data.startY,//开始Y坐标
@@ -1285,18 +1307,18 @@ GWC_reuse:function(){
     })
   },
 
-  bindRegionChange:function(res){
-     let that=this;
+  bindRegionChange: function (res) {
+    let that = this;
     console.log(res);
     console.log(res.detail.value);
     let personnel = that.data.region[res.detail.value];
-    personnel= personnel.name
+    personnel = personnel.name
     let Carrier = that.data.region[res.detail.value].id;
-    console.log(Carrier) 
-   that.setData({
-     Carrier,
-     personnel
-   })
+    console.log(Carrier)
+    that.setData({
+      Carrier,
+      personnel
+    })
 
   },
   // 价格输入变化

@@ -388,7 +388,7 @@ PP_reuse:function(){
   /**
    * 商品详情
    */
-  aClick: function (event) {
+  listClick: function (event) {
     let that = this;
     let url = event.currentTarget.dataset.url;
     let aClickFlag = that.data.aClickFlag;

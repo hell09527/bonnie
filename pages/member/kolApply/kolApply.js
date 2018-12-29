@@ -80,6 +80,7 @@ Page({
   onLoad: function (options) {
     var that = this;
     var listData = this.data.listData;
+    console.log(app)
 
       // 扫码进入
     if (options.scene) {
@@ -1134,6 +1135,7 @@ Page({
         url: 'api.php?s=Distributor/applyDistributor',
         data: listData,
         success: function (res) {
+          // console.log(res, app.globalData.openid, event.detail.formId)
           app.sendRequest({
             url: 'api.php?s=distributor/sendKolTemplateCreated',
             data: {

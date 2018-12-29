@@ -286,16 +286,16 @@ Page({
       app.restStatus(that, 'saveAddressFlag');
       return;
     }
-    if (district == 0) {
-      app.showBox(that, '请选择区县');
-      app.restStatus(that, 'saveAddressFlag');
-      return;
-    }
+    // if (district == 0) {
+    //   app.showBox(that, '请选择区县');
+    //   app.restStatus(that, 'saveAddressFlag');
+    //   return;
+    // }
     if (address == '') {
       app.showBox(that, '请输入详细地址');
       app.restStatus(that, 'saveAddressFlag');
       return;
-    }
+    } 
     app.sendRequest({
       url: 'api.php?s=member/addmemberaddress',
       data: {

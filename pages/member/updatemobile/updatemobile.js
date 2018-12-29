@@ -206,6 +206,7 @@ Page({
             let code = that.data.code;
             console.log(code);
           }
+          
           that.setData({
             codeMobile: data.value.pc,
           })

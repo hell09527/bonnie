@@ -20,13 +20,15 @@ Page({
     is_verification: 0, //是否本店核销员
     is_open_virtual_goods: 0, //是否开启虚拟商品
     listClickFlag: 0,
-    is_vip:0,
+    is_vip: 0,
     // unregistered: 1, //是否注册(1, 0)
     showModal: false,
     Choice: false,
-   
+    layout: false,
+    tel: ''
+
   },
-  REUSE_member:function(){
+  REUSE_member: function () {
     let that = this;
     app.sendRequest({
       url: 'api.php?s=member/memberIndex',
@@ -81,9 +83,6 @@ Page({
     let that = this;
     let base = app.globalData.siteBaseUrl;
     let defaultImg = app.globalData.defaultImg;
- 
-
-
 
     that.setData({
       Base: base,
@@ -106,8 +105,8 @@ Page({
   onShow: function () {
     let that = this;
     //是否授权数据更新
-   let updata=app.globalData.unregistered;
-    // console.log(updata)
+    let updata = app.globalData.unregistered;
+    console.log(updata)
     let vip_overdue_time = app.globalData.vip_overdue_time
     // console.log(vip_overdue_time)
     //会员有效期
@@ -117,7 +116,7 @@ Page({
     let tab_type = app.globalData.tab_type;
     let tab = app.globalData.tab;
     // console.log(tab)
-    let is_vip=app.globalData.is_vip
+    let is_vip = app.globalData.is_vip
     // console.log(is_vip, tab_type)
 
     that.setData({
@@ -127,7 +126,7 @@ Page({
     })
 
     if (tab_parm == 'cancle_pay') {
-      if (tab==2){
+      if (tab == 2) {
         let url = tab_type == 2 ? '/pages/order/myvirtualorderlist/myvirtualorderlist' : '/pages/member/givingRecords/givingRecords?status=1';
         app.setTabParm('');
         app.setTabType('');
@@ -135,7 +134,7 @@ Page({
         wx.navigateTo({
           url: url,
         })
-      }else{
+      } else {
         let url = tab_type == 2 ? '/pages/order/myvirtualorderlist/myvirtualorderlist' : '/pages/order/myorderlist/myorderlist?status=1';
         app.setTabParm('');
         app.setTabType('');
@@ -146,14 +145,14 @@ Page({
 
     }
 
-   
+
     let member_info = that.data.member_info;
     app.restStatus(that, 'listClickFlag');
     //回调解决执行的先后顺序的问题
     if (app.globalData.token && app.globalData.token != '') {
       //判断是否是付费会员的接口
       that.REUSE_member();
-       } else {
+    } else {
       app.employIdCallback = employId => {
         if (employId != '') {
           //判断是否是付费会员的接口
@@ -170,28 +169,28 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**
@@ -218,18 +217,18 @@ Page({
   /**
    * 签到
    */
-  signIn: function (e){
+  signIn: function (e) {
     let that = this;
     app.sendRequest({
       url: 'api.php?s=member/signIn',
       data: {},
-      success: function(res){
+      success: function (res) {
         let code = res.code;
         let data = res.data;
-        if(code == 0){
-          if(data == 0){
+        if (code == 0) {
+          if (data == 0) {
             app.showBox(that, '签到失败');
-          }else if(data == 1){
+          } else if (data == 1) {
             app.showBox(that, '签到成功');
             that.setData({
               isSign: 1
@@ -244,15 +243,18 @@ Page({
     this.setData({
       showModal: false,
       Choice: false,
-    })},
+      layout: false,
+    })
+  },
   /**登录分支点*/
   Branch: function (e) {
     let _that = this;
     let branch = e.currentTarget.dataset.status;
- if (branch == "mobile") {
-   _that.setData({
-     Choice: false
-   })
+    if (branch == "mobile") {
+      _that.setData({
+        Choice: false,
+        layout: false,
+      })
       wx.navigateTo({
         url: '/pages/member/updatemobile/updatemobile?cho=1',
       })
@@ -277,33 +279,33 @@ Page({
   /**
    * 页面跳转
    */
-  listClick:function(event){
+  listClick: function (event) {
     let that = this;
     console.log(app.globalData.token)
-    
-    if ( app.globalData.token == '' || that.data.tel==''){
-       wx.showModal({
-          title: '请登录...',
-          content: '请您先登录成为会员,才可以同步个人数据.',
-          showCancel: false,
-        })
+
+    if (app.globalData.token == '' || that.data.tel == '') {
+      wx.showModal({
+        title: '请登录...',
+        content: '请您先登录成为会员,才可以同步个人数据.',
+        showCancel: false,
+      })
       return false;
     }
     let data_url = event.currentTarget.dataset.url;
     let listClickFlag = that.data.listClickFlag;
-    if (listClickFlag == 1){
+    if (listClickFlag == 1) {
       return false;
     }
     app.clicked(that, 'listClickFlag');
-    wx.navigateTo({ url: '/pages/' + data_url});
+    wx.navigateTo({ url: '/pages/' + data_url });
   },
 
-// 去会员专区
+  // 去会员专区
   toMemberZone: function () {
     let that = this
-      wx.navigateTo({
-        url: "/pages/payMembers/memberZone/memberZone",
-      })
+    wx.navigateTo({
+      url: "/pages/payMembers/memberZone/memberZone",
+    })
   },
   // 去注册会员
   toPayMember: function () {
@@ -328,6 +330,7 @@ Page({
         setIv: setIv,
         setEncryptedData
       })
+      console.log(that.data.unregistered)
       //判断是否继续弹出获取个人信息弹窗
       if (that.data.unregistered == 0) {
         wx.login({
@@ -344,7 +347,7 @@ Page({
                 if (res.code == 0) {
                   that.setData({
                     tel: res.data.user_tel,
-                      Choice: false
+                    Choice: false
                   })
 
 
@@ -369,10 +372,11 @@ Page({
 
     }
   },
-  
+
   //获取头像
   bindgetuserinfo: function (res) {
     let that = this;
+    console.log(res)
     if (res.detail.iv) {
       let iv = res.detail.iv;
       let encryptedData = res.detail.encryptedData;
@@ -385,73 +389,120 @@ Page({
       console.log(res.detail.userInfo.nickName)
       let heder_img = res.detail.userInfo.avatarUrl
       let wx_name = res.detail.userInfo.nickName
-      
-
+      let branch = res.currentTarget.dataset.status;
       this.setData({
         showModal: false,
+        Choice: false
       })
+      console.log(branch, 'branch ')
+      if (branch == "mobile") {
+        this.setData({
+          layout: true,
 
-      wx.login({
-        success: function (res) {
-          let coco = res.code;
-          app.sendRequest({
-            url: 'api.php?s=Login/getWechatEncryptInfo',
-            data: {
-              code: coco,
-              encryptedData: encryptedData,
-              iv: iv
-            },
-            success: function (res) {
-              if (res.code == 0) {
-                let lpl = res.data.token;
-                app.globalData.openid = res.data.openid;
-                app.globalData.token = res.data.token;
-                that.setData({
-                  unregistered: 0,
-                  wx_name: wx_name,
-                  heder_img
-                })
-                wx.login({
-                  success: function (res) {
-                    let coco = res.code;
-                    app.sendRequest({
-                      url: 'api.php?s=Login/getWechatMobile',
-                      data: {
-                        code: coco,
-                        mobileEncryptedData: that.data.setEncryptedData,
-                        mobileIv: that.data.setIv,
-                        token: lpl
-                      },
-                      success: function (res) {
+        })
 
-                        that.REUSE_member();
-                        if (res.code == 0) {
-                          that.setData({
-                            unregistered: 0,
-                            wx_name: wx_name,
-                            tel: res.data.user_tel,
-                            heder_img
-                          })
+        wx.login({
+          success: function (res) {
+            let coco = res.code;
+            app.sendRequest({
+              url: 'api.php?s=Login/getWechatEncryptInfo',
+              data: {
+                code: coco,
+                encryptedData: encryptedData,
+                iv: iv
+              },
+              success: function (res) {
+                if (res.code == 0) {
+                  let lpl = res.data.token;
+                  app.globalData.openid = res.data.openid;
+                  app.globalData.token = res.data.token;
+                  that.setData({
+                    unregistered: 0,
+                    wx_name: wx_name,
+                    heder_img
+                  })
 
-                        }
-                      }
-                    });
-                  }
-                })
+                  that.REUSE_member();
 
-
+                }
 
               }
+            });
+          }
+        })
 
-            }
-          });
-        }
-      })
+
+
+
+
+      } else {
+        wx.login({
+          success: function (res) {
+            let coco = res.code;
+            app.sendRequest({
+              url: 'api.php?s=Login/getWechatEncryptInfo',
+              data: {
+                code: coco,
+                encryptedData: encryptedData,
+                iv: iv
+              },
+              success: function (res) {
+                if (res.code == 0) {
+                  let lpl = res.data.token;
+                  app.globalData.openid = res.data.openid;
+                  app.globalData.token = res.data.token;
+                  that.setData({
+                    unregistered: 0,
+                    wx_name: wx_name,
+                    heder_img
+                  })
+                  wx.login({
+                    success: function (res) {
+                      let coco = res.code;
+                      app.sendRequest({
+                        url: 'api.php?s=Login/getWechatMobile',
+                        data: {
+                          code: coco,
+                          mobileEncryptedData: that.data.setEncryptedData,
+                          mobileIv: that.data.setIv,
+                          token: lpl
+                        },
+                        success: function (res) {
+
+                          that.REUSE_member();
+                          if (res.code == 0) {
+                            that.setData({
+                              unregistered: 0,
+                              wx_name: wx_name,
+                              tel: res.data.user_tel,
+                              heder_img
+                            })
+
+                          }
+                        }
+                      });
+                    }
+                  })
+
+
+
+                }
+
+              }
+            });
+          }
+        })
+      }
+
+
+
+
+
 
     } else {
       this.setData({
         showModal: false,
-       
+
       })
     }
 
@@ -460,8 +511,8 @@ Page({
 
 
   },
- 
 
-    
-  
+
+
+
 })

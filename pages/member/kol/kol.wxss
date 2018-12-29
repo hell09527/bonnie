@@ -1,3 +1,7 @@
+
+@import "/templates/dataChoose-template/dataChoose-template.wxss";
+@import "/templates/list-item-template/list-item-template.wxss";
+
 page{
   height: 100%;
   background:#fff;
@@ -5,7 +9,7 @@ page{
 
 .all{
   width: 100%;
-  background-color: #fff;
+  /* background-color: #fff; */
   margin-bottom: 20px;
 }
 .sales{
@@ -33,7 +37,7 @@ page{
 .table {
    width:100%;
   text-align: center;
-  background: #fff;
+  /* background: #fff; */
   padding:0 20rpx;
 }
 .tr {
@@ -45,6 +49,7 @@ page{
   padding:20rpx 0;
   margin-top: 20rpx;
   align-items: center;
+  background: #fff;
 }
 .td {
    width: 22.5%;
@@ -52,10 +57,6 @@ page{
       line-height: 34px;
     justify-content: center;
     text-align: center;
-}
-
-.bg-g{
-  background: #ccc;
 }
 .bg-w{
   display: flex;
@@ -175,7 +176,6 @@ scroll-view .canvas {
   background: #fff;
   overflow: hidden;
   font-size: 14px;
-  border-bottom: 1px solid #E2E2E2;
   max-width: 640px;
   margin: auto;
   margin-top:1px;
@@ -291,7 +291,7 @@ scroll-view .canvas {
 .show_yuan{
   font-weight: 700;
   font-size: 36px;
-  color:#edc481;
+  color:#ffb24c;
   text-align: center;
 }
 .x_fen{
@@ -304,7 +304,7 @@ scroll-view .canvas {
   font-size: 16px;
   text-align: center;
   color: #fff;
-  width:33%;
+  width:50%;
 }
 .x_fen .sk{
   border-left: 1px solid rgba(0,0,0,0.3); 
@@ -324,6 +324,7 @@ scroll-view .canvas {
   margin:40rpx;
   box-shadow: 0px 0px 20px rgba(0,0,0,0.1);
   padding:80rpx;
+  background: #fff;
 }
 .ck_blue{
   width:100%;
@@ -332,24 +333,6 @@ scroll-view .canvas {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.ck_blue_box{
-  background: #fff;
-  line-height: 56rpx;
-  display: flex;
-  align-items: center;
-  padding: 10rpx;
-}
-.ck_blue_box>view{
-  padding:0 50rpx;
-  font-size:16px;
-  color:#808080;
-  border-right: 1px solid #e5e5e5;
-}
-.ck_blue_box image{
-  width: 26rpx;
-  height:20rpx;
-  padding:0 50rpx;
 }
 
 .ck-tab-item{
@@ -513,7 +496,7 @@ font-size: 12px;
 }
 .template{
   margin-top: 10px;
-  padding: 10px;
+  padding: 10px 30rpx;
   font-size: 14px;
    /* -webkit-transform: translateY(-260px);
  transform: translateY(-260px); */
@@ -567,9 +550,10 @@ color:#fff;
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
+  margin:20rpx 0 10rpx;
 }
 .coin{
-  width: 25%;
+  width: 33%;
  color:#000 ;
 font-size:14px;
 
@@ -579,7 +563,7 @@ font-size:14px;
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
-  margin:18rpx 0;
+  margin:0 0 20rpx;
 }
 .rank{
   font-size: 12px;
@@ -587,7 +571,7 @@ font-size:14px;
   margin:26rpx 0;
 }
 .namey{
-    width: 25%;
+    width: 33%;
     font-size:12px;
     color:#808080;
 }
@@ -629,7 +613,8 @@ font-size:14px;
   border-bottom: 1px solid #cfcfcf;
 }
 .c_money image{
-  margin-right: 20rpx;
+  margin:0 20rpx;
+  width:18px;
 }
 .c_money{
   font-size:14px;
@@ -638,8 +623,11 @@ font-size:14px;
   align-items: center;
 }
 .edu{
-  color:#CC9933 ;
+  color:#8F8E94 ;
   font-size:14px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
   /* 极选师规则说明css */
@@ -652,26 +640,30 @@ font-size:14px;
   display: flex;
   width: 100%;
   align-items: center;
+  border-bottom: 1px solid #f1f1f1;
+}
+.trs:last-child{
+  border-bottom: none;
 }
 .tds {
   width:40%;
   padding-left:30rpx; 
   text-align: left;
+  height: 100%;
 }
 .bg-w{
-  background: snow;
+  background: #f1f1f1;
 }
 .bg-g{
   background: #fff;
-
 }
-bg-f{
-  background: #666;
+.bg-f{
+  background: #ccc;
+  padding:10rpx 0;
 }
 .th {
   width: 40%;
-  padding-left:30rpx;
-  background: #f1f1f1;
+  justify-content: center;
   color: #000;
   display: flex;
   height: 80rpx;
@@ -680,19 +672,19 @@ bg-f{
 }
 .th_pop{
     width: 60%;
-  padding-left:30rpx;
-  background: #f1f1f1;
+    justify-content: center;
   color: #000;
   display: flex;
   height: 80rpx;
   align-items: center;
   font-weight:700;
+  border-left: 1px solid #fff;
 }
 .be_come{
   width:60%;
- padding-left:30rpx;
+ padding:10rpx 30rpx;
 text-align:left;
-
+  border-left: 1px solid #f1f1f1;
 }
 .headline{
  font-size:16px;
@@ -704,26 +696,32 @@ font-weight:700;
   text-align:left;
   margin:15rpx 0px;
 }
-   .tb{
- display: flex;
+.tb{
+  border-bottom: 1px solid #f1f1f1;
+  display: flex;
   width: 100%;
   height: 80rpx;
   align-items: center;
-  }
-  .Star_table{
-
-border: 1px solid #f1f1f1;
-  }
+}
+.tb:last-child{
+  border-bottom: none;
+}
+.Star_table{
+  border: 1px solid #f1f1f1;
+}
    .Star_table .td{
-     
+     border-right: 1px solid #f1f1f1;
      display: flex;
      width: 100%;
      height: 80rpx;
      align-items: center;
   } 
-  
+  .Star_table .td:last-child{
+    border-right: none;
+  }
   .Star_table .th{
   width: 33.33%;
+     border-right: 1px solid #fff;
   padding-left:30rpx;
 background:#f1f1f1;
   color: #000;
@@ -732,7 +730,11 @@ background:#f1f1f1;
   align-items: center;
   font-weight:700;
   }
- .rotate{
-transform-origin:center;
-   transform:rotate(90deg);
- }
+  .Star_table .th:last-child{
+    border-right: none;
+  }
+.rotate{
+  transform-origin:center;
+  transform:rotate(90deg);
+  margin-bottom: 10rpx;
+}

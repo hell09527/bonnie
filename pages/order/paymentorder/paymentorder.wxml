@@ -168,7 +168,7 @@
                             </view>
                             <view class="left-col">
                                 <view class='h3'>
-                                    <view class='a'>{{goods.gift_goods.goods_name}}</view>
+                                    <text  decode="true" class='a'>{{goods.gift_goods.goods_name}}</text>
                                 </view>
                             </view>
                         </view>

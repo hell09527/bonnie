@@ -330,7 +330,7 @@ strong, b {
   left: 0;
   right: 0;
   z-index: 9999;
-  padding:40rpx 40rpx 0;
+  padding:40rpx ;
   margin: auto;
   border-radius: 10rpx;
   background: url('https://static.bonnieclyde.cn/background@2x.png') no-repeat;

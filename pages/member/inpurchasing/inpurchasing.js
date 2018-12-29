@@ -17,6 +17,7 @@ Page({
    */
   onLoad: function (options) {
     let that = this;
+    wx.hideShareMenu();
     app.sendRequest({
       url: "api.php?s=/goods/getInsideGoodsList",
       data: {

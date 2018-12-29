@@ -19,7 +19,6 @@ Page({
     that.setData({
       elment 
     })
-   
   },
 
   listClick: function (event) {

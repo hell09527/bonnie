@@ -206,6 +206,7 @@ Page({
     if (goodsEvaluate[index].img_num >= 5) {
       return false;
     }
+   
     //选择图片
     wx.chooseImage({
       // count: 1,

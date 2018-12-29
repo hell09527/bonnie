@@ -22,7 +22,7 @@ Page({
    */
   onLoad: function (options) {
     var that=this;
-
+   console.log(app)
     if (options.uid) {
       app.globalData.identifying = options.uid;
       console.log('options.uid', options.uid)

@@ -244,12 +244,16 @@ button::after{
 
 .member_list {
   list-style-type: none;
-  margin-bottom: 60px;
+  margin-bottom: 10px;
   background: none;
   background-color: #fff;
   padding: 15px 0 5px 0;
   font-size: 14px;
   overflow: hidden;
+}
+
+.Permissions{
+   padding:0;
 }
 
 .tips{

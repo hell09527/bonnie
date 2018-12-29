@@ -103,7 +103,7 @@
             </view>
             <view class="text">
               <view class="span pro-name">
-                <view class='span' style="color:#333333;">{{goods.goods_name}}</view>
+                <text  decode="true" class='span' style="color:#333333;">{{goods.goods_name}}</text>
               </view>
               <br/>
               <view class="pro-pric">

@@ -39,6 +39,8 @@
     "pages/goods/promotionzone/promotionzone",
     "pages/goods/spellinggroupzone/spellinggroupzone",
     "pages/member/newmypath/newmypath",
+    "pages/member/posterList/posterList",
+    "pages/member/createImage/createImage",
     "pages/member/updateaccount/updateaccount",
     "pages/member/excessive/excessive",
     "pages/member/personaldata/personaldata",
@@ -67,6 +69,8 @@
     "pages/member/kolApply/kolApply",
     "pages/member/inpurchasing/inpurchasing",
     "pages/member/kolSuccess/kolSuccess",
+    "pages/member/withdrawal/withdrawal",
+    "pages/member/withdrawalSuccess/withdrawalSuccess", 
     "pages/order/myvirtualorderlist/myvirtualorderlist",
     "pages/order/myorderlist/myorderlist",
     "pages/order/paymentorder/paymentorder",
@@ -125,5 +129,8 @@
     "navigationBarTitleText": "BonnieClyde",
     "backgroundColor": "#000",
     "navigationBarTextStyle": "white"
-  }
+  },
+  "navigateToMiniProgramAppIdList":[
+    "wx56c8f077de74b07c"
+  ]
 }

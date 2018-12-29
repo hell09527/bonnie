@@ -163,7 +163,8 @@ Page({
                     'package': 'prepay_id=' + data.prepay_id,
                     signType: 'MD5',
                     paySign: data.PaySign,
-                    success: function () {
+                    success: function (res) {
+                   console.log(res,'UId');
                        //  优惠卷
                       app.sendRequest({
                         url: 'api.php?s=Order/giveFullOfGifts',
@@ -204,6 +205,7 @@ Page({
                                 }else{
                                   // console.log(333)
                                   app.aldstat.sendEvent('普通商品支付成功');
+                                  
                                   wx.navigateTo({
                                     url: '/pages/pay/paycallback/paycallback?status=1&out_trade_no=' + out_trade_no,
                                   })

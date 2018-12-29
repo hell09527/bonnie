@@ -30,7 +30,7 @@
                     <image src="{{goods.picture.pic_cover_small==''?0:goods.picture.pic_cover_small}}" binderror='errorImg' data-index='{{index}}' data-key='{{key}}'/>
                   </view>
                   <view decode="true" class="text">
-                    <text class="pro-name span">{{goods.goods_name}}
+                    <text  decode="true"  class="pro-name span">{{goods.goods_name}}
                       <block wx:if='{{goods.gift_flag > 0}}'>
                         <view class='i gift'>赠品</view>
                       </block>

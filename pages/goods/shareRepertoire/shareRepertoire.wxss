@@ -88,12 +88,6 @@
   border-right: 1px solid #dedede;
 }
 
-.btn-confirm {
-  width: 50%;
-  color: #000;
-  font-weight:900;
-  text-align: center;
-}
 
 .goods-type-icon{
   background:#000;
@@ -620,4 +614,10 @@ button::after {
   border: none;
 }
 
+.btn-positive{
+ color:#fff;
+background:#000;
+width:50%;
+text-align:center;
 
+}

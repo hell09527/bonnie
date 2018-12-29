@@ -4,8 +4,8 @@ App({
  /a/dsa sadaswqwqewqkhhjhjhqqweqwewqewe  * 全局变量
    */
   globalData: {
-   siteBaseUrl: "https://www.bonnieclyde.cn/", //服务器url
-    // siteBaseUrl: "https://store-test.91xdb.com/", //服务器url
+    // siteBaseUrl: "https://www.bonnieclyde.cn/", //服务器url
+    siteBaseUrl: "https://store-test.91xdb.com/", //服务器url
     wx_info: null,
     encryptedData: '',
     iv: '',
@@ -50,7 +50,7 @@ App({
     updateManager.onCheckForUpdate(function (res) {
 
     })
-    
+
     updateManager.onUpdateReady(function () {
       wx.showModal({
         title: '更新提示',
@@ -78,7 +78,6 @@ App({
         console.log('获取用户信息失败', res);
         let unregistered = 1;
         that.setRegister(unregistered)
-
       }
     })
 
@@ -150,7 +149,7 @@ App({
     that.sendRequest({
       url: "api.php?s=Login/getWechatEncryptInfo",
       data: {
-        code:code,
+        code: code,
         encryptedData: encryptedData,   //微信信息
         iv: iv,
         store_id
@@ -423,6 +422,7 @@ App({
         prompt: content
       });
     }, 200)
+    
     setTimeout(function callBack() {
       that.setData({
         prompt: ''

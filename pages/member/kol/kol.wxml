@@ -1,3 +1,8 @@
+ 
+<!-- 引入tempalte  -->
+<import src="/templates/dataChoose-template/dataChoose-template.wxml" />
+<import src="/templates/list-item-template/list-item-template.wxml" />
+ 
  <view class="cf-container" data-reactid="2">
     <view class="cf-edge" data-reactid="3"></view>
     <view class="cf-content" data-reactid="4">
@@ -17,30 +22,23 @@
             <image src='{{user_headimg}}' mode='widthFix' />
           </view>
           <view class='stat-num'>
-            <block wx:for='{{star_num}}'>
+            <block wx:for='{{star_grade}}' wx:key>
               <image src='/images/member/star.png' mode='widthFix' />
             </block>
-            <block wx:for='{{3-star_num}}'>
+            <block wx:for='{{3-star_grade}}' wx:key>
               <image src='/images/member/no-star.png' mode='widthFix' />
             </block>
           </view>
           <view class="yu_title">
-            <view class="yu_s">累计获得分润</view>
-            <view class="show_yuan">￥{{sum_one}}</view>
+            <view class="yu_s">累计赚取</view>
+            <view class="show_yuan">￥{{separation_sum}}</view>
           </view>
-          <!-- <view class="synthesize">
-            <view class="explain"> 累计商品成交金额  (元) </view>
-            <view class='Mm'>{{sum_five}}</view>
-          </view> -->
           <view class="x_fen">
-            <view class="li">待结算
-              <view class="price">{{sum_two}}</view>
+            <view class="li" style='border-right:1px solid rgba(0,0,0,0.3)'>本期成交金额
+              <view class="price">{{quarter_goods_money_sum}}</view>
             </view>
-            <view class="li sk">待出账
-              <view class="price">{{sum_three}}</view>
-            </view>
-            <view class="li">已出账
-              <view class="price">{{sum_four}}</view>
+            <view class="li">本期成交订单
+              <view class="price">{{quarter_order_number_count}}</view>
             </view>
           </view>
         </view> 
@@ -50,151 +48,119 @@
         </view>
       </view> 
 
-<!-- 新加极选师星级 start -->
-<view class='repertoire'>
-
-   <!-- <view class='rank'>
-<view class="select">
-极选师星级:
-</view>
-<view class="grade"> {{star_name_start}}</view>
-</view> -->
-
-
-<view class='big_coin'>
-<view class='coin'>{{star_reward}}</view>
-<view class='coin'>{{member_count}}</view>
-<view class='coin'>{{order_number_count}}</view>
-<view class='coin'>{{goods_money_sum}}</view>
-</view>
-
-<view class='dish_name'>
-<view class='namey'>星级奖励比例</view>
-<view class='namey'>绑定会员</view>
-<view class='namey'>累计成交订单</view>
-<view class='namey'>累计成交金额</view>
-</view>
-  <!-- <progress   class='extent' percent="{{standard_rate}}"   color='#CC9933'/> -->
-
-  <!-- <view class='dec'>
- <view class="record_l">
-  {{star_name_start}}
-   </view>
-   <view class="record_r">
-   {{star_name_end}}
-   </view>
-  </view> -->
-</view>
-
-<view class='moneyBox'>
-  <view class='xuans'>
-    <view class='c_money'>
-      <image src='/images/member/issueMonay.png' mode='widthFix' style='width:18px;margin-right:26rpx'/>
-      <view>本期商品成交金额</view>
-    </view>
-    <view class='edu'> ￥{{quarter_goods_money_sum}}</view>
-  </view>
-  
-  <view class='xuans'>
-    <view class='c_money'>
-      <image src='/images/member/additionalMonay.png' mode='widthFix' style='width:22px;'/>      
-      <view>星级额外奖励金额</view>
-    </view>
-    <view class='edu'>  ￥{{bonus}} </view>
-  </view>
-</view>
-
-<!-- 新加极选师星级 end -->
-
-
-                           <!-- 分润规则说明  start-->
-  <view class="show" catchtap='open'>
-    <view class='run'>极选师规则说明</view>
-    <image class="direction rotate" src='https://static.bonnieclyde.cn/WechatIMG240.png'></image>      
-  </view>
-
-
-      <view class="template {{ temp ? 'open':''}}">
-        <view class="explains">
-        普通会员通过极选师推广链接购买商品，极选师将获得商品售出价格指定比例的分润。</view>
-
-<!-- 表格解释部分  start-->
-   <view class="tables">
-  <view class="trs bg-w">
-    <view class="th">专有名词</view>
-    <view class="th_pop">解释</view>
-
-  </view>
-  <block wx:for="{{TistData}}" wx:key="{{code}}">
-    <view class="trs bg-g" wx:if="{{index % 2 == 0}}">
-      <view class="tds">{{item.code}}</view>
-      <view class="be_come">{{item.text}}</view>
-    
-    </view>
-    <view class="trs bg-f" wx:else>
-      <view class="tds">{{item.code}}</view>
-      <view class="be_come">{{item.text}}</view>
-     
-    </view>
-  </block>
-</view>
-<!-- 表格解释部分  end-->
-<!-- 分润时长  start--> 
-<view class="Benefit_times" style="margin-bottom:40rpx;">
-<view class='headline'>分润时长</view>
-<view class='head_text'>订单已付款后，订单分润状态进入待结算;</view>
-<view class='head_text'>订单状态为已收货/已完成，订单分润状态仍然为待结算，此时为分润审核期;</view>
-<view class='head_text'>当此订单已完成超过15日，订单分润状态转变为待出账;</view>
-<view class='head_text'>在下一个出账日，此订单分润所得金额打款到极选师账户</view>
-<view class='head_text'>在分润计算方式:</view>
-<view class='head_text'>商品实际售价 x 商品分润比例= 最终所得分润金额</view>
-</view>
-
-<!-- 分润时长  end--> 
-<!-- 极选师星级制 start-->
-<view class='Star_system'>
-<view class='headline'>极选师星级制</view>
-<view class='head_text'>极选师向新会员/普通会员推广商品，新用户/普通用户通过极选师的小程序分享卡片/小程序码进入小程序，并产生消费，用户购买商品的金额转化为极选师的累计商品成交金额。</view>
-<view class='head_text'>考核期内，极选师的累计商品成交金额达到当前星级的升星额度，则自动上升一个星级。</view>
-<view class='head_text'>考核结算时，不同星级的极选师将会获得星级额外奖励。</view>
-  <view class=" tables  Star_table ">
-  <view class="tb bg-w">
-    <view class="th">极选师星级</view>
-    <view class="th">升星标准(元)</view>
-    <view class="th">星级奖励比例</view>
-  </view>
-  <block wx:for="{{CistData}}" wx:key="{{code}}" wx:for-item='item'>
-    <view class="tb bg-g" wx:if="{{index % 2 == 0}}">
-      <view class="td">{{item.star}}</view>
-      <view class="td">{{item.standard}}</view>
-      <view class="td">{{item. proportion}}</view>
-    </view>
-    <view class="tb bg-f" wx:else>
-      <view class="td">{{item.star}}</view>
-      <view class="td">{{item.standard}}</view>
-      <view class="td">{{item. proportion}}</view>
-    </view>
-  </block>
-</view>
-</view>
-
-
-<!-- 极选师星级制 end-->
-<!-- 星级奖励计算规则 start-->
-<view class='regulation'>
-<view class='headline'>星级奖励计算规则</view>
-<view class='head_text'>(超出升级标准的部分金额 - 星级升级标准金额) * 星级奖励比例 = 星级额外奖励最终金额</view>
-<view class='head_text'>假设极选师考核期内升到了二星级，则考核日，极选师获得星级奖励金额 = 一星级奖励金额 + 二星级奖励金额</view>
-</view>
-<!-- 星级奖励计算规则 end-->
-<view class="recommend">
-<view class='headline'>极选师推荐制</view>
-<view class='head_text'>极选师可以推荐普通会员成为签约极选师，推荐人与被推荐者共享被推荐者所得订单分润。</view>
-</view>
-
+      <view class='big_coin'>
+        <!-- <view class='coin'>{{star_reward}}</view> -->
+        <view class='coin'>{{member_count}}</view>
+        <view class='coin'>{{order_number_count}}</view>
+        <view class='coin'>{{goods_money_sum}}</view>
       </view>
-    </view> 
-  </block>
+
+      <view class='dish_name'>
+        <!-- <view class='namey'>星级奖励比例</view> -->
+        <view class='namey'>绑定会员</view>
+        <view class='namey'>累计成交订单</view>
+        <view class='namey'>累计成交金额</view>
+      </view>
+
+      <view class='moneyBox'>
+        <view class='xuans'>
+          <view class='c_money'>
+            <image src='/images/member/issueMonay.png' mode='widthFix'/>
+            <view>账户余额 ￥{{balance}}</view>
+          </view>
+          <view class='edu' catchtap='toTiXian'>
+          <text>前往提现</text>
+          <image class="direction" src='https://static.bonnieclyde.cn/WechatIMG240.png'></image> </view>
+        </view>
+        
+        <view class='xuans'>
+          <view class='c_money'>
+            <image src='/images/member/additionalMonay.png' mode='widthFix'/>  
+            <view>极选师规则说明</view>
+          </view>
+          <view class='edu' catchtap='open'>
+          <text>查看详情</text>
+          <image class="direction {{temp?'rotate':''}}" src='https://static.bonnieclyde.cn/WechatIMG240.png'></image> </view>
+        </view>
+      </view>
+
+      <!-- 极选师规则 -->
+      <view class="template {{ temp ? 'open':''}}">
+        <view class="explains">普通会员通过极选师推广链接购买商品，极选师将获得商品售出价格指定比例的分润。</view>
+        <!-- 表格解释部分  start-->
+        <view class="tables">
+          <view class="trs bg-w">
+            <view class="th">专有名词</view>
+            <view class="th_pop">解释</view>
+          </view>
+          <block wx:for="{{TistData}}" wx:key="{{code}}">
+            <view class="trs bg-g">
+              <view class="tds">{{item.code}}</view>
+              <view class="be_come">{{item.text}}</view>
+            </view>
+          </block>
+        </view>
+        <!-- 表格解释部分  end-->
+        <!-- 分润时长  start--> 
+        <view class="Benefit_times" style="margin-bottom:40rpx;">
+          <view class='headline'>分润时长</view>
+          <view class='head_text'>1. 订单已付款后，订单分润状态进入待结算；</view>
+          <view class='head_text'>2. 订单状态为已收货/已完成，订单分润状态仍然为待结算，此时为分润审核期；</view>
+          <view class='head_text'>3. 当此订单已完成超过15日，订单分润状态转变为待出账；</view>
+          <view class='head_text'>4. 在下一个出账日，此订单分润所得金额打款到极选师账户</view>
+          <view class='headline'>分润计算方式：</view>
+          <view class='head_text'>商品实际售价 x 商品分润比例 = 最终所得分润金额</view>
+        </view>
+        <!-- 分润时长  end--> 
+        <!-- 极选师星级制 start-->
+        <view class='Star_system'>
+          <view class='headline'>极选师星级制</view>
+          <view class='head_text'>极选师向新会员/普通会员推广商品，新用户/普通用户通过极选师的小程序分享卡片/小程序码进入小程序，并产生消费，用户购买商品的金额转化为极选师的累计商品成交金额。</view>
+          <view class='head_text'>考核期内，极选师的累计商品成交金额达到当前星级的升星额度，则自动上升一个星级。</view>
+          <view class='head_text'>考核结算时，不同星级的极选师将会获得星级额外奖励。</view>
+          <view class=" tables  Star_table ">
+            <view class="tb bg-w">
+              <view class="th">极选师星级</view>
+              <view class="th">升星标准(元)</view>
+              <view class="th">星级奖励比例</view>
+            </view>
+            <block wx:for="{{CistData}}" wx:key="{{code}}" wx:for-item='item'>
+              <view class="tb bg-g">
+                <view class="td">{{item.star}}</view>
+                <view class="td">{{item.standard}}</view>
+                <view class="td">{{item. proportion}}</view>
+              </view>
+            </block>
+          </view>
+        </view>
+        <!-- 极选师星级制 end-->
+        <!-- 星级奖励计算规则 start-->
+        <view class='regulation'>
+          <view class='headline'>星级奖励计算规则</view>
+          <view class='head_text'>(超出升级标准的部分金额 - 星级升级标准金额) * 星级奖励比例 = 星级额外奖励最终金额</view>
+          <view class='head_text'>假设极选师考核期内升到了二星级，则考核日，极选师获得星级奖励金额 = 一星级奖励金额 + 二星级奖励金额</view>
+          </view>
+          <!-- 星级奖励计算规则 end-->
+          <!-- 极选师推荐制 start-->
+          <view class="recommend">
+            <view class='headline'>极选师推荐制</view>
+            <view class='head_text'>极选师可以推荐普通会员成为签约极选师，推荐人额外获得被推荐者成交订单的分润。</view>
+          </view>
+          <!-- 极选师推荐制 end-->
+          <!-- 极选师提现 start-->
+          <view class="recommend">
+            <view class='headline'>极选师提现</view>
+            <view class='head_text'>极选师可以在小程序内自主发起提现申请，申请提现成功后1-2个工作日内等待审核。若审核通过，则微信零钱到账所提现金额。</view>
+            <view class='head_text'>1. 拥有极选师权限的微信号必须已通过实名认证；</view>
+            <view class='head_text'>2. 同一个极选师，单笔单日限额5000元/5000元；</view>
+            <view class='head_text'>3. 平台每日最多为同一个极选师提现10次。</view>
+          </view>
+          <!-- 极选师提现 end-->
+        </view>
+
+
+      </view> 
+    </block>
                             <!-- 分润规则说明  end -->
   <!-- 商品排行 -->
   <view  wx:if='{{_no== 1}}' class="slick"> 
@@ -214,19 +180,7 @@
       <!-- 商品推荐排行榜 -->
       <block wx:for="{{listData}}" wx:key="{{code}}"wx:for-item='item' wx:for-index='index' wx:if="{{isTopClick==1}}">
         <view class="tr" catchtap='skipClick' data-url='/goods/goodsdetail/goodsdetail?goods_id={{item.goods_id}}&&goods_name={{item.goods_name}}'>
-          <!-- 第一 -->
-          <view class="sequence" style='color:#d0021b' wx:if='{{index==0}}'>{{index+1}}</view>
-          <!-- 第二 -->
-          <view class="sequence" style='color:#f57923' wx:elif='{{index==1}}'>{{index+1}}</view>
-          <!-- 第三 -->
-          <view class="sequence" style='color:#f9b649' wx:elif='{{index==2}}'>{{index+1}}</view>
-          <!-- 其他 -->
-          <view class="sequence" wx:else>{{index+1}}</view>
-          <!-- <view class="brand">{{item.text}}</view> -->
-          <view class="names">
-          <image class="img" src='{{item.pic_cover_small}}'></image>
-          <view class="w_book">{{item.goods_name}}</view>
-          </view>
+          <template is="listItemTemplate" data="{{...item,index}}" />
           <!-- 第一 -->
           <view class="ratio" style='color:#d0021b' wx:if='{{index==0}}'>
             <text>分润</text>
@@ -255,19 +209,7 @@
 
       <block wx:for="{{saveData}}" wx:key="{{code}}"wx:for-item='item' wx:for-index='index' wx:if="{{isTopClick==2}}">
         <view class="tr" catchtap='skipClick' data-url='/goods/goodsdetail/goodsdetail?goods_id={{item.goods_id}}&&goods_name={{item.goods_name}}'>
-          <!-- 第一 -->
-          <view class="sequence" style='color:#d0021b' wx:if='{{index==0}}'>{{index+1}}</view>
-          <!-- 第二 -->
-          <view class="sequence" style='color:#f57923' wx:elif='{{index==1}}'>{{index+1}}</view>
-          <!-- 第三 -->
-          <view class="sequence" style='color:#f9b649' wx:elif='{{index==2}}'>{{index+1}}</view>
-          <!-- 其他 -->
-          <view class="sequence" wx:else>{{index+1}}</view>
-          <!-- <view class="brand">{{item.text}}</view> -->
-          <view class="names">
-          <image class="img" src='{{item.pic_cover_small}}'></image>
-          <view class="w_book">{{item.goods_name}}</view>
-          </view>
+          <template is="listItemTemplate" data="{{...item,index}}" />
           <!-- 第一 -->
           <view class="ratio" style='color:#d0021b' wx:if='{{index==0}}'>
             <text>销量</text>
@@ -297,12 +239,7 @@
   
   <view wx:if='{{_no== 2}}' class="slick">
     <view class="ck_blue">
-      <view class='ck_blue_box'>
-        <view>{{datetime}}</view>
-        <picker mode="date" value="{{datetime}}" start="2010-01" end="{{nowData}}" fields='month' bindchange="bindDateChange">
-          <image src='https://static.bonnieclyde.cn/WechatIMG268.png'></image>
-        </picker>
-      </view>
+      <template is="dataChooseTemplate" data="{{datetime,nowData}}" />
       <!-- <view class="ck-tab-item  {{ck=='1'?'tabck':''}}" catchtap='orders' data-id="1">
         <view class='a'>本周</view>
       </view>

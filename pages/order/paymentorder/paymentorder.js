@@ -1494,7 +1494,6 @@ console.log(data);
             pay_money = pay_money < 0 ? 0.00 : pay_money;
 
             //is_use_card判断
-
             if (that.data.is_use_card == 1) {
                 pay_money = that.data.pay_money
                 pay_money = Number(pay_money) - Number(that.data.max)
@@ -1550,9 +1549,10 @@ console.log(data);
                 from_type: that.data.order_type,
                 count_money: that.data.count_money,
                 uid:that.data.uid,
-              is_inside: that.data.is_inside ? that.data.is_inside:0,
+                is_inside: that.data.is_inside ? that.data.is_inside:0,
             },
             success: function (res) {
+              console.log(res);
                 let code = res.code;
                 let data = res.data;
 
