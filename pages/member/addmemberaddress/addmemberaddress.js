@@ -270,7 +270,9 @@ Page({
       app.restStatus(that, 'saveAddressFlag');
       return;
     }
-    let myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+
+    let myreg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
+    // let myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
     if (mobile.length != 11 || !myreg.test(mobile)){
       app.showBox(that, '请输入正确的手机号');
       app.restStatus(that, 'saveAddressFlag');

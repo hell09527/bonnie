@@ -44,7 +44,7 @@ button{
   position: fixed;
    bottom: 0;
    width: 100%;
-   height: 65%;
+  height:1000rpx;
   z-index: 4;
   background: #fff;
   box-shadow:0px 0px 20px rgba(0,0,0,0.1)
@@ -64,13 +64,17 @@ button{
 }
 .photoAlbum{
 border-radius:0;
-width:40%;
+width:80%;
 height:90rpx;
 float:left;
 text-align:center;
 line-height:90rpx;
 background:#fff;
-margin:5% 5%;
+margin:5% 10%;
+
+
+
+
 
 }
 .shop{
@@ -84,12 +88,13 @@ margin:5% 5%;
 }
 /* 商品分类标题 */
 .goods-detail-nav{
-    padding:18rpx 20rpx;
+    padding:12rpx 20rpx;
     background: #fff;
     white-space:nowrap;
     box-sizing: border-box;
     /* box-shadow: 0px 0px 20px rgba(0,0,0,0.1); */
     border-bottom: 1px solid #e5e5e5;
+    border-top:1px solid #e5e5e5;
   }
   .fixed{
     position: fixed;
@@ -122,7 +127,7 @@ margin:5% 5%;
   /* display: table; */
     position: fixed;
   width:100%;
-  height:720rpx;
+  height:820rpx;
 padding-bottom:50px;
 
 }
@@ -146,12 +151,12 @@ padding-bottom:50px;
     display: block;
   }
   .shop-detail{
-    padding:10px;
+    padding:14rpx;
   }
   .title{
     font-size: 12px;
-    line-height: 18px;
-    height:100rpx;
+  line-height:36rpx;
+height:68rpx;
     display: -webkit-box; 
     text-overflow: ellipsis;
   -webkit-line-clamp: 2; 
@@ -190,3 +195,69 @@ padding-bottom:50px;
   .roll{
     width: 100%;
   }
+/* 搜索 */
+.controlSearch{
+  width: 98%;
+  padding: 0;
+  background: none;
+  margin: 2px 0 5px 1%;
+  padding-top:7px;
+  background: #FFF;
+}
+  .controlSearch .control-search-input{
+  height: 30px;
+  border-bottom-left-radius: 15px;
+  border-top-left-radius: 15px;
+  overflow: hidden;
+  border-bottom-right-radius: 15px;
+  border-top-right-radius: 15px;
+  width: 90%;
+  margin: 0 5%;
+  background: #f1f1f1;
+}
+
+.controlSearch .control-search-input .search-input{
+  width: 76%;
+  height: 20px;
+  line-height: 20px;
+  margin-top: 4px;
+  padding: 0 15px;
+  border: none;
+  color: #999;
+  float: left;
+  font-size: 13px;
+  background: #EFEFEF;
+  text-align: left;
+}
+
+.custom-search-button{
+  top: 6px;
+}
+
+.controlSearch .control-search-input .search-button{
+  width: 14px;
+  padding: 4px 8px;
+  margin: 8px 0;
+  height: 14px;
+  line-height: 22px;
+  border: none;
+  background: #f1f1f1;
+  color: #fff;
+  font-size: 14px;
+  text-indent: -9999px;
+  background-size: 14px 14px;
+  border-left: 1px solid #dfdfdf;
+  float: right;
+}
+
+.controlSearch .control-search-input .search-button{
+  margin: 4px 0;
+}
+
+.category-content-section{
+  z-index: 1;
+}
+canvas{
+  position:absolute;
+  top:-1000px;
+}

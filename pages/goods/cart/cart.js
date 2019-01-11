@@ -213,9 +213,9 @@ Page({
   onReady: function () {
     let that = this;
     let siteBaseUrl = app.globalData.siteBaseUrl;
-    // wx.showShareMenu({
-    //   withShareTicket: true
-    // })
+    wx.showShareMenu({
+      withShareTicket: true
+    })
   },
 
   GWC_reuse: function () {

@@ -418,11 +418,10 @@ Page({
   },
 
   // 上传图片到服务器
-  uplodeHeadImg:function(tempFilePaths,paths) {
+  uplodeHeadImg: function (tempFilePaths, paths, listData) {
     var name = 'file_upload';
     var that = this;
     var base = app.globalData.siteBaseUrl;
-    var listData = this.data.listData;
     var token = app.globalData.token;
     // console.log(tempFilePaths)
     wx.uploadFile({
@@ -437,7 +436,7 @@ Page({
         var result = res.data
         // console.log(result);
         var data = JSON.parse(result)
-        console.log(data);
+        // console.log(data);
         if (data.code == 0) {
           data = data.data;
           var code = data.code;
@@ -447,13 +446,25 @@ Page({
           if (code > 0) {
             if (paths=='face'){
               listData.id_face_pros = img_url;
-              that.identityFace(tempFilePaths, listData);
+              that.setData({
+                FilePaths: tempFilePaths,
+                listData,
+              })
+              // that.identityFace(tempFilePaths, listData);
             } else if (paths == 'back') {
               listData.id_face_cons = img_url;
-              that.identityBack(tempFilePaths, listData);
+              that.setData({
+                recitePaths: tempFilePaths,
+                listData,
+              })
+              // that.identityBack(tempFilePaths, listData);
             } else if (paths == 'bankCard') {
               listData.bank_card_pic = img_url;
-              that.bankCard(tempFilePaths, listData);
+              that.setData({
+                bankCardImage: tempFilePaths,
+                listData,
+              })
+              // that.bankCard(tempFilePaths, listData);
             }
           }else{
             wx.hideLoading();
@@ -474,7 +485,6 @@ Page({
   // 银行卡上传
   cardimage:function(){
     var _this = this;
-    var listData = this.data.listData;
     wx.chooseImage({
       count: 1, // 默认9 
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
@@ -489,7 +499,8 @@ Page({
         wx.showLoading({
           title: '加载中',
           success: function () {
-            _this.uplodeHeadImg(result.tempFilePaths[0], 'bankCard');
+            _this.bankCard(result.tempFilePaths[0])
+            // _this.uplodeHeadImg(result.tempFilePaths[0], 'bankCard');
           }
         })
       },
@@ -501,8 +512,9 @@ Page({
   },
 
   // 银行卡识别
-  bankCard: function (tempFilePaths, listData) {
+  bankCard: function (tempFilePaths) {
     var _this = this;
+    var listData = this.data.listData;
     // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
     wx.getFileSystemManager().readFile({
       filePath: tempFilePaths, //选择图片返回的相对路径
@@ -521,10 +533,10 @@ Page({
                 // "X-Ca-Timestamp": "1540802691176", 
                 "gateway_channel": "https",
                 "X-Ca-Request-Mode": "debug",
-                "X-Ca-Key": "25240403",
+                "X-Ca-Key": "24906978",
                 "X-Ca-Stage": "RELEASE",
                 'content-type': "application/x-www-form-urlencoded;charset=utf-8",
-                'Authorization': 'APPCODE 1ee0fa43c5174ee09963be41686bb4f8'
+                'Authorization': 'APPCODE 2b19f336b34e4b50a7e14ad8c8765932'
               },
               success: function (res) {
                 wx.hideLoading();
@@ -546,11 +558,8 @@ Page({
                       duration: 2000
                     })
                     listData.bank_account_number = data.bank_card_number;
-                    listData.bank_name = data.bank_name
-                    _this.setData({
-                      bankCardImage: tempFilePaths,
-                      listData,
-                    })
+                    listData.bank_name = data.bank_name; 
+                    _this.uplodeHeadImg(tempFilePaths, 'bankCard', listData)
                   }
                 } else {
                   _this.setData({
@@ -596,14 +605,16 @@ Page({
           wx.showLoading({
             title: '加载中',
             success: function () {
-              _this.uplodeHeadImg(result.tempFilePaths[0], 'back');
+              _this.identityBack(result.tempFilePaths[0]);
+              // _this.uplodeHeadImg(result.tempFilePaths[0], 'back');
             }
           })
         }else{
           wx.showLoading({
             title: '加载中',
             success: function () {
-              _this.uplodeHeadImg(result.tempFilePaths[0], 'face');
+              _this.identityFace(result.tempFilePaths[0]);
+              // _this.uplodeHeadImg(result.tempFilePaths[0], 'face');
             }
           })
         }
@@ -616,8 +627,9 @@ Page({
   },
 
   // 身份证正面识别
-  identityFace: function (tempFilePaths, listData) {
+  identityFace: function (tempFilePaths) {
     var _this = this;
+    var listData = this.data.listData;
     // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
     wx.getFileSystemManager().readFile({
       filePath: tempFilePaths, //选择图片返回的相对路径
@@ -636,10 +648,10 @@ Page({
                 // "X-Ca-Timestamp": "1541043385872",
                 "gateway_channel": "https",
                 "X-Ca-Request-Mode": "debug",
-                "X-Ca-Key": "25240403",
+                "X-Ca-Key": "24906978",
                 "X-Ca-Stage": "RELEASE",
                 "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
-                "Authorization": "APPCODE 1ee0fa43c5174ee09963be41686bb4f8"
+                "Authorization": "APPCODE 2b19f336b34e4b50a7e14ad8c8765932"
               },
               success: function (res) {
                 wx.hideLoading();
@@ -663,9 +675,8 @@ Page({
                   listData.name = list.name;
                   listData.birthday = list.birthday;
                   listData.nation = data.ocr.nation;
+                  _this.uplodeHeadImg(tempFilePaths, 'face', listData)
                   _this.setData({
-                    FilePaths: tempFilePaths,
-                    listData,
                     sexList,
                   })
                   wx.showToast({
@@ -704,8 +715,9 @@ Page({
   },
 
   // 身份证反面识别
-  identityBack: function (tempFilePaths, listData) {
+  identityBack: function (tempFilePaths) {
     var _this = this;
+    var listData = this.data.listData;
     // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
     wx.getFileSystemManager().readFile({
       filePath: tempFilePaths, //选择图片返回的相对路径
@@ -725,10 +737,10 @@ Page({
             // "X-Ca-Timestamp": "1541043385872",
             "gateway_channel": "https",
             "X-Ca-Request-Mode": "debug",
-            "X-Ca-Key": "25240403",
+            "X-Ca-Key": "24906978",
             "X-Ca-Stage": "RELEASE",
             "Content-Type": "application/octet-stream; charset=utf-8",
-            "Authorization": "APPCODE 1ee0fa43c5174ee09963be41686bb4f8"
+            "Authorization": "APPCODE 2b19f336b34e4b50a7e14ad8c8765932"
           },
           success: function (res) {
             wx.hideLoading();
@@ -748,12 +760,9 @@ Page({
                 day = "0" + day;
               }
               var nowDate = year.toString() + month.toString() + day.toString();
-              console.log(parseInt(end_date) - parseInt(nowDate));
+              // console.log(parseInt(end_date) - parseInt(nowDate));
               if (parseInt(end_date) - parseInt(nowDate)>=0){
-                _this.setData({
-                  recitePaths: tempFilePaths,
-                  listData,
-                })
+                _this.uplodeHeadImg(tempFilePaths, 'back', listData)
                 wx.showToast({
                   title: '上传成功',
                   icon: 'success',
@@ -807,7 +816,7 @@ Page({
   // 删除图片
   toDelImg: function (e) {
     let img = e.currentTarget.dataset.img;
-    console.log(img);
+    // console.log(img);
     if(img=='face'){
       this.setData({
         FilePaths:''
@@ -1135,7 +1144,7 @@ Page({
         url: 'api.php?s=Distributor/applyDistributor',
         data: listData,
         success: function (res) {
-          // console.log(res, app.globalData.openid, event.detail.formId)
+          console.log(res, app.globalData.openid, event.detail.formId)
           app.sendRequest({
             url: 'api.php?s=distributor/sendKolTemplateCreated',
             data: {

@@ -65,7 +65,7 @@ Page({
           let img = member_info.user_info.user_headimg;
           member_info.user_info.user_headimg = app.IMG(img); //图片路径处理
           let tel = data.user_info.user_tel;
-          console.log(tel)
+          console.log(tel);
           that.setData({
             member_info: res.data,
             tel: tel,

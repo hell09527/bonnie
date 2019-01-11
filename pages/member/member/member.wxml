@@ -239,7 +239,7 @@
         <view class='li' wx:if='{{distributor_type!=0}}'>
     
           <view class="a member_list_item" catchtap='listClick'     data-url="member/posterList/posterList">
-            <image src='https://static.bonnieclyde.cn/plot.png' />
+            <image src='https://static.bonnieclyde.cn/icon21.png' />
             <view class='span'>海报制作</view>
           </view>
         </view>

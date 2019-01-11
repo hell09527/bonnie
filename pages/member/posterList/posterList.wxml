@@ -1,16 +1,20 @@
 <!--pages/member/posterList/posterList.wxml-->
 <scroll-view class="therefore">
 <!-- //海报列表渲染 -->
-  <view>
+  <view> 
       <view class='body'>
         <!-- <view class='goods-title'>NB</view> -->
-        <block wx:for='{{category_goods}}' wx:key='' wx:for-item='shops' wx:for-index='index'>
-          <view class='goods_all' hover-class="good_over" catchtap='listClick' data-index='{{index}}' >
+        <view class='posterlis'>
+                 <block wx:for='{{category_goods}}' wx:key='' wx:for-item='shops' wx:for-index='index'>
+          <view class='goods_all'  catchtap='listClick' data-index='{{index}}' data-id='{{shops.id}}'>
             <view class="all-box">
-              <image src='{{shops.pic_cover_small}}' mode='widthFix' lazy-load='true'></image>
+              <image src='{{shops.code_pic}}'
+ mode='widthFix' lazy-load='true'></image>
 </view>
           </view>
         </block>
+        </view>    
+
       </view>
   </view>
 
@@ -22,9 +26,10 @@
 </view>
 </view>
 <!-- //大图片 -->
-<view class="mimi" wx:if="{{hovers}}" catchtap='popupClose'></view>
-<view   class="blocks" wx:if="{{hovers}}">
-<scroll-view style="height:{{windowHeight}}px;">
+<!-- catchtap='popupClose' -->
+<view class="mimi" wx:if="{{reveal}}" ></view>
+<view   class="blocks" wx:if="{{reveal}}">
+<scroll-view  scroll-y  style="height:{{windowHeight}}px; z-index:999">
  <image src='{{Imgs}}' mode='widthFix' style="width:100%;"></image>
 
   <view class="contain"> 

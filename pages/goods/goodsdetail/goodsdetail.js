@@ -105,19 +105,11 @@ Page({
       // 扫码进入
       var scene = decodeURIComponent(options.scene);
       let goods_id = scene.split('&')[0];
-      let store_id = scene.split('&')[1];
-      let kol_id = scene.split('&')[2];
+      let kol_id = scene.split('&')[1];
       console.log("********详情页id", goods_id);
-      console.log("********内详情页code_id", store_id);
       console.log("********内详情页kol_id", kol_id);
-
-      if (store_id == 0) {
-        console.log("********内详情页kol_idj", kol_id);
-        app.globalData.kol_id = kol_id;
-      } else {
-        console.log("********内详情页store_idj", store_id);
-        app.globalData.store_id = store_id;
-      }
+      app.globalData.kol_id = kol_id;
+    
       that.setData({
         goods_id: goods_id,
       })

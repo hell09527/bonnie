@@ -39,8 +39,6 @@
     "pages/goods/promotionzone/promotionzone",
     "pages/goods/spellinggroupzone/spellinggroupzone",
     "pages/member/newmypath/newmypath",
-    "pages/member/posterList/posterList",
-    "pages/member/createImage/createImage",
     "pages/member/updateaccount/updateaccount",
     "pages/member/excessive/excessive",
     "pages/member/personaldata/personaldata",
@@ -50,6 +48,8 @@
     "pages/member/giftPrefecture/giftPrefecture",
     "pages/member/kol/kolbill/kolbill",
     "pages/member/membercoupon/membercoupon",
+    "pages/member/posterList/posterList",
+    "pages/member/createImage/createImage",
     "pages/member/mycollection/mycollection",
     "pages/member/updatememberaddress/updatememberaddress",
     "pages/member/addmemberaddress/addmemberaddress",
@@ -70,7 +70,7 @@
     "pages/member/inpurchasing/inpurchasing",
     "pages/member/kolSuccess/kolSuccess",
     "pages/member/withdrawal/withdrawal",
-    "pages/member/withdrawalSuccess/withdrawalSuccess", 
+    "pages/member/withdrawalSuccess/withdrawalSuccess",
     "pages/order/myvirtualorderlist/myvirtualorderlist",
     "pages/order/myorderlist/myorderlist",
     "pages/order/paymentorder/paymentorder",
@@ -130,7 +130,7 @@
     "backgroundColor": "#000",
     "navigationBarTextStyle": "white"
   },
-  "navigateToMiniProgramAppIdList":[
+  "navigateToMiniProgramAppIdList": [
     "wx56c8f077de74b07c"
   ]
 }

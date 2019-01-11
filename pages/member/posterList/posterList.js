@@ -7,7 +7,8 @@ Page({
    */
   data: {
     category_goods:[],
-    hovers:false,
+    reveal:false,
+    id :''
   },
 
   /**
@@ -17,16 +18,9 @@ Page({
     let that = this;
     wx.getSystemInfo({
       success(res) {
-        console.log(res.model)
-        console.log(res.pixelRatio)
-        console.log(res.windowWidth)
-        console.log(res.windowHeight)
-        console.log(res.language)
-        console.log(res.version)
-        console.log(res.platform)
-        let windowWidth= res.windowWidth - 40
-        let windowHeight = res.windowHeight - 50
-        console.log(windowHeight)
+        let windowWidth= res.windowWidth - 40;
+        let windowHeight = res.windowHeight ;
+        console.log(windowHeight);
         that.setData({
           windowWidth: windowWidth,
           windowHeight
@@ -48,31 +42,7 @@ Page({
    */
   onShow: function () {
     var that = this;
-    var category_goods = that.data.category_goods;
-    var page = that.data.page;
-    // 获取商品分类标题点击的商品
-    app.sendRequest({
-      url: "api.php?s=/index/branchPro",
-      data: {
-        category_id:'' ,
-        page_index: 1,
-      },
-      method: 'POST',
-      success: function (res) {
-        let new_category_goods = res.data.pro.data;
-        if (new_category_goods[0] != undefined) {
-          page++;
-        }
-        let category_pic = res.data.category_pic;
-        category_goods = category_goods.concat(new_category_goods)
-        // console.log(category_goods)
-        that.setData({
-          category_goods: category_goods,
-          category_pic: category_pic,
-          page: page,
-        })
-      }
-    });
+    that.postList();
   },
 
 
@@ -90,25 +60,59 @@ Page({
   listClick:function(e){
     let that = this;
     let i = e.currentTarget.dataset.index;
+    let id = e.currentTarget.dataset.id;
+    console.log(that.data.category_goods[i].code_pic)
     that.setData({
-     Imgs :that.data.category_goods[i].pic_cover_small,
-      hovers: true,
+      Imgs :that.data.category_goods[i].code_pic,
+      reveal: true,
+      id
     })
     
+  },
+  postList:function(){
+    let that = this;
+    // 获取海报列表
+    app.sendRequest({
+      url: "api.php?s=Distributor/wxcodeList",
+      method: 'POST',
+      success: function (res) {
+        console.log(res.data.data)
+        that.setData({
+          category_goods: res.data.data,
+        })
+      }
+    });
   },
     /**
    * 删除图片
    */
   delImgs:function(){
     let that = this;
+    let id = that.data.id;
+    app.sendRequest({
+      url: "api.php?s=Distributor/wxcodeDelete",
+      data:{
+        id:id
+      },
+      method: 'POST',
+      success: function (res) {
+        console.log(res.data.data);
+        that.setData({
+          category_goods: res.data.data,
+        })
+        that.popupClose(); 
+        that.postList();
+      }
+    });
+  
+   
+
   },
   /**
 * 下载到相册
 */
   Savelocal: function () {
-   
-      let that = this;
-
+  let that = this;
     wx.downloadFile({
       url: that.data.Imgs, 
       success(res) {
@@ -158,7 +162,7 @@ Page({
   popupClose: function () {
     let that = this;
     that.setData({
-      hovers: false,
+      reveal: false,
     })
   },
 

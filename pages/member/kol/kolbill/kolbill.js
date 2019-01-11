@@ -1314,43 +1314,43 @@ Page({
    
 
 
-  //   for (let index in str) {
-  //     if (str[index].word.indexOf("招商银行") != -1){
-  //       Openbank.push(str[index].word)
-  //     } else if (str[index].word.indexOf("日期") != -1){
-  //       Openbank.push(str[index].word)
-  //     } else if (str[index].word.indexOf("流水号") != -1) {
-  //       Openbank.push(str[index].word)
-  //     } else if (str[index].word.indexOf("收款账号") != -1) {
-  //       Openbank.push(str[index].word)
-  //     } else if (str[index].word.indexOf("户名") != -1) {
-  //       Openbank.push(str[index].word)
-  //     } else if (str[index].word.indexOf("开户行") != -1) {
-  //       Openbank.push(str[index].word)
-  //     } else if (str[index].word.indexOf("金额(大写)") != -1) {
-  //       Openbank.push(str[index].word)
-  //     } else if (str[index].word.indexOf("(小写)") != -1) {
-  //       Openbank.push(str[index].word)
-  //     } else if (str[index].word.indexOf("CNY") != -1) {
-  //       Openbank.push(str[index].word)
-  //       console.log(str[index].word)
-  //     }else if (str[index].word.indexOf("付款人账号") != -1) {
-  //       Openbank.push(str[index].word)
-  //     } else if (str[index].word.indexOf("付款人户名") != -1) {
-  //       Openbank.push(str[index].word)
-  //     } else if (str[index].word.indexOf("戈款备注") != -1) {
-  //       Openbank.push(str[index].word)
-  //     } else {
-  //     }
+    for (let index in str) {
+      if (str[index].word.indexOf("招商银行") != -1){
+        Openbank.push(str[index].word)
+      } else if (str[index].word.indexOf("日期") != -1){
+        Openbank.push(str[index].word)
+      } else if (str[index].word.indexOf("流水号") != -1) {
+        Openbank.push(str[index].word)
+      } else if (str[index].word.indexOf("收款账号") != -1) {
+        Openbank.push(str[index].word)
+      } else if (str[index].word.indexOf("户名") != -1) {
+        Openbank.push(str[index].word)
+      } else if (str[index].word.indexOf("开户行") != -1) {
+        Openbank.push(str[index].word)
+      } else if (str[index].word.indexOf("金额(大写)") != -1) {
+        Openbank.push(str[index].word)
+      } else if (str[index].word.indexOf("(小写)") != -1) {
+        Openbank.push(str[index].word)
+      } else if (str[index].word.indexOf("CNY") != -1) {
+        Openbank.push(str[index].word)
+        console.log(str[index].word)
+      }else if (str[index].word.indexOf("付款人账号") != -1) {
+        Openbank.push(str[index].word)
+      } else if (str[index].word.indexOf("付款人户名") != -1) {
+        Openbank.push(str[index].word)
+      } else if (str[index].word.indexOf("戈款备注") != -1) {
+        Openbank.push(str[index].word)
+      } else {
+      }
     
-  //   }
-  //   //整理招商银行数据
-  //  let Concat= Openbank[7].concat(Openbank[8]);
-  //  console.log(Concat)
-  //   Openbank.splice(7,2);
-  //   Openbank.splice(7, 0, Concat)
-  //   console.log(Openbank)
-  //   Openbank.pop()
+    }
+    //整理招商银行数据
+   let Concat= Openbank[7].concat(Openbank[8]);
+   console.log(Concat)
+    Openbank.splice(7,2);
+    Openbank.splice(7, 0, Concat)
+    console.log(Openbank)
+    Openbank.pop()
 
 
        //整理支付宝数据

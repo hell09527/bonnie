@@ -53,8 +53,8 @@
               </view>
               <view>
                 <text wx:if='{{item.order_no}}'>订单号：{{item.order_no}}</text>
-                <text wx:else>{{item.account_type==1?'分润提现':'奖金提现'}}</text>
-                <text>{{item.settlement_time}}</text>
+                <text wx:else>{{item.status==0?'审核中':item.status==1?'已到账':'已拒绝'}}</text>
+                <text>{{item.modify_date?item.modify_date:item.settlement_time}}</text>
               </view>
             </view>
           </block>

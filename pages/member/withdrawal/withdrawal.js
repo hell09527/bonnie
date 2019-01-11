@@ -41,8 +41,10 @@ Page({
           var item = separationRecords[i].accountRecords;
           for (var j = 0; j < item.length;j++){
             var index = item[j].settlement_time.indexOf(" ");
+            var index2 = item[j].modify_date.indexOf(" ");
             // console.log(index);
             item[j].settlement_time = item[j].settlement_time.substr(index + 1, item[j].settlement_time.length);
+            item[j].modify_date = item[j].modify_date.substr(index2 + 1, item[j].modify_date.length);
             if (parseFloat(item[j].money)>0){
               item[j].money = '+' + item[j].money;
               item[j].isGreen=true;

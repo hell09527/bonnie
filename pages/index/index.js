@@ -58,7 +58,8 @@ Page({
     // })
     wx.navigateTo({
       // url: "/pages/member/kolApply/kolApply",
-      url: "/pages/member/kol/kolbill/kolbill",
+      // url: "/pages/member/kol/kolbill/kolbill",
+      url:"/pages/goods/goodslist/goodslist",
     })
 
   },
@@ -75,18 +76,10 @@ Page({
     if (options.scene) {
       // 扫码进入
       var scene = decodeURIComponent(options.scene);
-      let store_id = scene.split('&')[0];
-      let kol_id = scene.split('&')[1];
-
+      console.log("scene ", scene);
+      let kol_id = scene.split('&')[0];
+      app.globalData.kol_id = kol_id;
       console.log("********kol_id", kol_id);
-      console.log("********store_id", store_id);
-      if (store_id == 0) {
-        app.globalData.kol_id = kol_id;
-        console.log("********kol_idj", kol_id);
-      } else {
-        app.globalData.store_id = store_id;
-        console.log("********store_idj", store_id);
-      }
     }
 
 
