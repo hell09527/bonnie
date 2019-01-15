@@ -86,6 +86,9 @@ page{
   font-size: 20px;
   font-family: "微软雅黑","Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 }
+button::after{
+ border:none;
+}
 
 .span{
   display: inline;

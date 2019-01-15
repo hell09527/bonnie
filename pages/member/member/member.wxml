@@ -70,9 +70,6 @@
       成为会员
     </view>
   </view>             -->
- 
-<!-- <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"> 你好</button>  -->
-
   <view class='control'>
     <view class='control_l_content selected'>
       普通订单
@@ -81,7 +78,7 @@
       查看全部订单
     </view>
   </view>
-   <!-- <button open-type="getUserInfo" bindgetuserinfo="bindgetuserinfo">点击刷新个人信息</button>  -->
+   <!-- <button open-type="getUserInfo" bindgetuserinfo="userinfo">点击刷新个人信息</button>  -->
   <view class='member-nav'>
     <view class="member-nav_item" catchtap='listClick' data-url='order/myorderlist/myorderlist?status=1'>
       <image src='/images/member/pay.png'/>
@@ -214,6 +211,9 @@
         </view> 
      </view> -->
  
+
+        
+
        <!-- <view class='li'>
         <view class="a member_list_item" catchtap='listClick' data-url="member/givingRecords/givingRecords">
           <image src='http://video.ushopal.com/WechatIMG73.png'/>
@@ -235,6 +235,14 @@
         </view>
         </view>
       </block>
+      <block>
+        <view class='li' wx:if='{{distributor_type==1}}'>
+        <view class="a member_list_item" catchtap='listClick' data-url="index/coupon/coupon">
+          <image src='https://static.bonnieclyde.cn/WechatIMG1.png'/>
+          <view class='span'>优惠券分享</view>
+        </view> 
+        </view> 
+      </block>
       <block >
         <view class='li' wx:if='{{distributor_type!=0}}'>
     
@@ -244,6 +252,7 @@
           </view>
         </view>
       </block>
+      
    
   
 

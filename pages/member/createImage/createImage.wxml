@@ -5,7 +5,7 @@
     <view class='shuck'>
     <block  wx:if="{{ts==2 || ts==3}}" >
           <image  src="{{saveImg}}" data-index='{{index}}' data-img='{{saveImg}}' style="width:{{setfixW}}px;margin:0 auto; height:{{imgUrlH}}px" catchtap='preivewImg'></image>
-   <view class='photoAlbum' catchtap='Save'>保存到相册</view>
+   <!-- <view class='photoAlbum' catchtap='Save'>保存到相册</view> -->
      </block>
 
       <image wx:if="{{ts==1 ||ts==6}}" src="{{imgUrl}}" data-index='{{index}}' data-img='{{imgUrl}}' mode='widthFix' catchtap='preivewImg'></image>
@@ -14,15 +14,17 @@
     <view class='fixaction'>
 
       <view class='ul' wx:if='{{Fixtitle==1}}'>
-        <view class='li' style="width:33.3%" catchtap='uploading'>上传图片</view>
+        <view class='li' wx:if="{{maKestep==1}}"  style='width:100%;' catchtap='uploading'>上传图片</view>
          <!-- 固定页面状态显示 -->
-        <view class='li' style="width:33.3%"  catchtap='commodity'>选择商品</view>
-         <view class='li' style="width:33.3%;" catchtap='beChange'>{{beTitle}}</view>
+        <view class='li'   wx:if="{{maKestep==2}}" style='width:100%;'  catchtap='commodity'>选择商品</view>
+
+         <view class='li'wx:if="{{maKestep==3}}" style='width:100%;'  catchtap='achieve'>制作海报</view>
       </view>
               <!-- 固定页面状态显示 -->
    <view class='ul' wx:if='{{Fixtitle==2}}'>
-        <view class='li' style="width:50%" catchtap='Jump'>继续制作</view>
-        <view class='li' style="width:50%"  catchtap='countermand'>返回列表</view>
+        <view class='li' style="width:33.3%" catchtap='Jump'>继续制作</view>
+        <view class='li' style="width:33.3%;font-weight: 500;" catchtap='Save' >保存相册</view>
+        <view class='li' style="width:33.3%"  catchtap='countermand'>返回列表</view>
       </view>
 
     </view>
@@ -63,9 +65,8 @@
        
      </block>
      <block wx:if='{{category==2}}'>
-
      <view class='goods_all' wx:for='{{synthesize_list}}' wx:key='' wx:for-item='pos' wx:for-index='index'  data-i="{{pos.brand_id}}"
-     data-title='{{pos.brand_name}}' data-ito="{{pos.brand_id}}" catchtap='distinguish'>
+     data-title='{{pos.brand_name}}' data-i="{{pos.brand_id}}" catchtap='Chooseshop'>
        <view class="all-box"  >
                 <image src="{{pos.brand_ads}}" mode="widthFix"></image>
                 <view class="shop-detail">
@@ -88,7 +89,7 @@
       <scroll-view scroll-y class="roll" style="height:{{windowHeight}}px;">
         <image wx:if="{{ts==2 || ts==3}}" src="{{saveImg}}" data-index='{{index}}' data-img='{{saveImg}}' style="width:{{setfixW}}px;margin:0 auto; height:{{imgUrlH}}px" catchtap='preivewImg'></image>
         <!-- <image wx:if="{{ts==2}}" src="{{imgUrl}}" data-index='{{index}}' data-img='{{imgUrl}}' mode='widthFix' catchtap='preivewImg' ></image> -->
-        <view class='photoAlbum' catchtap='Save'>保存到相册</view>
+        <!-- <view class='photoAlbum' catchtap='Save'>保存到相册</view> -->
         <!-- <view class='photoAlbum' catchtap='Close'>退出</view> -->
       </scroll-view>
     </view>

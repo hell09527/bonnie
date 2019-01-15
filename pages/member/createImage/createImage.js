@@ -27,7 +27,8 @@ Page({
     // search_list:[],//搜索列表
     searchFlag: 0,//避免重复点击
     beTitle: '返回列表',
-    Fixtitle: 1  //固定页面状态显示
+    Fixtitle: 1 , //固定页面状态显示
+    maKestep: 1,//制作步骤
   },
   /**
    * 生命周期函数--监听页面加载
@@ -85,14 +86,18 @@ Page({
         ctx.setFillStyle('#000') // 文字颜色：白色
         ctx.setFontSize(12) // 文字字号：12px
         // ctx.fillText("作者:薛定谔了猫", 50, codeH )
+        
       
         let R
         let fsm = wx.getFileSystemManager();
+        // wx.removeStorageSync
         // 因wx.getImageInfo获取不到base64的信息 
         //转换base64解码
         let buffer = that.data.codeUrl.replace('data:image/png;base64,', '');
+        // +new Date().getTime() 避免安卓缓存问题
+        let Yo=wx.env.USER_DATA_PATH + "/" + new Date().getTime() + ".png"
         fsm.writeFile({
-          filePath: wx.env.USER_DATA_PATH + '/test.png',
+          filePath:Yo, 
           data: buffer,
           encoding: 'base64',
           success(res) {
@@ -100,14 +105,14 @@ Page({
             R = wx.env.USER_DATA_PATH + '/test.png';
             // 获取图片信息
             wx.getImageInfo({
-              src: R,
+              src: Yo,
               success: function (res) {
                 let HOS = setfixW / 4;
                 console.log(HOS)
                 ctx.drawImage(res.path, W, H, HOS, HOS)
                 ctx.stroke()
                 ctx.draw();
-                //  console.log('121331')
+                 console.log('121331')
                 wx.showToast({
                   title: '制作中',
                   icon: 'loading',
@@ -130,7 +135,7 @@ Page({
                         saveImg: res.tempFilePath
                       })
                       // 将合成图片图片上传到服务器到海报列表
-                      that.uplodeHeadImg(that, Imgs)
+                      that.uplodeHeadImg(that, Imgs);
                     }
                   });
                 }, 2000)
@@ -141,6 +146,10 @@ Page({
             });
           }
         })
+
+
+     
+
 
       }
     });
@@ -253,6 +262,8 @@ Page({
    */
   onShow: function () {
     let that = this;
+    this.onLoad();
+    wx.clearStorage()
     that.tocomposite(); //商品标题数据
     that.toGoods(0, 0); //商品数据
     // 综合门类的数据
@@ -373,59 +384,46 @@ Page({
   // 选中商品
   Chooseshop: function (e) {
     let category_goods = this.data.category_goods;
-
+    let synthesize_list = this.data.synthesize_list;
+    let category=this.data.category;
     let index = e.currentTarget.dataset.i;
     var name = e.currentTarget.dataset.title;
     let beTitle = '下一步'
-    if (index) {
-      // 选中的礼物的下标
-      let index = e.currentTarget.dataset.i;
-      // 先改变全部礼物都为不选中
-      let category_goods = this.data.category_goods;
-      console.log(category_goods)
-      for (let i = 0; i < category_goods.length; i++) {
-        if (category_goods[i].goods_id == index) {
-          category_goods[i].selected = true;
-        } else {
-          category_goods[i].selected = false;
+     if(category==1){
+      if (index) {
+        // 选中的礼物的下标
+        let index = e.currentTarget.dataset.i;
+        // 先改变全部礼物都为不选中
+        let category_goods = this.data.category_goods;
+        console.log(category_goods)
+        for (let i = 0; i < category_goods.length; i++) {
+          if (category_goods[i].goods_id == index) {
+            category_goods[i].selected = true;
+          } else {
+            category_goods[i].selected = false;
+          }
         }
       }
-    }
-
-    this.setData({
-      category_goods: category_goods,
-      gooSid: index,
-      name: name,
-      next: 6,
-      beTitle
-    })
-  },
-
-  // 选中综合品牌
-  distinguish: function (e) {
-    let that = this;
-    let Ito = e.currentTarget.dataset.ito;
-    var name = e.currentTarget.dataset.title;
-    let synthesize_list = this.data.synthesize_list;
-    let beTitle = '下一步'
-    console.log(Ito)
-    console.log(name)
-    // 先改变全部礼物都为不选中
-    for (let i = 0; i < synthesize_list.length; i++) {
-      if (synthesize_list[i].brand_id == Ito) {
+     }else{
+     // 先改变全部礼物都为不选中
+     for (let i = 0; i < synthesize_list.length; i++) {
+      if (synthesize_list[i].brand_id == index) {
         synthesize_list[i].selected = true;
       } else {
         synthesize_list[i].selected = false;
       }
     }
+     }
+     console.log(index )
+
     this.setData({
+      category_goods: category_goods,
       synthesize_list: synthesize_list,
-      gooSid: Ito,
+      gooSid: index,
       name: name,
       next: 6,
-      beTitle
+      maKestep:3
     })
-
   },
   // 商品品牌点击
   toCheckActive: function (e) {
@@ -484,8 +482,8 @@ Page({
       })
       that.popupClose();
     }
-    //刷新当前页面的数据
-    getCurrentPages()[getCurrentPages().length - 1].data
+    // //刷新当前页面的数据
+    // getCurrentPages()[getCurrentPages().length - 1].data
 
   },
   Close: function () {
@@ -505,9 +503,9 @@ Page({
   //完成
   achieve: function () {
     let that = this;
+    let id=that.data.gooSid
     console.log(that.data.gooSid);
     if (!that.data.imgUrl) {
-      // console.log(1111)
       that.showBox('您还没有选择图片')
     } else if (!that.data.gooSid) {
       // that.Commonality();
@@ -523,11 +521,9 @@ Page({
           },
           success: function (res) {
             let data = res.data;
-            // console.log(data)
-            // let array = wx.base64ToArrayBuffer(data)
-            // let base64 = wx.arrayBufferToBase64(array);
             that.setData({
               codeUrl: data,
+              Fixtitle: 2,
               ts: 2
             })
             that.Commonality();
@@ -583,7 +579,8 @@ Page({
           console.log(tempFiles);
           that.setData({
             imgUrl: tempFiles,
-            ts: 1
+            ts: 1,
+            maKestep:2
           })
         },
         fail: function (res) {
@@ -640,7 +637,7 @@ Page({
               code_pic: img_url,
             },
             success: function (res) {
-              console.log(res.data)
+              console.log(res.data);
               var data = res.data
               if (res.statusCode == 200) {
 
@@ -648,8 +645,6 @@ Page({
 
             }
           })
-
-
 
         } else {
           app.showBox(that, '上传失败');
@@ -733,13 +728,5 @@ Page({
       let page = that.data.page;
       this.toGoods(category_id, page);
     }
-
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

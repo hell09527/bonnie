@@ -25,7 +25,6 @@ Page({
     circular: true,
     indicatorColor: '#AAA',
     indicatorActiveColor: '#FFF',
-    swiperHeight: 153,
     copyRight: {
       is_load: 1,
       default_logo: '/images/index/logo_copy.png',

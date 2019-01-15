@@ -15,6 +15,8 @@ Page({
     price:'',     //输入金额
     isBindInput:true,    //输入框没输入时符号显示
     remain:true,    //提现方式
+    maxMoey: '',    //当日最高提现金额
+    minMoey:'',    //当日最低提现金额
   },
 
   /**
@@ -41,10 +43,10 @@ Page({
           var item = separationRecords[i].accountRecords;
           for (var j = 0; j < item.length;j++){
             var index = item[j].settlement_time.indexOf(" ");
-            var index2 = item[j].modify_date.indexOf(" ");
+            // var index2 = item[j].modify_date.indexOf(" ");
             // console.log(index);
             item[j].settlement_time = item[j].settlement_time.substr(index + 1, item[j].settlement_time.length);
-            item[j].modify_date = item[j].modify_date.substr(index2 + 1, item[j].modify_date.length);
+            // item[j].modify_date = item[j].modify_date.substr(index2 + 1, item[j].modify_date.length);
             if (parseFloat(item[j].money)>0){
               item[j].money = '+' + item[j].money;
               item[j].isGreen=true;
@@ -55,6 +57,8 @@ Page({
           remainPrice: res.data.account.balance,  //分润余额
           rewardPrice: res.data.account.bonus,  //奖励余额
           separationRecords,   //账单明细
+          maxMoey: parseFloat(res.data.config.withdraw_cash_max) - parseFloat(res.data.config.withdraw_cash_sum),    //当日最高提现金额
+          minMoey: res.data.config.withdraw_cash_min,    //当日最低提现金额
         })
       }
     })
@@ -197,7 +201,7 @@ Page({
             that.setData({
               prompt: '用户余额不足',
             })
-          } else {
+          } else if(res.code==1) {
             console.log(event.detail.formId, app.globalData.openid, res.data);
             app.sendRequest({
               url: "api.php?s=distributor/createWithdrawTemplate",

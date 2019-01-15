@@ -147,8 +147,6 @@ Page({
 
         }
       }
-    
-
 
     if (goods_name) {
       wx.setNavigationBarTitle({
@@ -157,7 +155,6 @@ Page({
     }
 
   //  极选师扫码12小时内有分销来源
-
     let timestamp = Date.parse(new Date);
     if (app.globalData.identifying != 0) {
       let overtime = timestamp + 43200000;
@@ -168,9 +165,6 @@ Page({
       wx.setStorageSync('uid', uid)
       wx.setStorageSync('overtime', overtime);
     }
-
-
-
 
     if (flys == 'fly'){
       that.setData({
@@ -1396,45 +1390,37 @@ Page({
       
       //判断是否继续弹出获取个人信息弹窗
       if (app.globalData.unregistered==0){
-      wx.login({
-    success: function (res){
-      let coco=res.code;
-      app.sendRequest({
-        url: 'api.php?s=Login/getWechatMobile',
-        data: {
-          code: coco,
-          mobileEncryptedData: e.detail.encryptedData,
-          mobileIv: e.detail.iv
-        },
-        success: function (res) {
-          that.setData({
-            Choice: false
-          })
-             if(res.code==0){
-             that.setData({
-               tel: res.data.user_tel,
-               Choice: false
-             })
-             }
-
-        }
-      });
-    }
-  })
-
-  
-
-   }else{
-    
+        wx.login({
+          success: function (res){
+            let coco=res.code;
+            app.sendRequest({
+              url: 'api.php?s=Login/getWechatMobile',
+              data: {
+                code: coco,
+                mobileEncryptedData: e.detail.encryptedData,
+                mobileIv: e.detail.iv
+              },
+              success: function (res) {
+                that.setData({
+                  Choice: false
+                })
+                if(res.code==0){
+                  that.setData({
+                    tel: res.data.user_tel,
+                    Choice: false
+                  })
+                }
+              }
+            });
+          }
+        })
+      }else{
         that.setData({
           showModal: true,
           Choice:false
         })
       }
-
-    } else {
-  
-    }
+    } 
   },
   //获取头像
   bindgetuserinfo: function (res) {
@@ -1462,7 +1448,6 @@ Page({
           layout: true,
 
         })
-
         wx.login({
           success: function (res) {
             let coco = res.code;
@@ -1483,20 +1468,11 @@ Page({
                     wx_name: wx_name,
                     heder_img
                   })
-
-                
-
                 }
-
               }
             });
           }
         })
-
-
-
-
-
       } else {
         wx.login({
           success: function (res) {
@@ -1530,8 +1506,6 @@ Page({
                           token: lpl
                         },
                         success: function (res) {
-
-                          
                           if (res.code == 0) {
                             that.setData({
                               unregistered: 0,
@@ -1539,39 +1513,23 @@ Page({
                               tel: res.data.user_tel,
                               heder_img
                             })
-
                           }
                         }
                       });
                     }
                   })
-
-
-
                 }
-
               }
             });
           }
         })
       }
-
-
-
-
-
-
     } else {
       this.setData({
         showModal: false,
 
       })
     }
-
-
-
-
-
   },
 
   /**

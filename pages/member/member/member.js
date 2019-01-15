@@ -372,7 +372,26 @@ Page({
 
     }
   },
+  //更新头像
+  userinfo:function(res){
+    let that=this;
+    if (res.detail.iv) {
+      let iv = res.detail.iv;
+      let encryptedData = res.detail.encryptedData;
+      app.globalData.iv = res.detail.iv;
+      app.globalData.encryptedData = res.detail.encryptedData;
+      app.globalData.unregistered = 0;
+      console.log(res.detail.iv
+      )}
+    let heder_img = res.detail.userInfo.avatarUrl
+    let wx_name = res.detail.userInfo.nickName
+    let branch = res.currentTarget.dataset.status;
 
+    that.setData({
+      wx_name: wx_name,
+      heder_img
+    })
+  },
   //获取头像
   bindgetuserinfo: function (res) {
     let that = this;

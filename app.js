@@ -71,7 +71,6 @@ App({
         console.log('获取用户信息成功', res);
         let unregistered = 0;
         that.setRegister(unregistered)
-
         this.app_login();
       },
       fail(res) {

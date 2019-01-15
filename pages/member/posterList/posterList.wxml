@@ -29,16 +29,22 @@
 <!-- catchtap='popupClose' -->
 <view class="mimi" wx:if="{{reveal}}" ></view>
 <view   class="blocks" wx:if="{{reveal}}">
-<scroll-view  scroll-y  style="height:{{windowHeight}}px; z-index:999">
- <image src='{{Imgs}}' mode='widthFix' style="width:100%;"></image>
+<scroll-view  scroll-y  style="height:{{windowHeight}}px; z-index:99" >
 
+<swiper   autoplay='{{false}}'   interval="2000" duration="1000"  circular  style='height: {{OrifinHeight}}px' current='{{visualI}}' bindchange='onSlideChangeEnd'>
+<block wx:for='{{category_goods}}' wx:key='' wx:for-item='shops' wx:for-index='index' >
+<swiper-item >
+<image src='{{shops.code_pic}}' mode='widthFix' style="width:100%;"  catchtap='exitMoswl'></image>
+</swiper-item>
+</block>
+</swiper>
+
+</scroll-view>
   <view class="contain"> 
   <view class="inline" catchtap='delImgs'>删除图片</view>
   <view class="inline" catchtap='Savelocal'>下载到相册</view>
-  <view class="inline" catchtap='exitMoswl'>退出</view>
+  <view class="inline" catchtap='exitMoswl'>返回列表</view>
   </view>
-</scroll-view>
-
 
 </view>
 </scroll-view>

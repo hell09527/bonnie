@@ -89,7 +89,9 @@
     "pages/verification/virtualgoodsshare/virtualgoodsshare",
     "pages/verification/verificationorderdetail/verificationorderdetail",
     "pages/goods/integralzone/integralzone",
-    "pages/index/coverindex/coverindex"
+    "pages/index/coverindex/coverindex",
+    "pages/index/coupon/coupon",
+    "pages/index/couponReceive/couponReceive"
   ],
   "tabBar": {
     "borderStyle": "black",

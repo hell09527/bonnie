@@ -1195,7 +1195,6 @@ Page({
     this.setData({
       startX: e.changedTouches[0].clientX,
       startY: e.changedTouches[0].clientY,
-      items: this.data.items,
       cart_list: data,
     })
   },

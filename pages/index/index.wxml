@@ -193,4 +193,5 @@
     </view>
     <image src="https://static.bonnieclyde.cn/WechatI3.png" mode='widthFix' style='margin:100rpx auto;display:block;width:300rpx;position: relative;'></image>
   </form>
+
 </scroll-view>

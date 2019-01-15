@@ -8,7 +8,10 @@ Page({
   data: {
     category_goods:[],
     reveal:false,
-    id :''
+    id :'',
+    visualI:'',
+    swiperHeight: 400,
+    swperStatu:1, //是否切换图片
   },
 
   /**
@@ -19,11 +22,13 @@ Page({
     wx.getSystemInfo({
       success(res) {
         let windowWidth= res.windowWidth - 40;
-        let windowHeight = res.windowHeight ;
+        let windowHeight = res.windowHeight-60 ;
+        let OrifinHeight = res.windowHeight+100;
         console.log(windowHeight);
         that.setData({
           windowWidth: windowWidth,
-          windowHeight
+          windowHeight,
+          OrifinHeight
         })
       }
 
@@ -61,9 +66,11 @@ Page({
     let that = this;
     let i = e.currentTarget.dataset.index;
     let id = e.currentTarget.dataset.id;
-    console.log(that.data.category_goods[i].code_pic)
+    console.log(that.data.category_goods[i].code_pic);
+      console.log(i)
     that.setData({
       Imgs :that.data.category_goods[i].code_pic,
+      visualI: i,
       reveal: true,
       id
     })
@@ -88,7 +95,24 @@ Page({
    */
   delImgs:function(){
     let that = this;
-    let id = that.data.id;
+    let category_goods = that.data.category_goods;
+    let In = that.data.In;
+    let id
+
+    if (that.data.swperStatu==1){
+       id=that.data.id;
+    }else{
+      for (let index in category_goods) {
+        if (In == index) {
+          id = category_goods[index].id;
+          console.log(id)
+        }
+      }
+    }
+
+    
+   
+   
     app.sendRequest({
       url: "api.php?s=Distributor/wxcodeDelete",
       data:{
@@ -112,9 +136,22 @@ Page({
 * 下载到相册
 */
   Savelocal: function () {
-  let that = this;
+    let that = this;
+    let In = that.data.In;
+    let category_goods = that.data.category_goods;
+    let Imgs;
+    if (that.data.swperStatu == 1) {
+      Imgs = that.data.Imgs;
+    } else {
+      for (let index in category_goods) {
+        if (In == index) {
+          Imgs= category_goods[index].code_pic;
+          console.log(Imgs)
+        }
+      }
+    }
     wx.downloadFile({
-      url: that.data.Imgs, 
+      url: Imgs, 
       success(res) {
         // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
         if (res.statusCode === 200) {
@@ -122,9 +159,6 @@ Page({
           that.setData({
             filePath: res.tempFilePath
           })
-          // wx.playVoice({
-          //   filePath: res.tempFilePath
-          // })
         }
       }
     })
@@ -202,6 +236,14 @@ Page({
     })
 
   },
+  onSlideChangeEnd:function(e){
+    var that = this;
+    console.log(e.detail.current );
+    that.setData({
+      In: e.detail.current ,
+      swperStatu:2
+    })
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -229,11 +271,5 @@ Page({
   onReachBottom: function () {
 
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
+ 
 })
