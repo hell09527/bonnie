@@ -26,10 +26,10 @@ button{
 .li{
   float: left;
   text-align: center;
-  line-height: 50px;
+  line-height: 120rpx;
   color: #fff;
   width: 20%;
-  height: 50px;
+  height: 120rpx;
 }
 .mimi{
   position: fixed;
@@ -253,6 +253,11 @@ height:68rpx;
 .controlSearch .control-search-input .search-button{
   margin: 4px 0;
 }
+.Uicon{
+  width:20px;
+  height: 20px;
+  vertical-align:middle
+}
 
 .category-content-section{
   z-index: 1;
@@ -260,4 +265,72 @@ height:68rpx;
 canvas{
   position:absolute;
   top:-1000px;
+}
+/* 使用步骤css  */
+.useStep{
+  width:100%;
+ padding: 0px;
+}
+.Step1{
+  width:100%;
+display:flex;
+justify-content:space-around;
+ margin-top: 10px;
+ height:44rpx;
+}
+.wire{
+
+  border:1px solid #eeb85b;
+  width:89px;
+  height:2px;
+  margin-top:21rpx;
+
+
+}
+.Htitle{
+  font-family:PingFangSC-Regular;
+font-size:16px;
+color:#eeb85b;
+letter-spacing:0;
+text-align:justify;
+
+ 
+}
+.eg{
+  margin: 80rpx;
+}
+.loText{
+  font-family:PingFangSC-Light;
+  font-size:36rpx;
+  color:#9b9b9b;
+  letter-spacing:0;
+  text-align:center;
+}
+.h1{
+  font-family:PingFangSC-Medium;
+  font-size:32rpx;
+  color:#4a4a4a;
+  letter-spacing:0;
+  text-align:center;
+  line-height:20px;
+  margin:3px;
+}
+.Step_text{
+  font-family:PingFangSC-Light;
+font-size:36rpx;
+color:#efbb61;
+letter-spacing:0;
+text-align:center;
+}
+.line{
+border:1px solid #eeb85b;
+margin:0 auto;
+width:29px;
+height:1px;
+}
+.Utype{
+width: 100px;
+height: 100rpx;
+color:#fff;
+margin: 0 auto;
 }

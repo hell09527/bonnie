@@ -56,39 +56,74 @@
                 <view class='sku span' wx:if='{{cart.sku_name!=""}}'>规格：{{cart.sku_name}}</view>
                 <view class="number"data-id='{{cart.goods_id}}' data-name='{{cart.goods_name}}'>
                   <!-- {{box.promotion_price}}此价格并非原价也可能是会员价也可能是促销价 -->
-                  <view class='span' name="goods_price" wx:if='{{is_vip==0 && distributor_type!=1}}'>
+                  <view class='span' name="goods_price" wx:if='{{showStatus==0}}'>
                     ¥{{cart.promotion_price}}
                   </view>
-                  <view wx:if='{{distributor_type==1 && edit == 0}}' name="goods_price">
+
+                  <!-- <view wx:if='{{distributor_type==1 && edit == 0}}' name="goods_price">
                     <view class='span' name="goods_price" style='width:140rpx;'>
                       ¥{{cart.promotion_price}}
                     </view>
                     <text style='color:#999;font-size:12px;margin-left:10rpx;'>
                       原价¥{{cart.price}}
                     </text>
-                  </view>
+                  </view> -->
+
+                       <!-- 超级vip的权限 -->
                   <view wx:if='{{distributor_type==1 && edit == 1}}' name="goods_price">
                     ¥
-                    <input class="goods_price-input" type='digit' value='{{cart.promotion_price}}' data-index='{{k}}' data-id='{{cart.cart_id}}' bindinput='inputPrice' />
+                    <input class="goods_price-input" type='digit' value='{{cart.promotion_price}}' data-index='{{k}}' data-id='{{cart.cart_id}}' bindinput='ECTPrice' />
                     <text style='color:#999;font-size:12px;margin-left:10rpx;'>
                       原价¥{{cart.price}}
                     </text>
                   </view>
+                  
+                    <!-- 普通vip的权限 -->
+                  <view wx:if='{{ distributor_type!=0 && distributor_type!=1 && edit == 1 && cart.is_change_price==1}}' name="goods_price">
+                    ¥
+     <input   class="goods_price-input  " type='digit' value='{{cart.promotion_price}}' data-index='{{k}}' data-id='{{cart.cart_id}}'
+ bindinput='inputPrice'  bindblur='EiditPrice'  />
+                    <view class='showTitle' style='color:red;font-size: 12px;' > 您修改的价格不得低于{{cart.min_change_price}} </view>
+                   
+                  </view>
+                     <!-- 付费会员的价格 -->
                   <view class='vip_price' wx:if='{{is_vip==1 && distributor_type!=1}}' style='color:#CC9933' name="vip_price">
                     ¥ {{cart.promotion_price}}
                   </view>
+
                 </view>
-                <view class="edit_num">
+                
+                <!-- 普通vip的样式 -->
+                <view class="edit_show"  wx:if='{{distributor_type!=0 && distributor_type!=1 && edit == 1 && cart.is_change_price==1}}'>
+                 <text style='color:#999;font-size:12px;margin-left:10rpx;line-height:0; '>
+                      原价¥{{cart.price}}
+                    </text>
                   <view class="span ui-number">
                     <view class="decrease" data-type='minus' data-index='{{i}}' data-key='{{k}}' style="border-right:1px solid #ccc;" data-id='{{cart.cart_id}}' catchtap='numAdjust'>
                       -
                     </view>
-                    <input class="num" value="{{cart.num}}" data-index='{{i}}' data-key='{{k}}' data-id='{{cart.cart_id}}' bindblur='inputAdjust' />
+                    <input class="num"  type='number'  value="{{cart.num}}" data-index='{{i}}' data-key='{{k}}' data-id='{{cart.cart_id}}' bindblur='inputAdjust' />
                     <view class="increase" data-type='add' data-index='{{i}}' data-key='{{k}}' style="border-left:1px solid #ccc;" data-id='{{cart.cart_id}}' catchtap='numAdjust'>
                       +
                     </view>
                   </view>
                 </view>
+                <!-- 超级vip的样式  -->
+               <view class="edit_num" wx:else>
+                  <view class="span ui-number">
+                    <view class="decrease" data-type='minus' data-index='{{i}}' data-key='{{k}}' style="border-right:1px solid #ccc;" data-id='{{cart.cart_id}}' catchtap='numAdjust'>
+                      -
+                    </view>
+                    <input class="num"  type='number'   value="{{cart.num}}" data-index='{{i}}' data-key='{{k}}' data-id='{{cart.cart_id}}' bindblur='inputAdjust' />
+                    <view class="increase" data-type='add' data-index='{{i}}' data-key='{{k}}' style="border-left:1px solid #ccc;" data-id='{{cart.cart_id}}' catchtap='numAdjust'>
+                      +
+                    </view>
+                  </view>
+                </view>
+
+
+
+
               </view>
             </view>
             <view class="del" catchtap="del" data-index="{{k}}">删除</view>

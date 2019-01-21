@@ -50,11 +50,14 @@ Page({
     isHide: 0,    //客服按钮是否影藏
     // unregistered:1, //是否注册(1, 0)
     region: [
-      { id: 3104, name: '焦阳阳' },
+      { id: '3104', name: '焦阳阳' },
       { id: '', name: '未指定' },
     ],
     personnel: '',
-    Carrier: ''    // 分销者ID
+    Carrier: '' ,   // 分销者ID
+    showStatus:0,   // 原价的展示
+    showTitle:0,//是否提示普通极选师修改价格
+    showEide:0
   },
   // 测试数据
   last: function () {
@@ -126,10 +129,6 @@ Page({
     //   }else{
 
     //   }
-
-
-
-
   },
 
 
@@ -229,10 +228,14 @@ Page({
         let total_price = 0.00;
         if (code == 0) {
           let data = res.data;
-          // console.log(data)
+          console.log(data)
           for (let index in data) {
             for (let key in data[index]) {
               data[index][key].isTouchMove = false //默认全隐藏删除
+
+              // 测试代码
+              // data[index][key].Move=0;
+
               if (that.in_array(data[index][key].cart_id, that.data.unselected_list)) {
                 data[index][key].status = 0;
                 that.setData({
@@ -241,7 +244,7 @@ Page({
               } else {
                 data[index][key].status = 1;
               }
-
+              console.log(data)
               let promotion_price = parseFloat(data[index][key].promotion_price);
               let num = parseInt(data[index][key].num);
               if (data[index][key].status == 1) {
@@ -315,11 +318,10 @@ Page({
     console.log(updata)
     console.log(distributor_type, uid)
 
-
-
     that.setData({
       is_vip,
       unregistered: updata,
+      showStatus:0,
       distributor_type,
       uid
     })
@@ -353,23 +355,15 @@ Page({
 
     if (app.globalData.token && app.globalData.token != '') {
       //判断是否是付费会员的接口
-
       that.GWC_reuse()
-
-
-
     } else {
-
       app.employIdCallback = employId => {
         if (employId != '') {
           //判断是否是付费会员的接口
           that.GWC_reuse()
-
         }
-
       }
     }
-
   },
   /**
    * 生命周期函数--监听页面隐藏
@@ -437,7 +431,17 @@ Page({
     let cart_list = that.data.cart_list;
     let total_price = 0.00;
     let status = edit == 1 ? 0 : 1;
+    let showStatus;
 
+    // 状态
+    if( (that.data.distributor_type==0) || edit==0){
+      showStatus=0;
+    }else if(that.data.distributor_type!=0 && edit==1 ){
+      showStatus=1;
+    }
+     
+    
+    
     // for (let index in cart_list) {
     //     for (let key in cart_list[index]) {
     //         cart_list[index][key].status = status;
@@ -451,6 +455,7 @@ Page({
 
     that.setData({
       edit: edit,
+      showStatus
       // choose:status,
       // check_all: status,
       // is_checked: status,
@@ -516,6 +521,7 @@ Page({
         }
       })
     }
+    
     console.log(new_unselected_list)
     //this.data.cart_list.forEach();
     this.setData({
@@ -1320,8 +1326,57 @@ Page({
     })
 
   },
+  //输入事件完成
+  EiditPrice:function(){
+    var that = this;
+    var i = this.i ;
+    var id = this.id;
+    var cart_list = that.data.cart_list;
+    var price = this.price;
+    var total_price = 0;  
+   
+    for (let index in cart_list) {
+      for (let key in cart_list[index]) {
+        if (cart_list[index][key].cart_id == id) {
+          if(that.data.distributor_type !=1){
+            let  shop_id= cart_list[index][key].goods_id
+              if(price<cart_list[index][key].min_change_price){
+                this.setData({
+                  showTitle:1,
+                  shop_id,
+                })
+                cart_list[index][key].promotion_price = cart_list[index][key].min_change_price;
+              }else{
+                this.setData({
+                  showTitle:0,
+                })
+                cart_list[index][key].promotion_price = price ;
+              }
+        
+          }else{
+            cart_list[index][key].promotion_price = price 
+          }
+        }
+        if (cart_list[index][key].status == 1) {
+          total_price = total_price + parseFloat(cart_list[index][key].promotion_price * cart_list[index][key].num);
+        }
+      }
+    }
+
+        this.setData({
+          total_price: total_price.toFixed(2),
+          cart_list,
+        })
+  },
   // 价格输入变化
-  inputPrice: function (event) {
+  inputPrice:function (event) {
+    this.i = event.currentTarget.dataset.index;
+    this.id = event.currentTarget.dataset.id;
+    this.price = event.detail.value;
+
+  },
+  // 超级vip价格输入变化
+  ECTPrice:function(event){
     var that = this;
     var i = event.currentTarget.dataset.index;
     var id = event.currentTarget.dataset.id;
@@ -1342,6 +1397,7 @@ Page({
       total_price: total_price.toFixed(2),
       cart_list,
     })
-  },
+
+  }
 })
 

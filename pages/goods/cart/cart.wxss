@@ -261,11 +261,20 @@ input {
 .edit_num{
   display: flex;
   justify-content: flex-end;
+ height: 68rpx;
   align-items: center;
   position: relative;
   z-index: 100;
 }
-
+.edit_show{
+  display: flex;
+  justify-content:space-between;
+  height: 68rpx;
+   align-items: center;
+   position: relative;
+   z-index: 100;
+  
+}
 .cart-list-li .ui-number .decrease, .cart-list-li .ui-number .increase {
   color: initial;
   width: 25px;

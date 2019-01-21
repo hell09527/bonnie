@@ -437,9 +437,22 @@ Page({
           if (data > 0) {
            if(that.data.cho==1){
              app.showBox(that, '完成页面');
-              wx.navigateBack({
-               delta: 1
-             })
+
+             var pages = getCurrentPages();
+             var currPage = pages[pages.length - 1];  //当前页面
+             var prevPage = pages[pages.length - 3]; //上上一个页面
+             //console.log(currPage, prevPage);
+
+             if (prevPage.route == "pages/member/kolApply/kolApply") {
+               //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
+               wx.navigateTo({
+                 url: "/pages/member/kolApply/kolApply?uid="+app.globalData.recommendUser,
+               })
+             } else {
+               wx.navigateBack({
+                 delta: 1
+               })
+             }
            }else{
              wx.navigateTo({
                url: "/pages/member/excessive/excessive",

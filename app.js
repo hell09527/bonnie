@@ -42,7 +42,8 @@ App({
       technical_support: '',
     },
     projectData: {},    //二级页参数
-    unregistered: 0
+    unregistered: 0,
+    recommendUser:'',   //极选师推荐人
   },
   //app初始化函数
   onLaunch: function () {
@@ -77,22 +78,31 @@ App({
         console.log('获取用户信息失败', res);
         let unregistered = 1;
         that.setRegister(unregistered)
+        that.unregisteredCallback(unregistered)
       }
     })
-
     that.defaultImg();
     that.webSiteInfo();
     that.copyRightIsLoad();
+  },
+
+  // 判断是否登录
+  isLogin: function (unregistered){
+    console.log(unregistered)
+    if (unregistered == 1){
+      wx.navigateTo({
+        url: '/pages/member/resgin/resgin',
+      })
+    }
   },
 
   onShow: function () {
     let that = this;
     wx.getSystemInfo({
       success: res => {
-
         let modelmes = res.model;
         if (modelmes.search('iPhone X') != -1) {
-          that.globalData.isIphoneX = true
+          that.globalData.isIphoneX = true;
         }
       }
     })
@@ -218,7 +228,6 @@ App({
             'content-type': 'application/json'
           },
           success: function (res) {
-
             wx.hideLoading()
             //请求失败
             if (res.statusCode && res.statusCode != 200) {
@@ -254,25 +263,6 @@ App({
             typeof param.fail == 'function' && param.fail(res.data);
           },
 
-          // fail: (e) => {
-          //   console.log(e, 999)
-          //   if (e.errMsg === "request:fail "){
-          //     wx.showModal({
-          //       title: '提示',
-          //       content: '请求失败,请检查网络',
-          //       showCancel: false,
-          //       confirmColor: '#0f77ff',
-          //       success: (res) => { }
-          //     });
-          //   } else{
-
-          //   }
-
-          //   typeof param.fail == 'function' && param.fail(res.data);
-
-          // },
-
-
           complete: function (res) {
             param.hideLoading || that.hideToast();
             typeof param.complete == 'function' && param.complete(res.data);
@@ -281,6 +271,7 @@ App({
       }
     })
   },
+
   //微信提示 函数
   showToast: function (param) {
     wx.showToast({
@@ -375,6 +366,11 @@ App({
   },
   employIdCallback: function (employId) {
     if (employId != '') {
+
+    }
+  },
+  unregisteredCallback: function (unregistered) {
+    if (unregistered != '') {
 
     }
   },

@@ -602,7 +602,7 @@
                 <view class="span reduce quantity-minus-disabled" catchtap='goodsNumAdjust' data-type='minus'>
                     -
                 </view>
-                <input class="number" name="quantity" autocomplete="off" bindinput='goodsNumAdjustCheck' value="{{goodsNum}}" min="1" max="277" id="num" />
+                <input class="number" type='number' name="quantity" autocomplete="off" bindblur='goodsNumAdjustCheck' value="{{goodsNum}}" min="1" max="277" id="num" />
                 <view class="span add" catchtap='goodsNumAdjust' data-type='add'>+</view>
             </view>
             <!-- <view class='span last-goods' id="Stock">剩余{{stock}}件</view> -->

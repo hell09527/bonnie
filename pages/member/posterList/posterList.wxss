@@ -123,3 +123,25 @@ z-index: 999;
   color: #fff;
   width: 33.3%;
 }
+.Uicon{
+  width:20px;
+  height: 20px;
+  vertical-align:middle
+}
+.Utype{
+  width: 100px;
+  height: 100rpx;
+  color:#fff;
+  margin: 0 auto;
+  }
+  .dashed{
+    width: 448rpx;
+    height: 448rpx;
+    line-height: 448rpx;
+    text-align: center;
+    font-size: 16px;
+    color: #bbbaba;
+    border-radius: 0 0 20%;
+    border: 2px dashed #bbbaba;
+    margin: 250rpx 0 0 150rpx;
+  }

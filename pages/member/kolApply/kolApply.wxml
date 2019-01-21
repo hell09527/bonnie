@@ -1,4 +1,17 @@
 <!--pages/member/kolApply/kolApply.wxml-->
+<scroll-view wx:if='{{isKol==2}}'>
+  <view class='article'>
+    <view class="pay-block">
+			<image src='https://static.bonnieclyde.cn/W56.png' mode='widthFix'/>
+		</view>
+        <view class='p' >{{kolText}}</view>
+       <button catchtap='toIndex'>返回首页</button>
+			
+  </view>
+</scroll-view>
+
+
+
 <scroll-view wx:if='{{isKol==1}}'>
 
   <view class="motify {{prompt==''?'hide':''}}">
@@ -203,13 +216,4 @@
   </view>
 </scroll-view>
 
-<scroll-view wx:if='{{isKol==2}}'>
-  <view class='article'>
-    <view class="pay-block">
-			<image src='https://static.bonnieclyde.cn/W56.png' mode='widthFix'/>
-		</view>
-        <view class='p' >{{kolText}}</view>
-       <button catchtap='toIndex'>返回首页</button>
-			
-  </view>
-</scroll-view>
+

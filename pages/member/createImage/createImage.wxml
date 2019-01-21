@@ -10,21 +10,91 @@
 
       <image wx:if="{{ts==1 ||ts==6}}" src="{{imgUrl}}" data-index='{{index}}' data-img='{{imgUrl}}' mode='widthFix' catchtap='preivewImg'></image>
     </view>
+        <!-- 使用步骤页面 -->
+        <view class="useStep" wx:if="{{ts==0}}">
+          <view class="Step1">
+          <view class="wire"></view >
+          <view class='Htitle'>海报发布操作指南</view>
+          <view  class="wire"></view >
+          </view >
+
+          <view class="eg">
+          <view class="Step_text">Step1</view >
+          <view class="h1">上传图片</view>
+          <view  class="loText">选择手机相册图片或拍照上传</view >
+          </view >
+
+         <view class="eg">
+          <view class="Step_text">Step2</view >
+          <view class="h1">选择商品</view>
+          <view  class="loText">点击打开商品列表选择平台内商品</view >
+          <view class="loText" >用作生成海报上的小程序码</view >
+          </view >
+        
+           <view class="eg">
+          <view class="Step_text">Step3</view >
+            <view class="h1">生成海报</view>
+          <view class="loText" >前两步完成后</view >
+          <view  class="loText">点击“下一步”生成带有小程序码的海报</view >
+          <view  class="loText">并可以将海报保存至本地</view >
+          </view >
+
+            <view class='line'></view>
+
+        </view>
+
+
+
+
+
+
     <!-- 固定操作页 -->
     <view class='fixaction'>
 
       <view class='ul' wx:if='{{Fixtitle==1}}'>
-        <view class='li' wx:if="{{maKestep==1}}"  style='width:100%;' catchtap='uploading'>上传图片</view>
+      
+        <view class='li' wx:if="{{maKestep==1}}"  style='width:100%;' catchtap='uploading'> 
+           <view class='Utype'>
+              <image class='Uicon' src='https://static.bonnieclyde.cn/camera@2x.png'></image>
+            上传图片 
+           </view> 
+            
+         </view>
          <!-- 固定页面状态显示 -->
-        <view class='li'   wx:if="{{maKestep==2}}" style='width:100%;'  catchtap='commodity'>选择商品</view>
+        <view class='li'   wx:if="{{maKestep==2}}" style='width:100%;'  catchtap='commodity'>
+            <view class='Utype'>
+              <image class='Uicon' src='https://static.bonnieclyde.cn/Group%2013%20Copy@2x.png'></image>
+            选择商品
+           </view> 
+           </view>
 
-         <view class='li'wx:if="{{maKestep==3}}" style='width:100%;'  catchtap='achieve'>制作海报</view>
+         <view class='li'wx:if="{{maKestep==3}}" style='width:100%;'  catchtap='achieve'>
+              <view class='Utype'>
+              <image class='Uicon' src='https://static.bonnieclyde.cn/photo@2x.png'></image>
+            制作海报
+           </view> 
+           </view>
       </view>
               <!-- 固定页面状态显示 -->
    <view class='ul' wx:if='{{Fixtitle==2}}'>
-        <view class='li' style="width:33.3%" catchtap='Jump'>继续制作</view>
-        <view class='li' style="width:33.3%;font-weight: 500;" catchtap='Save' >保存相册</view>
-        <view class='li' style="width:33.3%"  catchtap='countermand'>返回列表</view>
+        <view class='li' style="width:33.3%" catchtap='Jump'>
+               <view class='Utype'>
+              <image class='Uicon' src='https://static.bonnieclyde.cn/photo@2x.png'></image>
+                继续制作
+             </view> 
+        </view>
+        <view class='li' style="width:33.3%;font-weight: 500;" catchtap='Save' >
+            <view class='Utype'>
+              <image class='Uicon' src='https://static.bonnieclyde.cn/down@2x.png'></image>
+                 下载到相册
+             </view> 
+          </view>
+        <view class='li' style="width:33.3%"  catchtap='countermand'>
+           <view class='Utype'>
+              <image class='Uicon' src='https://static.bonnieclyde.cn/back@2x.png'></image>
+                 返回列表
+             </view> 
+          </view>
       </view>
 
     </view>

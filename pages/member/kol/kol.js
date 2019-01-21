@@ -10,10 +10,9 @@ Page({
     nowData: '',  //当前月
     TistData: [
       { "code": "分润待结算状态", "text": "订单付款后，订单获得的分润" },
-      { "code": "分润审核期", "text": "订单已收货/已完成后15天内的维权期" },
-      { "code": "分润待出账状态", "text": "订单获得的分润已过了审核期，在下一个出账日可以出账" },
-      { "code": "分润已出账状态", "text": "订单获得的分润已入账到极选师账户" },
-      { "code": "出账日", "text": "分润入账到极选师账户的日期" },
+      { "code": "分润审核期", "text": "订单已收货后15天内的维权期" },
+      { "code": "待入账金额", "text": "订单获得的分润处于审核期" },
+      { "code": "可提现金额", "text": "订单获得的分润已入账到极选师账户，等待提现" },
       { "code": "考核期", "text": "每个季度为一个考核期" },
     ],
     CistData: [
@@ -145,6 +144,9 @@ Page({
           order_number_count: res.data.order_number_count, //累计成交订单笔数
           goods_money_sum: res.data.goods_money_sum.toFixed(2), //累计成交金额
           balance: res.data.account_sum.toFixed(2),  //账户余额
+          unsettled_separation_sum:res.data.unsettled_separation_sum.toFixed(2), //待结算金额
+
+
         })
       }
     })
@@ -166,10 +168,8 @@ Page({
           let order_list = res.data.data;
           // console.log(order_list )
           for (let index in order_list) {
-            order_list[index].create_time = time.formatTime(order_list[index].create_time, 'Y-M-D h:m:s');
-
-
-
+            order_list[index].create_time = time.formatTime(order_list[index].create_time, 'Y-M-D');
+            
             //图片处理
             for (let key in order_list[index].order_item_list) {
               let img = order_list[index].order_item_list[key].picture.pic_cover_small;
@@ -241,7 +241,18 @@ Page({
           let order_list = res.data.data;
           // console.log(order_list )
           for (let index in order_list) {
-            order_list[index].create_time = time.formatTime(order_list[index].create_time, 'Y-M-D h:m:s');
+            order_list[index].create_time = time.formatTime(order_list[index].create_time, 'Y-M-D');
+
+            // 卖家发货时间加上14天
+            if (order_list[index].consign_time != 0 && order_list[index].sign_time==0){
+              order_list[index].consign_time = time.formatTime(order_list[index].consign_time, 'Y-M-D');
+              order_list[index].expect_time = that.expectTime(order_list[index].consign_time,14);
+            } else if (order_list[index].consign_time != 0 && order_list[index].sign_time != 0) {
+              // 买家签收时间加上7天
+              order_list[index].sign_time = time.formatTime(order_list[index].sign_time, 'Y-M-D');
+              order_list[index].expect_time = that.expectTime(order_list[index].sign_time, 7);
+            }
+
             //图片处理
             for (let key in order_list[index].order_item_list) {
               let img = order_list[index].order_item_list[key].picture.pic_cover_small;
@@ -263,6 +274,31 @@ Page({
         }
       }
     })
+  },
+
+  // 预计分润到账时间
+  expectTime:function(time,days){
+    var dt = time;
+    dt = dt.replace('-', '/');//js不认2011-11-10,只认2011/11/10
+    var t1 = new Date(new Date(dt).valueOf() + days * 24 * 60 * 60 * 1000);// 日期加上指定的天数
+    var month;
+    var day;
+    if ((t1.getMonth() + 1) < 10) {
+      // alert("0"+(t1.getMonth() + 1));
+      month = "0" + (t1.getMonth() + 1);
+    }
+    else {
+      month = t1.getMonth() + 1;
+    }
+    if (t1.getDate() < 10) {
+      day = "0" + t1.getDate();
+    }
+    else {
+      day = t1.getDate();
+    }
+    // var ttt= t1.getFullYear() + "-" + (t1.getMonth() + 1) + "-" + t1.getDate();
+    var ttt = t1.getFullYear() + "-" + month + "-" + day;
+    return ttt;
   },
 
   listClick: function () {
@@ -441,9 +477,10 @@ Page({
 
   // 跳转提现页面
   toTiXian: function () {
-    wx.navigateTo({
-      url: '/pages/member/withdrawal/withdrawal',
-    })
+    // if (this.data.balance>0) {
+      wx.navigateTo({
+        url: '/pages/member/withdrawal/withdrawal',
+      })
   },
 
 

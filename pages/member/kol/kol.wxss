@@ -301,18 +301,20 @@ scroll-view .canvas {
   padding: 40rpx 0;
 }
 .x_fen .li{
-  font-size: 16px;
+  font-size: 12px;
   text-align: center;
-  color: #fff;
+   color: #fff;
   width:50%;
 }
 .x_fen .sk{
   border-left: 1px solid rgba(0,0,0,0.3); 
   border-right: 1px solid rgba(0,0,0,0.3);
 }
-.price{
+.li .price{
+  color:#ffb24c;
+  font-weight: 700;
   margin-top: 6px;
-  font-size: 14px;
+  font-size: 16px;
 }
 .slick{
    text-align: center;
@@ -417,6 +419,12 @@ display: -webkit-box;
 -webkit-line-clamp: 1;
 -webkit-box-orient: vertical;
 }
+.R_f{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
 .L_f{
   display: flex;
   flex-direction: column;
@@ -424,7 +432,7 @@ display: -webkit-box;
   align-items: flex-end;
 }
 .sta{
-  font-size: 14px;
+  font-size: 12px;
 }
 .num{
    width: 100%;
@@ -435,7 +443,7 @@ display: -webkit-box;
 .number{
 font-size: 14px;
 color:#8f8f8f;
-width: 10%;
+width: 15%;
 text-align: right;
 }
 .run{
@@ -444,7 +452,7 @@ text-align: right;
   line-height:60px;
 }
 .runs{
-  font-size:16px;
+  font-size:14px;
   color:#ca9d53;
 }
 .lenght{
@@ -553,7 +561,7 @@ color:#fff;
   margin:20rpx 0 10rpx;
 }
 .coin{
-  width: 33%;
+  width: 25%;
  color:#000 ;
 font-size:14px;
 
@@ -563,7 +571,7 @@ font-size:14px;
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
-  margin:0 0 20rpx;
+  margin:0 0 30rpx;
 }
 .rank{
   font-size: 12px;
@@ -571,7 +579,7 @@ font-size:14px;
   margin:26rpx 0;
 }
 .namey{
-    width: 33%;
+    width: 25%;
     font-size:12px;
     color:#808080;
 }
@@ -610,7 +618,7 @@ font-size:14px;
   justify-content: space-between;
   align-items: center;
   height: 90rpx;
-  border-bottom: 1px solid #cfcfcf;
+  border-top: 1px solid #cfcfcf;
 }
 .c_money image{
   margin:0 20rpx;
@@ -671,8 +679,8 @@ font-size:14px;
   font-weight:700;
 }
 .th_pop{
-    width: 60%;
-    justify-content: center;
+  width: 60%;
+  justify-content: center;
   color: #000;
   display: flex;
   height: 80rpx;
@@ -737,4 +745,15 @@ background:#f1f1f1;
   transform-origin:center;
   transform:rotate(90deg);
   margin-bottom: 10rpx;
+}
+.deposit{
+width:280px;
+height:40px;
+line-height: 40px;
+color: #fff;
+margin: 0 auto;
+background:#eeb85b;
+margin-top:40rpx;
+margin-bottom:40rpx;
+
 }

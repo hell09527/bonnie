@@ -80,20 +80,27 @@ Page({
   onLoad: function (options) {
     var that = this;
     var listData = this.data.listData;
-    console.log(app)
-
+    // console.log(app.globalData.token)
+    console.log(options.scene, options.uid);
       // 扫码进入
     if (options.scene) {
       var uid = decodeURIComponent(options.scene);
-      listData.recommend_user = uid;
-      console.log(uid)
-      app.sendRequest({
-        url: 'api.php?s=Distributor/applyUserName',
-        data: { uid: uid },
-        success: function (res) {
-          console.log(res);
-          listData.recommend_user = uid;
-          if (res.code == 1) {
+      app.globalData.recommendUser = uid;
+    } else if (options.uid){
+      var uid =options.uid
+    } else if(this.data.uid) {
+      var uid = this.data.uid;
+    }
+
+    console.log(uid)
+    app.sendRequest({
+      url: 'api.php?s=Distributor/applyUserName',
+      data: { uid: uid },
+      success: function (res) {
+        console.log(res);
+        listData.recommend_user = uid;
+        if (res.code == 1) {
+          if (uid) {
             var recommend_user = res.data;
             that.setData({
               recommend_user,
@@ -101,101 +108,16 @@ Page({
             })
           }
         }
-      })
-
-    }
-
-    if (app.globalData.token && app.globalData.token != '') {
-      //判断是否是付费会员的接口
-      // 获取手机号
-      app.sendRequest({
-        url: "api.php?s=member/getMemberDetail",
-        success: function (res) {
-          let data = res.data
-          if (res.code == 0) {
-            let tel = data.user_info.user_tel;
-            let kol=data.distributor_type;
-            let uid = data.user_info.uid;
-            // 判断是否是极选师
-            app.sendRequest({
-              url: 'api.php?s=distributor/checkApply',
-              data: {
-                uid:uid
-              },
-              success: function (res) {
-                console.log(res);
-                if (res.code == 2) {
-                  that.setData({
-                    isKol: 2,
-                    kolText: '你已经是极选师',
-                  })
-                } else if (res.code == 3) {
-                  that.setData({
-                    isKol: 2,
-                    kolText: '资料正在审核中 请耐心等待',
-                  })
-                } else {
-                  that.setData({
-                    isKol: 1,
-                  })
-                }
-              }
-            })
-            listData.tel = tel;
-            that.setData({
-              listData,
-            })
-          }
-        }
-      })
-    } else {
-      app.employIdCallback = employId => {
-        if (employId != '') {
-          //判断是否是付费会员的接口
-          // 获取手机号
-          app.sendRequest({
-            url: "api.php?s=member/getMemberDetail",
-            success: function (res) {
-              let data = res.data
-              if (res.code == 0) {
-                let tel = data.user_info.user_tel;
-                let uid = data.user_info.uid;
-                // 判断是否是极选师
-                app.sendRequest({
-                  url: 'api.php?s=distributor/checkApply',
-                  data: {
-                    uid:uid
-                  },
-                  success: function (res) {
-                    console.log(res);
-                    if (res.code == 2) {
-                      that.setData({
-                        isKol: 2,
-                        kolText: '你已经是极选师',
-                      })
-                    } else if (res.code == 3) {
-                      that.setData({
-                        isKol: 2,
-                        kolText: '资料正在审核中 请耐心等待',
-                      })
-                    } else {
-                      that.setData({
-                        isKol: 1,
-                      })
-                    }
-                  }
-                })
-                console.log(tel,uid)
-                listData.tel = tel;
-                that.setData({
-                  listData,
-                })
-              }
-            }
-          })
-        }
       }
+    })
+
+
+    app.unregisteredCallback = unregistered => {
+      console.log(app.globalData.unregistered);
+      app.isLogin(app.globalData.unregistered);
     }
+
+
     app.sendRequest({
       url: 'api.php?s=index/getProvince',
       data: {},
@@ -295,8 +217,12 @@ Page({
       app.showBox(that, '详细地址不能含有特殊字符');
     } else if (!myreg.test(listData.tel)) {
       app.showBox(that, '请填写正确手机号码');
-    } else if (!provinceArray[provinceIndex].province_name) {
-      app.showBox(that, '请填写住址');
+    } else if (provinceIndex==0) {
+      app.showBox(that, '请选择省');
+    } else if (cityIndex == 0) {
+      app.showBox(that, '请选择市');
+    } else if (districtIndex== 0) {
+      app.showBox(that, '请选择区');
     } else if (!listData.name) {
       app.showBox(that, '请填写姓名');
     } else if (this.isEmojiCharacter(listData.name)) {
@@ -1186,7 +1112,119 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var that = this;
+    var listData = this.data.listData;
     wx.hideShareMenu();
+    console.log(app.globalData.unregistered)
+    if (app.globalData.unregistered == 1) {
+      wx.navigateTo({
+        url: '/pages/member/resgin/resgin',
+      })
+    }
+
+    if (app.globalData.token && app.globalData.token != '') {
+      //判断是否是付费会员的接口
+      app.sendRequest({
+        url: "api.php?s=member/getMemberDetail",
+        success: function (res) {
+          let data = res.data
+          if (res.code == 0) {
+            let tel = data.user_info.user_tel;
+            let uid = data.user_info.uid;
+
+            if (tel == '') {
+              wx.navigateTo({
+                url: '/pages/member/resgin/resgin',
+              })
+            } else {
+
+              // 判断是否是极选师
+              app.sendRequest({
+                url: 'api.php?s=distributor/checkApply',
+                data: {
+                  uid: uid
+                },
+                success: function (res) {
+                  console.log(res);
+                  if (res.code == 2) {
+                    that.setData({
+                      isKol: 2,
+                      kolText: '你已经是极选师',
+                    })
+                  } else if (res.code == 3) {
+                    that.setData({
+                      isKol: 2,
+                      kolText: '资料正在审核中 请耐心等待',
+                    })
+                  } else {
+                    that.setData({
+                      isKol: 1,
+                    })
+                  }
+                }
+              })
+              console.log(tel, uid)
+              listData.tel = tel;
+              that.setData({
+                listData,
+              })
+            }
+          }
+        }
+      })
+    } else {
+      app.employIdCallback = employId => {
+        console.log(employId)
+        if (employId != '') {
+          app.sendRequest({
+            url: "api.php?s=member/getMemberDetail",
+            success: function (res) {
+              let data = res.data
+              if (res.code == 0) {
+                let tel = data.user_info.user_tel;
+                let uid = data.user_info.uid;
+                if (tel == '') {
+                  wx.navigateTo({
+                    url: '/pages/member/resgin/resgin',
+                  })
+                } else {
+                  // 判断是否是极选师
+                  app.sendRequest({
+                    url: 'api.php?s=distributor/checkApply',
+                    data: {
+                      uid: uid
+                    },
+                    success: function (res) {
+                      console.log(res);
+                      if (res.code == 2) {
+                        that.setData({
+                          isKol: 2,
+                          kolText: '你已经是极选师',
+                        })
+                      } else if (res.code == 3) {
+                        that.setData({
+                          isKol: 2,
+                          kolText: '资料正在审核中 请耐心等待',
+                        })
+                      } else {
+                        that.setData({
+                          isKol: 1,
+                        })
+                      }
+                    }
+                  })
+                  console.log(tel, uid)
+                  listData.tel = tel;
+                  that.setData({
+                    listData,
+                  })
+                }
+              }
+            }
+          })
+        }
+      }
+    }
   },
 
   /**

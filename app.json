@@ -67,6 +67,7 @@
     "pages/member/givingDetail/givingDetail",
     "pages/member/receiveDetail/receiveDetail",
     "pages/member/kolApply/kolApply",
+    "pages/member/resgin/resgin",
     "pages/member/inpurchasing/inpurchasing",
     "pages/member/kolSuccess/kolSuccess",
     "pages/member/withdrawal/withdrawal",

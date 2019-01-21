@@ -14,9 +14,13 @@ Page({
     rewardPrice:'',    //奖励余额
     price:'',     //输入金额
     isBindInput:true,    //输入框没输入时符号显示
-    remain:true,    //提现方式
     maxMoey: '',    //当日最高提现金额
     minMoey:'',    //当日最低提现金额
+    remain: true,//提现方式
+    RunPrice:'', //可提现金额
+    hint:0,//hint提示
+    Astop:true //提现按钮是否禁用
+
   },
 
   /**
@@ -25,7 +29,6 @@ Page({
   onLoad: function () {
 
   },
-
   // 可用余额 以及账单明细
   orders: function (start_date, end_date) {
     let that = this;
@@ -43,10 +46,7 @@ Page({
           var item = separationRecords[i].accountRecords;
           for (var j = 0; j < item.length;j++){
             var index = item[j].settlement_time.indexOf(" ");
-            // var index2 = item[j].modify_date.indexOf(" ");
-            // console.log(index);
             item[j].settlement_time = item[j].settlement_time.substr(index + 1, item[j].settlement_time.length);
-            // item[j].modify_date = item[j].modify_date.substr(index2 + 1, item[j].modify_date.length);
             if (parseFloat(item[j].money)>0){
               item[j].money = '+' + item[j].money;
               item[j].isGreen=true;
@@ -105,6 +105,7 @@ Page({
   isRemain:function(){
     this.setData({
       remain: true,
+      RunPrice:''
     })
   },
 
@@ -112,71 +113,156 @@ Page({
   isReward: function () {
     this.setData({
       remain: false,
+      RunPrice:''
     })
   },
 
   // 填写价格
   priceValue: function (e) {
-    var price = e.detail.value;
     var that=this;
     var remainPrice = this.data.remainPrice;
     var rewardPrice = this.data.rewardPrice;
-    if (this.data.remain){
-      if (price > parseFloat(remainPrice)) {
-        this.setData({
-          prompt: '金额不能超过余额',
-          price: parseFloat(remainPrice)
-        })
-      }
-      else if (price < 1) {
-        this.setData({
-          prompt: '金额不能小于1'
-        })
-      } else {
-        this.setData({
-          price,
-        })
-      }
-    } else{
-      if (price > parseFloat(rewardPrice)) {
-        this.setData({
-          prompt: '金额不能超过余额',
-          price: parseFloat(rewardPrice)
-        })
-      }
-      else if (price < 1) {
-        this.setData({
-          prompt: '金额不能小于1'
-        })
-      } else {
-        this.setData({
-          price,
-        })
-      }
-    }
-    setTimeout(function () {
+   
+
+    //是否存在改变
+    if(e){
+
+      var price = e.detail.value;
+      console.log(price )
       that.setData({
-        prompt: ''
+        RunPrice:price,
       })
-    }, 1500)
+      if (that.data.remain){
+        
+        if (price > parseFloat(remainPrice)) {
+          console.log('1',price)
+          that.setData({
+            hint:3,
+            RunPrice:price,
+          })
+  
+        }
+        else if (price < parseFloat(that.data.minMoey)) {
+          console.log('2',price)
+          that.setData({
+            hint:2,
+            RunPrice:price,
+          })
+        console.log(that.data.hint)
+        } else if(price>parseFloat(that.data.maxMoey)){
+          console.log('3',price)
+          that.setData({
+            hint:1
+          })
+          return;
+        }else if(!price ){
+          console.log('进来了',price)
+          that.setData({
+            hint:0
+          })
+          return;
+        }
+        else{
+          console.log('4',price)
+          that.setData({
+            RunPrice:price,
+            hint:0
+          })
+        }
+  
+  
+  
+      } else{
+        if (price > parseFloat(rewardPrice)) {
+          console.log('5',price)
+          that.setData({
+
+            hint:3,
+            RunPrice:price,
+          })
+        }
+        else if ( price <parseFloat(that.data.minMoey)){
+          console.log('6',price)
+          that.setData({
+            hint:2,
+            RunPrice:price,
+          })
+
+        } 
+        else if(price>parseFloat(that.data.maxMoey)){
+          console.log('7',price)
+          that.setData({
+            hint:1
+          })
+          return;
+  
+        } else if(!price){
+          console.log('进来了2',price)
+          that.setData({
+            hint:0
+          })
+          return;
+        }
+        else {
+          console.log('8',price)
+          that.setData({
+            RunPrice:price,
+            hint:0
+          })
+        }
+      }
+
+
+    }else{
+      that.setData({
+        RunPrice:price,
+        hint:0
+      })
+    }
+   
+    
+    
+   
+ 
+   
+
+    
+    
+  
   },
 
   // 申请提现
   toApply: function (event){
-    var price=this.data.price;
+    var price=this.data.RunPrice;
+    var remainPrice = this.data.remainPrice;
+    var rewardPrice = this.data.rewardPrice;
+    console.log(price)
     var that=this;
     var account_type = this.data.remain?1:2;
     // console.log(price, account_type)
-    if (!price){
-      that.setData({
-        prompt: '请输入提现金额',
+
+
+    
+
+    if (!price || price < this.data.minMoey){
+      console.log('来了老弟1')
+     return;
+    } else if(price>that.data.maxMoey){
+      console.log('来了老弟1、2')
+      return;
+    }else if(price > parseFloat(remainPrice) && account_type==1){
+
+      console.log('来了老弟3')
+      return;
+    }else if(price > parseFloat(rewardPrice && account_type==1)){
+      return;
+    }
+    else {
+      console.log('来了老弟4');
+      this.setData({
+        Astop:false
       })
-      setTimeout(function () {
-        that.setData({
-          prompt: ''
-        })
-      }, 1500)
-    } else {
+     
       app.sendRequest({
         url: "api.php?s=distributor/toWithdraw",
         data: {
@@ -202,6 +288,9 @@ Page({
               prompt: '用户余额不足',
             })
           } else if(res.code==1) {
+            that.setData({
+              Astop:true
+            })
             console.log(event.detail.formId, app.globalData.openid, res.data);
             app.sendRequest({
               url: "api.php?s=distributor/createWithdrawTemplate",
@@ -224,6 +313,10 @@ Page({
           }, 2000)
         }
       })
+
+
+
+
     }
   },
 
@@ -258,7 +351,28 @@ Page({
     var monthEndDate = mydate + '-' + endDate;
     this.orders(monthStartDate, monthEndDate)
   },
+ //提现全部
+ collect:function(){
+   let that=this;
+    // 更新hint数据
+   that.priceValue();
+   let RunPrice;
+   if(that.data.remain){
+     //分润余额
+     RunPrice=that.data.remainPrice; 
+   }else{
+    //奖励余额
+    RunPrice=that.data.rewardPrice ; 
+   }
+   if(RunPrice>that.data.maxMoey){
+    RunPrice=that.data.maxMoey;
+   }
 
+   that.setData({
+    RunPrice,
+   })
+   
+ },
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -287,10 +401,5 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
 
-  }
 })

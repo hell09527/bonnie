@@ -1,6 +1,6 @@
-const app = getApp();
 var wxParse = require('../../../wxParse/wxParse.js');
 var time = require("../../../utils/util.js");
+const app = getApp();
 
 Page({
   /**
@@ -1068,6 +1068,7 @@ Page({
       }
 
       if (num > numCount){
+        app.showBox(that, '已达到最大库存');
         num = numCount;
       }
     } else if (button_type == 'minus' && numCount > 0){
@@ -1096,6 +1097,7 @@ Page({
     let num = event.detail.value;
     let numCount = parseInt(that.data.stock);
     let max_buy = parseInt(that.data.goods_info.max_buy);
+    // let stock = parseInt(that.data.goods_info.stock);
     let min_buy = parseInt(that.data.goods_info.min_buy);
 
     if (max_buy > 0 && num > max_buy) {
@@ -1115,6 +1117,7 @@ Page({
     }
 
     if (num > numCount) {
+      app.showBox(that, '已达到最大库存');
       num = numCount;
     } else if (num < 0) {
       num = 0;
