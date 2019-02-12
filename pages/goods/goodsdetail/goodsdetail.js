@@ -68,6 +68,7 @@ Page({
     curr_id: '',   //当前打开的视频id
     point:0,
     layout: false,
+    Token:''
   },
     //测试数据
   last:function(){
@@ -126,27 +127,8 @@ Page({
     });
     
 
-      if (app.globalData.token && app.globalData.token != '') {
-        //判断是否是付费会员的接口
-        that.XXS_reuse();
     
-      } else {
-        app.employIdCallback = employId => {
-          if (employId != '') {
-            //判断是否是付费会员的接口
-            that.XXS_reuse();
-          }
-          //是否授权数据更新
-          let updata = that.data.unregistered
-          updata = app.globalData.unregistered;
 
-          console.log(updata, 'updata')
-          that.setData({
-            unregistered: updata
-          });
-
-        }
-      }
 
     if (goods_name) {
       wx.setNavigationBarTitle({
@@ -217,24 +199,29 @@ Page({
 
   XXS_reuse:function(){
     let that = this;
+
     app.sendRequest({
       url: "api.php?s=member/getMemberDetail",
       success: function (res) {
         let data = res.data
         if (res.code == 0) {
-          let is_vip = data.is_vip
-          app.globalData.is_vip = data.is_vip
-          app.globalData.distributor_type = data.distributor_type
-          let distributor_type = data.distributor_type
-          app.globalData.uid = data.uid
-          app.globalData.vip_gift = data.vip_gift
-          app.globalData.vip_goods = data.vip_goods
-          app.globalData.vip_overdue_time = data.vip_overdue_time;
+          let is_vip = data.is_vip;
+          app.globalData.is_vip = data.is_vip;
+          app.globalData.distributor_type = data.distributor_type;
+          let distributor_type = data.distributor_type;
+          app.globalData.uid = data.uid;
+          app.globalData.vip_gift = data.vip_gift;
+          app.globalData.vip_goods = data.vip_goods;
           let tel = data.user_info.user_tel;
-          console.log(tel)
+          if (tel !== null || tel !== undefined || tel  !== '') {
+            console.log(111)
+          } else if (tel==''){
+            console.log(223)
+          } 
+
           let updata = that.data.unregistered;
           updata = app.globalData.unregistered;
-          console.log(updata, 'updata', '134',data.is_employee)
+          console.log(updata, 'updata', '134', data.is_employee)
           // console.log(app.globalData.is_vip)
           that.setData({
             is_vip: is_vip,
@@ -243,6 +230,9 @@ Page({
             unregistered: updata,
             is_employee: data.is_employee,
           })
+         
+          
+   
         }
       }
     })
@@ -261,86 +251,8 @@ Page({
     let is_employee = that.data.is_employee;
     console.log(is_employee)
 
-       // 更新登录数据
-    // let times = 0;
-    // let load_timer = setInterval(function () {
-    //   times++;
-    //   if (app.globalData.token && app.globalData.token != '') {
-    //     //判断是否是付费会员的接口
-    //     app.sendRequest({
-    //       url: "api.php?s=member/getMemberDetail",
-    //       success: function (res) {
-    //         let data = res.data
-    //         if (res.code == 0) {
-    //           let is_vip = data.is_vip
-    //           app.globalData.is_vip = data.is_vip
-    //           app.globalData.distributor_type = data.distributor_type
-    //           let distributor_type = data.distributor_type
-    //           app.globalData.uid = data.uid
-    //           app.globalData.vip_gift = data.vip_gift
-    //           app.globalData.vip_goods = data.vip_goods
-    //           app.globalData.vip_overdue_time = data.vip_overdue_time;
-    //           let tel = data.user_info.user_tel;
-    //           let updata = that.data.unregistered
-    //           updata = app.globalData.unregistered;
-    //           console.log(updata, 'updata', '134')
 
-    //           console.log(tel)
-    //           // console.log(app.globalData.is_vip)
-    //           that.setData({
-    //             is_vip: is_vip,
-    //             tel: tel,
-    //             distributor_type,
-    //             unregistered: updata
-    //           })
-    //           clearInterval(load_timer);
-    //         }
-    //       }
-    //     })
-    //   } else {
-    //     app.employIdCallback = employId => {
-    //       if (employId != '') {
-    //         //判断是否是付费会员的接口
-    //         app.sendRequest({
-    //           url: "api.php?s=member/getMemberDetail",
-    //           success: function (res) {
-    //             let data = res.data
-    //             if (res.code == 0) {
-    //               let is_vip = data.is_vip
-    //               app.globalData.is_vip = data.is_vip
-    //               app.globalData.distributor_type = data.distributor_type
-    //               let distributor_type = data.distributor_type
-    //               app.globalData.uid = data.uid
-    //               app.globalData.vip_gift = data.vip_gift
-    //               app.globalData.vip_goods = data.vip_goods
-    //               app.globalData.vip_overdue_time = data.vip_overdue_time;
-    //               let tel = data.user_info.user_tel;
-    //               let updata = that.data.unregistered
-    //               updata = app.globalData.unregistered;
-    //               console.log(updata, 'updata', '181')
-    //               console.log(tel)
-    //               that.setData({
-    //                 is_vip: is_vip,
-    //                 tel: tel,
-    //                 distributor_type
-    //               })
-    //             }
-    //           }
-    //         })
-    //       }
-    //       //是否授权数据更新
-    //       let updata = that.data.unregistered
-    //       updata = app.globalData.unregistered;
-    //       console.log(updata, 'updata')
-    //       that.setData({
-    //         unregistered: updata
-    //       });
-
-    //       clearInterval(load_timer);
-    //     }
-    //   }
-    // }, 1000);
-
+  
 
 
     //判断是否是付费会员
@@ -365,6 +277,27 @@ Page({
         console.log(333333)
       }
 }
+
+      
+         
+         
+   
+
+if (app.globalData.token && app.globalData.token != '') {
+  //判断是否是付费会员的接口
+  that.XXS_reuse();
+} else {
+  app.employIdCallback = employId => {
+    if (employId != '') {
+      //判断是否是付费会员的接口
+      that.XXS_reuse();
+    }
+
+  }
+}
+
+
+
 
 
     app.restStatus(that, 'comboFlag');
@@ -571,11 +504,16 @@ Page({
      }
   },
    /**触发*/
-  Crossroad:function(){
+  Crossdetails:function(){
      let _that=this;
-    _that.setData({
-      Choice:true,
-    })
+     let Tel=_that.data.tel;
+     console.log(213)
+     let suffix=_that.data.goods_id;
+     if (app.globalData.unregistered == 1 || Tel=='') {
+       wx.navigateTo({
+         url: '/pages/member/resgin/resgin?suffix='+suffix,
+       })
+       }
   },
   plusXing(str, frontLen) {
     //console.log(str);
@@ -1404,6 +1342,7 @@ Page({
                 mobileIv: e.detail.iv
               },
               success: function (res) {
+                console.log(res.data.user_tel);
                 that.setData({
                   Choice: false
                 })
@@ -1466,8 +1405,10 @@ Page({
                   let lpl = res.data.token;
                   app.globalData.openid = res.data.openid;
                   app.globalData.token = res.data.token;
+                  that.XXS_reuse();
                   that.setData({
                     unregistered: 0,
+                    Token:res.data.token,
                     wx_name: wx_name,
                     heder_img
                   })
@@ -1492,8 +1433,10 @@ Page({
                   let lpl = res.data.token;
                   app.globalData.openid = res.data.openid;
                   app.globalData.token = res.data.token;
+                
                   that.setData({
                     unregistered: 0,
+                    Token:res.data.token,
                     wx_name: wx_name,
                     heder_img
                   })
@@ -1509,6 +1452,7 @@ Page({
                           token: lpl
                         },
                         success: function (res) {
+                          that.XXS_reuse();
                           if (res.code == 0) {
                             that.setData({
                               unregistered: 0,
@@ -1516,6 +1460,7 @@ Page({
                               tel: res.data.user_tel,
                               heder_img
                             })
+                           
                           }
                         }
                       });

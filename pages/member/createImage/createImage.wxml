@@ -4,11 +4,11 @@
     <canvas canvas-id="shareCanvas"  style="width:{{setfixW}}px;margin:0 auto; height:{{imgUrlH}}px;" ></canvas>
     <view class='shuck'>
     <block  wx:if="{{ts==2 || ts==3}}" >
-          <image  src="{{saveImg}}" data-index='{{index}}' data-img='{{saveImg}}' style="width:{{setfixW}}px;margin:0 auto; height:{{imgUrlH}}px" catchtap='preivewImg'></image>
+          <image  lazy-load="true" src="{{saveImg}}" data-index='{{index}}' data-img='{{saveImg}}' style="width:{{setfixW}}px;margin:0 auto; height:{{imgUrlH}}px" catchtap='preivewImg'></image>
    <!-- <view class='photoAlbum' catchtap='Save'>保存到相册</view> -->
      </block>
 
-      <image wx:if="{{ts==1 ||ts==6}}" src="{{imgUrl}}" data-index='{{index}}' data-img='{{imgUrl}}' mode='widthFix' catchtap='preivewImg'></image>
+      <image  lazy-load="true" wx:if="{{ts==1 ||ts==6}}" src="{{imgUrl}}" data-index='{{index}}' data-img='{{imgUrl}}' mode='widthFix' catchtap='preivewImg'></image>
     </view>
         <!-- 使用步骤页面 -->
         <view class="useStep" wx:if="{{ts==0}}">
@@ -55,7 +55,7 @@
       
         <view class='li' wx:if="{{maKestep==1}}"  style='width:100%;' catchtap='uploading'> 
            <view class='Utype'>
-              <image class='Uicon' src='https://static.bonnieclyde.cn/camera@2x.png'></image>
+              <image  lazy-load="true" class='Uicon' src='https://static.bonnieclyde.cn/camera@2x.png'></image>
             上传图片 
            </view> 
             
@@ -63,14 +63,14 @@
          <!-- 固定页面状态显示 -->
         <view class='li'   wx:if="{{maKestep==2}}" style='width:100%;'  catchtap='commodity'>
             <view class='Utype'>
-              <image class='Uicon' src='https://static.bonnieclyde.cn/Group%2013%20Copy@2x.png'></image>
+              <image lazy-load="true" class='Uicon' src='https://static.bonnieclyde.cn/Group%2013%20Copy@2x.png'></image>
             选择商品
            </view> 
            </view>
 
          <view class='li'wx:if="{{maKestep==3}}" style='width:100%;'  catchtap='achieve'>
               <view class='Utype'>
-              <image class='Uicon' src='https://static.bonnieclyde.cn/photo@2x.png'></image>
+              <image class='Uicon' lazy-load="true" src='https://static.bonnieclyde.cn/photo@2x.png'></image>
             制作海报
            </view> 
            </view>
@@ -79,19 +79,19 @@
    <view class='ul' wx:if='{{Fixtitle==2}}'>
         <view class='li' style="width:33.3%" catchtap='Jump'>
                <view class='Utype'>
-              <image class='Uicon' src='https://static.bonnieclyde.cn/photo@2x.png'></image>
+              <image lazy-load="true" class='Uicon' src='https://static.bonnieclyde.cn/photo@2x.png'></image>
                 继续制作
              </view> 
         </view>
         <view class='li' style="width:33.3%;font-weight: 500;" catchtap='Save' >
             <view class='Utype'>
-              <image class='Uicon' src='https://static.bonnieclyde.cn/down@2x.png'></image>
+              <image lazy-load="true" class='Uicon' src='https://static.bonnieclyde.cn/down@2x.png'></image>
                  下载到相册
              </view> 
           </view>
         <view class='li' style="width:33.3%"  catchtap='countermand'>
            <view class='Utype'>
-              <image class='Uicon' src='https://static.bonnieclyde.cn/back@2x.png'></image>
+              <image lazy-load="true" class='Uicon' src='https://static.bonnieclyde.cn/back@2x.png'></image>
                  返回列表
              </view> 
           </view>
@@ -120,13 +120,13 @@
             <view class='goods_all' catchtap='Chooseshop' data-i="{{shops.goods_id}}"  data-index="{{index}}" data-title='{{shops.goods_name}}'
 >
          <view class="all-box">
-                <image src="{{shops.pic_cover_small}}" mode="widthFix"></image>
+                <image lazy-load="true" src="{{shops.pic_cover_small}}" mode="widthFix"></image>
                 <view class="shop-detail">
                   
                     <block wx:for='{{shops.group_query}}' wx:key='' wx:for-item='vo'>
                     </block>
        <text decode="true" class="title">{{shops.goods_name}}</text>
-                  <image src='/images/goods/cartp2.png' mode='widthFix' wx:if="{{shops.selected}}" class="selected"></image>
+                  <image lazy-load="true" src='/images/goods/cartp2.png' mode='widthFix' wx:if="{{shops.selected}}" class="selected"></image>
             
                 </view>
               </view>

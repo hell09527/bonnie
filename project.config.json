@@ -11,7 +11,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.4.2",
 	"appid": "wxd145d8a6e951dd1b",
-	"projectname": "testttttt",
+	"projectname": "official",
 	"isGameTourist": false,
 	"condition": {
 		"search": {
@@ -31,7 +31,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 2,
 			"list": [
 				{
 					"id": -1,
@@ -42,7 +42,14 @@
 				{
 					"id": -1,
 					"name": "666",
-					"pathName": "pages/member/withdrawal/withdrawal"
+					"pathName": "pages/member/withdrawal/withdrawal",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "6",
+					"pathName": "pages/member/Meinfo/Meinfo",
+					"query": ""
 				}
 			]
 		}

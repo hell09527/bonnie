@@ -2,7 +2,7 @@
 
 <scroll-view>
   <view class='backgroundImage'>
-    <image src="http://p6yljnwkf.bkt.clouddn.com/Wechat1.png"></image>
+    <!-- <image src="http://p6yljnwkf.bkt.clouddn.com/Wechat1.png"></image> -->
   </view> 
     <view class="motify {{prompt==''?'hide':''}}">
         <icon class="i show_type warning" type='warn' size='25' color='#FFF'></icon>

@@ -122,6 +122,8 @@ page{
   height:90rpx;
   color:#fff;
   margin:40rpx auto;
+  text-align: center;
+  line-height: 90rpx;
 }
 
 /* 经历爱好 */
@@ -129,7 +131,7 @@ page{
   padding:20rpx 40rpx;
   width:100%;
 }
-.hobby>view{
+.hobby_view{
   box-sizing: border-box;
   margin:40rpx 0;
 }

@@ -50,16 +50,24 @@
                 </view>
               </view>
               <view class="info">
-                <view class='name' data-id='{{cart.goods_id}}' data-name='{{cart.goods_name}}' >
-                    <text class="goods-type-icon" wx:if="{{cart.source_type == 2}}">跨境商品</text>{{cart.goods_name}}
-                </view>
+                <text class='name' decode="true"  data-id='{{cart.goods_id}}' data-name='{{cart.goods_name}}' >
+                    <text  decode="true"  class="goods-type-icon" wx:if="{{cart.source_type == 2}}">跨境商品</text>{{cart.goods_name}}
+                </text>
                 <view class='sku span' wx:if='{{cart.sku_name!=""}}'>规格：{{cart.sku_name}}</view>
                 <view class="number"data-id='{{cart.goods_id}}' data-name='{{cart.goods_name}}'>
                   <!-- {{box.promotion_price}}此价格并非原价也可能是会员价也可能是促销价 -->
-                  <view class='span' name="goods_price" wx:if='{{showStatus==0}}'>
-                    ¥{{cart.promotion_price}}
+                  <view class='span' name="goods_price" wx:if='{{distributor_type==0}}'>
+                    ¥{{cart.is_inside==0?cart.promotion_price:cart.interior_price}}
+                    
                   </view>
-
+                  
+                  <view  class='span promotion' name="goods_price" wx:if='{{distributor_type!=0 && edit == 0}}'>
+                    销售价: ¥{{cart.promotion_price}}
+                     <view  class='interior' style="color:red;font-size: 12px;" name="goods_price" wx:if='{{cart.is_inside==1}}'>
+                    内购价: ¥{{cart.interior_price}}
+                     </view>
+                  </view>
+                
                   <!-- <view wx:if='{{distributor_type==1 && edit == 0}}' name="goods_price">
                     <view class='span' name="goods_price" style='width:140rpx;'>
                       ¥{{cart.promotion_price}}
@@ -86,6 +94,12 @@
                     <view class='showTitle' style='color:red;font-size: 12px;' > 您修改的价格不得低于{{cart.min_change_price}} </view>
                    
                   </view>
+              <view  class='span' name="goods_price" wx:if='{{ distributor_type!=0 && distributor_type!=1 && edit == 1 && cart.is_change_price==0}}' >
+                    销售价: ¥{{cart.promotion_price}}
+                     <view  class='interior' style="color:red;font-size: 12px;" name="goods_price" wx:if='{{cart.is_inside==1}}'>
+                    内购价: ¥{{cart.interior_price}}
+                     </view>
+                  </view>
                      <!-- 付费会员的价格 -->
                   <view class='vip_price' wx:if='{{is_vip==1 && distributor_type!=1}}' style='color:#CC9933' name="vip_price">
                     ¥ {{cart.promotion_price}}
@@ -102,7 +116,7 @@
                     <view class="decrease" data-type='minus' data-index='{{i}}' data-key='{{k}}' style="border-right:1px solid #ccc;" data-id='{{cart.cart_id}}' catchtap='numAdjust'>
                       -
                     </view>
-                    <input class="num"  type='number'  value="{{cart.num}}" data-index='{{i}}' data-key='{{k}}' data-id='{{cart.cart_id}}' bindblur='inputAdjust' />
+                    <input class="num"  type='number'  value="{{cart.num}}" data-index='{{i}}' data-key='{{k}}'   data-id='{{cart.cart_id}}' bindinput='inputGai'    bindblur='inputAdjust' />
                     <view class="increase" data-type='add' data-index='{{i}}' data-key='{{k}}' style="border-left:1px solid #ccc;" data-id='{{cart.cart_id}}' catchtap='numAdjust'>
                       +
                     </view>
@@ -114,16 +128,12 @@
                     <view class="decrease" data-type='minus' data-index='{{i}}' data-key='{{k}}' style="border-right:1px solid #ccc;" data-id='{{cart.cart_id}}' catchtap='numAdjust'>
                       -
                     </view>
-                    <input class="num"  type='number'   value="{{cart.num}}" data-index='{{i}}' data-key='{{k}}' data-id='{{cart.cart_id}}' bindblur='inputAdjust' />
+                    <input class="num"  type='number'   value="{{cart.num}}" data-index='{{i}}' data-key='{{k}}' data-id='{{cart.cart_id}}' bindinput='inputGai'  bindblur='inputAdjust' />
                     <view class="increase" data-type='add' data-index='{{i}}' data-key='{{k}}' style="border-left:1px solid #ccc;" data-id='{{cart.cart_id}}' catchtap='numAdjust'>
                       +
                     </view>
                   </view>
                 </view>
-
-
-
-
               </view>
             </view>
             <view class="del" catchtap="del" data-index="{{k}}">删除</view>
@@ -232,7 +242,7 @@
         </view>
         <view class="flex-item bc_red" wx:if='{{check_3_carts.length>0}}'>
           <label class="radio">
-            <radio color="black" value="3" />
+            <radio color="black" value="3"  checked/>
             内购跨境商品{{carts_3_info.total_num}}件 共计 ¥ {{carts_3_info.total_price}}
           </label>
         </view>

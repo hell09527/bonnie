@@ -278,6 +278,8 @@
             </view>
         </view>
     </block>
+    <!-- 春节物流通告 -->
+    <!-- <image class="expressage" style='height:260rpx;' src='https://static.bonnieclyde.cn/20190129-%E5%8F%91%E8%B4%A7%E9%80%9A%E7%9F%A5.jpg' mode='widthFix' ></image> -->
     <!-- 商家服务 -->
     <block wx:if='{{goods_info.existingMerchant[0]!=undefined}}'>
         <view class="price_postage">
@@ -603,6 +605,7 @@
                     -
                 </view>
                 <input class="number" type='number' name="quantity" autocomplete="off" bindblur='goodsNumAdjustCheck' value="{{goodsNum}}" min="1" max="277" id="num" />
+                
                 <view class="span add" catchtap='goodsNumAdjust' data-type='add'>+</view>
             </view>
             <!-- <view class='span last-goods' id="Stock">剩余{{stock}}件</view> -->
@@ -698,10 +701,10 @@
                     <!-- 判断是否为礼物盒 -->
                     <block wx:if='{{flys==0}}'>
                         <view wx:if='{{unregistered==1 || tel==""}}'>
-                            <button class="a big-btn orange-btn  c-addcard-btn" id="addCart" catchtap='Crossroad'>
+                            <button class="a big-btn orange-btn  c-addcard-btn sss" id="addCart" catchtap='Crossdetails'>
                                 加入购物车
                             </button>
-                            <button class="a big-btn red-btn c-buy-btn" id="addCart" catchtap='Crossroad'>
+                            <button class="a big-btn red-btn c-buy-btn sss" id="addCart" catchtap='Crossdetails'>
                                 立即购买
                             </button>
                         </view>
@@ -716,10 +719,10 @@
                     </block>
                     <block wx:if='{{flys==1}}'>
                         <view wx:if='{{unregistered==1 || tel==""}}'>
-                            <button class="a big-btn orange-btn  c-addcard-btn" id="addCart" catchtap='Crossroad'>
+                            <button class="a big-btn orange-btn  c-addcard-btn" id="addCart" catchtap='Crossdetails'>
                                 加入礼物盒
                             </button>
-                            <button class="a big-btn red-btn c-buy-btn" id="addCart" catchtap='Crossroad'>
+                            <button class="a big-btn red-btn c-buy-btn" id="addCart" catchtap='Crossdetails'>
                                 立即购买
                             </button>
                         </view>

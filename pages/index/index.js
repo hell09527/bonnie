@@ -56,9 +56,9 @@ Page({
     //   url: '/pages/goods/shareRepertoire/shareRepertoire?share_li=90:1:0.01,89:1:0.01&tag=2&store=0',
     // })
     wx.navigateTo({
-      // url: "/pages/member/kolApply/kolApply",
+      url: "/pages/member/kolApply/kolApply",
       // url: "/pages/member/kol/kolbill/kolbill",
-      url:"/pages/goods/goodslist/goodslist",
+      // url:"/pages/goods/goodslist/goodslist",
     })
 
   },

@@ -9,19 +9,19 @@ Page({
     datetime:'',   //出生日期
     navList:[
       {
-        name:'基本信息',
-        select:true,
+        name: '基本信息',
+        select: true,
       },
+      // {
+      //   name: '自我介绍',
+      //   select: false,
+      // },
+      // {
+      //   name: '结算信息',
+      //   select: false,
+      // },
       {
-        name: '经历爱好',
-        select: false,
-      },
-      {
-        name: '结算信息',
-        select: false,
-      },
-      {
-        name: '自我介绍',
+        name: '工作经历',
         select: false,
       },
     ],
@@ -67,11 +67,12 @@ Page({
     infoList:'',   //基本资料详情
     bankCard:'',    //银行卡
     listData:{
-      estimate_money:20000,
+      estimate_money:2000,
     },    //全数据
     isKol: 0,    //是否是极选师
     kolText: '',    //文本
-    recommend_user:'',   //推荐人
+    recommend:'',   //推荐人
+    showTitle:'',
   },
 
   /**
@@ -84,32 +85,104 @@ Page({
     console.log(options.scene, options.uid);
       // 扫码进入
     if (options.scene) {
-      var uid = decodeURIComponent(options.scene);
-      app.globalData.recommendUser = uid;
-    } else if (options.uid){
-      var uid =options.uid
-    } else if(this.data.uid) {
-      var uid = this.data.uid;
-    }
+      var scene = decodeURIComponent(options.scene);
+      let uid= scene.split('&')[0]; //推荐人
+      let invitation= scene.split('&')[1];//邀请人
+       let Uid;
+       if(uid==0){
+        app.globalData.recommendUser = invitation; 
+        app.globalData.is_recommend=2;
+        listData.is_recommend=2; 
+        app.globalData.showTitle='邀请人';
+        Uid=invitation; 
+        that.setData({
+          showTitle:'邀请人'
+        })
+       }else if(invitation==0){
+        app.globalData.recommendUser = uid; 
+        app.globalData.is_recommend=1;
+        listData.is_recommend=1; 
+        app.globalData.showTitle='推荐人';
+        Uid=uid;  
+        that.setData({
+          showTitle:'推荐人'
+        })
+       }
+       console.log(Uid,'uid')
+       if(Uid){
+         console.log('进来了')
+        app.sendRequest({
+          url: 'api.php?s=Distributor/applyUserName',
+          data: { uid: Uid},
+          success: function (res) {
+            console.log(res);
+            listData.recommend_user = Uid;
 
-    console.log(uid)
-    app.sendRequest({
-      url: 'api.php?s=Distributor/applyUserName',
-      data: { uid: uid },
-      success: function (res) {
-        console.log(res);
-        listData.recommend_user = uid;
-        if (res.code == 1) {
-          if (uid) {
-            var recommend_user = res.data;
-            that.setData({
-              recommend_user,
-              listData,
-            })
+            if (res.code == 1) {
+            
+                var recommend_user = res.data;
+                that.setData({
+                  recommend: recommend_user,
+                  listData,
+                })
+              
+            }
+          }
+        })
+       }
+
+      console.log(uid)
+ 
+
+    } else if (options.uid){
+      var uid = options.uid;  
+      console.log(uid)
+      app.sendRequest({
+        url: 'api.php?s=Distributor/applyUserName',
+        data: { uid: uid },
+        success: function (res) {
+          console.log(res);
+          listData.recommend_user = uid;
+          listData.is_recommend=app.globalData.is_recommend;
+          let showTitle=app.globalData.showTitle;
+          if (res.code == 1) {
+            if (uid) {
+              var recommend_user = res.data;
+              that.setData({
+                recommend: recommend_user,
+                listData,
+                showTitle
+              })
+            }
           }
         }
-      }
-    })
+      })
+    } else if(this.data.uid) {
+      var uid = this.data.uid; 
+      console.log(uid)
+      app.sendRequest({
+        url: 'api.php?s=Distributor/applyUserName',
+        data: { uid: uid },
+        success: function (res) {
+          console.log(res);
+          listData.recommend_user = uid;
+          listData.is_recommend=app.globalData.is_recommend;
+          let showTitle=app.globalData.showTitle;
+          if (res.code == 1) {
+            if (uid) {
+              var recommend_user = res.data;
+              that.setData({
+                recommend: recommend_user,
+                listData,
+                showTitle
+              })
+            }
+          }
+        }
+      })
+    }
+
+ 
 
 
     app.unregisteredCallback = unregistered => {
@@ -196,50 +269,36 @@ Page({
     var that=this;
     var navList = this.data.navList;
     var listData = this.data.listData;
-    var provinceArray = this.data.provinceArray;
-    var cityArray = this.data.cityArray;
-    var districtArray = this.data.districtArray;
-    var provinceIndex = this.data.provinceIndex;
-    var cityIndex = this.data.cityIndex;
-    var districtIndex = this.data.districtIndex;
-    listData.province = provinceArray[provinceIndex].province_name;
-    listData.city = cityArray[cityIndex].city_name;
-    listData.district = districtArray[districtIndex].district_name;
-    var myreg = /^1(3|4|5|7|8)\d{9}$/;
     var reg = /[~#^$@%&!?%*]/gi;
-    if (!listData.id_face_cons){
-      app.showBox(that, '请上传身份证反面');
-    } else if (!listData.address) {
-      app.showBox(that, '请填写详细地址');
-    } else if (this.isEmojiCharacter(listData.address)) {
-      app.showBox(that, '详细地址不能含有表情');
-    } else if (reg.test(listData.address)) {
-      app.showBox(that, '详细地址不能含有特殊字符');
-    } else if (!myreg.test(listData.tel)) {
-      app.showBox(that, '请填写正确手机号码');
-    } else if (provinceIndex==0) {
-      app.showBox(that, '请选择省');
-    } else if (cityIndex == 0) {
-      app.showBox(that, '请选择市');
-    } else if (districtIndex== 0) {
-      app.showBox(that, '请选择区');
-    } else if (!listData.name) {
-      app.showBox(that, '请填写姓名');
-    } else if (this.isEmojiCharacter(listData.name)) {
-      app.showBox(that, '姓名不能含有表情');
-    } else if (reg.test(listData.name)) {
-      app.showBox(that, '姓名不能含有特殊字符');
-    } else if (!listData.nation) {
-      app.showBox(that, '请填写民族');
-    } else if (this.isEmojiCharacter(listData.nation)) {
-      app.showBox(that, '民族不能含有表情');
-    } else if (reg.test(listData.nation)) {
-      app.showBox(that, '民族不能含有特殊字符');
+    if (!listData.describe1) {
+      app.showBox(that, '请填写流量入口');
+    } else if (this.isEmojiCharacter(listData.describe1)) {
+      app.showBox(that, '流量入口不能含有表情');
+    } else if (reg.test(listData.describe1)) {
+      app.showBox(that, '流量入口不能含有特殊字符');
+    } else if (listData.describe1.length < 10) {
+      app.showBox(that, '流量入口字数不够');
+    } else if (listData.describe2.length < 10) {
+      app.showBox(that, '你眼中的BC字数不够');
+    } else if (this.isEmojiCharacter(listData.describe2)) {
+      app.showBox(that, '你眼中的BC不能含有表情');
+    } else if (reg.test(listData.describe2)) {
+      app.showBox(that, '你眼中的BC不能含有特殊字符');
+    } else if (!listData.describe2) {
+      app.showBox(that, '请填写你眼中的BC');
+    } else if (listData.describe3.length < 10) {
+      app.showBox(that, '为何选择做极选师字数不够');
+    } else if (this.isEmojiCharacter(listData.describe3)) {
+      app.showBox(that, '为何选择做极选师不能含有表情');
+    } else if (reg.test(listData.describe3)) {
+      app.showBox(that, '为何选择做极选师不能含有特殊字符');
+    } else if (!listData.describe3) {
+      app.showBox(that, '请填写为何选择做极选师');
     }else{
-      navList[1].select = true;
+      navList[2].select = true;
       this.setData({
         navList: navList,
-        isShow: 2,
+        isShow: 3,
       })
     }
     console.log(listData);
@@ -250,38 +309,93 @@ Page({
     var that = this;
     var navList = this.data.navList;
     var listData = this.data.listData;
-    var reg = /[~#^$@%&!?%*]/gi;
-    if (!listData.educational_experience) {
-      app.showBox(that, '请填写教育经历');
-    } else if (this.isEmojiCharacter(listData.educational_experience)) {
-      app.showBox(that, '教育经历不能含有表情');
-    } else if (reg.test(listData.educational_experience)) {
-      app.showBox(that, '教育经历不能含有特殊字符');
-    }else if(listData.educational_experience.length<10) {
-      app.showBox(that, '教育经历字数不够');
-    } else if (listData.work_experience.length < 10) {
-      app.showBox(that, '工作经历字数不够');
-    } else if (!listData.work_experience) {
-      app.showBox(that, '请填写工作经历');
-    } else if (this.isEmojiCharacter(listData.work_experience)) {
-      app.showBox(that, '工作经历不能含有表情');
-    } else if (reg.test(listData.work_experience)) {
-      app.showBox(that, '工作经历不能含有特殊字符');
-    } else if (listData.hobbies.length < 10) {
-      app.showBox(that, '爱好特长字数不够');
-    } else if (this.isEmojiCharacter(listData.hobbies)) {
-      app.showBox(that, '爱好特长不能含有表情');
-    } else if (reg.test(listData.hobbies)) {
-      app.showBox(that, '爱好特长不能含有特殊字符');
-    } else if (!listData.hobbies) {
-      app.showBox(that, '请填写爱好特长');
-    } else {
-      navList[2].select = true;
+    var sexList = this.data.sexList;
+    var provinceArray = this.data.provinceArray;
+    var cityArray = this.data.cityArray;
+    var districtArray = this.data.districtArray;
+    var provinceIndex = this.data.provinceIndex;
+    var cityIndex = this.data.cityIndex;
+    var districtIndex = this.data.districtIndex;
+    listData.province = provinceArray[provinceIndex].province_name;
+    listData.city = cityArray[cityIndex].city_name;
+    listData.district = districtArray[districtIndex].district_name;
+   
+    // if (!listData.educational_experience) {
+    //   app.showBox(that, '请填写教育经历');
+    // } else if (this.isEmojiCharacter(listData.educational_experience)) {
+    //   app.showBox(that, '教育经历不能含有表情');
+    // } else if (reg.test(listData.educational_experience)) {
+    //   app.showBox(that, '教育经历不能含有特殊字符');
+    // }else if(listData.educational_experience.length<10) {
+    //   app.showBox(that, '教育经历字数不够');
+    // } else if (listData.work_experience.length < 10) {
+    //   app.showBox(that, '工作经历字数不够');
+    // } else if (!listData.work_experience) {
+    //   app.showBox(that, '请填写工作经历');
+    // } else if (this.isEmojiCharacter(listData.work_experience)) {
+    //   app.showBox(that, '工作经历不能含有表情');
+    // } else if (reg.test(listData.work_experience)) {
+    //   app.showBox(that, '工作经历不能含有特殊字符');
+    // } else if (listData.hobbies.length < 10) {
+    //   app.showBox(that, '爱好特长字数不够');
+    // } else if (this.isEmojiCharacter(listData.hobbies)) {
+    //   app.showBox(that, '爱好特长不能含有表情');
+    // } else if (reg.test(listData.hobbies)) {
+    //   app.showBox(that, '爱好特长不能含有特殊字符');
+    // } else if (!listData.hobbies) {
+    //   app.showBox(that, '请填写爱好特长');
+    // } else {
+    //   navList[1].select = true;
+    //   this.setData({
+    //     navList: navList,
+    //     isShow: 2,
+    //   })
+    // }
+    // else if (!listData.nation) {
+    //   app.showBox(that, '请填写民族');
+    // } else if (this.isEmojiCharacter(listData.nation)) {
+    //   app.showBox(that, '民族不能含有表情');
+    // } else if (reg.test(listData.nation)) {
+    //   app.showBox(that, '民族不能含有特殊字符');
+    // }
+
+   console.log(listData.birthday )
+//    else if(districtIndex == 0) {
+//   app.showBox(that, '请选择区');
+// } 
+   
+   var myreg = /^1(3|4|5|7|8)\d{9}$/;
+   var reg = /[~#^$@%&!?%*]/gi;
+
+ if (!listData.name) {
+     app.showBox(that, '请填写姓名');
+   } else if (this.isEmojiCharacter(listData.name)) {
+     app.showBox(that, '姓名不能含有表情');
+   } else if (reg.test(listData.name)) {
+     app.showBox(that, '姓名不能含有特殊字符');
+   } else if(listData.birthday==undefined){
+    app.showBox(that, '请填写出生日期');
+   }  else if (provinceIndex == 0) {
+    app.showBox(that, '请选择省');
+  } else if (cityIndex == 0) {
+    app.showBox(that, '请选择市');
+  }  else if (!listData.address) {
+    app.showBox(that, '请填写详细地址');
+  }  else if (this.isEmojiCharacter(listData.address)) {
+    app.showBox(that, '详细地址不能含有表情');
+  } else if (reg.test(listData.address)) {
+    app.showBox(that, '详细地址不能含有特殊字符');
+  } else if (!myreg.test(listData.tel)) {
+    app.showBox(that, '请填写正确手机号码');
+  }else{
+    navList[1].select = true;
       this.setData({
         navList: navList,
-        isShow: 3,
+        isShow: 2,
       })
-    }
+   }
+
+
   },
 
   // 跳转自我介绍
@@ -330,188 +444,188 @@ Page({
   },
 
   // 身份证正面上传
-  frontimage: function () {
-    var FilePaths = this.data.FilePaths;
-    // 判断此时上传的身份证是正面还是反面
-    this.identityCard('front');
-  },
+  // frontimage: function () {
+  //   var FilePaths = this.data.FilePaths;
+  //   // 判断此时上传的身份证是正面还是反面
+  //   this.identityCard('front');
+  // },
 
   // 反面上传
-  reciteimage: function () {
-    var recitePaths = this.data.recitePaths;
-    // 判断此时上传的身份证是正面还是反面
-    this.identityCard('recite');
-  },
+  // reciteimage: function () {
+  //   var recitePaths = this.data.recitePaths;
+  //   // 判断此时上传的身份证是正面还是反面
+  //   this.identityCard('recite');
+  // },
 
   // 上传图片到服务器
-  uplodeHeadImg: function (tempFilePaths, paths, listData) {
-    var name = 'file_upload';
-    var that = this;
-    var base = app.globalData.siteBaseUrl;
-    var token = app.globalData.token;
-    // console.log(tempFilePaths)
-    wx.uploadFile({
-      url: base + 'api.php?s=upload/uploadFile',
-      filePath: tempFilePaths,
-      name: name,
-      formData: {
-        token: token,
-        file_path: 'upload/comment/',
-      },
-      success: function (res) {
-        var result = res.data
-        // console.log(result);
-        var data = JSON.parse(result)
-        // console.log(data);
-        if (data.code == 0) {
-          data = data.data;
-          var code = data.code;
-          var message = data.message;
-          var img_url = data.data;
-          img_url = app.IMG(img_url);
-          if (code > 0) {
-            if (paths=='face'){
-              listData.id_face_pros = img_url;
-              that.setData({
-                FilePaths: tempFilePaths,
-                listData,
-              })
-              // that.identityFace(tempFilePaths, listData);
-            } else if (paths == 'back') {
-              listData.id_face_cons = img_url;
-              that.setData({
-                recitePaths: tempFilePaths,
-                listData,
-              })
-              // that.identityBack(tempFilePaths, listData);
-            } else if (paths == 'bankCard') {
-              listData.bank_card_pic = img_url;
-              that.setData({
-                bankCardImage: tempFilePaths,
-                listData,
-              })
-              // that.bankCard(tempFilePaths, listData);
-            }
-          }else{
-            wx.hideLoading();
-            app.showBox(that, data.message);
-          }
-        } else {
-          wx.hideLoading();
-          app.showBox(that, data.message);
-        }
-      },
-      fail: function (res) {
-        wx.hideLoading();
-        app.showBox(that, '上传失败');
-      }
-    })
-  },
+  // uplodeHeadImg: function (tempFilePaths, paths, listData) {
+  //   var name = 'file_upload';
+  //   var that = this;
+  //   var base = app.globalData.siteBaseUrl;
+  //   var token = app.globalData.token;
+  //   // console.log(tempFilePaths)
+  //   wx.uploadFile({
+  //     url: base + 'api.php?s=upload/uploadFile',
+  //     filePath: tempFilePaths,
+  //     name: name,
+  //     formData: {
+  //       token: token,
+  //       file_path: 'upload/comment/',
+  //     },
+  //     success: function (res) {
+  //       var result = res.data
+  //       // console.log(result);
+  //       var data = JSON.parse(result)
+  //       // console.log(data);
+  //       if (data.code == 0) {
+  //         data = data.data;
+  //         var code = data.code;
+  //         var message = data.message;
+  //         var img_url = data.data;
+  //         img_url = app.IMG(img_url);
+  //         if (code > 0) {
+  //           if (paths=='face'){
+  //             listData.id_face_pros = img_url;
+  //             that.setData({
+  //               FilePaths: tempFilePaths,
+  //               listData,
+  //             })
+  //             // that.identityFace(tempFilePaths, listData);
+  //           } else if (paths == 'back') {
+  //             listData.id_face_cons = img_url;
+  //             that.setData({
+  //               recitePaths: tempFilePaths,
+  //               listData,
+  //             })
+  //             // that.identityBack(tempFilePaths, listData);
+  //           } else if (paths == 'bankCard') {
+  //             listData.bank_card_pic = img_url;
+  //             that.setData({
+  //               bankCardImage: tempFilePaths,
+  //               listData,
+  //             })
+  //             // that.bankCard(tempFilePaths, listData);
+  //           }
+  //         }else{
+  //           wx.hideLoading();
+  //           app.showBox(that, data.message);
+  //         }
+  //       } else {
+  //         wx.hideLoading();
+  //         app.showBox(that, data.message);
+  //       }
+  //     },
+  //     fail: function (res) {
+  //       wx.hideLoading();
+  //       app.showBox(that, '上传失败');
+  //     }
+  //   })
+  // },
 
   // 银行卡上传
-  cardimage:function(){
-    var _this = this;
-    wx.chooseImage({
-      count: 1, // 默认9 
-      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有 
-      success: function (result) {
-        // 判断图片是否过大
-        var tempFiles = result.tempFiles[0];
-        if (tempFiles.size > 1024 * 1024 * 8) {
-          app.showBox(_this, '上传图片过大');
-          return;
-        }
-        wx.showLoading({
-          title: '加载中',
-          success: function () {
-            _this.bankCard(result.tempFilePaths[0])
-            // _this.uplodeHeadImg(result.tempFilePaths[0], 'bankCard');
-          }
-        })
-      },
-      fail: function (res) {
-        app.showBox(_this, '无法获取本地图片');
-        console.log(res);
-      }
-    })
-  },
+  // cardimage:function(){
+  //   var _this = this;
+  //   wx.chooseImage({
+  //     count: 1, // 默认9 
+  //     sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+  //     sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有 
+  //     success: function (result) {
+  //       // 判断图片是否过大
+  //       var tempFiles = result.tempFiles[0];
+  //       if (tempFiles.size > 1024 * 1024 * 8) {
+  //         app.showBox(_this, '上传图片过大');
+  //         return;
+  //       }
+  //       wx.showLoading({
+  //         title: '加载中',
+  //         success: function () {
+  //           _this.bankCard(result.tempFilePaths[0])
+  //           // _this.uplodeHeadImg(result.tempFilePaths[0], 'bankCard');
+  //         }
+  //       })
+  //     },
+  //     fail: function (res) {
+  //       app.showBox(_this, '无法获取本地图片');
+  //       console.log(res);
+  //     }
+  //   })
+  // },
 
   // 银行卡识别
-  bankCard: function (tempFilePaths) {
-    var _this = this;
-    var listData = this.data.listData;
-    // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-    wx.getFileSystemManager().readFile({
-      filePath: tempFilePaths, //选择图片返回的相对路径
-      encoding: 'base64', //编码格式
-      success: list => { //成功的回调
-        var base64 = 'data:image/jpeg;base64,' + list.data;
-        // console.log(base64);
-            wx.request({
-              url: 'https://bankocr.market.alicloudapi.com/cardbank',
-              data: {
-                img: base64,
-              },
-              method: 'POST',
-              header: {
-                // "Host": "bankocr.market.alicloudapi.com",
-                // "X-Ca-Timestamp": "1540802691176", 
-                "gateway_channel": "https",
-                "X-Ca-Request-Mode": "debug",
-                "X-Ca-Key": "24906978",
-                "X-Ca-Stage": "RELEASE",
-                'content-type': "application/x-www-form-urlencoded;charset=utf-8",
-                'Authorization': 'APPCODE 2b19f336b34e4b50a7e14ad8c8765932'
-              },
-              success: function (res) {
-                wx.hideLoading();
-                // console.log(res)
-                if (res.data.msg == '识别成功') {
-                  let data = res.data.result;
-                  if (data.bank_card_type == 0) {
-                    _this.setData({
-                      prompt: '不能识别有效银行卡'
-                    })
-                  } else if(data.bank_card_type == 2) {
-                    _this.setData({
-                      prompt: '请上传借记卡或储蓄卡'
-                    })
-                  } else {
-                    wx.showToast({
-                      title: '上传成功',
-                      icon: 'success',
-                      duration: 2000
-                    })
-                    listData.bank_account_number = data.bank_card_number;
-                    listData.bank_name = data.bank_name; 
-                    _this.uplodeHeadImg(tempFilePaths, 'bankCard', listData)
-                  }
-                } else {
-                  _this.setData({
-                    prompt: res.data.msg || '查询失败'
-                  })
-                }
-                setTimeout(function () {
-                  _this.setData({
-                    prompt: ''
-                  })
-                }, 2000)
-              },
-              fail:function(res){
-                wx.hideLoading();
-                console.log(res)
-                app.showBox(_this, '上传失败')
-              }
-            })
-      },
-      fail: function (res) {
-        wx.hideLoading();
-        console.log(res)
-        app.showBox(_this, '上传失败')
-      }
-    })
-  },
+  // bankCard: function (tempFilePaths) {
+  //   var _this = this;
+  //   var listData = this.data.listData;
+  //   // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+  //   wx.getFileSystemManager().readFile({
+  //     filePath: tempFilePaths, //选择图片返回的相对路径
+  //     encoding: 'base64', //编码格式
+  //     success: list => { //成功的回调
+  //       var base64 = 'data:image/jpeg;base64,' + list.data;
+  //       // console.log(base64);
+  //           wx.request({
+  //             url: 'https://bankocr.market.alicloudapi.com/cardbank',
+  //             data: {
+  //               img: base64,
+  //             },
+  //             method: 'POST',
+  //             header: {
+  //               // "Host": "bankocr.market.alicloudapi.com",
+  //               // "X-Ca-Timestamp": "1540802691176", 
+  //               "gateway_channel": "https",
+  //               "X-Ca-Request-Mode": "debug",
+  //               "X-Ca-Key": "24906978",
+  //               "X-Ca-Stage": "RELEASE",
+  //               'content-type': "application/x-www-form-urlencoded;charset=utf-8",
+  //               'Authorization': 'APPCODE 2b19f336b34e4b50a7e14ad8c8765932'
+  //             },
+  //             success: function (res) {
+  //               wx.hideLoading();
+  //               // console.log(res)
+  //               if (res.data.msg == '识别成功') {
+  //                 let data = res.data.result;
+  //                 if (data.bank_card_type == 0) {
+  //                   _this.setData({
+  //                     prompt: '不能识别有效银行卡'
+  //                   })
+  //                 } else if(data.bank_card_type == 2) {
+  //                   _this.setData({
+  //                     prompt: '请上传借记卡或储蓄卡'
+  //                   })
+  //                 } else {
+  //                   wx.showToast({
+  //                     title: '上传成功',
+  //                     icon: 'success',
+  //                     duration: 2000
+  //                   })
+  //                   listData.bank_account_number = data.bank_card_number;
+  //                   listData.bank_name = data.bank_name; 
+  //                   _this.uplodeHeadImg(tempFilePaths, 'bankCard', listData)
+  //                 }
+  //               } else {
+  //                 _this.setData({
+  //                   prompt: res.data.msg || '查询失败'
+  //                 })
+  //               }
+  //               setTimeout(function () {
+  //                 _this.setData({
+  //                   prompt: ''
+  //                 })
+  //               }, 2000)
+  //             },
+  //             fail:function(res){
+  //               wx.hideLoading();
+  //               console.log(res)
+  //               app.showBox(_this, '上传失败')
+  //             }
+  //           })
+  //     },
+  //     fail: function (res) {
+  //       wx.hideLoading();
+  //       console.log(res)
+  //       app.showBox(_this, '上传失败')
+  //     }
+  //   })
+  // },
 
   // 身份证上传
   identityCard: function (paths) {
@@ -767,12 +881,15 @@ Page({
     let provinceArray = that.data.provinceArray;
     let province_id = provinceArray[index].province_id;
     app.clicked(that, 'listClickFlag');
-    that.setData({
-      provinceIndex: index,
-      province: province_id,
-      cityIndex: 0,
-      districtIndex: 0
-    })
+    
+      
+  that.setData({
+  provinceIndex: index,
+  province: province_id,
+  cityIndex: 0,
+  districtIndex: 0
+   })
+
     if (province_id == 0) {
       return;
     }
@@ -877,15 +994,38 @@ Page({
       return;
     }
   },
+  nameWrok:function(e){
+    var name = e.detail.value;
+    var listData=this.data.listData;
+      listData.name=name.replace(/\s+/g, '');
+      this.setData({
+        listData,
+      })
+   
+  },
 
   // 性别修改
   radioChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value)
     var sex = e.detail.value;
+    var  sexList= this.data.sexList;
+   
+    for(let i=0;i<sexList.length;i++){
+      if(e.detail.value=='男'){
+        sexList[0].checked=true;
+        sexList[1].checked=false;
+      }else if(e.detail.value=='女'){
+        sexList[1].checked=true
+        sexList[0].checked=false;
+      }
+    
+    }
+    
     var listData = this.data.listData;
     listData.sex = sex;
     this.setData({
       listData,
+      sexList
     })
   },
 
@@ -901,6 +1041,17 @@ Page({
     } else {
       return;
     }
+    
+  },
+  nationWrok: function (e) {
+    var nation = e.detail.value;
+    var listData = this.data.listData;
+      listData.nation = nation.replace(/\s+/g, '');
+      this.setData({
+        listData,
+      })
+   
+    
   },
 
   // 详细地址修改
@@ -912,7 +1063,15 @@ Page({
       listData,
     })
   },
+  addressWrok:function(e){
+    var address = e.detail.value;
+    var listData = this.data.listData;
+    listData.address = address.replace(/\s+/g, '');
+    this.setData({
+      listData,
+    })
 
+  },
   // 手机号码修改
   phoneValue: function (e) {
     var tel = e.detail.value;
@@ -948,6 +1107,16 @@ Page({
     var work_experience = e.detail.value;
     var listData = this.data.listData;
     listData.work_experience = work_experience;
+    this.setData({
+      listData,
+    })
+  },
+  joinWrok:function(e){
+    console.log('ok')
+    var listData = this.data.listData;
+    var work_experience = e.detail.value;
+    listData.work_experience = work_experience.replace(/\s+/g, '');
+    console.log(listData.work_experience)
     this.setData({
       listData,
     })
@@ -1037,33 +1206,14 @@ Page({
   toApply: function (event) {
     var that = this;
     var listData = this.data.listData;
-    var sexList = this.data.sexList;
+    var experience=listData.work_experience;
+   
     var reg = /[~#^$@%&!?%*]/gi;
-    if (!listData.describe1) {
-      app.showBox(that, '请填写流量入口');
-    } else if (this.isEmojiCharacter(listData.describe1)) {
-      app.showBox(that, '流量入口不能含有表情');
-    } else if (reg.test(listData.describe1)) {
-      app.showBox(that, '流量入口不能含有特殊字符');
-    }else if (listData.describe1.length < 10) {
-      app.showBox(that, '流量入口字数不够');
-    } else if (listData.describe2.length < 10) {
-      app.showBox(that, '你眼中的BC字数不够');
-    } else if (this.isEmojiCharacter(listData.describe2)) {
-      app.showBox(that, '你眼中的BC不能含有表情');
-    } else if (reg.test(listData.describe2)) {
-      app.showBox(that, '你眼中的BC不能含有特殊字符');
-    } else if (!listData.describe2) {
-      app.showBox(that, '请填写你眼中的BC');
-    } else if (listData.describe3.length < 10) {
-      app.showBox(that, '为何选择做极选师字数不够');
-    } else if (this.isEmojiCharacter(listData.describe3)) {
-      app.showBox(that, '为何选择做极选师不能含有表情');
-    } else if (reg.test(listData.describe3)) {
-      app.showBox(that, '为何选择做极选师不能含有特殊字符');
-    } else if (!listData.describe3) {
-      app.showBox(that, '请填写为何选择做极选师');
-    } else {
+    if(!experience){
+      app.showBox(that, '工作经历不能为空');
+    }else if(experience.length < 10 ){
+      app.showBox(that, '工作经历字数不够');
+    }else{
       console.log(listData)
       // 提交表格
       app.sendRequest({
@@ -1115,7 +1265,7 @@ Page({
     var that = this;
     var listData = this.data.listData;
     wx.hideShareMenu();
-    console.log(app.globalData.unregistered)
+    console.log(app.globalData.unregistered);
     if (app.globalData.unregistered == 1) {
       wx.navigateTo({
         url: '/pages/member/resgin/resgin',

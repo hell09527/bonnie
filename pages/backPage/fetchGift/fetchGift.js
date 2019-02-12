@@ -169,9 +169,13 @@ Page({
   /**触发*/
   Crossroad: function () {
     let _that = this;
-    _that.setData({
-      Choice: true
-    })
+    let suffix=_that.data.order_id;
+    let Tel=_that.data.tel;
+    if (app.globalData.unregistered == 1 || Tel=='') {
+      wx.navigateTo({
+        url: '/pages/member/resgin/resgin?suffix='+suffix,
+      })
+    }
   },
   //获取微信手机号
   getPhoneNumber: function (e) {

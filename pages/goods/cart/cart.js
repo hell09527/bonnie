@@ -166,7 +166,7 @@ Page({
    */
   onConfirm: function () {
     var slist = [];
-    console.log(this.data.send_type)
+    console.log(this.data.send_type);
     var goods_type = 1;
     var is_inside = 0;   //是否为内购商品
     if (this.data.send_type == 1) {
@@ -245,9 +245,15 @@ Page({
                 data[index][key].status = 1;
               }
               console.log(data)
-              let promotion_price = parseFloat(data[index][key].promotion_price);
+           
               let num = parseInt(data[index][key].num);
               if (data[index][key].status == 1) {
+                let promotion_price ;
+                if(data[index][key].is_inside== 0){
+                  promotion_price = parseFloat(data[index][key].promotion_price);
+                }else{
+                  promotion_price = parseFloat(data[index][key].interior_price);
+                }
                 total_price = parseFloat(total_price) + parseFloat(promotion_price * num);
               }
 
@@ -393,6 +399,7 @@ Page({
   },
   inputChange(e) {
     "use strict";
+    console.log( e.detail.value);
     this.setData({
       send_type: e.detail.value
     })
@@ -476,8 +483,17 @@ Page({
     let total_price = that.data.total_price;
     let is_checked = 0;
     let check_all = 1;
-    let promotion_price = parseFloat(cart_list[i][k].promotion_price);
     let num = parseInt(cart_list[i][k].num);
+    let promotion_price ;
+  
+
+
+    
+    if(cart_list[i][k].is_inside== 0){
+      promotion_price = parseFloat(cart_list[i][k].promotion_price);
+    }else{
+      promotion_price = parseFloat(cart_list[i][k].interior_price);
+    }
 
     if (status == 0) {
       status = 1;
@@ -596,6 +612,7 @@ Page({
           let stock = new_cart_list[i][k].stock;
           let max_buy = new_cart_list[i][k].max_buy
           let min_buy = new_cart_list[i][k].min_buy;
+
           //加
           if (adjust_type == 'add') {
             if (num < stock) {
@@ -630,13 +647,21 @@ Page({
           }
 
           new_cart_list[i][k].num = num;
+
           //新数组添加选中状态
           total_price = 0.00;
           for (let index in cart_list) {
             for (let key in cart_list[index]) {
               new_cart_list[index][key].status = cart_list[index][key].status;
-              new_cart_list[index][key].promotion_price = cart_list[index][key].promotion_price
-              let promotion_price = parseFloat(cart_list[index][key].promotion_price);
+              new_cart_list[index][key].promotion_price = cart_list[index][key].promotion_price;
+
+              let promotion_price ;
+              if(cart_list[index][key].is_inside== 0){
+                promotion_price = parseFloat(cart_list[index][key].promotion_price);
+              }else{
+                promotion_price = parseFloat(cart_list[index][key].interior_price);
+              }
+              
               let num = parseInt(new_cart_list[index][key].num);
 
               if (new_cart_list[index][key].status) {
@@ -680,8 +705,11 @@ Page({
     let i = event.currentTarget.dataset.index;
     let k = event.currentTarget.dataset.key;
     let id = event.currentTarget.dataset.id;
+   
+
     let cart_list = that.data.cart_list;
-    let num = event.detail.value;
+    // 调节ios的input  value 
+    let num = this.num;
     let total_price = that.data.total_price;
 
     app.sendRequest({
@@ -701,10 +729,12 @@ Page({
               num = max_buy;
             }
           } else {
+
             if (num >= stock) {
               app.showBox(that, '已达到最大库存');
               num = stock;
             }
+
           }
 
           if (min_buy > 0) {
@@ -718,17 +748,32 @@ Page({
               num = 1;
             }
           }
-
+          
+          // 保持修改价格的一致性
+          new_cart_list = cart_list;
           new_cart_list[i][k].num = num;
-          // console.log(num)
+        
+       
           //新数组添加选中状态
           total_price = 0;
           for (let index in cart_list) {
             for (let key in cart_list[index]) {
               new_cart_list[index][key].status = cart_list[index][key].status;
-              let promotion_price = parseFloat(new_cart_list[index][key].promotion_price);
+             
+              let promotion_price ;
+              if(new_cart_list[index][key].is_inside== 0){
+                promotion_price = parseFloat(new_cart_list[index][key].promotion_price);
+              }else{
+                promotion_price = parseFloat(new_cart_list[index][key].interior_price);
+              }
+
+
               let num = parseInt(new_cart_list[index][key].num);
-              total_price = parseFloat(total_price) + parseFloat(promotion_price * num);
+
+              if(new_cart_list[index][key].status==1){
+                total_price = parseFloat(total_price) + parseFloat(promotion_price * num);
+              }
+              
             }
           }
           // console.log(num)
@@ -742,10 +787,20 @@ Page({
             success: function (res) {
               let code = res.data;
               if (code > 0) {
+
+              
+
+
+             
                 that.setData({
                   cart_list: new_cart_list,
                   total_price: total_price.toFixed(2),
-                })
+                });
+
+
+
+
+
               } else {
                 app.showBox(that, '操作失败');
               }
@@ -912,9 +967,14 @@ Page({
             } else {
               carts_3 += ',' + cart_id;
             }
-            total_price_3 += parseFloat(cart_list[index][key].num) * parseFloat(cart_list[index][key].price)
+            total_price_3 += parseFloat(cart_list[index][key].num) * parseFloat(cart_list[index][key].interior_price)
             total_num_3 += cart_list[index][key].num
             cart_3.push(cart_list[index][key]);
+
+            that.setData({
+              send_type: 3, 
+            })
+            
           } else if (cart_list[index][key].source_type == 1 && cart_list[index][key].is_inside == 1) {
 
             //大贸内购商品
@@ -925,7 +985,7 @@ Page({
             } else {
               carts_4 += ',' + cart_id;
             }
-            total_price_4 += parseFloat(cart_list[index][key].num) * parseFloat(cart_list[index][key].price)
+            total_price_4 += parseFloat(cart_list[index][key].num) * parseFloat(cart_list[index][key].interior_price)
             total_num_4 += cart_list[index][key].num
             cart_4.push(cart_list[index][key]);
           }
@@ -1368,6 +1428,11 @@ Page({
           cart_list,
         })
   },
+
+  inputGai:function(event){
+    let that = this;
+    this.num = event.detail.value;
+  },
   // 价格输入变化
   inputPrice:function (event) {
     this.i = event.currentTarget.dataset.index;
@@ -1375,6 +1440,9 @@ Page({
     this.price = event.detail.value;
 
   },
+
+
+
   // 超级vip价格输入变化
   ECTPrice:function(event){
     var that = this;

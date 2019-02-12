@@ -271,9 +271,12 @@ Page({
   /**触发*/
   Crossroad: function () {
     let _that = this;
-    _that.setData({
-      Choice: true
-    })
+    let Tel=_that .data.tel;
+    if (app.globalData.unregistered == 1 || Tel=='') {
+      wx.navigateTo({
+        url: '/pages/member/resgin/resgin',
+      })
+      }
   },
 
   /**

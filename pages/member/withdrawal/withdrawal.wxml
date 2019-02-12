@@ -1,6 +1,4 @@
 <!--pages/member/withdrawal/withdrawal.wxml-->
-
- 
 <!-- 引入tempalte  -->
 <import src="/templates/dataChoose-template/dataChoose-template.wxml" />
 <scroll-view>
@@ -28,17 +26,31 @@
             <view style='color:red;font-size: 14px;' wx:if='{{hint==2}}'>输入金额不可低于{{minMoey}}元</view>
              <view style='color:red;font-size: 14px;' wx:if='{{hint==3}}'>输入金额已超过可提现金额</view>
       <form bindsubmit="toApply" report-submit="true">
-          <button  wx:if='{{Astop}}'  class='head-btn'  formType="submit" >立即提现</button>
-          <button  wx:if='{{!Astop}}'  class='head-btn'  formType="submit" disabled='false'>立即提现</button>
+        <block></block>
+          <button  wx:if='{{Astop && switchover==1}}'  class='head-btn'  formType="submit" >立即提现</button>
+          <button  wx:if='{{!Astop || switchover==0}}'  class='head-btn'  formType="submit" disabled='false'>立即提现</button>
       </form>
+       <view style='color:red;font-size: 14px;' wx:if='{{switchover==0}}'>请您前往信息认证后再进行提现</view>
       <view class="switch"  wx:if="{{remain}}" catchtap='isReward'>{{rewardPrice!=0?'奖金提现 >':''}} </view>
       <view   class="switch"  wx:if="{{!remain}}" catchtap='isRemain'>{{remainPrice!=0?'分润金额 >':''}} </view>
     </view>
   </view>
+   <view class='moneyBox'>
+         <view class='xuans'>
+          <view class='c_money'>
+            <view>个人信息认证</view>
+          </view>
+          <view class='edu' catchtap='open'>
+          <text wx:if='{{switchover==0}}'>前往提交信息</text>
+          <text wx:if='{{switchover==1}}' style='color:#ffb24c'>身份证已上传</text>
+          <image lazy-load="true" class="direction " src='https://static.bonnieclyde.cn/WechatIMG240.png'></image> </view>
+        </view>
+    </view>
   <view class='detail-box'>
     <view class='detail-head'>
       <template is="dataChooseTemplate" data="{{datetime,nowData}}" />
     </view>
+   
     <!-- 本月事件 -->
     <block wx:for="{{separationRecords}}" wx:key="" wx:for-item='separationRecordsItem' wx:for-index='separationRecordsIndex' wx:if="{{separationRecords.length>0}}">
       <view class='detail-item'>

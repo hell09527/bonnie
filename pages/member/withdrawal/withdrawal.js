@@ -7,19 +7,22 @@ Page({
    */
   data: {
     datetime: '',  //选中的年月
-    detailtime:'',    //账单明细的时间
+    detailtime: '',    //账单明细的时间
     nowData: '',  //当前年月
-    prompt:'',    //提示语
-    remainPrice:'',  //分润余额
-    rewardPrice:'',    //奖励余额
-    price:'',     //输入金额
-    isBindInput:true,    //输入框没输入时符号显示
+    prompt: '',    //提示语
+    remainPrice: '',  //分润余额
+    rewardPrice: '',    //奖励余额
+    price: '',     //输入金额
+    isBindInput: true,    //输入框没输入时符号显示
     maxMoey: '',    //当日最高提现金额
-    minMoey:'',    //当日最低提现金额
+    minMoey: '',    //当日最低提现金额
     remain: true,//提现方式
-    RunPrice:'', //可提现金额
-    hint:0,//hint提示
-    Astop:true //提现按钮是否禁用
+    RunPrice: '', //可提现金额
+    hint: 0,//hint提示
+    Astop: true, //提现按钮是否禁用
+    switchover: 0,//切换提现还是验证身份证
+    carry: {}, //携带数据
+
 
   },
 
@@ -42,23 +45,32 @@ Page({
       success: function (res) {
         console.log(res.data)
         var separationRecords = res.data.accountRecordsDate;
-        for (var i = 0; i < separationRecords.length;i++){
+        for (var i = 0; i < separationRecords.length; i++) {
           var item = separationRecords[i].accountRecords;
-          for (var j = 0; j < item.length;j++){
+          for (var j = 0; j < item.length; j++) {
             var index = item[j].settlement_time.indexOf(" ");
             item[j].settlement_time = item[j].settlement_time.substr(index + 1, item[j].settlement_time.length);
-            if (parseFloat(item[j].money)>0){
+            if (parseFloat(item[j].money) > 0) {
               item[j].money = '+' + item[j].money;
-              item[j].isGreen=true;
+              item[j].isGreen = true;
             }
           }
         }
+        console.log(res.data.switchover);
+        let carry = {
+          name: res.data.switchover.real_name,
+          issue: res.data.switchover.idCard,
+        }
+
+
         that.setData({
           remainPrice: res.data.account.balance,  //分润余额
           rewardPrice: res.data.account.bonus,  //奖励余额
           separationRecords,   //账单明细
           maxMoey: parseFloat(res.data.config.withdraw_cash_max) - parseFloat(res.data.config.withdraw_cash_sum),    //当日最高提现金额
-          minMoey: res.data.config.withdraw_cash_min,    //当日最低提现金额
+          minMoey: res.data.config.withdraw_cash_min,    //当日最低提现金额 
+          switchover: res.data.switchover.switchover,
+          carry
         })
       }
     })
@@ -102,10 +114,10 @@ Page({
   },
 
   // 提现分润金额
-  isRemain:function(){
+  isRemain: function () {
     this.setData({
       remain: true,
-      RunPrice:''
+      RunPrice: ''
     })
   },
 
@@ -113,156 +125,144 @@ Page({
   isReward: function () {
     this.setData({
       remain: false,
-      RunPrice:''
+      RunPrice: ''
     })
   },
 
   // 填写价格
   priceValue: function (e) {
-    var that=this;
+    var that = this;
     var remainPrice = this.data.remainPrice;
     var rewardPrice = this.data.rewardPrice;
-   
+
 
     //是否存在改变
-    if(e){
-
+    if (e) {
       var price = e.detail.value;
-      console.log(price )
+      console.log(price)
       that.setData({
-        RunPrice:price,
+        RunPrice: price,
       })
-      if (that.data.remain){
-        
+      if (that.data.remain) {
+
         if (price > parseFloat(remainPrice)) {
-          console.log('1',price)
+          console.log('1', price)
           that.setData({
-            hint:3,
-            RunPrice:price,
+            hint: 3,
+            RunPrice: price,
           })
-  
+
         }
         else if (price < parseFloat(that.data.minMoey)) {
-          console.log('2',price)
+          console.log('2', price)
           that.setData({
-            hint:2,
-            RunPrice:price,
+            hint: 2,
+            RunPrice: price,
           })
-        console.log(that.data.hint)
-        } else if(price>parseFloat(that.data.maxMoey)){
-          console.log('3',price)
+          console.log(that.data.hint)
+        } else if (price > parseFloat(that.data.maxMoey)) {
+          console.log('3', price)
           that.setData({
-            hint:1
-          })
-          return;
-        }else if(!price ){
-          console.log('进来了',price)
-          that.setData({
-            hint:0
+            hint: 1
           })
           return;
-        }
-        else{
-          console.log('4',price)
+        } else if (!price) {
+          console.log('进来了', price)
           that.setData({
-            RunPrice:price,
-            hint:0
-          })
-        }
-  
-  
-  
-      } else{
-        if (price > parseFloat(rewardPrice)) {
-          console.log('5',price)
-          that.setData({
-
-            hint:3,
-            RunPrice:price,
-          })
-        }
-        else if ( price <parseFloat(that.data.minMoey)){
-          console.log('6',price)
-          that.setData({
-            hint:2,
-            RunPrice:price,
-          })
-
-        } 
-        else if(price>parseFloat(that.data.maxMoey)){
-          console.log('7',price)
-          that.setData({
-            hint:1
-          })
-          return;
-  
-        } else if(!price){
-          console.log('进来了2',price)
-          that.setData({
-            hint:0
+            hint: 0
           })
           return;
         }
         else {
-          console.log('8',price)
+          console.log('4', price)
           that.setData({
-            RunPrice:price,
-            hint:0
+            RunPrice: price,
+            hint: 0
+          })
+        }
+
+
+
+      } else {
+        if (price > parseFloat(rewardPrice)) {
+          console.log('5', price)
+          that.setData({
+
+            hint: 3,
+            RunPrice: price,
+          })
+        }
+        else if (price < parseFloat(that.data.minMoey)) {
+          console.log('6', price)
+          that.setData({
+            hint: 2,
+            RunPrice: price,
+          })
+
+        }
+        else if (price > parseFloat(that.data.maxMoey)) {
+          console.log('7', price)
+          that.setData({
+            hint: 1
+          })
+          return;
+
+        } else if (!price) {
+          console.log('进来了2', price)
+          that.setData({
+            hint: 0
+          })
+          return;
+        }
+        else {
+          console.log('8', price)
+          that.setData({
+            RunPrice: price,
+            hint: 0
           })
         }
       }
 
 
-    }else{
+    } else {
       that.setData({
-        RunPrice:price,
-        hint:0
+        RunPrice: price,
+        hint: 0
       })
     }
-   
-    
-    
-   
- 
-   
 
-    
-    
-  
   },
 
   // 申请提现
-  toApply: function (event){
-    var price=this.data.RunPrice;
+  toApply: function (event) {
+    var price = this.data.RunPrice;
     var remainPrice = this.data.remainPrice;
     var rewardPrice = this.data.rewardPrice;
     console.log(price)
-    var that=this;
-    var account_type = this.data.remain?1:2;
+    var that = this;
+    var account_type = this.data.remain ? 1 : 2;
     // console.log(price, account_type)
 
+    // if(that.data.switchover==0){
+    //   wx.navigateTo({
+    //     url: '/pages/member/verifierID/verifierID',
+    //   })
 
-    
-
-    if (!price || price < this.data.minMoey){
-      console.log('来了老弟1')
-     return;
-    } else if(price>that.data.maxMoey){
-      console.log('来了老弟1、2')
+    // }else{}
+    if (!price || price < this.data.minMoey) {
       return;
-    }else if(price > parseFloat(remainPrice) && account_type==1){
-
-      console.log('来了老弟3')
+    } else if (price > that.data.maxMoey) {
       return;
-    }else if(price > parseFloat(rewardPrice && account_type==1)){
+    } else if (price > parseFloat(remainPrice) && account_type == 1) {
       return;
-    }
-    else {
+    } else if (price > parseFloat(rewardPrice && account_type == 1)) {
+      return;
+    } else {
       console.log('来了老弟4');
       this.setData({
-        Astop:false
+        Astop: false
       })
-     
+
       app.sendRequest({
         url: "api.php?s=distributor/toWithdraw",
         data: {
@@ -270,8 +270,8 @@ Page({
           account_type: account_type,     //(账户类型：1分润余额；2：奖金）
         },
         success: function (res) {
-          var data=res.data;
-          if(data=='-2015'){
+          var data = res.data;
+          if (data == '-2015') {
             that.setData({
               prompt: '提现功能未启用',
             })
@@ -287,9 +287,9 @@ Page({
             that.setData({
               prompt: '用户余额不足',
             })
-          } else if(res.code==1) {
+          } else if (res.code == 1) {
             that.setData({
-              Astop:true
+              Astop: true
             })
             console.log(event.detail.formId, app.globalData.openid, res.data);
             app.sendRequest({
@@ -297,7 +297,7 @@ Page({
               data: {
                 open_id: app.globalData.openid,
                 form_id: event.detail.formId,
-                data_id:res.data,
+                data_id: res.data,
               },
               success: function (result) {
                 wx.navigateTo({
@@ -313,11 +313,24 @@ Page({
           }, 2000)
         }
       })
-
-
-
-
     }
+  },
+  open: function () {
+    let _lol = this;
+    let IN = _lol.data.carry;
+    console.log(IN )
+    let switchover = _lol.data.switchover;
+    if (switchover == 0) {
+      wx.navigateTo({
+        url: '/pages/member/verifierID/verifierID',
+      })
+    } else {
+      wx.navigateTo({
+        url: '/pages/member/Meinfo/Meinfo?info=' + JSON.stringify(IN),
+      })
+    }
+
+
   },
 
 
@@ -343,7 +356,7 @@ Page({
       detailtime: detailtime,
       nowData: mydate,
       isBindInput: true,
-      price:''
+      price: ''
     })
     var endDate = this.getMonthDays(date.getMonth());
     console.log(endDate)
@@ -351,28 +364,28 @@ Page({
     var monthEndDate = mydate + '-' + endDate;
     this.orders(monthStartDate, monthEndDate)
   },
- //提现全部
- collect:function(){
-   let that=this;
+  //提现全部
+  collect: function () {
+    let that = this;
     // 更新hint数据
-   that.priceValue();
-   let RunPrice;
-   if(that.data.remain){
-     //分润余额
-     RunPrice=that.data.remainPrice; 
-   }else{
-    //奖励余额
-    RunPrice=that.data.rewardPrice ; 
-   }
-   if(RunPrice>that.data.maxMoey){
-    RunPrice=that.data.maxMoey;
-   }
+    that.priceValue();
+    let RunPrice;
+    if (that.data.remain) {
+      //分润余额
+      RunPrice = that.data.remainPrice;
+    } else {
+      //奖励余额
+      RunPrice = that.data.rewardPrice;
+    }
+    if (RunPrice > that.data.maxMoey) {
+       RunPrice = that.data.maxMoey;
+    }
 
-   that.setData({
-    RunPrice,
-   })
-   
- },
+    that.setData({
+      RunPrice,
+    })
+
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */

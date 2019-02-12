@@ -255,7 +255,7 @@ swiper {
 }
 
 .divider-line{
-  height: 13px;
+  height: 10rpx;
   background: #F8F8F8;
   margin: 0;
   border: 0;
@@ -1921,6 +1921,10 @@ border-radius: 0;
     border-left:36rpx solid #fff;
     border-bottom:22rpx solid transparent;
 }
+/* .expressage{
+  margin-top:10rpx; 
+  width:748rpx
+} */
 
 
 

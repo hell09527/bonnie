@@ -8,13 +8,15 @@ Page({
   data: {
     showModal: false,
     layout: false,
+    suffix: '',//后缀
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that=this;
+    var that = this;
+
     //是否授权数据更新
     let updata = that.data.unregistered
     updata = app.globalData.unregistered;
@@ -23,19 +25,33 @@ Page({
     that.setData({
       unregistered: updata,
     })
+
+    if (options.suffix) {
+      that.setData({
+        suffix: options.suffix,
+      })
+    } else {
+
+    }
+
+
+
+
   },
 
   /**登录分支点*/
   Branch: function (e) {
     let _that = this;
+    let suffix = _that.data.suffix;
     let branch = e.currentTarget.dataset.status;
     if (branch == "mobile") {
       _that.setData({
         layout: false,
         Choice: false
       })
+
       wx.navigateTo({
-        url: '/pages/member/updatemobile/updatemobile?cho=1',
+        url: '/pages/member/updatemobile/updatemobile?cho=1' + '&suffix=' + suffix,
       })
     } else if (branch == "no") {
       _that.setData({
@@ -87,10 +103,13 @@ Page({
                   that.setData({
                     tel: res.data.user_tel,
                   })
-                  wx.navigateTo({
-                    url: '/pages/member/kolApply/kolApply?uid=' + app.globalData.recommendUser,
-                  })
+
+                  // wx.navigateTo({
+                  //   url: '/pages/member/kolApply/kolApply?uid=' + app.globalData.recommendUser,
+                  // })
+
                 }
+                that.toBack();
               }
             });
           }
@@ -193,10 +212,12 @@ Page({
                               tel: res.data.user_tel,
                               heder_img
                             })
-                            wx.navigateTo({
-                              url: '/pages/member/kolApply/kolApply?uid=' + app.globalData.recommendUser,
-                            })
+
+                            // wx.navigateTo({
+                            //   url: '/pages/member/kolApply/kolApply?uid=' + app.globalData.recommendUser,
+                            // })
                           }
+                          that.toBack();
                         }
                       });
                     }
@@ -215,7 +236,9 @@ Page({
     }
   },
 
-  toBack:function(){
+  toBack: function () {
+    let _that = this;
+    let suffix = _that.data.suffix;
     var pages = getCurrentPages();
     var currPage = pages[pages.length - 1];  //当前页面
     var prevPage = pages[pages.length - 2]; //上一个页面
@@ -226,7 +249,39 @@ Page({
       prevPage.setData({
         uid: app.globalData.recommendUser,
       })
+      wx.redirectTo({
+        url: '/pages/member/kolApply/kolApply?uid=' + app.globalData.recommendUser,
+      })
+
+    } else if (prevPage.route == "pages/goods/goodsdetail/goodsdetail") {
+      console.log(11);
+      console.log(suffix)
+      //  商品详情页面
+
+      wx.redirectTo({
+        url: "/pages/goods/goodsdetail/goodsdetail?goods_id=" + suffix,
+      })
+
+    } else if (prevPage.route == "pages/member/member/member") {
+      console.log(22)
+      //  个人中心页面
+      wx.switchTab({
+        url: "/pages/member/member/member",
+      })
+    } else if (prevPage.route == "pages/goods/shareRepertoire/shareRepertoire") {
+      console.log(33)
+      //  购物清单页面
+      wx.redirectTo({
+        url: "/pages/goods/shareRepertoire/shareRepertoire?share_li=" + suffix,
+      })
+    } else if (prevPage.route == "pages/backPage/fetchGift/fetchGift") {
+      console.log(44)
+      //  领取礼物页面
+      wx.redirectTo({
+        url: "/pages/backPage/fetchGift/fetchGift?order_id=" + suffix,
+      })
     }
+
     wx.navigateBack({ changed: true });//返回上一页  
   },
 

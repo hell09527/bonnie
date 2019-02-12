@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/member/resgin/resgin",
     "pages/goods/goodslist/goodslist",
     "pages/goods/goodslast/goodslast",
     "pages/goods/cart/cart",
@@ -59,6 +60,8 @@
     "pages/member/balancewater/balancewater",
     "pages/member/integralwater/integralwater",
     "pages/member/balancewithdraw/balancewithdraw",
+    "pages/member/verifierID/verifierID",
+    "pages/member/Meinfo/Meinfo",
     "pages/member/recharge/recharge",
     "pages/member/towithdraw/towithdraw",
     "pages/member/accountlist/accountlist",
@@ -67,7 +70,6 @@
     "pages/member/givingDetail/givingDetail",
     "pages/member/receiveDetail/receiveDetail",
     "pages/member/kolApply/kolApply",
-    "pages/member/resgin/resgin",
     "pages/member/inpurchasing/inpurchasing",
     "pages/member/kolSuccess/kolSuccess",
     "pages/member/withdrawal/withdrawal",

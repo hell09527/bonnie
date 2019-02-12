@@ -1,8 +1,5 @@
 /* pages/member/withdrawal/withdrawal.wxss */
-
-
 @import "/templates/dataChoose-template/dataChoose-template.wxss";
-
 .head-box{
   background: url('https://static.bonnieclyde.cn/%E9%A1%B5%E9%9D%A2%E8%83%8C%E6%99%AF%20copy@2x.png') no-repeat;
   background-size: 100% 100%;
@@ -16,7 +13,6 @@
   /* justify-content: space-around; */
   align-items: center;
   letter-spacing: 6rpx;
-
 }
 .head-top-title>view{
   font-size:28rpx;
@@ -165,7 +161,6 @@ border: 1px solid #9b9b9b;
   letter-spacing:0;
   text-align:justify;
   margin-top:40rpx;
-
 }
 .tpop{
  position: absolute;
@@ -174,4 +169,36 @@ border: 1px solid #9b9b9b;
 .list{
   width: 33.3%;
   margin-left:180rpx;
+}
+.xuans{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 90rpx;
+  border-top: 1px solid #cfcfcf;
+}
+.c_money image{
+  margin:0 20rpx;
+  width:18px;
+}
+.c_money{
+  font-size:14px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.edu {
+  color:#8F8E94 ;
+  font-size:14px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.edu image{
+  width:36rpx;
+  height:36rpx;
+
+}
+.moneyBox{
+  padding:0 30rpx;
 }

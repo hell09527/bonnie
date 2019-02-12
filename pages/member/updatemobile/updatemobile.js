@@ -32,8 +32,10 @@ Page({
     let base = app.globalData.siteBaseUrl;
     
     if (options.cho) {
+
       that.setData({
-        cho: options.cho
+        cho: options.cho,
+        suffix:options.suffix,
       })
     }
 
@@ -424,7 +426,7 @@ Page({
    * 保存
    */
   save: function (that, mobile) {
-      //  let  that=this;
+   let  suffix=that.data.suffix;
     app.sendRequest({
       url: "api.php?s=member/modifymobile",
       data: {
@@ -448,11 +450,30 @@ Page({
                wx.navigateTo({
                  url: "/pages/member/kolApply/kolApply?uid="+app.globalData.recommendUser,
                })
-             } else {
-               wx.navigateBack({
-                 delta: 1
-               })
+             } else if(prevPage.route == "pages/goods/goodsdetail/goodsdetail"){
+              //  商品详情页面
+              wx.navigateTo({
+                url: "/pages/goods/goodsdetail/goodsdetail?goods_id=" +suffix,
+              })
+             }else if(prevPage.route == "pages/member/member/member"){
+              //  个人中心页面
+              wx.switchTab({
+                url: "/pages/member/member/member", 
+              })
+             }else if(prevPage.route == "pages/goods/shareRepertoire/shareRepertoire"){
+              //  购物清单页面
+              wx.navigateTo({
+                url: "/pages/goods/shareRepertoire/shareRepertoire?share_li=" +suffix, 
+              })
+             }else if(prevPage.route == "pages/backPage/fetchGift/fetchGift"){
+              //  领取礼物页面
+              wx.navigateTo({
+                url: "/pages/backPage/fetchGift/fetchGift?order_id=" +suffix, 
+              })
              }
+
+
+
            }else{
              wx.navigateTo({
                url: "/pages/member/excessive/excessive",

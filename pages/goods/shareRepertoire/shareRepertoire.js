@@ -60,67 +60,7 @@ Page({
         // console.log(app.globalData.identifying,'app.globalData.identifying')
         app.globalData.breakpoint = options.breakpoint;
       }
-      // else{
-      //     if (app.globalData.token && app.globalData.token != '') {
-      //         //判断是否是付费会员的接口
-      //         app.sendRequest({
-      //             url: "api.php?s=member/getMemberDetail",
-      //             success: function (res) {
-      //                 let data = res.data
-      //                 if (res.code == 0) {
-      //                     let is_vip = data.is_vip
-      //                     app.globalData.is_vip = data.is_vip
-      //                     app.globalData.member_level = data.member_level
-      //                     let member_level = data.member_level
-      //                     app.globalData.uid = data.uid
-      //                     app.globalData.vip_gift = data.vip_gift
-      //                     app.globalData.vip_goods = data.vip_goods
-      //                     app.globalData.vip_overdue_time = data.vip_overdue_time
-      //                     // console.log(app.globalData.is_vip)
-      //                     that.setData({
-      //                         is_vip: is_vip,
-      //                         member_level
-      //                     })
-      //                 }
-      //             }
-      //         })
-      //
-      //
-      //
-      //     } else {
-      //
-      //         app.employIdCallback = employId => {
-      //             if (employId != '') {
-      //                 //判断是否是付费会员的接口
-      //
-      //                 app.sendRequest({
-      //                     url: "api.php?s=member/getMemberDetail",
-      //                     success: function (res) {
-      //                         let data = res.data
-      //                         if (res.code == 0) {
-      //                             let is_vip = data.is_vip
-      //                             app.globalData.is_vip = data.is_vip
-      //                             app.globalData.member_level = data.member_level
-      //                             let member_level = data.member_level
-      //                             app.globalData.uid = data.uid
-      //                             app.globalData.vip_gift = data.vip_gift
-      //                             app.globalData.vip_goods = data.vip_goods
-      //                             app.globalData.vip_overdue_time = data.vip_overdue_time
-      //                             //  console.log(app.globalData.is_vip)
-      //                             that.setData({
-      //                                 is_vip: is_vip,
-      //                                 member_level
-      //                             })
-      //                         }
-      //                     }
-      //                 })
-      //             }
-      //
-      //
-      //
-      //         }
-      //     }
-      // }
+      
 
 
 
@@ -336,6 +276,21 @@ Page({
 
     app.restStatus(that, 'settlementFlag');
     app.restStatus(that, 'goodsDetailFlag');
+
+
+    if (app.globalData.token && app.globalData.token != '') {
+      that.QD_reuse();
+    } else {
+      app.employIdCallback = employId => {
+        if (employId != '') {
+          // console.log(2, app.globalData.unionid)
+          that.QD_reuse();
+        }
+      }
+    }
+
+
+
   
 
     app.sendRequest({
@@ -410,16 +365,7 @@ Page({
     })
 
 
-    if (app.globalData.token && app.globalData.token != '') {
-      that.QD_reuse();
-    } else {
-      app.employIdCallback = employId => {
-        if (employId != '') {
-          // console.log(2, app.globalData.unionid)
-          that.QD_reuse();
-        }
-      }
-    }
+   
 
 
  
@@ -484,9 +430,15 @@ Page({
   /**触发*/
   Crossroad: function () {
     let _that = this;
-    _that.setData({
-      Choice: true
-    })
+    let Tel=_that.data.tel;
+    // 目录后缀
+    let  suffix=_that.data.share_sku_list;
+    if (app.globalData.unregistered == 1 || Tel=='') {
+      wx.navigateTo({
+        url: '/pages/member/resgin/resgin?suffix='+ suffix,
+      })
+    }
+
   },
   inputChange(e) {
     "use strict";
@@ -1085,19 +1037,13 @@ Page({
                     wx_name: wx_name,
                     heder_img
                   })
-
-                 
-
+                  that.QD_reuse();
                 }
 
               }
             });
           }
         })
-
-
-
-
 
       } else {
         wx.login({
@@ -1115,6 +1061,7 @@ Page({
                   let lpl = res.data.token;
                   app.globalData.openid = res.data.openid;
                   app.globalData.token = res.data.token;
+                
                   that.setData({
                     unregistered: 0,
                     wx_name: wx_name,
@@ -1132,8 +1079,7 @@ Page({
                           token: lpl
                         },
                         success: function (res) {
-
-                         
+                          that.QD_reuse();
                           if (res.code == 0) {
                             that.setData({
                               unregistered: 0,
@@ -1141,8 +1087,10 @@ Page({
                               tel: res.data.user_tel,
                               heder_img
                             })
+                           
 
                           }
+
                         }
                       });
                     }

@@ -20,8 +20,6 @@ Page({
       { star: '二星级', standard: '150000', proportion: '7%' },
       { star: '三星级', standard: '210000', proportion: '10%' },
     ],
-
-
     isCode: 1,   //小程序码切换
     user_headimg: '',   //头像
     star_num: '',   //星级
@@ -80,9 +78,9 @@ Page({
         
         for (let index in listData){
           // console.log(listData[index].fraction)
-          listData[index].fraction
-          listData[index].fraction = listData[index].fraction * 100 + "%"
+          listData[index].fraction = Number(listData[index].fraction*100).toFixed() + "%";
         }
+        console.log(listData)
         that.setData({
           listData
         })
@@ -145,8 +143,6 @@ Page({
           goods_money_sum: res.data.goods_money_sum.toFixed(2), //累计成交金额
           balance: res.data.account_sum.toFixed(2),  //账户余额
           unsettled_separation_sum:res.data.unsettled_separation_sum.toFixed(2), //待结算金额
-
-
         })
       }
     })
@@ -169,21 +165,27 @@ Page({
           // console.log(order_list )
           for (let index in order_list) {
             order_list[index].create_time = time.formatTime(order_list[index].create_time, 'Y-M-D');
+
+            // 卖家发货时间加上14天
+            if (order_list[index].consign_time != 0 && order_list[index].sign_time == 0) {
+              order_list[index].consign_time = time.formatTime(order_list[index].consign_time, 'Y-M-D');
+              order_list[index].expect_time = that.expectTime(order_list[index].consign_time, 14);
+            } else if (order_list[index].consign_time != 0 && order_list[index].sign_time != 0) {
+              // 买家签收时间加上7天
+              order_list[index].sign_time = time.formatTime(order_list[index].sign_time, 'Y-M-D');
+              order_list[index].expect_time = that.expectTime(order_list[index].sign_time, 7);
+            }
             
             //图片处理
             for (let key in order_list[index].order_item_list) {
               let img = order_list[index].order_item_list[key].picture.pic_cover_small;
               order_list[index].order_item_list[key].picture.pic_cover_small = app.IMG(img);
-              order_list[index].order_item_list[key].fraction = order_list[index].order_item_list[key].fraction * 100 + "%";
-              let shareBenefit = (order_list[index].order_item_list[key].goods_money) * parseInt(order_list[index].order_item_list[key].fraction)
-              // console.log(order_list[index].order_item_list[key].goods_money);
-              // console.log(order_list[index].order_item_list[key].fraction);
 
-              // console.log(shareBenefit)
+              order_list[index].order_item_list[key].fraction = order_list[index].order_item_list[key].fraction * 100 + "%";
+
+              let shareBenefit = (order_list[index].order_item_list[key].goods_money) * parseInt(order_list[index].order_item_list[key].fraction)
 
               order_list[index].order_item_list[key].shareBenefit = (shareBenefit / 100).toFixed(2)
-
-              // console.log(order_list[index].order_item_list[key].fraction)
             }
           }
           // console.log(parseInt(0.1))
@@ -279,7 +281,7 @@ Page({
   // 预计分润到账时间
   expectTime:function(time,days){
     var dt = time;
-    dt = dt.replace('-', '/');//js不认2011-11-10,只认2011/11/10
+    dt = dt.replace(/-/g,'/');//js不认2011-11-10,只认2011/11/10
     var t1 = new Date(new Date(dt).valueOf() + days * 24 * 60 * 60 * 1000);// 日期加上指定的天数
     var month;
     var day;
@@ -432,7 +434,6 @@ Page({
   open: function () {
     let that = this;
     if (that.data.temp != 'open') {
-
 
       that.setData({
         temp: 'open',

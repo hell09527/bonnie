@@ -19,14 +19,14 @@
       <view class='bcg-box'>
         <view class="bcg">
           <view class='headimg'>
-            <image src='{{user_headimg}}' mode='widthFix' />
+            <image lazy-load="true" src='{{user_headimg}}' mode='widthFix' />
           </view>
           <view class='stat-num'>
             <block wx:for='{{star_grade}}' wx:key>
-              <image src='/images/member/star.png' mode='widthFix' />
+              <image lazy-load="true" src='/images/member/star.png' mode='widthFix' />
             </block>
             <block wx:for='{{3-star_grade}}' wx:key>
-              <image src='/images/member/no-star.png' mode='widthFix' />
+              <image lazy-load="true" src='/images/member/no-star.png' mode='widthFix' />
             </block>
           </view>
           <view class="yu_title">
@@ -46,7 +46,7 @@
             </view>
           </view>
         </view> 
-        <image src='{{user_headimg}}' mode='widthFix' class='headimg-background' wx:if='{{user_headimg}}'/>
+        <image lazy-load="true" src='{{user_headimg}}' mode='widthFix' class='headimg-background' wx:if='{{user_headimg}}'/>
         <view class='kol_name' wx:if='{{user_headimg}}'>
           {{member_name}}
         </view>
@@ -86,7 +86,7 @@
           </view>
           <view class='edu' catchtap='open'>
           <text>查看详情</text>
-          <image class="direction {{temp?'rotate':''}}" src='https://static.bonnieclyde.cn/WechatIMG240.png'></image> </view>
+          <image lazy-load="true" class="direction {{temp?'rotate':''}}" src='https://static.bonnieclyde.cn/WechatIMG240.png'></image> </view>
         </view>
       </view>
 
@@ -168,7 +168,7 @@
 
       </view> 
     </block>
-                            <!-- 分润规则说明  end -->
+        <!-- 分润规则说明  end -->
   <!-- 商品排行 -->
   <view  wx:if='{{_no== 1}}' class="slick"> 
   <view class="all" >
@@ -273,6 +273,12 @@
                   </view>
                   <view class="number">￥{{goods.goods_money}}</view>
                 </view>
+                 <view class="num">
+                    <view class="run">分润比例  {{goods.fraction}}</view>
+                  </view>
+                    <view class="num">
+                    <view class="runs">直接分润金额 ￥{{goods.direct_separation}}</view>
+                  </view>
                 <view class="num">
                   <block wx:if="{{order.order_status==4}}">
                     <view class="sta">分润已入账</view>
@@ -284,10 +290,7 @@
                     <view class="sta"></view>
                   </block>
 
-                  <view class="L_f">
-                    <view class="run">分润比例  {{goods.fraction}}</view>
-                    <view class="runs">直接分润金额 ￥{{goods.direct_separation}}</view>
-                  </view>
+                 
                 </view>
               </view>
             </block>
@@ -311,10 +314,10 @@
         </view>
         <view class="table">
           <view class="nav_qr" wx:if='{{isCode==1}}'>
-            <image src="{{imgU}}" bindload='imgLoad'  catchtap='preivewImg' data-index='{{index}}' data-img='{{imgU}}' mode='widthFix'  style="width:100%" class="fde"/>   
+            <image lazy-load="true" src="{{imgU}}" bindload='imgLoad'  catchtap='preivewImg' data-index='{{index}}' data-img='{{imgU}}' mode='widthFix'  style="width:100%" class="fde"/>   
           </view>
           <view class="nav_qr" wx:if='{{isCode==2}}'>
-            <image src="{{applyCode}}" bindload='imgLoad'  catchtap='preivewImg' data-index='{{index}}' data-img='{{applyCode}}' mode='widthFix'  style="width:100%" class="fde"/>
+            <image lazy-load="true" src="{{applyCode}}" bindload='imgLoad'  catchtap='preivewImg' data-index='{{index}}' data-img='{{applyCode}}' mode='widthFix'  style="width:100%" class="fde"/>
           </view>
         </view>
      </view>

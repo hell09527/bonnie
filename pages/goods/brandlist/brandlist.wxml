@@ -9,7 +9,7 @@
 <!-- 广告位 -->
 <block>
   <view  wx:if='{{brand_pic?brand_pic:""}}' class="slick">
-          <image  lazy-load="true"  src="{{brand_pic}}" bindload='imgLoad' mode='widthFix' class="fde"/>
+  <image  lazy-load="true"  src="{{brand_pic}}" bindload='imgLoad' mode='widthFix' class="fde"/>
   </view>
   </block>
   <!-- <block>
