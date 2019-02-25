@@ -521,6 +521,7 @@
   max-height: 240px;
   overflow-y: scroll;
   background-color: #fff;
+  -webkit-overflow-scrolling: touch;
 }
 
 .mask-layer-control .list .item{
@@ -664,6 +665,7 @@
   padding-bottom: 6px;
   height: 250px;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .mask-layer-control .date-list .li {

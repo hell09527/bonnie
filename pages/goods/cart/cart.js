@@ -331,21 +331,21 @@ Page({
       distributor_type,
       uid
     })
-
+    // 当订单同时包含跨境商品和大贸商品时
     that.setData({
-      carts_1_info: {    // 大贸 当订单同时包含跨境商品和大贸商品时
+      carts_1_info: {    // 选中的大贸 
         total_price: 0,
         total_num: 0
       },
-      carts_2_info: {   // 跨境 当订单同时包含跨境商品和大贸商品时
+      carts_2_info: {   // 选中的跨境 
         total_price: 0,
         total_num: 0
       },
-      carts_3_info: {   // 跨境 当订单同时包含跨境商品和大贸商品时
+      carts_3_info: {   // 内购跨境 
         total_price: 0,
         total_num: 0
       },
-      carts_4_info: {   // 跨境 当订单同时包含跨境商品和大贸商品时
+      carts_4_info: {   // 内购跨境 
         total_price: 0,
         total_num: 0
       },
@@ -729,14 +729,11 @@ Page({
               num = max_buy;
             }
           } else {
-
             if (num >= stock) {
               app.showBox(that, '已达到最大库存');
               num = stock;
             }
-
           }
-
           if (min_buy > 0) {
             if (num <= min_buy) {
               app.showBox(that, '该商品最少购买' + min_buy + '件');
@@ -748,9 +745,10 @@ Page({
               num = 1;
             }
           }
-          
-          // 保持修改价格的一致性
+
+           // 保持修改价格的一致性
           new_cart_list = cart_list;
+          // 保持修改数量的一致性
           new_cart_list[i][k].num = num;
         
        
@@ -787,20 +785,10 @@ Page({
             success: function (res) {
               let code = res.data;
               if (code > 0) {
-
-              
-
-
-             
                 that.setData({
                   cart_list: new_cart_list,
                   total_price: total_price.toFixed(2),
                 });
-
-
-
-
-
               } else {
                 app.showBox(that, '操作失败');
               }
@@ -1187,9 +1175,9 @@ Page({
           let price = cart_list[index][key].promotion_price;
           let share_list = sku_id + ':' + num + ':' + price;
           if (share_li == '') {
-            share_li = share_list
+            share_li = share_list;
           } else {
-            share_li += ',' + share_list
+            share_li += ',' + share_list;
           }
         }
       }
@@ -1238,15 +1226,12 @@ Page({
         // imageUrl: imgUrl,
         success: function (res) {
           app.showBox(that, '分享成功');
-
         },
         fail: function (res) {
           app.showBox(that, '分享失败');
         }
       }
     }
-
-
   },
 
   //手指触摸动作开始 记录起点X坐标
@@ -1422,13 +1407,12 @@ Page({
         }
       }
     }
-
         this.setData({
           total_price: total_price.toFixed(2),
           cart_list,
         })
   },
-
+//数量输入变化；
   inputGai:function(event){
     let that = this;
     this.num = event.detail.value;
@@ -1440,9 +1424,6 @@ Page({
     this.price = event.detail.value;
 
   },
-
-
-
   // 超级vip价格输入变化
   ECTPrice:function(event){
     var that = this;

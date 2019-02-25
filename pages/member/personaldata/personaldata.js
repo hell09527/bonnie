@@ -42,12 +42,8 @@ Page({
   onReady: function () {
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
+  See_data:function(){
     let that = this;
-    app.restStatus(that, 'listClickFlag');
     app.sendRequest({
       url: "api.php?s=member/getMemberDetail",
       data: {},
@@ -57,6 +53,7 @@ Page({
         let data = res.data;
         if (code == 0) {
           let user_info = data.user_info;
+          console.log(user_info);
           user_info.user_headimg = app.IMG(user_info.user_headimg); //图片路径处理
           that.setData({
             user_info: user_info,
@@ -65,6 +62,16 @@ Page({
         }
       }
     })
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    let that = this;
+    app.restStatus(that, 'listClickFlag');
+    that.See_data();
+   
   },
 
   /**
@@ -117,6 +124,50 @@ Page({
       url: '/pages/member/member/member',
     });
   },
+    //更新头像
+    userinfo:function(res){
+      let that=this;
+      console.log(res.rawData);
+      if (res.detail.iv) {
+        let iv = res.detail.iv;
+        let encryptedData = res.detail.encryptedData;
+        app.globalData.iv = res.detail.iv;
+        app.globalData.encryptedData = res.detail.encryptedData;
+        app.globalData.unregistered = 0;
+        console.log(res.detail.iv
+        )}
+        console.log(res.rawData);
+        console.log(res.detail.userInfo.avatarUrl)
+        console.log(res.detail.userInfo.nickName);
+        app.sendRequest({
+          url: 'api.php?s=member/updateMemberDetail',
+          data: {
+            avatarUrl:res.detail.userInfo.avatarUrl,
+            nickName:res.detail.userInfo.nickName,
+            wx_info:res.detail.rawData,
+          },
+          success: function (res) {
+            if (res.code == 1) {
+              that.See_data();
+              that.setData({
+                tel: res.data.user_tel,
+                Choice: false
+              })
+  
+  
+            }
+  
+          }
+        });
+      let heder_img = res.detail.userInfo.avatarUrl
+      let wx_name = res.detail.userInfo.nickName
+      let branch = res.currentTarget.dataset.status;
+  
+      that.setData({
+        wx_name: wx_name,
+        heder_img
+      })
+    },
   /**
    * 页面跳转
    */

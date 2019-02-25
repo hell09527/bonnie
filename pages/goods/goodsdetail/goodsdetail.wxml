@@ -431,7 +431,7 @@
         <view class="hr divider-line"></view>
     </block>
     <!-- 商品评价 -->
-    <!-- <block wx:if="{{comments_list[0]!=undefined}}">
+    <block wx:if="{{comments_list[0]!=undefined}}">
         <view class="evaluation-container">
         <view class="tab-module-title">商品评价</view>
         <view class="hr with-margin-l"></view>
@@ -440,16 +440,16 @@
               <view class="evaluation-comments" catchtap='moreEvaluation' data-type='0'>
                 <view class="evaluation-info-box">  
                   <!-- 评价人信息 -->
-    <!-- <view class="evaluation-userinfo">
+    <view class="evaluation-userinfo">
                       <image src="{{comment.user_img}}" class="headimg" lazy-load='true' binderror='errorHeadImg'
                             data-index='0'></image>
                       <view class="span nickname">{{comment.member_name}}</view>
-                  </view> -->
+                  </view>
     <!-- 初次评价 -->
-    <!-- <view class="evaluation-content">{{comment.content}}</view> 
-                </view> -->
+    <view class="evaluation-content">{{comment.content}}</view> 
+                </view>
     <!-- 评价图片 -->
-    <!-- <view class="ul evaluation-pics" wx:if="{{comment.image[0]}}">
+    <view class="ul evaluation-pics" wx:if="{{comment.image[0]}}">
                  <view class="comment-imgAll">{{comment.image.length}}张</view>
                         <view class='li'>
                             <image src="{{comment.image[0]}}" class="comment-pic"/>
@@ -461,12 +461,12 @@
               <text>更多评论</text>
               <hr/>
               <text>See more</text>
-            </view> -->
-    <!-- </scroll-view> -->
-    <!-- <view class="check-more">
+            </view> 
+    </scroll-view>
+    <view class="check-more">
                 <button catchtap='moreEvaluation' data-type='0'>查看更多评价</button>
-            </view> -->
-    <!-- </view>  
+            </view>
+   </view>  
       </block> 
       <block wx:else>
         <view class="evaluation-container">
@@ -563,12 +563,13 @@
             <view class="li s-buy-pro">
                 <view class="span pro-img">
                     <!-- 商品SKU图片 -->
-                    <image src='{{goods_info.img_list[0].pic_cover_micro}}' class="js-thumbnail"></image>
+                    <image src='{{mo_imgs}}'    class="js-thumbnail"></image>
                 </view>
                 <view class="pro-info">
                     <!-- {{buyButtonStatus==3||buyButtonStatus==4?goods_info.goods_pintuan.tuangou_money:member_price}} -->
                     <text decode="{{true}}" class="p name">{{goods_info.goods_name}}</text>
-                    <view class="p pro-price" id="price" wx:if='{{is_employee==1&&is_inside_sell==1}}'>
+                    <!-- is_employee    是否为员工   is_inside_sell是否是内购商品 -->
+                    <view class="p pro-price" id="price" wx:if='{{is_employee==1 && is_inside_sell==1}}'>
                         ￥{{parseInt(goods_info.promotion_price)< parseInt(goods_info.inside_price)?goods_info.promotion_price:goods_info.inside_price}}
                     </view>
                     <view class="p pro-price" id="price" wx:else>
@@ -585,14 +586,19 @@
         <view class="ul s-buy-ul specification" id="specification">
             <block wx:for='{{spec_list}}' wx:key='' wx:for-index='key' wx:for-item='spec'>
                 <view class="li s-buy-li">
+                <!-- 商品规格选择 -->
                     <view class="left">{{spec.spec_name}}：</view>
                     <view class="right" name="specvals">
                         <block wx:for='{{spec.value}}' wx:for-item='sku' wx:for-index='k' wx:key=''>
-                            <view class="span select {{sku.status==1?'current':''}}" catchtap='skuSelect' data-key="{{key}}" data-k='{{k}}' data-picture-id="0">
+                            <view class="span select {{sku.status==1?'current':''}} " catchtap='skuSelect'  data-key="{{key}}" data-k='{{k}}' data-picture-id="0">
+                              <view  wx:if="{{sku.spec_show_type==2}}" class="sku_color" style=' background: {{sku.spec_value_data}};'></view>
+                              <image src='{{sku.spec_value_data}}'   wx:if='{{sku.spec_show_type==3}}'        class="sku_img"></image>
                                 {{sku.spec_value_name}}
                             </view>
+
                         </block>
                     </view>
+
                 </view>
                 <view class="hr with-margin-l {{key==spec_list.length-1?'hide':''}}"></view>
             </block>

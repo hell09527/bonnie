@@ -221,7 +221,7 @@ Page({
 
           let updata = that.data.unregistered;
           updata = app.globalData.unregistered;
-          console.log(updata, 'updata', '134', data.is_employee)
+          console.log(updata, 'updata', '134', data.is_employee);
           // console.log(app.globalData.is_vip)
           that.setData({
             is_vip: is_vip,
@@ -360,8 +360,11 @@ if (app.globalData.token && app.globalData.token != '') {
             imgUrls[index].pic_cover_mid = app.IMG(img);
           }
           let goods_info = data;
+          // 是否是内购商品
           let is_inside_sell = goods_info.is_inside_sell;
+
           console.log(goods_info)
+         
           goods_info.img_list[0].pic_cover_micro = app.IMG(goods_info.img_list[0].pic_cover_micro);
           goods_info.picture_detail.pic_cover_micro = app.IMG(goods_info.picture_detail.pic_cover_micro);
           goods_info.picture_detail.pic_cover_small = app.IMG(goods_info.picture_detail.pic_cover_small);
@@ -407,13 +410,20 @@ if (app.globalData.token && app.globalData.token != '') {
           
           let sku_info = that.data.sku_info;//选中规格信息
           let sku_id = that.data.sku_id; //选中规格
+          console.log(sku_id );
           let attr_value_items = {}; //规格组
           let stock = 0; //库存
+          let mo_imgs=data.img_list[0].pic_cover_micro;
           //规格默认选中
           for (let i = 0; i < data.spec_list.length; i++) {
             for (let l = 0; l < data.spec_list[i].value.length; l++) {
               if (l == 0) {
                 data.spec_list[i].value[l]['status'] = 1;
+
+              if(data.spec_list[i].value[l].spec_value_data_src ){
+                mo_imgs= data.spec_list[i].value[l].spec_value_data_src; 
+              } 
+
                 attr_value_items[i] = data.spec_list[i].value[l].spec_id + ':' + data.spec_list[i].value[l].spec_value_id;
                 attr_value_items.length = i + 1;
               } else {
@@ -438,6 +448,10 @@ if (app.globalData.token && app.globalData.token != '') {
               stock = data.sku_list[i].stock;
               sku_info = data.sku_list[i];
             }
+         
+
+
+
           }
           console.log(stock,'stock');
           that.setData({
@@ -447,7 +461,8 @@ if (app.globalData.token && app.globalData.token != '') {
             member_price: member_price,
             stock: stock,
             sku_info: sku_info,
-            vip_price
+            vip_price,
+            mo_imgs
           })
 
           let comment_type = that.data.comments_type;
@@ -940,27 +955,35 @@ if (app.globalData.token && app.globalData.token != '') {
     let key = event.currentTarget.dataset.key;
     let k = event.currentTarget.dataset.k;
     let goods_info = that.data.goods_info;
-    let arr = that.data.spec_list;
+    let arr = that.data.spec_list; //默认规格
     let stock = that.data.stock;
     let sku_id = that.data.sku_id;
+    
     let attr_value_items_format = that.data.attr_value_items_format;
     let member_price = that.data.member_price;
     let attr_value_items = {};
     let sku_info = that.data.sku_info;
     
+    // 通过key知道选择的规格
     for (let i = 0; i < arr[key].value.length;i++){
       arr[key].value[i].status=0;
     }
+  
     arr[key].value[k].status=1;
+    let sku_img=  arr[key].value[k].spec_value_data_src;
     //拼合规格组
     for (let i = 0; i < arr.length; i++) {
+     
       for (let l = 0; l < arr[i].value.length; l++) {
+       
         if (arr[i].value[l]['status'] == 1) {
           attr_value_items[i] = arr[i].value[l].spec_id + ':' + arr[i].value[l].spec_value_id;
           attr_value_items.length = i+1;
         }
+
       }
     }
+
     //规格组、库存判断
     for (let i = 0; i < goods_info.sku_list.length; i++) {
       let count = 1;
@@ -969,6 +992,7 @@ if (app.globalData.token && app.globalData.token != '') {
           count = 0;
         }
       }
+      
       if (count == 1) {
         sku_id = goods_info.sku_list[i].sku_id;
         attr_value_items_format = goods_info.sku_list[i].attr_value_items_format;
@@ -976,14 +1000,41 @@ if (app.globalData.token && app.globalData.token != '') {
         stock = goods_info.sku_list[i].stock;
         sku_info = goods_info.sku_list[i];
       }
+
+      console.log(sku_id);
+      console.log(goods_info.sku_list[i].sku_id);
+     
+      // 选择规格修改前段页面显示
+    if(sku_id   == goods_info.sku_list[i].sku_id){
+      
+      let sku_promote=goods_info.sku_list[i].promote_price;
+      let sku_price=goods_info.sku_list[i].price;
+      if(sku_img){
+        that.data.mo_imgs=sku_img;
+        that.setData({
+          mo_imgs:sku_img
+        })
+      }
+     
+      goods_info.promote_price=sku_promote;
+      goods_info.price=sku_price;
     }
+
+
+    }
+  
+
+
+    
+   
     that.setData({
       spec_list: arr,
       sku_id: sku_id,
       attr_value_items_format: attr_value_items_format,
       member_price: member_price,
       stock: stock,
-      sku_info: sku_info
+      sku_info: sku_info,
+      goods_info
     })
   },
 
@@ -1433,7 +1484,6 @@ if (app.globalData.token && app.globalData.token != '') {
                   let lpl = res.data.token;
                   app.globalData.openid = res.data.openid;
                   app.globalData.token = res.data.token;
-                
                   that.setData({
                     unregistered: 0,
                     Token:res.data.token,

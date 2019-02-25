@@ -44,9 +44,19 @@ App({
     projectData: {},    //二级页参数
     unregistered: 0,
     recommendUser:'',   //极选师推荐人
+    // traffic_acquisition_source: '' //引流来源
   },
   //app初始化函数
-  onLaunch: function () {
+  onLaunch: function (options) {
+    let that = this;
+    if (options.referrerInfo.extraData){
+      // traffic_acquisition_source      引流来源
+      console.log(options.referrerInfo.extraData.traffic_acquisition_source, 'traffic_acquisition_source');
+       that.globalData.traffic_acquisition_source = options.referrerInfo.extraData.traffic_acquisition_source;
+      that.yielding(that.globalData.traffic_acquisition_source)
+    
+    }
+
     const updateManager = wx.getUpdateManager()
     updateManager.onCheckForUpdate(function (res) {
 
@@ -66,7 +76,7 @@ App({
     updateManager.onUpdateFailed(function () {
       // 新的版本下载失败
     })
-    let that = this;
+   
     wx.getUserInfo({
       success: res => {
         console.log('获取用户信息成功', res);
@@ -166,7 +176,7 @@ App({
       success: function (res) {
         let code = res.code;
         if (code == 0 || code == 10) {
-
+          
           // that.setOpenid(res.data);
           that.setOpenid(res.data.openid)
           that.globalData.token = res.data.token;
@@ -391,6 +401,9 @@ App({
   },
   setIv: function (iv) {
     this.globalData.iv = iv;
+  },
+  yielding:function(lo){
+    this.globalData.lo = lo;
   },
   setToken: function (token) {
     this.globalData.token = token;

@@ -1521,7 +1521,8 @@ console.log(data);
         //console.log(card_id)
         //console.log(card_token)
         console.log(that.data.uid)
-      
+      console.log(' app.globalData.traffic_acquisition_source',app.globalData.traffic_acquisition_source)
+     
         app.sendRequest({
             url: url,
             data: {
@@ -1550,6 +1551,7 @@ console.log(data);
                 count_money: that.data.count_money,
                 uid:that.data.uid,
                 is_inside: that.data.is_inside ? that.data.is_inside:0,
+              traffic_acquisition_source: app.globalData.traffic_acquisition_source,// 引流来源
             },
             success: function (res) {
               console.log(res);

@@ -20,7 +20,7 @@
     <view class="com-content" style="margin-top:68rpx">
       <!-- <button catchtap='UK'>礼物专区</button> -->
       <!-- <button catchtap='UC'>订单查询</button> -->
-      <!-- <button catchtap='UZ'>赠送记录</button> -->
+      <!-- <button catchtap='skip'>赠送记录</button> -->
       <!-- 公告 -->
       <view class="hot {{index_notice[0]==undefined?'hide':''}}">
         <view class="notice-img">

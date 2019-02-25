@@ -122,12 +122,10 @@
          <view class="all-box">
                 <image lazy-load="true" src="{{shops.pic_cover_small}}" mode="widthFix"></image>
                 <view class="shop-detail">
-                  
                     <block wx:for='{{shops.group_query}}' wx:key='' wx:for-item='vo'>
                     </block>
        <text decode="true" class="title">{{shops.goods_name}}</text>
                   <image lazy-load="true" src='/images/goods/cartp2.png' mode='widthFix' wx:if="{{shops.selected}}" class="selected"></image>
-            
                 </view>
               </view>
             </view>

@@ -1,5 +1,3 @@
-
-
 <view>
 <view class='alls'></view> 
 <view class='approve' >
@@ -17,8 +15,6 @@
     <view class='name' >证件号</view>
     <view class='in'>{{Idcard}}</view>
 </view> 
-
- 
 </view>
 <view class='deposit' data-in='go' catchtap='againVerify' style="background:#eeb85b;">返回提现</view>
 <view class='deposit' data-in='again' catchtap='againVerify'>重新上传身份证</view>

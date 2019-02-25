@@ -157,6 +157,7 @@ Page({
                 }
                 let out_trade_no = that.data.out_trade_no;
                 console.log(res, "iuhygtfrewdewc",that.data.ty)
+
                 wx.requestPayment({
                     timeStamp: data.timestamp.toString(),
                     nonceStr: data.nonce_str,
@@ -237,4 +238,5 @@ Page({
             }
         })
     }
+    
 })

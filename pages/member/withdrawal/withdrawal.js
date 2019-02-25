@@ -348,6 +348,9 @@ Page({
     var date = new Date;
     var year = date.getFullYear();
     var month = date.getMonth() + 1;
+    var God= date.getDate();
+    console.log(God.toString());
+    console.log(month.toString());
     month = (month < 10 ? "0" + month : month);
     var mydate = (year.toString() + '-' + month.toString());
     var detailtime = (year.toString() + '年' + month.toString() + '月');

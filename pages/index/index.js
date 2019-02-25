@@ -64,7 +64,6 @@ Page({
   },
   onLoad: function (options) {
     let that = this;
-
     if (options.uid) {
       // 这个字段是转发过后承载uid     identifying
       app.globalData.identifying = options.uid;
@@ -80,9 +79,6 @@ Page({
       app.globalData.kol_id = kol_id;
       console.log("********kol_id", kol_id);
     }
-
-
-
     //  极选师扫码12小时内有分销来源
     // let timestamp = Date.parse(new Date);
     // if (app.globalData.kol_id != 0) {
@@ -163,6 +159,8 @@ Page({
         })
       }
     });
+  
+  
 
     //  获取往期话题
     app.sendRequest({
@@ -194,22 +192,22 @@ Page({
     });
 
     // 品牌获取
-    app.sendRequest({
-      url: "api.php?s=/goods/getGoodsBrandListRecommend",
-      data: {},
-      method: 'POST',
-      success: function (res) {
-        let brand = res.data.data;
-        // console.log(res.data)
-        for (let index in brand) {
-          let img = brand[index].brand_ads;
-          brand[index].brand_ads = app.IMG(img);
-        }
-        that.setData({
-          brand: brand
-        })
-      }
-    });
+    // app.sendRequest({
+    //   url: "api.php?s=/goods/getGoodsBrandListRecommend",
+    //   data: {},
+    //   method: 'POST',
+    //   success: function (res) {
+    //     let brand = res.data.data;
+    //     // console.log(res.data)
+    //     for (let index in brand) {
+    //       let img = brand[index].brand_ads;
+    //       brand[index].brand_ads = app.IMG(img);
+    //     }
+    //     that.setData({
+    //       brand: brand
+    //     })
+    //   }
+    // });
 
     if (app.globalData.token && app.globalData.token != '') {
       //判断是否是付费会员的接口
@@ -309,12 +307,20 @@ Page({
     //   }
     // }
 
-
-
     app.restStatus(that, 'listClickFlag');
     app.restStatus(that, 'noticeContentFlag');
 
-
+  },
+  // 小程序之间的跳转和携带参数；eg
+  skip: function () {
+    wx.navigateToMiniProgram({
+      appId: 'wxd145d8a6e951dd1b',
+      path: 'pages/goods/brandlist/brandlist?id=22',
+      envVersion: 'trial',
+      extraData: {
+        traffic_acquisition_source : '小红书'
+      },
+    })
   },
 
   /**
@@ -356,10 +362,6 @@ Page({
         title: title
       })
     }
-
-
-
-
 
   },
   /**
@@ -451,6 +453,7 @@ Page({
       })
     }
     app.clicked(that, 'listClickFlag');
+    
     // //判断这个图片是否跳转
     // if (hasTarget == 0) {
     //   return false;

@@ -29,6 +29,7 @@ Page({
     beTitle: '返回列表',
     Fixtitle: 1 , //固定页面状态显示
     maKestep: 1,//制作步骤
+    myTime:null,
   },
   /**
    * 生命周期函数--监听页面加载
@@ -51,6 +52,10 @@ Page({
       }
 
     })
+  },
+  onUnload () {
+      //  关闭但页面清除单前页面的定时器
+    clearInterval(this.data.myTime);
   },
   //绘画
   Drawing: function () {
@@ -118,7 +123,11 @@ Page({
                   icon: 'loading',
                   duration: 2000
                 });
-                setTimeout(function () {
+
+              //  关闭但页面清除单前页面的定时器
+                 clearInterval(that.data.myTime);
+
+                 that.data.myTime= setTimeout(function () {
                   wx.canvasToTempFilePath({
                     x: 0,
                     y: 0,
@@ -139,6 +148,8 @@ Page({
                     }
                   });
                 }, 2000)
+
+
               },
               fail() {
                 console.log(res)
@@ -181,7 +192,6 @@ Page({
     });
   },
   file: function () {
-    console.log(888888)
     let that = this;
     console.log(that.data.saveImg, 'saveImg')
     wx.saveImageToPhotosAlbum({
@@ -546,7 +556,6 @@ Page({
               ts: 2
             })
             that.Commonality();
-
           }
         })
       }
@@ -559,7 +568,6 @@ Page({
 
   // 上传图片
   uploading: function () {
-
     let that = this;
     that.setData({
       lucency: false

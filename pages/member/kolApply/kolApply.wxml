@@ -6,7 +6,6 @@
 		</view>
         <view class='p' >{{kolText}}</view>
        <button catchtap='toIndex'>返回首页</button>
-			
   </view>
 </scroll-view>
 
@@ -74,7 +73,7 @@
         <view class='table-text'>出生日期</view>
         <view class="section table-input">
           <view style='height:1.4rem'>{{listData.birthday}}</view>
-          <picker mode="date" value="{{listData.birthday}}" start="1900-01-01" end="2019-03-10" bindchange="bindDateChange">
+          <picker mode="date" value="{{listData.birthday}}" start="1900-01-01" end="{{mydate}}" bindchange="bindDateChange">
             <view class="picker">···</view>
           </picker>
         </view>
@@ -116,7 +115,6 @@
         <view class='table-input'>{{recommend}}</view>
       </view> 
     <view class='next-btn' catchtap='torealname'>下一步</view>
-     
     </view>
   </view>
 
@@ -144,11 +142,8 @@
         <form bindsubmit="toApply" report-submit="true">
             <button class='hobby-next-btn'  formType="submit">提交申请</button>
         </form>
-
       </view>
-      
   </view>
-
   <!-- 实名制认证 -->
   <!-- <view class='realname-box' wx:if='{{isShow==3}}'>
     <view style='margin:20rpx 0;'>

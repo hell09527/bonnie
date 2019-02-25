@@ -378,6 +378,7 @@ Page({
   //更新头像
   userinfo:function(res){
     let that=this;
+    console.log(res.rawData);
     if (res.detail.iv) {
       let iv = res.detail.iv;
       let encryptedData = res.detail.encryptedData;
@@ -386,6 +387,29 @@ Page({
       app.globalData.unregistered = 0;
       console.log(res.detail.iv
       )}
+      console.log(res.rawData);
+      console.log(res.detail.userInfo.avatarUrl)
+      console.log(res.detail.userInfo.nickName);
+      app.sendRequest({
+        url: 'api.php?s=member/updateMemberDetail',
+        data: {
+          avatarUrl:res.detail.userInfo.avatarUrl,
+          nickName:res.detail.userInfo.nickName,
+          wx_info:res.detail.rawData,
+        },
+        success: function (res) {
+          if (res.code == 1) {
+
+            that.setData({
+              tel: res.data.user_tel,
+              Choice: false
+            })
+
+
+          }
+
+        }
+      });
     let heder_img = res.detail.userInfo.avatarUrl
     let wx_name = res.detail.userInfo.nickName
     let branch = res.currentTarget.dataset.status;
@@ -399,6 +423,7 @@ Page({
   bindgetuserinfo: function (res) {
     let that = this;
     console.log(res)
+
     if (res.detail.iv) {
       let iv = res.detail.iv;
       let encryptedData = res.detail.encryptedData;
@@ -407,6 +432,7 @@ Page({
       app.globalData.unregistered = 0;
       console.log(res.detail.iv
       )
+
       console.log(res.detail.userInfo.avatarUrl)
       console.log(res.detail.userInfo.nickName)
       let heder_img = res.detail.userInfo.avatarUrl

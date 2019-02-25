@@ -7,6 +7,8 @@
           <view class="value touxiang"  data-url='member/modifyface/modifyface'>
             <image src='{{user_info.user_headimg!=""?user_info.user_headimg:"/images/member/member_default.png"}}' mode='widthFix' binderror='errorHeadImg'/>
           </view>
+      <view class='update'> <button  class='account_management' open-type="getUserInfo" bindgetuserinfo="userinfo">更新资料</button>  </view>
+
         </view>
       </view>
       <view  data-url="" class="view">

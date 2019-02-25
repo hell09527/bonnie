@@ -68,17 +68,22 @@ scroll-view{
   width: 60px;
 }
 
-.account_management {
-  float: right;
-  position: absolute;
-  right: 25px;
-  font-size: 13px;
-  top: 5px;
+/* .account_management {
+  position:absolute;
+  right: 50rpx;
+  width:150rpx;
+  font-size:20rpx;
+  color:#9b9b9b;
+  height:40rpx;
+  line-height:35rpx;
+  border:1px solid #9b9b9b;
+  top: 10rpx;
   color: #fff;
-  line-height: 8px;
-}
+  background-color: #000;
+  border-radius: 0;
+} */
 
-.account_management:after{
+/* .account_management:after{
   position: absolute;
   content: '';
   top: 8px;
@@ -91,7 +96,7 @@ scroll-view{
   transform: rotate(45deg);
   -o-transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
-}
+} */
 
 .member_foot {
   width: 100%;
