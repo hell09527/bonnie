@@ -87,9 +87,9 @@ Page({
         })
         ctx.drawImage(res.path, 0, 0, setfixW, imgUrlH)
         // 作者名称
-        ctx.setTextAlign('center') // 文字居中
-        ctx.setFillStyle('#000') // 文字颜色：白色
-        ctx.setFontSize(12) // 文字字号：12px
+        // ctx.setTextAlign('center') // 文字居中
+        // ctx.setFillStyle('#000') // 文字颜色：白色
+        // ctx.setFontSize(12) // 文字字号：12px
         // ctx.fillText("作者:薛定谔了猫", 50, codeH )
         
       

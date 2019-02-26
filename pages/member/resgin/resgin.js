@@ -155,7 +155,8 @@ Page({
               data: {
                 code: coco,
                 encryptedData: encryptedData,
-                iv: iv
+                iv: iv,
+                traffic_acquisition_source: app.globalData.traffic_acquisition_source
               },
               success: function (res) {
                 if (res.code == 0) {
@@ -181,7 +182,8 @@ Page({
               data: {
                 code: coco,
                 encryptedData: encryptedData,
-                iv: iv
+                iv: iv,
+                traffic_acquisition_source: app.globalData.traffic_acquisition_source
               },
               success: function (res) {
                 if (res.code == 0) {

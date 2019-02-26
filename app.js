@@ -157,6 +157,10 @@ App({
   wechatLogin: function () {
     let that = this;
     let code = that.globalData.code;
+    // 引流来源
+    let traffic_acquisition_source = that.globalData.traffic_acquisition_source;
+    console.log('进来了')
+    console.log('引流来源', traffic_acquisition_source)
     let store_id = that.globalData.store_id;
     let wx_info = that.globalData.wx_info;
     let encryptedData = that.globalData.encryptedData;
@@ -171,7 +175,8 @@ App({
         code: code,
         encryptedData: encryptedData,   //微信信息
         iv: iv,
-        store_id
+        store_id,
+        traffic_acquisition_source
       },
       success: function (res) {
         let code = res.code;
