@@ -315,7 +315,13 @@ if (app.globalData.token && app.globalData.token != '') {
         let code = res.code;
         let data = res.data;
         if (code == 0) {
-          let vip_price = data.vip_price
+          let vip_price = data.vip_price;
+          let goodsDetailImg = data.goodsDetailImg;
+          if (goodsDetailImg){
+               
+          }else{
+            goodsDetailImg=0
+          }
           // console.log(vip_price)
           // 判断是否礼物商品
           if(data.goods_type==2){
@@ -398,6 +404,7 @@ if (app.globalData.token && app.globalData.token != '') {
             brand_id: brand_id ,
             sum,
             is_inside_sell,
+            goodsDetailImg   //极选师推荐图片
           });
 
           //限时折扣计时

@@ -140,7 +140,7 @@
             <view class='span last'></view>
         </view> -->
     </view>
-    <view class="hr with-margin-l"></view>
+    <!-- <view class="hr with-margin-l"></view> -->
     <view class="hr divider-line"></view>
     <!-- 开通会员 -->
     <!-- <view class="openMember" catchtap='toOpenMember' wx:if="{{is_vip==0}}">
@@ -236,6 +236,9 @@
             <view class='span'>完成</view>
         </view>
     </view>
+        <image class="expressage" style='width:100%;' 
+        wx:if="{{ goodsDetailImg!=0}}"src='{{goodsDetailImg}}' mode='widthFix' ></image>
+          <view class="hr divider-line"></view>
     <!-- 已选择 -->
     <block wx:if='goods_info.goods_pintuan == undefined'>
         <block wx:if='{{goods_info.goods_pintuan.is_open != 1}}'>
@@ -428,7 +431,7 @@
                 </block>
             </view>
         </view>
-        <view class="hr divider-line"></view>
+        <!-- <view class="hr divider-line"></view> -->
     </block>
     <!-- 商品评价 -->
     <block wx:if="{{comments_list[0]!=undefined}}">

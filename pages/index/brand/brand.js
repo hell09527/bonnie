@@ -76,7 +76,9 @@ Page({
    
    
     if (is_show == 0) {
-      app.aldstat.sendEvent(title + '品牌');
+      app.aldstat.sendEvent('品牌点击事件',{
+        "品牌名称":title
+      });
       wx.navigateTo({
         url: '/pages/goods/brandlist/brandlist?id=' + id,   //+'&store_id=1'
       })

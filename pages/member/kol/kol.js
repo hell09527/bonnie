@@ -281,7 +281,7 @@ Page({
   // 预计分润到账时间
   expectTime:function(time,days){
     var dt = time;
-    dt = dt.replace(/-/g,'/');//js不认2011-11-10,只认2011/11/10
+    dt = dt.replace(/-/g, '/');//js不认2011-11-10,只认2011/11/10
     var t1 = new Date(new Date(dt).valueOf() + days * 24 * 60 * 60 * 1000);// 日期加上指定的天数
     var month;
     var day;

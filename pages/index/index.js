@@ -433,7 +433,9 @@ Page({
 
     // 跳转活动详情页
     if (projectData.id) {
-      app.aldstat.sendEvent('首页 ' + title + '活动');
+      app.aldstat.sendEvent('首页活动点击', {
+        "活动名称":title
+      });
       wx.navigateTo({
         url: '/pages/index/projectIndex/projectIndex?data=' + JSON.stringify(projectData),
       })
@@ -445,8 +447,16 @@ Page({
       //防止多次点击
       return false;
     } else {
-      console.log('首页 ' + title + '(' + types + '-' + code + ')');
-      app.aldstat.sendEvent('首页 ' + title + '(' + types + '-' + code + ')');
+      console.log('首页商品点击' ,{
+        "商品标题":title,
+        "商品类型":types,
+        "物料编码":code
+      });
+      app.aldstat.sendEvent('首页商品点击', {
+        "商品标题": title,
+        "商品类型": types,
+        "物料编码": code
+      });
 
       wx.navigateTo({
         url: '/pages' + url,
@@ -467,29 +477,6 @@ Page({
     // wx.navigateTo({
     //   url: '/pages' + url,
     // })
-  },
-
-  // 跳转品牌专区
-  toBrand(e) {
-    "use strict";
-    let is_show = e.currentTarget.dataset.show
-    let id = e.currentTarget.dataset.id
-    let title = e.currentTarget.dataset.title
-    console.log(is_show)
-    console.log(id)
-    // let data = {
-    //   id: e.currentTarget.dataset.data.brand_id,
-    //   pic: e.currentTarget.dataset.data.brand_pic,
-    //   title: e.currentTarget.dataset.data.brand_name
-    // }
-    if (is_show == 0) {
-      app.aldstat.sendEvent('首页 ' + title + '品牌');
-      wx.navigateTo({
-        url: '/pages/goods/brandlist/brandlist?id=' + id,   //+'&store_id=1'
-      })
-    } else {
-      return false;
-    }
   },
 
   tabBar: function (event) {
