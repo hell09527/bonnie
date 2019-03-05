@@ -57,7 +57,6 @@ Page({
     // })
     wx.navigateTo({
       url: "/pages/member/kolApply/kolApply",
-      // url: "/pages/member/kol/kolbill/kolbill",
       // url:"/pages/goods/goodslist/goodslist",
     })
 
@@ -128,9 +127,6 @@ Page({
     }, 1000);
     that.webSiteInfo();
 
- 
-  
-  
 
     //  获取往期话题
     app.sendRequest({
