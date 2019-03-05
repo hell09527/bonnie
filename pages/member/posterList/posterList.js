@@ -90,7 +90,7 @@ Page({
       }
     });
   },
-    /**
+   /**
    * 删除图片
    */
   delImgs:function(){

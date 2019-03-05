@@ -271,7 +271,7 @@ Page({
   /**触发*/
   Crossroad: function () {
     let _that = this;
-    let Tel=_that .data.tel;
+    let Tel=_that.data.tel;
     if (app.globalData.unregistered == 1 || Tel=='') {
       wx.navigateTo({
         url: '/pages/member/resgin/resgin',

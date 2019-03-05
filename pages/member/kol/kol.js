@@ -3,7 +3,7 @@ var time = require("../../../utils/util.js");
 var _wxcharts = require('../../mars/plugins/wxcharts')
 Page({
   data: {
-    ck: 1,//区分数据本月或者本周
+     ck: 1,//区分数据本月或者本周
     _no: '0',//区分切换项
     isTopClick: 1,  //商品排行标题点击
     datetime: '',
@@ -25,16 +25,13 @@ Page({
     star_num: '',   //星级
     member_name: '',   //kol名字
   },
-
   onLoad: function () {
     // console.log('onLoad')
     let that = this;
-
     // console.log(that.getWeekStartDate());
     // console.log(that.getWeekEndDate());
     // console.log(that.getMonthStartDate());
     // console.log(that.getMonthEndDate());
-
     var date = new Date;
     var year = date.getFullYear();
     var month = date.getMonth() + 1;
@@ -227,7 +224,6 @@ Page({
       status: order_status,
     })
   },
-
   orders: function (start_date, end_date) {
     let that = this;
     app.sendRequest({

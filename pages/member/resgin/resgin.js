@@ -254,12 +254,10 @@ Page({
       wx.redirectTo({
         url: '/pages/member/kolApply/kolApply?uid=' + app.globalData.recommendUser,
       })
-
     } else if (prevPage.route == "pages/goods/goodsdetail/goodsdetail") {
       console.log(11);
       console.log(suffix)
       //  商品详情页面
-
       wx.redirectTo({
         url: "/pages/goods/goodsdetail/goodsdetail?goods_id=" + suffix,
       })
@@ -267,9 +265,10 @@ Page({
     } else if (prevPage.route == "pages/member/member/member") {
       console.log(22)
       //  个人中心页面
-      wx.switchTab({
+      wx.redirectTo({
         url: "/pages/member/member/member",
       })
+
     } else if (prevPage.route == "pages/goods/shareRepertoire/shareRepertoire") {
       console.log(33)
       //  购物清单页面
@@ -294,12 +293,15 @@ Page({
 
   },
 
+
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
 
   },
+
+
 
   /**
    * 生命周期函数--监听页面隐藏

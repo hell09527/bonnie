@@ -147,8 +147,7 @@ Page({
                       that.uplodeHeadImg(that, Imgs);
                     }
                   });
-                }, 2000)
-
+                }, 2000);
 
               },
               fail() {
@@ -729,12 +728,13 @@ Page({
   lower: function () {
     let that = this;
     if (that.data.category == 1) {
-      console.log('到底了大哥lower')
+      console.log('到底了大哥lower');
       let that = this;
       let category_id = that.data.category_id;
       let category_goods = that.data.category_goods;
       let page = that.data.page;
-      this.toGoods(category_id, page);
+      // that.data.myTime=setTimeout(function () {   },1000)
+        that .toGoods(category_id, page);
     }
   },
 })

@@ -4,8 +4,8 @@ App({
  /a/dsa sadaswqwqewqkhhjhjhqqweqwewqewe  * 全局变量
    */
   globalData: {
-    siteBaseUrl: "https://www.bonnieclyde.cn/", //服务器url
-    // siteBaseUrl: "https://store-test.91xdb.com/", //服务器url
+    // siteBaseUrl: "https://www.bonnieclyde.cn/", //服务器url
+    siteBaseUrl: "https://store-test.91xdb.com/", //服务器url
     wx_info: null,
     encryptedData: '',
     iv: '',
@@ -44,14 +44,14 @@ App({
     projectData: {},    //二级页参数
     unregistered: 0,
     recommendUser:'',   //极选师推荐人
-    // traffic_acquisition_source: '' //引流来源
+    traffic_acquisition_source: '' //引流来源
   },
   //app初始化函数
   onLaunch: function (options) {
     let that = this;
     if (options.referrerInfo.extraData){
       // traffic_acquisition_source      引流来源
-      console.log(options.referrerInfo.extraData.traffic_acquisition_source, 'traffic_acquisition_source');
+      // console.log(options.referrerInfo.extraData.traffic_acquisition_source, 'traffic_acquisition_source');
        that.globalData.traffic_acquisition_source = options.referrerInfo.extraData.traffic_acquisition_source;
       that.yielding(that.globalData.traffic_acquisition_source)
     
@@ -159,8 +159,8 @@ App({
     let code = that.globalData.code;
     // 引流来源
     let traffic_acquisition_source = that.globalData.traffic_acquisition_source;
-    console.log('进来了')
-    console.log('引流来源', traffic_acquisition_source)
+    // console.log('进来了')
+    // console.log('引流来源', traffic_acquisition_source)
     let store_id = that.globalData.store_id;
     let wx_info = that.globalData.wx_info;
     let encryptedData = that.globalData.encryptedData;

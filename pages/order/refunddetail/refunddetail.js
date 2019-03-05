@@ -54,6 +54,8 @@ Page({
     shop_address: {},
     refundFlag: 0,
     returnsGoodsFlag: 0,
+    require_num:'',
+    myTime:null
   },
 
   /**
@@ -83,6 +85,24 @@ Page({
         let data = res.data;
         if (code == 0) {
           let refund_info = data.refund_detail.refund_info;
+          let refund_max_num= data.refund_detail.refund_max_num;
+          let refund_max_money= data.refund_detail.refund_max_money;
+         let require_num=data.refund_detail.refund_max_num;
+         let refund_require_money=data.refund_detail.refund_require_money;
+         
+           let  actual_price =refund_max_money;
+           refund_require_money=actual_price ;
+          
+          let goods_num=[];
+          for (var i = 0; i < refund_max_num; i++) {
+            goods_num.push(i+1)
+          }
+          console.log(goods_num)
+          
+          
+          
+        
+          
           if (refund_info[refund_info.length-1] != undefined){
             refund_info = refund_info[refund_info.length - 1];
             refund_info.action_time = time.formatTime(refund_info.action_time, 'Y-M-D h:m:s');
@@ -91,7 +111,7 @@ Page({
           }
           
           that.setData({
-            refund_money: parseFloat(data.refund_money).toFixed(2),
+            refund_money: parseFloat(refund_max_money).toFixed(2),
             refund_balance: parseFloat(data.refund_balance).toFixed(2),
             require_array: require_array,
             order_id: data.refund_detail.order_id,
@@ -99,12 +119,49 @@ Page({
             refund_info: refund_info,
             refund_detail: data.refund_detail,
             shop_address: data.shop_address,
-            refund_real_money: data.refund_detail.refund_real_money
+            refund_real_money: data.refund_detail.refund_real_money,
+            goods_num,
+            refund_max_money,
+            refund_max_num,
+            actual_price,
+            require_num,
+            refund_require_money
           })
+
         }
         console.log(res);
       }
     });
+  },
+  onUnload () {
+    //  关闭但页面清除单前页面的定时器
+  clearInterval(this.data.myTime);
+},
+  bindPickerChange:function(e){
+    let _this=this;
+    let refund_max_num=_this.data.refund_max_num;
+    let refund_max_money=_this.data.refund_max_money;
+    let require_num  = _this.data.require_num ; 
+    let  actual_price=_this.data.actual_price;
+    let refund_require_money=_this.data.refund_require_money ;
+  
+    // 选择数量
+    let ch_num=e.detail.value;
+    require_num =Number(ch_num)+Number(1);
+    actual_price = (refund_max_money/refund_max_num)*require_num ;
+    refund_require_money=actual_price;
+     
+     let refund_require_num =Number(ch_num)+Number(1);
+    
+     console.log( actual_price)
+     _this.setData({
+      require_num,
+      actual_price,
+      refund_require_money,
+      refund_require_num  
+    })
+    
+    
   },
 
   /**
@@ -203,6 +260,7 @@ Page({
 
     let refund_require_money = event.detail.value;
     let refund_money = that.data.refund_money;
+       console.log(refund_money)
     
     if (refund_require_money > refund_money){
       app.showBox(that, '超出可退金额范围');
@@ -273,6 +331,7 @@ Page({
     let order_id = that.data.order_id;
     let order_goods_id = that.data.order_goods_id;
     let refund_require_money = parseFloat(that.data.refund_require_money);
+    let refund_require_num = parseFloat(that.data.refund_require_num);
     let refund_balance = parseFloat(that.data.refund_balance);
     let refund_money = that.data.refund_money;
     let require_array = that.data.require_array;
@@ -317,6 +376,7 @@ Page({
         refund_type: refund_type,
         refund_require_money: refund_require_money,
         refund_reason: refund_reason,
+        refund_require_num :refund_require_num 
       },
       success: function (res) {
         let code = res.code;

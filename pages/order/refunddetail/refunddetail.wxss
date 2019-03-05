@@ -138,7 +138,10 @@
   width: 72%;
   float: right;
   font-size: 12px;
+  line-height:88rpx;
   position: relative;
+  top:8rpx;
+
 }
 
 .columns-select:after{

@@ -331,6 +331,9 @@ Page({
       distributor_type,
       uid
     })
+
+
+    
     // 当订单同时包含跨境商品和大贸商品时
     that.setData({
       carts_1_info: {    // 选中的大贸 

@@ -36,6 +36,7 @@
             </view>
           </view>
         </view>
+
         <view class="row">
           <view class="small-12 columns">
             <view class='label'><view class="span color-red">*</view>退款原因：</view>
@@ -46,12 +47,30 @@
             </view>
           </view>
         </view>
+
+            <!-- 新添加的 数量 -->
+         <view class="row">
+          <view class="small-12 columns">
+            <view class='label'><view class="span color-red">*</view>选择数量：</view>
+            <view class="columns-select">
+            <!-- value='{{require_num}}'  -->
+              <picker id='refund_reason'  bindchange="bindPickerChange" value="{{require_num}}" range='{{goods_num}}' >
+               <view class='span'>{{require_num}}</view>
+                <view class="picker">
+                    {{goods_num[index]}}
+                 </view>
+              </picker>
+            </view>
+          </view>
+             </view>
+
         <view class="row">
           <view class="small-12 columns">
             <view class='label'><view class="span color-red">*</view>退款金额：</view>
+             <input class="columns-select" value='{{actual_price}}' bindinput='refundRequireMoney' />
             <block wx:if='{{(refund_balance == 0) || (refund_balance > 0 && refund_money > 0)}}'>
               <view class="columns-input">
-                <input value="" id="refund_money" bindinput='refundRequireMoney' class="maxRefund" type="digit" placeholder="最多可退款{{refund_money}}元"/>
+                <input value="" id="refund_money" bindinput='refundRequireMoney' class="maxRefund" type="digit" />
               </view>
             </block>
             <block wx:if='{{refund_balance > 0 && refund_money == 0}}'>
