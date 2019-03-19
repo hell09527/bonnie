@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4d43c777-671d-4c87-b25c-470608135301" name="Default" comment="" />
+    <list default="true" id="4d43c777-671d-4c87-b25c-470608135301" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pages/order/protocol/protocol.js" afterPath="$PROJECT_DIR$/pages/order/protocol/protocol.js" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -18,9 +20,39 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/index/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="126" column="13" lean-forward="false" selection-start-line="126" selection-start-column="13" selection-end-line="126" selection-end-column="13" />
-              <folding />
+            <state relative-caret-position="1905">
+              <caret line="127" column="13" lean-forward="false" selection-start-line="127" selection-start-column="13" selection-end-line="127" selection-end-column="13" />
+              <folding>
+                <marker date="1552985426000" expanded="true" signature="1237:1403" ph="{...}" />
+                <marker date="1552985426000" expanded="true" signature="1395:1403" ph="{&quot;url&quot;: &quot;/pages/member/kolApply/kolApply&quot;...}" />
+                <marker date="1552985426000" expanded="true" signature="19511:19923" ph="{...}" />
+                <marker date="1552985426000" expanded="true" signature="19511:19960" ph="{...}" />
+                <marker date="1552985426000" expanded="true" signature="19511:19966" ph="{&quot;url&quot;: &quot;api.php?s=task/copyRightIsLoad&quot;...}" />
+                <marker date="1552985426000" expanded="true" signature="19511:19971" ph="{...}" />
+                <marker date="1552985426000" expanded="true" signature="19629:19841" ph="{...}" />
+                <marker date="1552985426000" expanded="true" signature="19976:19995" ph="/** 公告内容 ...*/" />
+                <marker date="1552985426000" expanded="true" signature="20026:20390" ph="{...}" />
+                <marker date="1552985426000" expanded="true" signature="20268:20295" ph="{...}" />
+                <marker date="1552985426000" expanded="true" signature="20314:20385" ph="{...}" />
+                <marker date="1552985426000" expanded="true" signature="20395:20416" ph="/** 图片路径处理 ...*/" />
+                <marker date="1552985426000" expanded="true" signature="20439:20689" ph="{...}" />
+                <marker date="1552985426000" expanded="true" signature="20694:20713" ph="/** 基础配置 ...*/" />
+                <marker date="1552985426000" expanded="true" signature="20741:21275" ph="{...}" />
+                <marker date="1552985426000" expanded="true" signature="20784:21270" ph="{&quot;url&quot;: &quot;api.php?s=login/getWebSiteInfo&quot;...}" />
+                <marker date="1552985426000" expanded="true" signature="20877:21264" ph="{...}" />
+                <marker date="1552985426000" expanded="true" signature="20988:21227" ph="{...}" />
+                <marker date="1552985426000" expanded="true" signature="21013:21056" ph="{&quot;webSiteInfo&quot;: data...}" />
+                <marker date="1552985426000" expanded="true" signature="21306:21761" ph="{...}" />
+                <marker date="1552985426000" expanded="true" signature="21392:21756" ph="{&quot;method&quot;: 'POST'...}" />
+                <marker date="1552985426000" expanded="true" signature="21487:21572" ph="{&quot;openid&quot;: app.globalData.openid...}" />
+                <marker date="1552985426000" expanded="true" signature="21610:21680" ph="{&quot;content-type&quot;: 'application/x-www-form-urlencoded;'...}" />
+                <marker date="1552985426000" expanded="true" signature="21712:21750" ph="{...}" />
+                <marker date="1552985426000" expanded="true" signature="21820:22002" ph="{...}" />
+                <marker date="1552985426000" expanded="true" signature="21957:21997" ph="{&quot;touchMove&quot;: touchMove...}" />
+                <marker date="1552985426000" expanded="true" signature="22198:22283" ph="{...}" />
+                <marker date="1552985426000" expanded="true" signature="22289:22344" ph="{...}" />
+                <marker date="1552985426000" expanded="true" signature="22310:22337" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -28,18 +60,28 @@
       <file leaf-file-name="refunddetail.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/order/refunddetail/refunddetail.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="223" column="24" lean-forward="true" selection-start-line="223" selection-start-column="24" selection-end-line="223" selection-end-column="24" />
+            <state relative-caret-position="5625">
+              <caret line="375" column="9" lean-forward="false" selection-start-line="375" selection-start-column="9" selection-end-line="375" selection-end-column="9" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="481">
-              <caret line="56" column="4" lean-forward="true" selection-start-line="56" selection-start-column="4" selection-end-line="56" selection-end-column="4" />
+              <caret line="56" column="4" lean-forward="false" selection-start-line="56" selection-start-column="4" selection-end-line="56" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="protocol.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pages/order/protocol/protocol.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="114" column="0" lean-forward="true" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -56,6 +98,7 @@
         <option value="$PROJECT_DIR$/pages/index/index.js" />
         <option value="$PROJECT_DIR$/pages/order/refunddetail/refunddetail.js" />
         <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/pages/order/protocol/protocol.js" />
       </list>
     </option>
   </component>
@@ -68,7 +111,7 @@
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1280" />
-    <option name="height" value="731" />
+    <option name="height" value="734" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -85,6 +128,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -151,10 +196,30 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bonnie-clyde" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bonnie-clyde" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="order" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="protocol" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -194,14 +259,15 @@
       <updated>1551781817734</updated>
       <workItem from="1551781819263" duration="130000" />
       <workItem from="1551876694666" duration="1563000" />
+      <workItem from="1552988211760" duration="28000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1693000" />
+    <option name="totallyTimeSpent" value="1721000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="731" extended-state="0" />
+    <frame x="0" y="23" width="1280" height="734" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2494043" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -236,22 +302,44 @@
     <entry file="file://$PROJECT_DIR$/pages/index/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1890">
-          <caret line="126" column="13" lean-forward="true" selection-start-line="126" selection-start-column="13" selection-end-line="126" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/index/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
           <caret line="126" column="13" lean-forward="false" selection-start-line="126" selection-start-column="13" selection-end-line="126" selection-end-column="13" />
-          <folding />
+          <folding>
+            <marker date="1552985426000" expanded="true" signature="1237:1403" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="1395:1403" ph="{&quot;url&quot;: &quot;/pages/member/kolApply/kolApply&quot;...}" />
+            <marker date="1552985426000" expanded="true" signature="19511:19923" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="19511:19960" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="19511:19966" ph="{&quot;url&quot;: &quot;api.php?s=task/copyRightIsLoad&quot;...}" />
+            <marker date="1552985426000" expanded="true" signature="19511:19971" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="19629:19841" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="19976:19995" ph="/** 公告内容 ...*/" />
+            <marker date="1552985426000" expanded="true" signature="20026:20390" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="20268:20295" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="20314:20385" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="20395:20416" ph="/** 图片路径处理 ...*/" />
+            <marker date="1552985426000" expanded="true" signature="20439:20689" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="20694:20713" ph="/** 基础配置 ...*/" />
+            <marker date="1552985426000" expanded="true" signature="20741:21275" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="20784:21270" ph="{&quot;url&quot;: &quot;api.php?s=login/getWebSiteInfo&quot;...}" />
+            <marker date="1552985426000" expanded="true" signature="20877:21264" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="20988:21227" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="21013:21056" ph="{&quot;webSiteInfo&quot;: data...}" />
+            <marker date="1552985426000" expanded="true" signature="21306:21761" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="21392:21756" ph="{&quot;method&quot;: 'POST'...}" />
+            <marker date="1552985426000" expanded="true" signature="21487:21572" ph="{&quot;openid&quot;: app.globalData.openid...}" />
+            <marker date="1552985426000" expanded="true" signature="21610:21680" ph="{&quot;content-type&quot;: 'application/x-www-form-urlencoded;'...}" />
+            <marker date="1552985426000" expanded="true" signature="21712:21750" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="21820:22002" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="21957:21997" ph="{&quot;touchMove&quot;: touchMove...}" />
+            <marker date="1552985426000" expanded="true" signature="22198:22283" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="22289:22344" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="22310:22337" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/order/refunddetail/refunddetail.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
+        <state relative-caret-position="3345">
           <caret line="223" column="24" lean-forward="true" selection-start-line="223" selection-start-column="24" selection-end-line="223" selection-end-column="24" />
           <folding />
         </state>
@@ -259,8 +347,108 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="481">
+        <state relative-caret-position="840">
           <caret line="56" column="4" lean-forward="true" selection-start-line="56" selection-start-column="4" selection-end-line="56" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/index/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1890">
+          <caret line="126" column="13" lean-forward="true" selection-start-line="126" selection-start-column="13" selection-end-line="126" selection-end-column="13" />
+          <folding>
+            <marker date="1552985426000" expanded="true" signature="1237:1403" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="1395:1403" ph="{&quot;url&quot;: &quot;/pages/member/kolApply/kolApply&quot;...}" />
+            <marker date="1552985426000" expanded="true" signature="19511:19923" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="19511:19960" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="19511:19966" ph="{&quot;url&quot;: &quot;api.php?s=task/copyRightIsLoad&quot;...}" />
+            <marker date="1552985426000" expanded="true" signature="19511:19971" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="19629:19841" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="19976:19995" ph="/** 公告内容 ...*/" />
+            <marker date="1552985426000" expanded="true" signature="20026:20390" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="20268:20295" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="20314:20385" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="20395:20416" ph="/** 图片路径处理 ...*/" />
+            <marker date="1552985426000" expanded="true" signature="20439:20689" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="20694:20713" ph="/** 基础配置 ...*/" />
+            <marker date="1552985426000" expanded="true" signature="20741:21275" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="20784:21270" ph="{&quot;url&quot;: &quot;api.php?s=login/getWebSiteInfo&quot;...}" />
+            <marker date="1552985426000" expanded="true" signature="20877:21264" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="20988:21227" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="21013:21056" ph="{&quot;webSiteInfo&quot;: data...}" />
+            <marker date="1552985426000" expanded="true" signature="21306:21761" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="21392:21756" ph="{&quot;method&quot;: 'POST'...}" />
+            <marker date="1552985426000" expanded="true" signature="21487:21572" ph="{&quot;openid&quot;: app.globalData.openid...}" />
+            <marker date="1552985426000" expanded="true" signature="21610:21680" ph="{&quot;content-type&quot;: 'application/x-www-form-urlencoded;'...}" />
+            <marker date="1552985426000" expanded="true" signature="21712:21750" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="21820:22002" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="21957:21997" ph="{&quot;touchMove&quot;: touchMove...}" />
+            <marker date="1552985426000" expanded="true" signature="22198:22283" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="22289:22344" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="22310:22337" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/index/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1905">
+          <caret line="127" column="13" lean-forward="false" selection-start-line="127" selection-start-column="13" selection-end-line="127" selection-end-column="13" />
+          <folding>
+            <marker date="1552985426000" expanded="true" signature="1237:1403" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="1395:1403" ph="{&quot;url&quot;: &quot;/pages/member/kolApply/kolApply&quot;...}" />
+            <marker date="1552985426000" expanded="true" signature="19511:19923" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="19511:19960" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="19511:19966" ph="{&quot;url&quot;: &quot;api.php?s=task/copyRightIsLoad&quot;...}" />
+            <marker date="1552985426000" expanded="true" signature="19511:19971" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="19629:19841" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="19976:19995" ph="/** 公告内容 ...*/" />
+            <marker date="1552985426000" expanded="true" signature="20026:20390" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="20268:20295" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="20314:20385" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="20395:20416" ph="/** 图片路径处理 ...*/" />
+            <marker date="1552985426000" expanded="true" signature="20439:20689" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="20694:20713" ph="/** 基础配置 ...*/" />
+            <marker date="1552985426000" expanded="true" signature="20741:21275" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="20784:21270" ph="{&quot;url&quot;: &quot;api.php?s=login/getWebSiteInfo&quot;...}" />
+            <marker date="1552985426000" expanded="true" signature="20877:21264" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="20988:21227" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="21013:21056" ph="{&quot;webSiteInfo&quot;: data...}" />
+            <marker date="1552985426000" expanded="true" signature="21306:21761" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="21392:21756" ph="{&quot;method&quot;: 'POST'...}" />
+            <marker date="1552985426000" expanded="true" signature="21487:21572" ph="{&quot;openid&quot;: app.globalData.openid...}" />
+            <marker date="1552985426000" expanded="true" signature="21610:21680" ph="{&quot;content-type&quot;: 'application/x-www-form-urlencoded;'...}" />
+            <marker date="1552985426000" expanded="true" signature="21712:21750" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="21820:22002" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="21957:21997" ph="{&quot;touchMove&quot;: touchMove...}" />
+            <marker date="1552985426000" expanded="true" signature="22198:22283" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="22289:22344" ph="{...}" />
+            <marker date="1552985426000" expanded="true" signature="22310:22337" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/order/refunddetail/refunddetail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5625">
+          <caret line="375" column="9" lean-forward="false" selection-start-line="375" selection-start-column="9" selection-end-line="375" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="481">
+          <caret line="56" column="4" lean-forward="false" selection-start-line="56" selection-start-column="4" selection-end-line="56" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/order/protocol/protocol.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="114" column="0" lean-forward="true" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
           <folding />
         </state>
       </provider>

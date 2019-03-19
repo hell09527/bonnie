@@ -68,6 +68,7 @@ Page({
   for (let index in Carry){
     //时间格式转化
     Carry[index].action_time  = time.formatTime(Carry[index].action_time , 'Y-M-D h:m:s');
+
   }
 
   console.log(Carry)
@@ -115,7 +116,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
-  }
+  // onShareAppMessage: function () {
+  //
+  // }
 })
