@@ -1,5 +1,3 @@
-
-
 <scroll-view class='{{mask_status==1?"noscroll":""}}'>
     <view class="motify {{prompt==''?'hide':''}}">
         <icon class="i show_type warning" type='warn' size='25' color='#FFF'></icon>

@@ -43,7 +43,7 @@ Page({
         end_date: end_date
       },
       success: function (res) {
-        console.log(res.data)
+        // console.log(res.data)
         var separationRecords = res.data.accountRecordsDate;
         for (var i = 0; i < separationRecords.length; i++) {
           var item = separationRecords[i].accountRecords;
@@ -56,7 +56,7 @@ Page({
             }
           }
         }
-        console.log(res.data.switchover);
+        // console.log(res.data.switchover);
         let carry = {
           name: res.data.switchover.real_name,
           issue: res.data.switchover.idCard,
@@ -78,14 +78,14 @@ Page({
 
   // 日期选择
   bindDateChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
+    // console.log('picker发送选择改变，携带值为', e.detail.value)
     var str = e.detail.value;
     var index = str.split('-');
-    console.log(index)
+    // console.log(index)
     var nowYear = index[0];
-    console.log(nowYear)
+    // console.log(nowYear)
     var nowMonth = index[1];
-    console.log(nowMonth)
+    // console.log(nowMonth)
 
     var detailtime = nowYear + '年' + nowMonth + '月';
     this.setData({
@@ -94,10 +94,10 @@ Page({
     })
 
     var endDate = this.getMonthDays(nowMonth - 1);
-    console.log(endDate)
+    // console.log(endDate)
     var monthStartDate = str + '-01';
     var monthEndDate = str + '-' + endDate;
-    console.log(monthStartDate, monthEndDate);
+    // console.log(monthStartDate, monthEndDate);
     this.orders(monthStartDate, monthEndDate)
   },
 
@@ -139,14 +139,14 @@ Page({
     //是否存在改变
     if (e) {
       var price = e.detail.value;
-      console.log(price)
+      // console.log(price)
       that.setData({
         RunPrice: price,
       })
       if (that.data.remain) {
 
         if (price > parseFloat(remainPrice)) {
-          console.log('1', price)
+          // console.log('1', price)
           that.setData({
             hint: 3,
             RunPrice: price,
@@ -154,7 +154,7 @@ Page({
 
         }
         else if (price < parseFloat(that.data.minMoey)) {
-          console.log('2', price)
+          // console.log('2', price)
           that.setData({
             hint: 2,
             RunPrice: price,
@@ -167,14 +167,14 @@ Page({
           })
           return;
         } else if (!price) {
-          console.log('进来了', price)
+          // console.log('进来了', price)
           that.setData({
             hint: 0
           })
           return;
         }
         else {
-          console.log('4', price)
+          // console.log('4', price)
           that.setData({
             RunPrice: price,
             hint: 0
@@ -185,7 +185,7 @@ Page({
 
       } else {
         if (price > parseFloat(rewardPrice)) {
-          console.log('5', price)
+          // console.log('5', price)
           that.setData({
 
             hint: 3,
@@ -201,21 +201,21 @@ Page({
 
         }
         else if (price > parseFloat(that.data.maxMoey)) {
-          console.log('7', price)
+          // console.log('7', price)
           that.setData({
             hint: 1
           })
           return;
 
         } else if (!price) {
-          console.log('进来了2', price)
+          // console.log('进来了2', price)
           that.setData({
             hint: 0
           })
           return;
         }
         else {
-          console.log('8', price)
+          // console.log('8', price)
           that.setData({
             RunPrice: price,
             hint: 0
@@ -258,7 +258,7 @@ Page({
     } else if (price > parseFloat(rewardPrice && account_type == 1)) {
       return;
     } else {
-      console.log('来了老弟4');
+      // console.log('来了老弟4');
       this.setData({
         Astop: false
       })
@@ -291,7 +291,7 @@ Page({
             that.setData({
               Astop: true
             })
-            console.log(event.detail.formId, app.globalData.openid, res.data);
+            // console.log(event.detail.formId, app.globalData.openid, res.data);
             app.sendRequest({
               url: "api.php?s=distributor/createWithdrawTemplate",
               data: {

@@ -520,7 +520,6 @@ Page({
       // that.Commonality();
       that.showBox('您还没有选择')
     } else {
-
       if (that.data.category == 1 || that.data.category == 3) {
         //小程序码shop图片
         app.sendRequest({
@@ -558,11 +557,7 @@ Page({
           }
         })
       }
-
-
     }
-
-
   },
 
   // 上传图片

@@ -56,8 +56,9 @@ Page({
     //   url: '/pages/goods/shareRepertoire/shareRepertoire?share_li=90:1:0.01,89:1:0.01&tag=2&store=0',
     // })
     wx.navigateTo({
-      url: "/pages/member/kolApply/kolApply",
-      // url:"/pages/goods/goodslist/goodslist",
+      // url: "/pages/member/kolApply/kolApply",
+      // url: "/pages/member/kol/kolbill/kolbill",
+     url:    "/pages/goods/goodsclassificationlist/goodsclassificationlist",
     })
 
   },
@@ -127,6 +128,9 @@ Page({
     }, 1000);
     that.webSiteInfo();
 
+ 
+  
+  
 
     //  获取往期话题
     app.sendRequest({
@@ -373,36 +377,58 @@ Page({
       title: event.currentTarget.dataset.title,
     }
     let listClickFlag = that.data.listClickFlag;
-    // console.log(url);
-    // //特殊点 跳转到二级页
-    // if (!x == 0) {
-    //   wx.navigateTo({
-    //     url: '/pages' + x,
-    //   })
-    // }
+    console.log(x,hasTarget);
 
+    //特殊点 跳转到黑科技商品
+    if (x==0) {
+      console.log('首页黑科技商品点击', {
+        "商品标题": title,
+        "商品类型": types,
+        "物料编码": code
+      });
+      app.aldstat.sendEvent('首页黑科技商品点击', {
+        "商品标题": title,
+        "商品类型": types,
+        "物料编码": code
+      });
+      wx.navigateTo({
+        url: '/pages' + url,
+      })
+    } else if(x == 1) {
+      console.log('首页新品推荐点击', {
+        "商品标题": title,
+        "商品类型": types,
+        "物料编码": code
+      });
+      app.aldstat.sendEvent('首页新品推荐点击', {
+        "商品标题": title,
+        "商品类型": types,
+        "物料编码": code
+      });
+      wx.navigateTo({
+        url: '/pages' + url,
+      })
+    }else if (projectData.id) {
     // 跳转活动详情页
-    if (projectData.id) {
       app.aldstat.sendEvent('首页活动点击', {
         "活动名称":title
       });
       wx.navigateTo({
         url: '/pages/index/projectIndex/projectIndex?data=' + JSON.stringify(projectData),
       })
-    }
-    else if (hasTarget == 0) {
+    }else if (hasTarget == 0) {
       //判断这个图片是否跳转
       return false;
     } else if (listClickFlag == 1) {
       //防止多次点击
       return false;
     } else {
-      console.log('首页商品点击' ,{
-        "商品标题":title,
-        "商品类型":types,
-        "物料编码":code
+      console.log('首页BC精选商品点击', {
+        "商品标题": title,
+        "商品类型": types,
+        "物料编码": code
       });
-      app.aldstat.sendEvent('首页商品点击', {
+      app.aldstat.sendEvent('首页BC精选商品点击', {
         "商品标题": title,
         "商品类型": types,
         "物料编码": code
@@ -687,7 +713,7 @@ Page({
         let data = res.data;
         if (code == 0) {
           let copyRight = data;
-          copyRight.technical_support = 'shopal技术支持';
+          copyRight.technical_support = 'ushopal技术支持';
           copyRight.default_logo = '/images/index/logo_copy.png';
 
           if (copyRight.is_load == 0) {

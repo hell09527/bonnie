@@ -678,14 +678,3 @@ width:100%;
 .choose{
   display:inline-block;
 }
-/* .d_l{
-  float: left;
-   line-height: 20px; 
-   width: 60px;
-   height: 20px;
- text-align: center;
-  margin-top: 8px;
-   border: 1px solid #000;
-   background-color: red;
-   color: #fff;
-} */

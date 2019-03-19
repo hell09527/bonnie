@@ -365,7 +365,7 @@ if (app.globalData.token && app.globalData.token != '') {
           }
           let goods_info = data;
           // 是否是内购商品
-          let is_inside_sell = goods_info.is_inside_sell;
+          let is_inside_sell = goods_info.sku_list[0].is_inside_sell;
 
           console.log(goods_info)
          
@@ -1004,6 +1004,7 @@ if (app.globalData.token && app.globalData.token != '') {
         member_price = goods_info.sku_list[i].member_price;
         stock = goods_info.sku_list[i].stock;
         sku_info = goods_info.sku_list[i];
+       
       }
 
       console.log(sku_id);
@@ -1011,9 +1012,21 @@ if (app.globalData.token && app.globalData.token != '') {
      
       // 选择规格修改前段页面显示
     if(sku_id   == goods_info.sku_list[i].sku_id){
-      
+      //内购时规格价格
       let sku_promote=goods_info.sku_list[i].promote_price;
       let sku_price=goods_info.sku_list[i].price;
+
+      //非内购价格
+      let sku_let=goods_info.sku_list[i].inside_price;
+      console.log(sku_let)
+      let Lei_price=goods_info.sku_list[i].inside_price;
+      let is_inside_sell= goods_info.sku_list[i].is_inside_sell;
+    
+          
+
+      that.setData({
+        is_inside_sell
+      })
       if(sku_img){
         that.data.mo_imgs=sku_img;
         that.setData({
@@ -1021,8 +1034,16 @@ if (app.globalData.token && app.globalData.token != '') {
         })
       }
      
-      goods_info.promote_price=sku_promote;
-      goods_info.price=sku_price;
+      if(is_inside_sell==0){
+        goods_info.promote_price=sku_promote;
+        goods_info.price=sku_price;
+      }else{
+        goods_info.inside_price=sku_let;
+        goods_info.inside_price= Lei_price
+      }
+
+
+     
     }
 
 
@@ -1325,7 +1346,7 @@ if (app.globalData.token && app.globalData.token != '') {
       public_boxs = goods_info.promotion_price < goods_info.price ? goods_info.promotion_price : goods_info.price 
       let box_detail = {
         shop_id: 0,
-        shop_name: 'shopal',
+        shop_name: 'ushopal',
         trueId: that.data.goods_info.goods_id,
         goods_name: that.data.goods_info.goods_name,
         count: count,
@@ -1435,7 +1456,7 @@ if (app.globalData.token && app.globalData.token != '') {
     let tag = "buy_now";
     let sku_list = sku_id + ':' + goods_num;
     let source_type = goods_info.source_type;
-    let is_inside = goods_info.is_inside_sell;
+    let is_inside = that.data.is_inside_sell;
     let goods_type = goods_info.goods_type;
     console.log(sku_list, goods_type, source_type)
     

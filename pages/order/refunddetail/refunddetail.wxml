@@ -1,31 +1,12 @@
-<scroll-view>
+<scroll-view  bindtap = "handletap" bindtouchstart = "handletouchtart" bindtouchend="handletouchend" bindtouchmove="handletouchmove">
   <view class="motify {{prompt==''?'hide':''}}">
     <icon class="i show_type warning" type='warn' size='25' color='#FFF'></icon>
     <view class="motify-inner">{{prompt}}</view>
   </view>
   <view class="form main mt-45">
-    <view class="return-process">
-      <view class="ul clear">
-        <view class="li step01 current">
-          <view class="p name">买家申请退款</view>
-          <view class="span number">1</view>
-          <view class="span prcess-line prcess-line-r"></view>
-        </view>
-        <view class="li step02 {{refund_info.refund_status==-1||refund_info.refund_status==1||refund_info.refund_status==2||refund_info.refund_status==3||refund_info.refund_status==4||refund_info.refund_status==5?'current':''}}">
-          <view class="p name">商家处理退款申请</view>
-          <view class="span prcess-line prcess-line-l"></view>
-          <view class="span number">2</view>
-          <view class="span prcess-line prcess-line-r"></view>
-        </view>
-        <view class="li step03 {{refund_info.refund_status==5?'current':''}}">
-          <view class="p name">退款完成</view>
-          <view class="span prcess-line prcess-line-l"></view>
-          <view class="span number">3</view>
-        </view>
-      </view>
-    </view>
-    <block wx:if='{{refund_detail.refund_status!=-1 && refund_detail.refund_status!=1 && refund_detail.refund_status!=2 && refund_detail.refund_status!=3 && refund_detail.refund_status!=4 && refund_detail.refund_status!=5 && refund_detail.goods_id != 0 && refund_detail.refund_status!=undefined}}'>
-      <view class="form form-c" id="form1">
+    
+    <block wx:if='{{refund_info=="" || ( refund_his.length > 0 && refund_info.refund_status==5 || refund_info.refund_status==-3 || refund_info.refund_status==-2) && refund_require_num!=0}}'>
+      <view class="form form-c yyyy" id="form1">
         <view class="row">
           <view class="small-12 columns">
             <view class='label'><view class="span color-red">*</view>处理方式：</view>
@@ -80,6 +61,7 @@
             </block>
           </view>
         </view>
+
         <block wx:if='{{refund_balance > 0 && refund_money > 0}}'>
           <view class="row">
             <view class="small-12 columns balance">
@@ -101,7 +83,30 @@
         <view class="a button" catchtap='refund'>提交退款申请</view>
       </view>
     </block>
-    <block wx:if='{{refund_info.refund_status==-1||refund_info.refund_status==1||refund_info.refund_status==2||refund_info.refund_status==3||refund_info.refund_status==4||refund_info.refund_status==5}}'>
+
+
+       <block wx:if='{{(refund_his.length > 0 && refund_info.refund_status!=5 && refund_info.refund_status!=-3 && refund_info.refund_status!=-1 && refund_info.refund_status!=-2) || (refund_require_num ==0 &&refund_info.refund_status!=3 )  }}'>
+        <view class="return-process"  >
+      <view class="ul clear">
+        <view class="li step01 current">
+          <view class="p name ">买家申请退款</view>
+          <view class="span number">1</view>
+          <view class="span prcess-line prcess-line-r"></view>
+        </view>
+        <view class="li step02 {{ refund_info.refund_status==-1||refund_info.refund_status==1||refund_info.refund_status==2||refund_info.refund_status==3||refund_info.refund_status==4||refund_info.refund_status==5?'current':''}}">
+          <view class="p name">商家处理退款申请</view>
+          <view class="span prcess-line prcess-line-l"></view>
+          <view class="span number">2</view>
+          <view class="span prcess-line prcess-line-r"></view>
+        </view>
+        <view class="li step03 {{ refund_info.refund_status==5?'current':''}}">
+          <view class="p name">退款完成</view>
+          <view class="span prcess-line prcess-line-l"></view>
+          <view class="span number">3</view>
+        </view>
+      </view>
+    </view>
+    
       <view class="none-goods">
         <icon class="icon-tip-circle" type='{{refund_info.refund_status==5?"success":"info"}}' color='{{refund_info.refund_status==5?"#7bc351":"#45a5cf"}}' size='30'></icon>
         <view class="text">
@@ -126,8 +131,8 @@
           </block>
           <block wx:if='{{refund_info.refund_status==5}}'>
             <view class='h4'>退款成功</view>
-            <view class="p time">退款成功时间:{{refund_info.action_time}}</view>
-            <view class="p money">退款金额： {{refund_real_money}}元</view>
+            <view class="p time">退款成功时间:{{refund_info.update_time}}</view>
+            <view class="p money">退款金额： {{refund_info.refund_money}}元</view>
             <block wx:if='{{refund_detail.refund_balance_money != 0 && refund_detail.refund_balance_money != "" && refund_detail.refund_balance_money != undefined}}'>
               <view class="p">
                 <view class='span'>
@@ -140,19 +145,22 @@
           </block>
         </view>
       </view>
+
+       <view class="a button" wx:if='{{refund_info.refund_status==1 ||refund_info.refund_status==3 ||refund_info.refund_status==4}}' catchtap='revocation'>撤销申请</view>
     </block>
+
     <block wx:if='{{refund_info.refund_status==2}}'>
       <view class="seller-agree" id="form2">
         <view class='h4'>请退货并填写物流信息</view>
         <view class='h5'>1、请退货</view>
         <view class="p explanation">
-          请退货未经卖家同意，请不要使用到付或平邮。<br/>
+          商品退货时，未经卖家同意，请不要使用到付或平邮。<br/>
           退货地址： 
           <block wx:if="{{shop_address.seller_mobile == '' || shop_address.seller_mobile == undefined || shop_address.shop_address == '' || shop_address.shop_address == undefined}}">
             <view class="span address">该商家暂未配置收货地址</view>
           </block>
           <block else>
-            <view class="span address">{{shop_address.shop_address + ' ' + shop_address.seller_name + ' ' + shop_address.seller_mobile}}</view>
+            <text  decode="true" class="span address">{{shop_address.shop_address + ' ' + shop_address.seller_name + ' ' + shop_address.seller_mobile}}</text>
           </block>
         </view>
         <view class='h5'>
@@ -174,8 +182,29 @@
           <view class="row">
             <view class="a button" catchtap='returnsGoods'>提交</view>
           </view>
+           <view class="a button"  catchtap='revocation'>撤销申请</view>
         </view>
       </view>
     </block>
+                                              <!-- 协商历史 -->
+            <block wx:if="{{refund_his!=''}}" > 
+           <view class='xie_show'>
+              <button  catchtap='protocol'>协商历史</button>
+              <button  open-type="contact">联系客服</button>
+
+          </view>
+           </block>   
+
+
+           <!-- //客服 -->
+           <button class="a new-btn buy-cart" open-type="contact" session-from="weapp" class="{{isHide==0?'yuan':'hide-kf'}}  ">
+                <view><image src="https://static.bonnieclyde.cn/tt.png"  mode='widthFix' ></image></view>
+                 <!-- <text class="ke_fu">客服</text> -->
+            </button> 
+
+
+
+
+
 	</view>
 </scroll-view>

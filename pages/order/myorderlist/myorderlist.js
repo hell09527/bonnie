@@ -459,15 +459,18 @@ Page({
   refund: function(event){
     let that = this;
     let refundFlag = that.data.refundFlag;
-    let status = that.data.status;
+    // let status = that.data.status;
     let order_goods_id = event.currentTarget.dataset.id;
+    let name= event.currentTarget.dataset.name;
+   let ship=event.currentTarget.dataset.ship;
+      let status=event.currentTarget.dataset.status
 
     if (refundFlag == 1){
       return false;
     }
     app.clicked(that, 'refundFlag');
     wx.navigateTo({
-      url: '/pages/order/refunddetail/refunddetail?id=' + order_goods_id + '&status=' + status,
+      url: '/pages/order/refunddetail/refunddetail?id=' + order_goods_id + '&status=' + status + '&name=' + name+ '&ship=' + ship,
     })
   },
 
@@ -547,4 +550,5 @@ Page({
       isHide: 0
     })
   },
+  
 })

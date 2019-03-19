@@ -991,7 +991,6 @@ Page({
     }
     // console.log(carts_list);
 
-
     //判断商品类型包含几种 
     var arr = [];
     if (cart_1.length > 0) {
@@ -1006,12 +1005,8 @@ Page({
     if (cart_4.length > 0) {
       arr.push(cart_4);
     }
-
     console.log(arr);
-
-
     if (arr.length >= 2) {
-
       this.setData({
         check_1_carts: cart_1,
         check_2_carts: cart_2,
@@ -1038,7 +1033,6 @@ Page({
       this.showDialogBtn();
       return;
     }
-
 
     app.clicked(that, 'settlementFlag');
     var goods_type = 1;
@@ -1113,10 +1107,10 @@ Page({
     wx.showActionSheet({
       itemList: ['A', 'B', 'C'],
       success: function (res) {
-        // console.log(res.tapIndex)
+        // console.log(res.tapIndex);
       },
       fail: function (res) {
-        // console.log(res.errMsg)
+        // console.log(res.errMsg);
       }
     })
   },

@@ -21,7 +21,7 @@
   </block> -->
     <view class="com-content" style="margin-top:68rpx">
                     <!-- 测试数据 -->
-      <!-- <button catchtap='UC'>订单查询</button> -->
+      <!-- <button catchtap='UC'>这是流客</button> -->
       <!-- <button catchtap='skip'>赠送记录</button> -->
       <!-- 公告 -->
       <view class="hot {{index_notice[0]==undefined?'hide':''}}">
@@ -168,7 +168,7 @@
           <image lazy-load="true" src="https://static.bonnieclyde.cn/Title@2x.png" mode='widthFix' style='margin:60rpx 20rpx 0;width:710rpx;'></image>
           <scroll-view class="indexLast-swiper" scroll-x>
             <block wx:for='{{new_pro}}' wx:key='' wx:for-item='shops' wx:for-index='index'>
-              <view class='last-shuffing-item' catchtap='listClick' data-title='{{shops.goods_name}}' data-types='{{shops.source_type}}' data-code='{{shops.material_code}}' data-url='/goods/goodsdetail/goodsdetail?goods_id={{shops.goods_id}}&&goods_name={{shops.goods_name}}'>
+              <view class='last-shuffing-item' catchtap='listClick' data-x="1" data-title='{{shops.goods_name}}' data-types='{{shops.source_type}}' data-code='{{shops.material_code}}' data-url='/goods/goodsdetail/goodsdetail?goods_id={{shops.goods_id}}&&goods_name={{shops.goods_name}}'>
                 <button form-type='submit' class="form-button">
                   <image lazy-load="true" src="{{shops.new_pic}}" style="width:560rpx;height:560rpx;display:block;"></image>
                 </button>
@@ -178,7 +178,7 @@
           <image lazy-load="true" src="https://static.bonnieclyde.cn/Title-1@2x.png" mode='widthFix' style='margin:60rpx 20rpx 40rpx;width:710rpx;'></image>
             <!-- 新品推荐 -->
           <block wx:for='{{shop}}' wx:key='' wx:for-item='shops' wx:for-index='index'>
-            <view wx:if="{{index>1&&index<12}}" class='{{index==0?"heder":" "}} a uo' catchtap='listClick' data-has="{{shops.hasTarget}}" data-x="{{ shops.hasExtra }}" data-id="{{shops.id}}" data-title="{{shops.goodsTitle?shops.goodsTitle:shops.title}}" data-types='{{shops.sourceType}}' data-code='{{shops.materialCode}}' data-url='/goods/goodsdetail/goodsdetail?goods_id={{shops.goodsId}}&&goods_name={{shops.goodsTitle}}'>
+            <view wx:if="{{index>1&&index<12}}" class='{{index==0?"heder":" "}} a uo' catchtap='listClick' data-has="{{shops.hasTarget}}" data-x="{{ shops.hasExtra}}" data-id="{{shops.id}}" data-title="{{shops.goodsTitle?shops.goodsTitle:shops.title}}" data-types='{{shops.sourceType}}' data-code='{{shops.materialCode}}' data-url='/goods/goodsdetail/goodsdetail?goods_id={{shops.goodsId}}&&goods_name={{shops.goodsTitle}}'>
               <button form-type='submit' class="form-button">
                 <image lazy-load="true" src="{{shops.imgUrl?shops.imgUrl:shops.pic}}" mode="widthFix" style="width:100%" wx:if="{{shops.imgUrl || shops.pic}}"></image>
               </button>

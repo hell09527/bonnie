@@ -62,7 +62,7 @@ Page({
         })
       }
     });
-    this.toGoods(0, 1)
+    this.toGoods(9, 1)
   },
 
   // 跳转品牌专区

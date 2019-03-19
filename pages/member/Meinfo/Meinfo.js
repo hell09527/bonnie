@@ -13,9 +13,7 @@ Page({
    */
   onLoad: function (options) {
       let that=this;
-      
       let  Info= JSON.parse(options.info) ;
-      
       console.log(Info.name)
       console.log(Info.issue)
       that.setData({
