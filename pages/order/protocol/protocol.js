@@ -24,13 +24,12 @@ Page({
    let   carry_data=carry_datas[0]
    let   refund_action= carry_data.refund_action;
     //  console.log(refund_action)
-  
     // for (let index in refund_action){
     //   //时间格式转化
     //   refund_action[index].action_time  = time.formatTime(refund_action[index].action_time , 'Y-M-D h:m:s');
     // }
    
- //倒叙
+    //倒叙
     // refund_action.reverse();
  
 
@@ -63,18 +62,28 @@ Page({
   upspring:function(event){
    let  that=this;
    let  index= event.currentTarget.dataset.index;
-  let  Carry=that.data.carry_datas[index].refund_action;
+   let Refund_type=that.data.carry_datas[index].refund_type;
+   let  Refund_require_money=that.data.carry_datas[index].refund_require_money;
+  
+   let  Refund_shipping_company=that.data.carry_datas[index].refund_shipping_company;
+   let  Refund_shipping_code=that.data.carry_datas[index].refund_shipping_code;
+    let   Carry=that.data.carry_datas[index].refund_action;
+    console.log(Refund_shipping_company)
   console.log(Carry)
   for (let index in Carry){
     //时间格式转化
     Carry[index].action_time  = time.formatTime(Carry[index].action_time , 'Y-M-D h:m:s');
-
   }
 
   console.log(Carry)
    that.setData({
     is_now:2,
-    Carry
+    Carry,
+    Refund_type,
+    Refund_shipping_company,
+    Refund_shipping_code,
+    Refund_require_money
+
    })
   },
 
@@ -116,7 +125,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  // onShareAppMessage: function () {
-  //
-  // }
+  onShareAppMessage: function () {
+
+  }
 })

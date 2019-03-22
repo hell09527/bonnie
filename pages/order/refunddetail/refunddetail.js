@@ -94,17 +94,14 @@ Page({
           let refund_info = data.refund_detail.refund_account_record;
          //退款记录
           let  refund_his = data.refund_detail.refund_account_records;
-          
           let refund_max_num= data.refund_detail.refund_max_num;
-        
           let refund_max_money= data.refund_detail.refund_max_money;
          let require_num=data.refund_detail.refund_max_num;
          let refund_require_money=data.refund_detail.refund_require_money;
-        
          for (let index in refund_his){
-  //时间格式转化
-  refund_his[index].askfor_time  = time.formatTime(refund_his[index].askfor_time, 'Y-M-D h:m:s');
-  console.log(refund_his.askfor_time )
+                   //时间格式转化
+               refund_his[index].askfor_time  = time.formatTime(refund_his[index].askfor_time, 'Y-M-D h:m:s');
+                 console.log(refund_his.askfor_time )
          }
          
            
@@ -180,6 +177,10 @@ Page({
         }
       }
     })
+                                  
+
+    
+
 
 
   },
@@ -358,22 +359,13 @@ Page({
          for (let index in refund_his){
         //时间格式转化
           refund_his[index].askfor_time  = time.formatTime(refund_his[index].askfor_time, 'Y-M-D h:m:s');
-      
         //   if(refund_his[index].refund_action!=''){
         //     for (let index in refund_his[index].refund_action){
-
         //       refund_his[index].refund_action[index].action_time=time.formatTime(refund_his[index].refund_action[index].action_time.askfor_time, 'Y-M-D h:m:s');
         //     }
-
         //    console.log(refund_his.askfor_time )
         //  }
-         
-
           }
-         
-        
-           
-         
            let  actual_price =refund_max_money;
            refund_require_money=actual_price ;
           

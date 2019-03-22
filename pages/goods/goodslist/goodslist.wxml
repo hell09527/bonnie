@@ -116,6 +116,7 @@
           </view>
         </view>
       </view>
+      
       <!-- 选择分类start -->
       <!-- <view class="data-category-select-layer {{categoryStatus==1?'show':''}}">
         <view class="ul primary_classification">
@@ -133,6 +134,7 @@
         </view>
       </view> -->
       <!-- 选择分类end -->
+
       <!-- 排序start -->
       <view class="filtrate-more sale-num {{sortStatus==1?'show':''}}">
         <view class="span filtrate-sort">

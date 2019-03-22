@@ -383,18 +383,32 @@ picker{
 .xie_show{
  width:100%;
 display:flex;
-justify-content:space-around;
+justify-content:center;
 margin-top:60rpx;
+margin-bottom: 60rpx;
 
 }
 .xie_show button {
-  border: 1px solid #333;
+  border: 1px solid #96989e;
   background: #fff;
   border-radius: 0;
   width:230rpx;
   font-size:16px;
   
 }
+/* .xie_left{
+ margin-left:72rpx;
+}
+.xie_right{
+margin-right:72rpx;
+} */
+.lect{
+  width: 72%;
+  float: right;
+  font-size: 12px;
+  position: relative;
+  top:14rpx;
 
+}
 
 
