@@ -560,6 +560,11 @@ Page({
 
 
   },
+  explain:function(){
+    wx.navigateTo({
+      url: "/pages/member/supportCenter/supportCenter",
+    })
+  }
 
 
 

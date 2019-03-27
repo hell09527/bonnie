@@ -71,6 +71,7 @@
     "pages/member/inpurchasing/inpurchasing",
     "pages/member/kolSuccess/kolSuccess",
     "pages/member/withdrawal/withdrawal",
+    "pages/member/supportCenter/supportCenter",
     "pages/member/withdrawalSuccess/withdrawalSuccess",
     "pages/order/myvirtualorderlist/myvirtualorderlist",
     "pages/order/myorderlist/myorderlist",

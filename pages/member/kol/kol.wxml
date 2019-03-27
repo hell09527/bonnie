@@ -8,7 +8,6 @@
     <view class="cf-content" data-reactid="4">
           <view class="cf-tab-item {{_no=='0'?'select':''}}" catchtap='topNav' data-id="0"><view class='a'>分润统计</view></view>
       <view class="cf-tab-item {{_no=='1'?'select':''}}" catchtap='topNav' data-id="1"><view class='a'>商品排行</view></view>
-
       <view class="cf-tab-item {{_no=='2'?'select':''}}" catchtap='topNav' data-id="2"><view class='a'>订单统计</view></view>
       <view class="cf-tab-item {{_no=='3'?'select':''}}" catchtap='topNav' data-id="3"><view class='a'>小程序码</view></view>
     </view>

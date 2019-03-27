@@ -126,9 +126,7 @@ Page({
           success: function (res) {
             console.log(res);
             listData.recommend_user = Uid;
-
             if (res.code == 1) {
-            
                 var recommend_user = res.data;
                 that.setData({
                   recommend: recommend_user,

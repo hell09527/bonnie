@@ -1,0 +1,20 @@
+/* pages/member/supportCenter/supportCenter.wxss */
+.headline{
+    font-size:16px;
+   color:#000;
+   text-align:left;
+   font-weight:700;
+   }
+   .head_text{
+     text-align:left;
+     margin:15rpx 0px;
+     /* text-indent:2em; */
+     color: #666;
+     margin-left: 2em;
+   }
+   .Als{
+     padding: 40rpx;
+   }
+   .cols{
+     margin-top: 30rpx;
+   }

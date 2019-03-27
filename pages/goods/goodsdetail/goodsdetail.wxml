@@ -1,6 +1,7 @@
 <import src="../../../wxParse/wxParse.wxml" />
 <!-- 引入tempalte -->
 <import src="/templates/dataLogin-template/dataLogin.wxml" />
+<scroll-view>
 <view class='{{maskShow==1?"noscroll":""}}' style="overflow:hidden;">
     <view class="motify {{prompt==''?'hide':''}}">
         <icon class="i show_type warning" type='warn' size='25' color='#FFF'></icon>
@@ -757,3 +758,4 @@
   <template is="dataLogin" data="{{showModal,Choice,layout}}" />
   
 </view>
+</scroll-view>

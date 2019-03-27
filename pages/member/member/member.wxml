@@ -230,7 +230,7 @@
       <block wx:if='{{(distributor_type!=0 &&distributor_type!=1)}}'>
         <view class='li'>
       <view class="a member_list_item" catchtap='listClick' data-url="member/kol/kol">
-          <image lazy-load="true"  src='https://static.bonnieclyde.cn/WIMG23.png' />
+          <image lazy-load="true"  src='https://static.bonnieclyde.cn/50-50.png' />
           <view class='span'>极选师</view>
         </view>
         </view>
@@ -258,4 +258,7 @@
 
     </view>
   </view>
+   <view wx:if="{{distributor_type ==0}}" catchtap='explain'  >
+              <image lazy-load="true"  style='width:100%;height:120rpx'    src='https://static.bonnieclyde.cn/WechatIMG5401.png'  />
+   </view>
 </scroll-view>
