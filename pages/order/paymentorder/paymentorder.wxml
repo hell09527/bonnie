@@ -393,8 +393,7 @@
     </block>
 
     <view style="height: 50px"></view>
-
-    <view class="order-total-pay bottom-fix">
+    <view class="order-total-pay bottom-fix  ">
         <view class="pay-container clearfix">
             <view class="span c-gray-darker font-size-12">应付金额：</view>
             <view class="span font-size-13 theme-price-color">
@@ -415,6 +414,7 @@
                 <!-- <button class="commit-bill-btn" catchtap='sidShow'>提交订单</button> -->
             </block>
         </view>
+       <view class="s '{{isIphoneX?'L-ise':''}}' "></view>
     </view>
 
     <view class="mask-layer {{mask_status==1?'':'hide'}}" catchtap='closePoupo'></view>

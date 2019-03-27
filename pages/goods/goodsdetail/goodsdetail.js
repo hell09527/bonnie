@@ -248,15 +248,16 @@ Page({
     let base = that.data.Base;
     let is_employee = that.data.is_employee;
     console.log(is_employee)
-
-
+    let isIphoneX = app.globalData.isIphoneX;
+ 
   
 
 
     //判断是否是付费会员
     let is_vip = app.globalData.is_vip;
     that.setData({
-      is_vip
+      is_vip,
+      isIphoneX
     })
     if (app.globalData.distributor_type!=0){
 
@@ -364,6 +365,7 @@ if (app.globalData.token && app.globalData.token != '') {
             imgUrls[index].pic_cover_mid = app.IMG(img);
           }
           let goods_info = data;
+
           // 是否是内购商品
           let is_inside_sell = goods_info.sku_list[0].is_inside_sell;
 
@@ -1459,8 +1461,9 @@ if (app.globalData.token && app.globalData.token != '') {
     let is_inside = that.data.is_inside_sell;
     let goods_type = goods_info.goods_type;
     console.log(sku_list, goods_type, source_type)
-    
-    if(that.data.flys==0){
+      console.log(is_inside);
+
+      if(that.data.flys==0){
       wx.navigateTo({
         url: '/pages/order/paymentorder/paymentorder?tag=' + 1 + '&sku=' + sku_list + '&goods_type=' + goods_type + '&source_type=' + source_type + '&order_type=0' + '&is_inside=' + is_inside,
       })

@@ -560,6 +560,7 @@
     <view class='span hide' id="addcart_way">
         <view class='i'></view>
     </view>
+
     <view class="s-buy {{sBuy==1?'':'hide'}}" wx:if="{{ unregistered==0 && tel!=''}}" id="s_buy">
         <view class="popup hide" id="popup"></view>
         <view class="ul s-buy-ul">
@@ -671,8 +672,11 @@
                 <view class="a btn {{buyButtonStatus==4?'':'hide'}} {{stock==0?'disabled':''}} {{goods_info.state==0?'disabled':''}}" id="submit_ok" catchtap="{{stock==0?'nullStock':'confirmSpellingList'}}" tag="buyBtn1">
                     {{goods_info.state==0?'已下架':'下一步'}}
                 </view>
+              
             </view>
         </view>
+                   <!-- 适配全面屏 -->
+                      <view class="s '{{isIphoneX?'L-ise':''}}' "></view>
     </view>
     <view class="js-bottom-opts bottom-fix">
         <view class="responsive-wrapper">
@@ -747,6 +751,8 @@
                 </block>
             </view>
         </view>
+        <!-- 适配全面屏 -->
+        <view class="s '{{isIphoneX?'L-ise':''}}' "></view>
     </view>
   <template is="dataLogin" data="{{showModal,Choice,layout}}" />
   

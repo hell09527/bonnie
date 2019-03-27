@@ -271,10 +271,18 @@ Page({
    */
   onShow: function () {
     let that = this;
+
+  
+
     this.onLoad();
     wx.clearStorage()
     that.tocomposite(); //商品标题数据
     that.toGoods(0, 0); //商品数据
+
+    let isIphoneX = app.globalData.isIphoneX;
+    that.setData({
+        isIphoneX
+    })
     // 综合门类的数据
     app.sendRequest({
       url: "api.php?s=Distributor/getDistributorBrandList",

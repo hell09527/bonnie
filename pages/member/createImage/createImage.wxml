@@ -97,6 +97,9 @@
           </view>
       </view>
 
+      <!-- 适配全面屏 -->
+        <view class="s '{{isIphoneX?'L-ise':''}}' "></view>
+
     </view>
     <!-- 选择商品 -->
     <view class='mimi' wx:if="{{lucency}}" catchtap='popupClose'></view>

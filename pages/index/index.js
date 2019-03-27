@@ -146,6 +146,48 @@ Page({
       }
     });
 
+
+    
+
+
+
+//  获取最新话题
+app.sendRequest({
+  url: "api.php?s=/activity/hotTopic",
+  data: { limit: 1 },
+  method: 'POST',
+  success: function (res) {
+    console.log(res.data);
+    // 获取最新话题下面商品
+    app.sendRequest({
+      url: "api.php?s=/Activity/activityInfo",
+      data: { master_id: res.data.data.id },
+      success: function (res) {
+
+        var new_actList = [];
+        var actList = res.data.data
+        for (var i = 0; i < actList.length; i++) {
+          if (actList[i].goods_info) {
+            new_actList.push(actList[i]);
+          }
+        }
+        console.log(res)
+        that.setData({
+          activities_list: new_actList,
+        })
+      }
+    });
+    that.setData({
+      lastOne: res.data.data,
+    })
+  }
+});
+
+
+
+
+
+
     app.sendRequest({
       url: "index.php?s=/api/index/getindeximglist",
       data: {},
@@ -828,6 +870,7 @@ Page({
         isFix: 0,
       })
     } else {
+      // console.log("向上滑了");
       this.setData({
         isFix: 1,
       })

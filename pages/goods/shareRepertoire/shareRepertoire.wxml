@@ -46,7 +46,8 @@
                 <view class="edit_num"  wx:if='{{distributorType!=1}}'>
                   <view class="span ui-number">
                     <view class="decrease" data-type='minus' data-index='{{index}}' style="border-right:1px solid #ccc;" catchtap='numAdjust'>-</view>
-                     <input class="num" value="{{cart.num}}" data-index='{{index}}' data-id='{{cart.cart_id}}' bindblur='inputAdjust'/> 
+                     <!-- <input    class="num" value="{{cart.num}}" data-index='{{index}}' data-id='{{cart.cart_id}}' bindblur='inputAdjust'/>  -->
+                     <view   class="num" data-index='{{index}}' data-id='{{cart.cart_id}}'>{{cart.num}}</view>
                     <view class="increase" data-type='add' data-index='{{index}}' style="border-left:1px solid #ccc;" catchtap='numAdjust'>+</view>
                   </view>
                 </view>
@@ -59,7 +60,7 @@
     </view>
   <block wx:if="{{cart_list.length != 0 && cart_list != undefined}}">
         <view class="fixed bottom">
-            <view class="btn_wrap btn_wrap_static">
+            <view class="btn_wrap btn_wrap_static  '{{isIphoneX?'Lise':''}}' ">
               <view class="btn ttn_server" id="div_selected" wx:if='{{distributorType!=1}}'>
                     <view class='div'>
                         <image src='/images/goods/{{check_all==1?"cartp2.png":"cartp1.png"}}' mode='widthFix' catchtap='checkAll'></image>
@@ -84,7 +85,6 @@
                       catchtap='settlemenT'>
                         <view class='span {{edit==0?"":"hide"}}' id="settlement" style='font-size: 16px;font-weight: 500;'>结算</view>
                 </view>
-  
 
             </view>
         </view>

@@ -4,8 +4,8 @@ App({
  /a/dsa sadaswqwqewqkhhjhjhqqweqwewqewe  * 全局变量
    */
   globalData: {
-    // siteBaseUrl: "https://www.bonnieclyde.cn/", //服务器url
-    siteBaseUrl: "https://store-test.91xdb.com/", //服务器url
+    siteBaseUrl: "https://www.bonnieclyde.cn/", //服务器url
+    // siteBaseUrl: "https://store-test.91xdb.com/", //服务器url
     wx_info: null,
     encryptedData: '',
     iv: '',
@@ -111,9 +111,17 @@ App({
     wx.getSystemInfo({
       success: res => {
         let modelmes = res.model;
-        if (modelmes.search('iPhone X') != -1) {
-          that.globalData.isIphoneX = true;
+        console.log(modelmes,'手机');
+        if (res.screenHeight - res.windowHeight - res.statusBarHeight - 46 > 70) {
+          　　　　　　　　　　//  处理相关逻辑
+          console.log('jinlai')
+             that.globalData.isIphoneX = true;
         }
+        // if (modelmes.search('iPhone X') != -1) {
+        //   console.log('进来了')
+        //   that.globalData.isIphoneX = true;
+        // }
+
       }
     })
   },

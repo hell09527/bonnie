@@ -38,7 +38,6 @@
         </block>
       </view>
       <!-- 选择分享分销者  end -->
-      
       <view class="cart-prolist">
         <view class="ul cart-prolist-ul " data-index="{{index}}" wx:for='{{list}}' wx:key='cart_id' wx:for-item='cart' wx:for-index='k'>
           <view class="li cart-list-li flex {{cart.isTouchMove ? 'touch-move-active' : ''}}" bindtouchstart="touchstart" bindtouchmove="touchmove" data-shopid="0" data-index="{{k}}">
@@ -58,9 +57,7 @@
                   <!-- {{box.promotion_price}}此价格并非原价也可能是会员价也可能是促销价 -->
                   <view class='span' name="goods_price" wx:if='{{distributor_type==0}}'>
                     ¥{{cart.is_inside==0?cart.promotion_price:cart.interior_price}}
-                    
                   </view>
-                  
                   <view  class='span promotion' name="goods_price" wx:if='{{distributor_type!=0 && edit == 0}}'>
                     销售价: ¥{{cart.promotion_price}}
                      <view  class='interior' style="color:red;font-size: 12px;" name="goods_price" wx:if='{{cart.is_inside==1}}'>
@@ -116,7 +113,8 @@
                     <view class="decrease" data-type='minus' data-index='{{i}}' data-key='{{k}}' style="border-right:1px solid #ccc;" data-id='{{cart.cart_id}}' catchtap='numAdjust'>
                       -
                     </view>
-                    <input class="num"  type='number'  value="{{cart.num}}" data-index='{{i}}' data-key='{{k}}'   data-id='{{cart.cart_id}}' bindinput='inputGai'    bindblur='inputAdjust' />
+                    <input wx:if='{{exchange}}' class="num"  type='number'  value="{{cart.num}}" data-index='{{i}}' data-key='{{k}}'   data-id='{{cart.cart_id}}' bindinput='inputGai'    bindblur='inputAdjust' />
+                    <view  wx:if='{{!exchange}}' class="num" catchtap='exchange'>{{cart.num}}</view>
                     <view class="increase" data-type='add' data-index='{{i}}' data-key='{{k}}' style="border-left:1px solid #ccc;" data-id='{{cart.cart_id}}' catchtap='numAdjust'>
                       +
                     </view>
@@ -128,7 +126,8 @@
                     <view class="decrease" data-type='minus' data-index='{{i}}' data-key='{{k}}' style="border-right:1px solid #ccc;" data-id='{{cart.cart_id}}' catchtap='numAdjust'>
                       -
                     </view>
-                    <input class="num"  type='number'   value="{{cart.num}}" data-index='{{i}}' data-key='{{k}}' data-id='{{cart.cart_id}}' bindinput='inputGai'  bindblur='inputAdjust' />
+                    <input  wx:if='{{exchange}}' class="num"  type='number'   value="{{cart.num}}" data-index='{{i}}' data-key='{{k}}' data-id='{{cart.cart_id}}' bindinput='inputGai'  bindblur='inputAdjust' />
+                     <view  wx:if='{{!exchange}}' class="num" catchtap='exchange'>{{cart.num}}</view>
                     <view class="increase" data-type='add' data-index='{{i}}' data-key='{{k}}' style="border-left:1px solid #ccc;" data-id='{{cart.cart_id}}' catchtap='numAdjust'>
                       +
                     </view>

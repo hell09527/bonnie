@@ -99,7 +99,7 @@ Page({
         let tag = options.tag;
         let cart_list = options.cart_list;
         let share_last = options.share_last;
-        let is_inside = options.is_inside
+        let is_inside = options.is_inside;
         console.log(is_inside);
       
         let base = app.globalData.siteBaseUrl;
@@ -403,6 +403,10 @@ Page({
 
         let myAddressFlag = that.data.myAddressFlag;
         let cancle_pay = that.data.cancle_pay;
+        let isIphoneX = app.globalData.isIphoneX;
+        that.setData({
+            isIphoneX
+        })
         app.restStatus(that, 'myAddressFlag');
 
         if (cancle_pay == 1) {

@@ -57,7 +57,8 @@ Page({
     Carrier: '' ,   // 分销者ID
     showStatus:0,   // 原价的展示
     showTitle:0,//是否提示普通极选师修改价格
-    showEide:0
+    showEide:0,
+    exchange:false
   },
   // 测试数据
   last: function () {
@@ -320,6 +321,8 @@ Page({
     let is_vip = app.globalData.is_vip;
     let distributor_type = app.globalData.distributor_type;
     let uid = app.globalData.uid;
+    let isIphoneX = app.globalData.isIphoneX;
+  
     let updata = app.globalData.unregistered;
     console.log(updata)
     console.log(distributor_type, uid)
@@ -329,6 +332,7 @@ Page({
       unregistered: updata,
       showStatus:0,
       distributor_type,
+      isIphoneX: isIphoneX,
       uid
     })
 
@@ -714,6 +718,10 @@ Page({
     // 调节ios的input  value 
     let num = this.num;
     let total_price = that.data.total_price;
+
+    that.setData({
+      exchange:false
+    });
 
     app.sendRequest({
       url: 'api.php?s=goods/cart',
@@ -1444,6 +1452,11 @@ Page({
       cart_list,
     })
 
+  },
+  exchange:function(){
+    this.setData({
+      exchange:true
+    })
   }
 })
 

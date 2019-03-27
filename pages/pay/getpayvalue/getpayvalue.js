@@ -20,6 +20,10 @@ Page({
     onLoad: function (options) {
         let that = this;
         let ty = options.Ty
+      let isIphoneX = app.globalData.isIphoneX;
+      that.setData({
+        isIphoneX
+      })
         console.log(ty)
         if (ty==8){
           that.setData({
@@ -94,7 +98,10 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-      console.log(app.globalData.openid, '97')
+      let isIphoneX = app.globalData.isIphoneX;
+      that.setData({
+        isIphoneX
+      })
     },
 
     /**

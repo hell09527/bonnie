@@ -101,11 +101,8 @@ Page({
          for (let index in refund_his){
                    //时间格式转化
                refund_his[index].askfor_time  = time.formatTime(refund_his[index].askfor_time, 'Y-M-D h:m:s');
-                 console.log(refund_his.askfor_time )
+                 console.log(refund_his.askfor_time);
          }
-         
-           
-         
            let  actual_price =refund_max_money;
            refund_require_money=actual_price ;
           

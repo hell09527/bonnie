@@ -246,6 +246,8 @@ Page({
     let that = this;
     let siteBaseUrl = app.globalData.siteBaseUrl;
     let share_sku_list = that.data.share_sku_list;
+    let isIphoneX = app.globalData.isIphoneX;
+   
     console.log(share_sku_list)
     //判断是否是付费会员
     let is_vip = app.globalData.is_vip;
@@ -257,7 +259,8 @@ Page({
     
     that.setData({
       unregistered: updata,
-      is_vip
+      is_vip,
+      isIphoneX
     })
 
     that.setData({
