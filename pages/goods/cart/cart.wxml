@@ -142,11 +142,9 @@
          <!-- 购物单信息 -->
       <view class='weChat-cart'>
         <image src='https://static.bonnieclyde.cn/stodownload.jpeg' mode='widthFix'></image>
-        <navigator target="miniProgram" open-type="navigate" app-id="wx56c8f077de74b07c" path="/open/function-introduction/function-introduction" extra-data="" version="release">已同步至购物单</navigator>
+        <navigator target="miniProgram" open-type="navigate" app-id="wx56c8f077de74b07c" path="/open/function-introduction/function-introduction" extra-data="" version="release">已同步至好物圈</navigator>
       </view>
       </view>
-
-     
     </view>
     <view wx:if='{{unregistered==1 || tel == ""}}'>
       <view class="Login" catchtap="aIndex" data-url='/pages/member/member/member'>

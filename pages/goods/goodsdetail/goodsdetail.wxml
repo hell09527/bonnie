@@ -208,7 +208,7 @@
         </block>
     </block>
     <!-- 领取优惠券弹框 -->
-    <view class="bottom_popup {{popupShow==1?'show':''}}">
+    <view class="bottom_popup {{popupShow==1?'show':''}}" animation='{{animation}}'>
         <view class="bottom_popup_title">领取优惠劵</view>
         <view class="ul coupon_list">
             <block wx:for='{{goods_info.goods_coupon_list}}' wx:key='' wx:for-item='coupon' wx:for-index='coupon_index'>
@@ -562,7 +562,7 @@
         <view class='i'></view>
     </view>
 
-    <view class="s-buy {{sBuy==1?'':'hide'}}" wx:if="{{ unregistered==0 && tel!=''}}" id="s_buy">
+    <view class="s-buy {{sBuy==1?'':'hide'}}" wx:if="{{ unregistered==0 && tel!=''}}" id="s_buy" animation='{{animation}}'>
         <view class="popup hide" id="popup"></view>
         <view class="ul s-buy-ul">
             <view class="li s-buy-pro">
@@ -626,8 +626,10 @@
         </view>
         <view class="ul s-buy-ul">
             <view class="s-buy-btn">
+            
                 <block wx:if='{{flys==0}}'>
-                    <block wx:if="{{popUp==1 }}">
+                      <!-- 查看规格按钮并且库存不为0 -->
+                    <block wx:if="{{popUp==1 && stock!=0 }}">
                         <block wx:if='{{buyButtonStatus==0}}'>
                             <button class="buy-s" catchtap="addCart">加入购物车</button>
                         </block>
@@ -635,13 +637,43 @@
                             {{goods_info.state==0?'已下架':'直接购买'}}
                         </view>
                     </block>
-                    <block wx:if="{{popUp==3}}">
-                        <!-- <view class="a btn spc {{buyButtonStatus==0?'':'hide'}} {{stock==0?'disabled':''}} {{goods_info.state==0?'disabled':''}}"
+                    <!-- 查看规格按钮并且库存为0 -->
+                    <block wx:if="{{popUp==1 && stock==0}}">
+                             <block wx:if='{{buyButtonStatus==0}}'>
+                            <button class="buy-s" catchtap="addCart">加入购物车</button>
+                            </block>
+                        <view class="a btn spk {{buyButtonStatus==0?'':'hide'}} {{stock==0?'disabled':''}} {{goods_info.state==0?'disabled':''}}" id="submit_ok" catchtap="{{stock==0?'nullStock':'buyNext'}}" tag="buyBtn1">
+                            {{goods_info.state==0?'已下架':'直接购买'}}
+                        </view>
+                    </block>
+                    <!-- 加入或者直接购买按钮库存不为0 -->
+                    <block wx:if="{{popUp==3 && stock!=0}}">
+                    <block wx:if='{{buyButtonStatus==1 }}'>
+                            <view class="a btn spc  {{stock==0?'disabled':''}} {{goods_info.state==0?'disabled':''}}"
+                              id="submit_ok"
+                                catchtap="{{stock==0?'nullStock':'addCart'}}" tag="buyBtn1">{{goods_info.state==0?'已下架':'下一步'}}
+                        </view>
+                    </block>
+                    <block wx:if='{{buyButtonStatus==0}}'>
+                          <view class="a btn spc  {{stock==0?'disabled':''}} {{goods_info.state==0?'disabled':''}}"
+                              id="submit_ok"
+                                catchtap="{{stock==0?'nullStock':'buyNext'}}" tag="buyBtn1">{{goods_info.state==0?'已下架':'下一步'}}
+                        </view>
+                    </block>
+                    </block>
+                       <!-- 加入或者直接购买按钮库存为0 -->
+                       <block wx:if="{{popUp==3 && stock==0}}">
+                          <block wx:if='{{buyButtonStatus==1 && goods_info.state!=0 && stock!=0}}'>
+                            <button class="buy-s" catchtap="addCart">加入购物车</button>
+                            </block>
+                         <view class="a btn spc  {{stock==0?'disabled':''}} {{goods_info.state==0?'disabled':''}}"
                       id="submit_ok"
                       catchtap="{{stock==0?'nullStock':'buyNext'}}" tag="buyBtn1">{{goods_info.state==0?'已下架':'下一步'}}
-                </view> -->
+                        </view>
                     </block>
                 </block>
+
+
                 <block wx:if='{{flys==1}}'>
                     <block wx:if="{{popUp==1}}">
                         <block wx:if='{{buyButtonStatus==0 }}'>
@@ -652,7 +684,8 @@
                         </view>
                     </block>
                 </block>
-                <block wx:if="{{popUp==3}}">
+
+                <!-- <block wx:if="{{popUp==3}}">
                     <view class="a btn spc {{buyButtonStatus==0?'':'hide'}} {{stock==0?'disabled':''}} {{goods_info.state==0?'disabled':''}}" id="submit_ok" catchtap="{{stock==0?'nullStock':'buyNext'}}" tag="buyBtn1">
                         {{goods_info.state==0?'已下架':'下一步'}}
                     </view>
@@ -666,7 +699,7 @@
                     <view class="a btn {{buyButtonStatus==1?'':'hide'}} {{stock==0?'disabled':''}} {{goods_info.state==0?'disabled':''}}" id="submit_ok" catchtap="{{stock==0?'nullStock':'addGift'}}" tag="buyBtn1">
                         {{goods_info.state==0?'已下架':'下一步'}}
                     </view>
-                </block>
+                </block> -->
                 <view class="a btn {{buyButtonStatus==3?'':'hide'}} {{stock==0?'disabled':''}} {{goods_info.state==0?'disabled':''}}" id="submit_ok" catchtap="{{stock==0?'nullStock':'groupBooking'}}" tag="buyBtn1">
                     {{goods_info.state==0?'已下架':'下一步'}}
                 </view>
@@ -677,7 +710,7 @@
             </view>
         </view>
                    <!-- 适配全面屏 -->
-                      <view class="s '{{isIphoneX?'L-ise':''}}' "></view>
+     <view class="s '{{isIphoneX?'L-ise':''}}' "></view>
     </view>
     <view class="js-bottom-opts bottom-fix">
         <view class="responsive-wrapper">

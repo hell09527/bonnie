@@ -72,6 +72,7 @@ Page({
         token: '',
         origin_money: 0,
          ask:0,
+         animationData: {},
 
         // 身份证类
         edit_card:false,
@@ -790,13 +791,40 @@ console.log(data);
             url: '/pages/member/memberaddress/memberaddress'
         })
     },
-
+    /**
+     * 动画效果
+     */
+    Animation:function(){
+        const animation = wx.createAnimation({
+          duration: 200,
+          timingFunction: 'ease',
+        })
+        this.animation = animation
+        animation.translateY(170).step()
+        this.setData({
+          animationData: animation.export()
+        })
+   
+   
+        setTimeout(function () {
+          animation.translateY(0).step()
+          this.setData({
+            animationData: animation.export()
+          })
+        }.bind(this), 20)
+   
+        this.setData({
+          animationData: animation.export(),
+        })
+     },
     /**
      * 支付方式
      */
     payType: function (event) {
         let that = this;
         let status = event.currentTarget.dataset.status;
+        console.log('donghua ')
+        this.Animation();
 
         that.setData({
             pay_box_status: status,
@@ -866,7 +894,7 @@ console.log(data);
     deliveryType: function (event) {
         let that = this;
         let status = event.currentTarget.dataset.status;
-
+        this.Animation();
         that.setData({
             delivery_status: status,
             mask_status: status
@@ -928,7 +956,6 @@ console.log(data);
      * 身份验证弹框(动画效果未实现)
      */
     sidShow: function (event) {
-     
         let type = event.currentTarget.dataset.type;
         let status = 0;
         let animation = wx.createAnimation({
@@ -1025,7 +1052,7 @@ console.log(data);
      */
     couponStatus: function (e) {
         let that = this;
-
+        this.Animation();
         that.setData({
             coupon_status: 1,
             mask_status: 1

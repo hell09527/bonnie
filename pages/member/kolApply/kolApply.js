@@ -6,67 +6,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    datetime:'',   //出生日期
-    navList:[
-      {
-        name: '基本信息',
-        select: true,
-      },
-
-      {
-        name: '工作经历',
-        select: false,
-      },
-    ],
-    sexList:[
-      {
-        name:'男',
-        checked:false,
-      }, {
-        name: '女',
-        checked: false,
-      },
-    ],     //性别
-    provinceArray:
-      [
-        {
-          'province_id': 0,
-          'province_name': '请选择省'
-        },
-      ],
-    cityArray:
-      [
-        {
-          'city_id': 0,
-          'city_name': '请选择市'
-        },
-      ],
-    districtArray:
-      [
-        {
-          'district_id': 0,
-          'district_name': '请选择区县'
-        },
-      ],        //地址选择数组
-    provinceIndex: 0,
-    cityIndex: 0,
-    districtIndex: 0,
-    isShow:1,    //显示模块
-    paths:'',   //此时是正面还是反面
-    FilePaths:'',  //正面
-    recitePaths:'',   //反面
-    isModel:false,   //模态框
-    prompt:'',  //提示语
-    infoList:'',   //基本资料详情
-    bankCard:'',    //银行卡
     listData:{
-      estimate_money:2000,
     },    //全数据
-    isKol: 0,    //是否是极选师
-    mydate:'',//今年-月-日 yyy-mm-dd
-    kolText: '',    //文本
     recommend:'',   //推荐人
-    showTitle:'', //展示文本
   },
 
   /**
@@ -86,7 +28,6 @@ Page({
     month = (month < 10 ? "0" + month : month);
     God = (month < 10 ? "0" + God : God);
     var mydate = (year.toString() + '-' + month.toString()+'-' + God);
-
     that.setData({
       mydate 
     })
@@ -126,13 +67,13 @@ Page({
           success: function (res) {
             console.log(res);
             listData.recommend_user = Uid;
+
             if (res.code == 1) {
                 var recommend_user = res.data;
                 that.setData({
                   recommend: recommend_user,
                   listData,
                 })
-              
             }
           }
         })
@@ -193,340 +134,7 @@ Page({
       console.log(app.globalData.unregistered);
       app.isLogin(app.globalData.unregistered);
     }
-
-
-    app.sendRequest({
-      url: 'api.php?s=index/getProvince',
-      data: {},
-      success: function (res) {
-        let code = res.code;
-        if (code == 0) {
-          let provinceArray = res.data;
-          let province_array = [{
-            area_id: 0,
-            province_id: 0,
-            province_name: '请选择省',
-            sort: 0
-          }];
-          for (let i = 0; i < provinceArray.length; i++) {
-            province_array[i + 1] = provinceArray[i];
-          }
-          that.setData({
-            provinceArray: province_array
-          })
-          //console.log(that.data.provinceArray);
-        }
-      }
-    })
-
-    
   },
-  
-
-  // 日期选择器
-  bindDateChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
-    var listData = this.data.listData;
-    listData.birthday = e.detail.value
-    this.setData({
-      listData
-    })
-  },
-
-  // 判断输入的文字是否有表情
-  isEmojiCharacter: function (substring) {
-    for (var i = 0; i < substring.length; i++) {
-      var hs = substring.charCodeAt(i);
-      if (0xd800 <= hs && hs <= 0xdbff) {
-        if (substring.length > 1) {
-          var ls = substring.charCodeAt(i + 1);
-          var uc = ((hs - 0xd800) * 0x400) + (ls - 0xdc00) + 0x10000;
-          if (0x1d000 <= uc && uc <= 0x1f77f) {
-            return true;
-          }
-        }
-      } else if (substring.length > 1) {
-        var ls = substring.charCodeAt(i + 1);
-        if (ls == 0x20e3) {
-          return true;
-        }
-      } else {
-        if (0x2100 <= hs && hs <= 0x27ff) {
-          return true;
-        } else if (0x2B05 <= hs && hs <= 0x2b07) {
-          return true;
-        } else if (0x2934 <= hs && hs <= 0x2935) {
-          return true;
-        } else if (0x3297 <= hs && hs <= 0x3299) {
-          return true;
-        } else if (hs == 0xa9 || hs == 0xae || hs == 0x303d || hs == 0x3030
-          || hs == 0x2b55 || hs == 0x2b1c || hs == 0x2b1b
-          || hs == 0x2b50) {
-          return true;
-        }
-      }
-    }
-  },
-
-  // 跳转经历爱好
-  tohobby:function(){
-    var that=this;
-    var navList = this.data.navList;
-    var listData = this.data.listData;
-    var reg = /[~#^$@%&!?%*]/gi;
-    if (!listData.describe1) {
-      app.showBox(that, '请填写流量入口');
-    } else if (this.isEmojiCharacter(listData.describe1)) {
-      app.showBox(that, '流量入口不能含有表情');
-    } else if (reg.test(listData.describe1)) {
-      app.showBox(that, '流量入口不能含有特殊字符');
-    } else if (listData.describe1.length < 10) {
-      app.showBox(that, '流量入口字数不够');
-    } else if (listData.describe2.length < 10) {
-      app.showBox(that, '你眼中的BC字数不够');
-    } else if (this.isEmojiCharacter(listData.describe2)) {
-      app.showBox(that, '你眼中的BC不能含有表情');
-    } else if (reg.test(listData.describe2)) {
-      app.showBox(that, '你眼中的BC不能含有特殊字符');
-    } else if (!listData.describe2) {
-      app.showBox(that, '请填写你眼中的BC');
-    } else if (listData.describe3.length < 10) {
-      app.showBox(that, '为何选择做极选师字数不够');
-    } else if (this.isEmojiCharacter(listData.describe3)) {
-      app.showBox(that, '为何选择做极选师不能含有表情');
-    } else if (reg.test(listData.describe3)) {
-      app.showBox(that, '为何选择做极选师不能含有特殊字符');
-    } else if (!listData.describe3) {
-      app.showBox(that, '请填写为何选择做极选师');
-    }else{
-      navList[2].select = true;
-      this.setData({
-        navList: navList,
-        isShow: 3,
-      })
-    }
-    console.log(listData);
-  },
-
-  // 跳转结算信息
-  torealname:function(){
-    var that = this;
-    var navList = this.data.navList;
-    var listData = this.data.listData;
-    var sexList = this.data.sexList;
-    var provinceArray = this.data.provinceArray;
-    var cityArray = this.data.cityArray;
-    var districtArray = this.data.districtArray;
-    var provinceIndex = this.data.provinceIndex;
-    var cityIndex = this.data.cityIndex;
-    var districtIndex = this.data.districtIndex;
-    listData.province = provinceArray[provinceIndex].province_name;
-    listData.city = cityArray[cityIndex].city_name;
-    listData.district = districtArray[districtIndex].district_name;
-   
-
-
-   console.log(listData.birthday )
-
-   
-   var myreg = /^1(3|4|5|7|8)\d{9}$/;
-   var reg = /[~#^$@%&!?%*]/gi;
-
- if (!listData.name) {
-     app.showBox(that, '请填写姓名');
-   } else if (this.isEmojiCharacter(listData.name)) {
-     app.showBox(that, '姓名不能含有表情');
-   } else if (reg.test(listData.name)) {
-     app.showBox(that, '姓名不能含有特殊字符');
-   } else if(listData.birthday==undefined){
-    app.showBox(that, '请填写出生日期');
-   }  else if (provinceIndex == 0) {
-    app.showBox(that, '请选择省');
-  } else if (cityIndex == 0) {
-    app.showBox(that, '请选择市');
-  }  else if (!listData.address) {
-    app.showBox(that, '请填写详细地址');
-  }  else if (this.isEmojiCharacter(listData.address)) {
-    app.showBox(that, '详细地址不能含有表情');
-  } else if (reg.test(listData.address)) {
-    app.showBox(that, '详细地址不能含有特殊字符');
-  } else if (!myreg.test(listData.tel)) {
-    app.showBox(that, '请填写正确手机号码');
-  }else{
-    navList[1].select = true;
-      this.setData({
-        navList: navList,
-        isShow: 2,
-      })
-   }
-
-
-  },
-
-  // 跳转自我介绍
-  toIntro:function(){
-    var that = this;
-    var navList = this.data.navList;
-    var listData = this.data.listData;
-    var reg = /[~#^$@%&!?%*]/gi;
-    if (!listData.bank_account_number) {
-      app.showBox(that, '请填写银行账号');
-    } else if (!listData.bank_name) {
-      app.showBox(that, '请填写银行名称');
-    } else if (this.isEmojiCharacter(listData.bank_name)) {
-      app.showBox(that, '银行名称不能含有表情');
-    } else if (reg.test(listData.bank_name)) {
-      app.showBox(that, '银行名称不能含有特殊字符');
-    } else if (!listData.bank_open_name) {
-      app.showBox(that, '请填写银行开户行');
-    } else if (this.isEmojiCharacter(listData.bank_open_name)) {
-      app.showBox(that, '银行开户行不能含有表情');
-    } else if (reg.test(listData.bank_open_name)) {
-      app.showBox(that, '银行开户行不能含有特殊字符');
-    }else{
-      navList[3].select = true;
-      this.setData({
-        navList: navList,
-        isShow: 4,
-      })
-    }
-  },
-
-  // 放回上一步
-  topreo:function(e){
-    var index = e.currentTarget.dataset.index;
-    var navList = this.data.navList;
-    for(let i=0;i<navList.length;i++){
-      navList[i].select=false;
-    }
-    for(let i=0;i<index;i++){
-      navList[i].select=true;
-    }
-    this.setData({
-      navList: navList,
-      isShow: index,
-    })
-  },
-
-
-  /**
-   * 图片预览
-   */
-  preivewImg: function (e) {
-    let imgUrls = e.currentTarget.dataset.img;
-    let urls = [];
-
-    urls.push(imgUrls);
-    wx.previewImage({
-      current: urls[0],
-      urls: urls,
-    })
-  },
-
-  
-
-  /**
-   * 省选择器
-   */
-  bindProvincChange: function (e) {
-    let that = this;
-    let index = e.detail.value;
-    let provinceArray = that.data.provinceArray;
-    let province_id = provinceArray[index].province_id;
-    app.clicked(that, 'listClickFlag');
-    
-      
-  that.setData({
-  provinceIndex: index,
-  province: province_id,
-  cityIndex: 0,
-  districtIndex: 0
-   })
-
-    if (province_id == 0) {
-      return;
-    }
-    app.sendRequest({
-      url: 'api.php?s=index/getCity',
-      data: {
-        province_id: province_id
-      },
-      success: function (res) {
-        let code = res.code;
-        if (code == 0) {
-          let cityArray = res.data;
-          let city_array = [{
-            area_id: 0,
-            city_id: 0,
-            city_name: '请选择市',
-            sort: 0
-          }];
-          for (let i = 0; i < cityArray.length; i++) {
-            city_array[i + 1] = cityArray[i];
-          }
-          that.setData({
-            cityArray: city_array
-          })
-        }
-      }
-    })
-  },
-  /**
-   * 市选择器
-   */
-  bindCityChange: function (e) {
-    let that = this;
-    let index = e.detail.value;
-    let cityArray = that.data.cityArray;
-    let city_id = cityArray[index].city_id;
-    that.setData({
-      cityIndex: index,
-      city: city_id,
-      districtIndex: 0
-    })
-    if (city_id == 0) {
-      return;
-    }
-    app.sendRequest({
-      url: 'api.php?s=index/getDistrict',
-      data: {
-        city_id: city_id
-      },
-      success: function (res) {
-        let code = res.code;
-        if (code == 0) {
-          let districtArray = res.data;
-          let district_array = [{
-            area_id: 0,
-            district_id: 0,
-            district_name: '请选择区县',
-            sort: 0
-          }];
-          for (let i = 0; i < districtArray.length; i++) {
-            district_array[i + 1] = districtArray[i];
-          }
-          that.setData({
-            districtArray: district_array
-          })
-        }
-
-      }
-    })
-  },
-  /**
-   * 区选择器
-   */
-  bindDistrictChange: function (e) {
-    let that = this;
-    let index = e.detail.value;
-    let districtArray = that.data.districtArray;
-    let district_id = districtArray[index].district_id;
-    that.setData({
-      districtIndex: index,
-      district: district_id
-    })
-  },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -534,275 +142,22 @@ Page({
     
   },
 
-  // 姓名修改
-  nameValue:function(e){
-    var name = e.detail.value;
-    var listData=this.data.listData;
-    if (name != listData.name){
-      listData.name=name;
-      this.setData({
-        listData,
-      })
-    }else{
-      return;
-    }
-  },
-  nameWrok:function(e){
-    var name = e.detail.value;
-    var listData=this.data.listData;
-      listData.name=name.replace(/\s+/g, '');
-      this.setData({
-        listData,
-      })
-   
-  },
-
-  // 性别修改
-  radioChange: function (e) {
-    console.log('radio发生change事件，携带value值为：', e.detail.value)
-    var sex = e.detail.value;
-    var  sexList= this.data.sexList;
-   
-    for(let i=0;i<sexList.length;i++){
-      if(e.detail.value=='男'){
-        sexList[0].checked=true;
-        sexList[1].checked=false;
-      }else if(e.detail.value=='女'){
-        sexList[1].checked=true
-        sexList[0].checked=false;
-      }
-    
-    }
-    
-    var listData = this.data.listData;
-    listData.sex = sex;
-    this.setData({
-      listData,
-      sexList
-    })
-  },
-
-  // 民族修改
-  nationValue: function (e) {
-    var nation = e.detail.value;
-    var listData = this.data.listData;
-    if (nation != listData.nation) {
-      listData.nation = nation;
-      this.setData({
-        listData,
-      })
-    } else {
-      return;
-    }
-    
-  },
-  nationWrok: function (e) {
-    var nation = e.detail.value;
-    var listData = this.data.listData;
-      listData.nation = nation.replace(/\s+/g, '');
-      this.setData({
-        listData,
-      })
-   
-    
-  },
-
-  // 详细地址修改
-  addressValue: function (e) {
-    var address = e.detail.value;
-    var listData = this.data.listData;
-    listData.address = address;
-    this.setData({
-      listData,
-    })
-  },
-  addressWrok:function(e){
-    var address = e.detail.value;
-    var listData = this.data.listData;
-    listData.address = address.replace(/\s+/g, '');
-    this.setData({
-      listData,
-    })
-
-  },
-  // 手机号码修改
-  phoneValue: function (e) {
-    var tel = e.detail.value;
-    var listData = this.data.listData;
-    listData.tel = tel;
-    this.setData({
-      listData,
-    })
-  },
-
-  // EMAIL修改
-  emailValue: function (e) {
-    var email = e.detail.value;
-    var listData = this.data.listData;
-    listData.email = email;
-    this.setData({
-      listData,
-    })
-  },
-
-  // 教育经历修改
-  educationValue: function (e) {
-    var educational_experience = e.detail.value;
-    var listData = this.data.listData;
-    listData.educational_experience = educational_experience;
-    this.setData({
-      listData,
-    })
-  },
-
-  // 工作经历修改
-  joinValue: function (e) {
-    var work_experience = e.detail.value;
-    var listData = this.data.listData;
-    listData.work_experience = work_experience;
-    this.setData({
-      listData,
-    })
-  },
-  joinWrok:function(e){
-    console.log('ok')
-    var listData = this.data.listData;
-    var work_experience = e.detail.value;
-    listData.work_experience = work_experience.replace(/\s+/g, '');
-    console.log(listData.work_experience)
-    this.setData({
-      listData,
-    })
-  },
-
-  // 爱好特长修改
-  hobbyValue: function (e) {
-    var hobbies = e.detail.value;
-    var listData = this.data.listData;
-    listData.hobbies = hobbies;
-    this.setData({
-      listData,
-    })
-  },
-
-  // 银行账号修改
-  bankNumValue: function (e) {
-    var bank_account_number = e.detail.value;
-    var listData = this.data.listData;
-    listData.bank_account_number = bank_account_number;
-    this.setData({
-      listData,
-    })
-  },
-
-  // 银行名称修改
-  bankNameValue: function (e) {
-    var bank_name = e.detail.value;
-    var listData = this.data.listData;
-    listData.bank_name = bank_name;
-    this.setData({
-      listData,
-    })
-  },
-
-  // 银行名称修改
-  banKDetailValue: function (e) {
-    var bank_open_name = e.detail.value;
-    var listData = this.data.listData;
-    listData.bank_open_name = bank_open_name;
-    this.setData({
-      listData,
-    })
-  },
-
-  // 流动入口及销售方向修改
-  describe1Value: function (e) {
-    var describe1 = e.detail.value;
-    var listData = this.data.listData;
-    listData.describe1 = describe1;
-    this.setData({
-      listData,
-    })
-  },
-
-  // 你眼中的BC修改
-  describe2Value: function (e) {
-    var describe2 = e.detail.value;
-    var listData = this.data.listData;
-    listData.describe2 = describe2;
-    this.setData({
-      listData,
-    })
-  },
-
-  // 为何选择极选师修改
-  describe3Value: function (e) {
-    var describe3 = e.detail.value;
-    var listData = this.data.listData;
-    listData.describe3 = describe3;
-    this.setData({
-      listData,
-    })
-  },
-
-  // 未来三个月预估销售额修改
-  moneyValue: function (e) {
-    var estimate_money = e.detail.value;
-    var listData = this.data.listData;
-    listData.estimate_money = estimate_money;
-    this.setData({
-      listData,
-    })
-  },
-
   // 申请极选师
   toApply: function (event) {
     var that = this;
     var listData = this.data.listData;
     var experience=listData.work_experience;
-   
-    var reg = /[~#^$@%&!?%*]/gi;
-    if(!experience){
-      app.showBox(that, '工作经历不能为空');
-    }else if(experience.length < 10 ){
-      app.showBox(that, '工作经历字数不够');
-    }else{
-      console.log(listData)
+ 
       // 提交表格
       app.sendRequest({
         url: 'api.php?s=Distributor/applyDistributor',
         data: listData,
         success: function (res) {
-          console.log(res, app.globalData.openid, event.detail.formId)
-          app.sendRequest({
-            url: 'api.php?s=distributor/sendKolTemplateCreated',
-            data: {
-              openid: app.globalData.openid,
-              formid: event.detail.formId,
-            },
-            success: function (result) {
-              console.log(res)
-              if(res.code==1){
-                setTimeout(function () {
-                  wx.showToast({
-                    title: res.message,
-                    icon: 'success',
-                    duration: 800,
-                    success: function () {
-                      setTimeout(function () {
-                        wx.switchTab({
-                          url: '/pages/index/index',
-                        })
-                      }, 1000)
-                    }
-                  })
-                }, 800)
-              }
-            }
-          })
+          console.log(res)
+       
         }
       })
-    }
+    
   },
 
   toIndex: function () {
@@ -866,11 +221,7 @@ Page({
                   }
                 }
               })
-              console.log(tel, uid)
-              listData.tel = tel;
-              that.setData({
-                listData,
-              })
+           
             }
           }
         }
@@ -916,11 +267,7 @@ Page({
                       }
                     }
                   })
-                  console.log(tel, uid)
-                  listData.tel = tel;
-                  that.setData({
-                    listData,
-                  })
+               
                 }
               }
             }

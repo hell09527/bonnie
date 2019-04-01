@@ -426,6 +426,7 @@ Page({
    * 保存
    */
   save: function (that, mobile) {
+
    let  suffix=that.data.suffix;
     app.sendRequest({
       url: "api.php?s=member/modifymobile",

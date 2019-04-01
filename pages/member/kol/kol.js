@@ -427,20 +427,32 @@ Page({
     })
   },
 
-  open: function () {
+  open: function (e) {
     let that = this;
-    if (that.data.temp != 'open') {
+    let Tyle= e.currentTarget.dataset.type;
+    if(Tyle=='two'){
+      if (that.data.temp != 'open') {
+        that.setData({
+          temp: 'open',
+          rotate: 'rotate'
+        })
+      } else {
+        that.setData({
+          temp: '',
+          rotate: ''
+        })
+      }
 
-      that.setData({
-        temp: 'open',
-        rotate: 'rotate'
+    }else{
+      wx.navigateTo({
+        url: "/pages/member/supportCenter/supportCenter",
       })
-    } else {
-      that.setData({
-        temp: '',
-        rotate: ''
-      })
+
     }
+
+   
+
+
 
   },
 

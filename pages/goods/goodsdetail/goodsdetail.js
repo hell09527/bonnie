@@ -882,29 +882,42 @@ if (app.globalData.token && app.globalData.token != '') {
       let status = 0;
 
 
-    this.setData({
-      point:1
-    })
-      let animation = wx.createAnimation({
-        duration: 3000,
-        timingFunction: 'ease-in',
-        transformOrigin: "50% 50% 0",
-        delay: 0
+      this.setData({
+        point: 1
       })
+      const animation = wx.createAnimation({
+        duration: 500,
+        timingFunction: 'ease',
+      })
+  
+      this.animation = animation
+  
+      animation.translateY(282).step()
+  
+      this.setData({
+        animation: animation.export()
+      })
+  
+      setTimeout(function () {
+        animation.translateY(0).step()
+        this.setData({
+          animation: animation.export()
+        })
+      }.bind(this), 50)
+  
       if (type == 'buy') {
         status = 0;
       } else if (type == 'addCart') {
         status = 1;
       }
-      animation.opacity(1).translateX(-100).step();
-      this.animation = animation;
       this.setData({
         sBuy: 1,
         maskShow: 1,
         buyButtonStatus: status,
-        animation: this.animation.export(),
+        animation: animation.export(),
         popUp
       })
+  
    
   
     
@@ -913,43 +926,69 @@ if (app.globalData.token && app.globalData.token != '') {
   /**
  * chakan弹框(动画效果未实现)
  */
-  Examine: function (event) {
-    let popUp = 1
-    let type = event.currentTarget.dataset.type;
-    let status = 0;
-    let animation = wx.createAnimation({
-      duration: 3000,
-      timingFunction: 'ease-in',
-      transformOrigin: "50% 50% 0",
-      delay: 0
-    })
-    if (type == 'buy') {
-      status = 0;
-    } else if (type == 'addCart') {
-      status = 1;
-    }
-    animation.opacity(1).translateX(-100).step();
-    this.animation = animation;
-    this.setData({
-      sBuy: 1,
-      maskShow: 1,
-      buyButtonStatus: status,
-      animation: this.animation.export(),
-      popUp
-    })
+Examine: function (event) {
+  let popUp = 1
+  let type = event.currentTarget.dataset.type;
+  let status = 0;
+  
+  if (type == 'buy') {
+    status = 0;
+  } else if (type == 'addCart') {
+    status = 1;
+  }
+  const animation = wx.createAnimation({
+    duration: 500,
+    timingFunction: 'ease',
+  })
 
-  },
+  this.animation = animation
+
+  animation.translateY(282).step()
+
+  setTimeout(function () {
+    animation.translateY(0).step()
+    this.setData({
+      animation: animation.export()
+    })
+  }.bind(this), 50)
+
+  this.setData({
+    sBuy: 1,
+    maskShow: 1,
+    buyButtonStatus: status,
+    animation: animation.export(),
+    popUp
+  })
+
+},
   
   /**
    * 关闭弹框
    */
-  popupClose: function(event) {
+  popupClose: function (event) {
+    const animation = wx.createAnimation({
+      duration: 500,
+      timingFunction: 'ease',
+    })
+
+    this.animation = animation
+
+    animation.translateY(0)
+
+    setTimeout(function () {
+      animation.translateY(-282).step()
+      this.setData({
+        animation: animation.export()
+      })
+    }.bind(this), 50)
+    
     this.setData({
       sBuy: 0,
       popupShow: 0,
       serviceShow: 0,
       maskShow: 0,
-      point:0,
+      point: 0,
+      animation: animation.export(),
       ladderPreferentialShow: 0,
     })
   },
@@ -1603,6 +1642,26 @@ if (app.globalData.token && app.globalData.token != '') {
    */
   popupShow: function(e){
     let that = this;
+
+    const animation = wx.createAnimation({
+      duration: 500,
+      timingFunction: 'ease',
+    })
+
+    this.animation = animation
+
+    animation.translateY(282).step()
+
+    this.setData({
+      animation: animation.export()
+    })
+
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animation: animation.export()
+      })
+    }.bind(this), 50)
 
     that.setData({
       popupShow: 1,

@@ -281,11 +281,6 @@
 .top-fix{
   border: 0;
   display: block;
-  z-index: 100;
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
   text-align: right;
   padding: 6px 7px;
   border-top: 1px solid #e5e5e5;
@@ -569,8 +564,8 @@
 }
 
 .btn-green{
-  background-color: #06bf04;
-  border-color: #03b401;
+  background-color: #000;
+  border-color: #000;
   border: 0;
   text-align: center;
   width: 100%;

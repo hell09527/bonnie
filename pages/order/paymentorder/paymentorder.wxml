@@ -33,7 +33,7 @@
     </block>
 </view>
 
-<scroll-view class='{{mask_status==1?"noscroll":""}}' style="margin-top:166rpx">
+<scroll-view class='{{mask_status==1?"noscroll":""}}' style="margin-top:20rpx">
 
     <view class="motify {{prompt==''?'hide':''}}">
         <icon class="i show_type warning" type='warn' size='25' color='#FFF'></icon>
@@ -419,7 +419,7 @@
 
     <view class="mask-layer {{mask_status==1?'':'hide'}}" catchtap='closePoupo'></view>
     <!-- 选择优惠券 -->
-    <view class="mask-layer-control {{coupon_status==1?'':'hide'}}">
+    <view class="mask-layer-control {{coupon_status==1?'':'hide'}}" animation='{{animation}}' animation='{{animationData}}'>
         <view class="header">选择优惠券
             <icon class="span close" catchtap='closePoupo' type='cancel' size='22' color='#666'></icon>
         </view>
@@ -451,7 +451,7 @@
     </view>
 
     <!-- 支付方式 -->
-    <view class="mask-layer-control {{pay_box_status==1?'':'hide'}}">
+    <view class="mask-layer-control {{pay_box_status==1?'':'hide'}}" animation='{{animationData}}' animation='{{animationData}}'>
         <view class="header">请选择支付方式
             <icon class="span close" catchtap='closePoupo' data-status='0' type='cancel' size='22' color='#666'></icon>
         </view>
@@ -476,7 +476,7 @@
         </view>
     </view>
     <!-- 配送方式 -->
-    <view class="mask-layer-control {{delivery_status==1?'':'hide'}}">
+    <view class="mask-layer-control {{delivery_status==1?'':'hide'}}" animation='{{animationData}}'>
         <view class="header">选择配送方式
             <icon class="span close" catchtap='closePoupo' data-status='0' type='cancel' size='22' color='#666'></icon>
         </view>
@@ -508,7 +508,7 @@
         </block>
     </view>
     <!-- 选择物流公司 -->
-    <view class="mask-layer-control {{express_company_status==0?'hide':''}}">
+    <view class="mask-layer-control {{express_company_status==0?'hide':''}}" animation='{{animationData}}'>
         <view class="header">选择物流公司
             <icon class="span close" catchtap='closePoupo' type='cancel' size='22' color='#666'></icon>
         </view>
@@ -533,7 +533,7 @@
         </view>
     </view>
     <!-- 选择自提地址 -->
-    <view class="mask-layer-control {{pick_up_status==0?'hide':''}}">
+    <view class="mask-layer-control {{pick_up_status==0?'hide':''}}" animation='{{animationData}}'>
         <view class="header">选择自提地址
             <icon class="span close" catchtap='closePoupo' type='cancel' size='22' color='#666'></icon>
         </view>
@@ -580,7 +580,7 @@
         </view>
     </view>
     <!-- 选择发票内容信息 -->
-    <view class="mask-layer-control {{invoice_content_status==1?'':'hide'}}">
+    <view class="mask-layer-control {{invoice_content_status==1?'':'hide'}}" animation='{{animationData}}'>
         <view class="header">请选择发票内容
             <icon class="span close" catchtap='closePoupo' type='cancel' size='22' color='#666'></icon>
         </view>
@@ -600,7 +600,7 @@
         </view>
     </view>
     <!-- 选择配送时间 -->
-    <view class="mask-layer-control {{shipping_time_status==1?'':'hide'}}">
+    <view class="mask-layer-control {{shipping_time_status==1?'':'hide'}}" animation='{{animationData}}'>
         <view class="header">指定配送时间
             <icon class="span close" catchtap='closePoupo' type='cancel' size='22' color='#666'></icon>
         </view>

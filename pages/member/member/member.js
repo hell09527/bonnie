@@ -562,7 +562,8 @@ Page({
   },
   explain:function(){
     wx.navigateTo({
-      url: "/pages/member/supportCenter/supportCenter",
+      url: "/pages/member/kolApply/kolApply",
+      // url: "/pages/member/supportCenter/supportCenter",
     })
   }
 

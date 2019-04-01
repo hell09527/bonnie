@@ -258,7 +258,7 @@
 
     </view>
   </view>
-   <view wx:if="{{distributor_type ==0}}" catchtap='explain'  >
+   <!-- <view wx:if="{{distributor_type ==0}}" catchtap='explain'  >
               <image lazy-load="true"  style='width:100%;height:120rpx'    src='https://static.bonnieclyde.cn/WechatIMG5401.png'  />
-   </view>
+   </view> -->
 </scroll-view>

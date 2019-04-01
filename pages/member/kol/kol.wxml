@@ -77,13 +77,23 @@
           <text>前往提现</text>
           <image class="direction" src='https://static.bonnieclyde.cn/WechatIMG240.png'></image> </view>
         </view> -->
+          <view class='xuans'>
+          <view class='c_money'>
+            <image src='/images/member/additionalMonay.png' mode='widthFix'/>  
+            <view>极选师帮助中心</view>
+          </view>
+          <view class='edu'    data-type='twist' catchtap='open'>
+   
+          <text>查看详情</text>
+          <image lazy-load="true" class="direction {{temp?'rotate':''}}" src='https://static.bonnieclyde.cn/WechatIMG240.png'></image> </view>
+        </view>
         
         <view class='xuans'>
           <view class='c_money'>
             <image src='/images/member/additionalMonay.png' mode='widthFix'/>  
             <view>极选师规则说明</view>
           </view>
-          <view class='edu' catchtap='open'>
+          <view class='edu' data-type='two' catchtap='open'>
           <text>查看详情</text>
           <image lazy-load="true" class="direction {{temp?'rotate':''}}" src='https://static.bonnieclyde.cn/WechatIMG240.png'></image> </view>
         </view>
