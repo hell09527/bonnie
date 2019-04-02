@@ -8,18 +8,6 @@ Page({
     isTopClick: 1,  //商品排行标题点击
     datetime: '',
     nowData: '',  //当前月
-    TistData: [
-      { "code": "分润待结算状态", "text": "订单付款后，订单获得的分润" },
-      { "code": "分润审核期", "text": "订单已收货后15天内的维权期" },
-      { "code": "待入账金额", "text": "订单获得的分润处于审核期" },
-      { "code": "可提现金额", "text": "订单获得的分润已入账到极选师账户，等待提现" },
-      { "code": "考核期", "text": "每个季度为一个考核期" },
-    ],
-    CistData: [
-      { star: '一星级', standard: '90000', proportion: '5%' },
-      { star: '二星级', standard: '150000', proportion: '7%' },
-      { star: '三星级', standard: '210000', proportion: '10%' },
-    ],
     isCode: 1,   //小程序码切换
     user_headimg: '',   //头像
     star_num: '',   //星级

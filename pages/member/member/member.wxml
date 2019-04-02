@@ -244,21 +244,32 @@
         </view> 
       </block>
       <block >
+
         <view class='li' wx:if='{{distributor_type!=0}}'>
-    
           <view class="a member_list_item" catchtap='listClick'     data-url="member/posterList/posterList">
             <image lazy-load="true" src='https://static.bonnieclyde.cn/icon21.png' />
             <view class='span'>海报制作</view>
           </view>
         </view>
+
+             <view class='li' wx:if='{{distributor_type!=0}}'>
+          <view class="a member_list_item" catchtap='listClick'     data-url="member/supportCenter/supportCenter?stu=1">
+            <image lazy-load="true" src='https://static.bonnieclyde.cn/help.png' />
+            <view class='span'>帮助中心</view>
+          </view>
+        </view>
+             <view class='li' wx:if='{{distributor_type!=0}}'>
+          <view class="a member_list_item" catchtap='listClick'     data-url="member/supportCenter/supportCenter?stu=2">
+            <image lazy-load="true" src='https://static.bonnieclyde.cn/detail@2x.png' />
+            <view class='span'>规则说明</view>
+          </view>
+        </view>
       </block>
-      
-   
-  
 
     </view>
   </view>
-   <!-- <view wx:if="{{distributor_type ==0}}" catchtap='explain'  >
-              <image lazy-load="true"  style='width:100%;height:120rpx'    src='https://static.bonnieclyde.cn/WechatIMG5401.png'  />
-   </view> -->
+  
+   <view wx:if="{{distributor_type ==0}}" catchtap='explain'  >
+              <image lazy-load="true"  style='width:100%;'  mode='widthFix'  src='https://static.bonnieclyde.cn/WechatIMG628.png'  />
+   </view>
 </scroll-view>

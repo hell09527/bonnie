@@ -187,7 +187,7 @@ swiper {
 
 .buy_area .price{
   float: left;
-  width:100%;
+  width:80%;
   font-size: 18px;
   line-height: 25px;
   margin-right: 10px;
@@ -1940,6 +1940,57 @@ overflow:hidden;
 
 
 }
+
+.orienation{
+  width: 100%;
+  height: 320rpx;
+  position: fixed;
+  z-index:1009 ;
+  left: 0;
+  bottom: 0;
+  background:#ccc;
+}
+.orienation button{
+  width: 100%;
+  height:100rpx;
+  background: #fff;
+  text-align: center;
+  margin: 0auto;
+  line-height: 100rpx;
+  border-radius: 0;
+  border-bottom: 1px solid #ccc;
+}
+.orienation :nth-child(2){
+  margin-bottom:15rpx ;
+}
+canvas{
+  position:absolute;
+  top:-1000px;
+}
+.exhibition{
+  position: fixed;
+  width: 500rpx;
+  text-align: center;
+  z-index:2000 ;
+  /* background: #fff; */
+  box-shadow:0px 0px 20px rgba(0,0,0,0.1);
+
+}
+.ng{
+  width: 500rpx;
+  display: flex;
+  justify-content: flex-start;
+  background:#fff;
+}
+.ng .l{
+ text-align: center;
+ width: 50%;
+ border-top: 1px solid #ccc;
+ color: #666;
+ height:88rpx ;
+ line-height: 88rpx;
+}
+
 
 
 

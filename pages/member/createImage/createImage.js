@@ -171,6 +171,7 @@ Page({
 
   },
   Save: function () {
+
     let that = this;
     wx.getSetting({
       success(res) {
@@ -223,6 +224,7 @@ Page({
     })
 
   },
+  
   popupClose: function () {
     let that = this;
     that.setData({

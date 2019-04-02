@@ -68,8 +68,16 @@ Page({
     curr_id: '',   //当前打开的视频id
     point:0,
     layout: false,
-    Token:''
+    Token:'',
+    TT:false, //选择莫态框‘
+    TCL:false, //选择莫态框‘
+    base_img:'https://static.bonnieclyde.cn/BC.jpg',//基于标准海报图片
+    codeUrl:'',// 二维码图片
+    shop_img:'', // 商品主图
+    compound_Img:'',//合成图片
+    UrlH:'',//canvas高度
   },
+ 
     //测试数据
   last:function(){
     let that = this;
@@ -116,6 +124,33 @@ Page({
       })
 
     }  
+          
+         // 制作二维码
+
+    
+    app.sendRequest({
+      url: "api.php?s=Distributor/getDistributorGoodsWxCode",
+      data: {
+        goods_id: options.goods_id
+      },
+      success: function (res) {
+        let data = res.data;
+        that.setData({
+          codeUrl: data,
+        })
+
+      }
+    })
+
+
+
+
+
+
+
+
+
+
 
     // 是否授权数据更新
     let updata = that.data.unregistered
@@ -125,6 +160,25 @@ Page({
     that.setData({
       unregistered:app.globalData.unregistered
     });
+
+
+
+    wx.getSystemInfo({
+      success(res) {
+        let windowWidth = res.windowWidth;//当前手机屏幕的宽度
+        let windowHeight = res.windowHeight - 50;
+        let screenWidth = res.windowWidth;
+        let screenHeight = res.windowHeight;
+        console.log(windowWidth)
+        console.log(windowHeight)
+        that.setData({
+          windowWidth: windowWidth,
+          windowHeight,
+          screenWidth,
+        })
+      }
+
+    })
     
 
 
@@ -257,6 +311,7 @@ Page({
     let is_vip = app.globalData.is_vip;
     that.setData({
       is_vip,
+      TT:false,
       isIphoneX
     })
     if (app.globalData.distributor_type!=0){
@@ -360,6 +415,9 @@ if (app.globalData.token && app.globalData.token != '') {
           }
           //商品图片处理
           let imgUrls = data.img_list;
+
+          //制作海报的商品主图
+          let shop_img=imgUrls[0].pic_cover_big;
           for(let index in imgUrls){
             let img = imgUrls[index].pic_cover_mid;
             imgUrls[index].pic_cover_mid = app.IMG(img);
@@ -404,7 +462,9 @@ if (app.globalData.token && app.globalData.token != '') {
             brand_id: brand_id ,
             sum,
             is_inside_sell,
-            goodsDetailImg   //极选师推荐图片
+            shop_img,
+            goodsDetailImg ,
+              //极选师推荐图片
           });
 
           //限时折扣计时
@@ -577,18 +637,21 @@ if (app.globalData.token && app.globalData.token != '') {
         imageUrl: goods_info.picture_detail.pic_cover_small,
         success: function (res) {
           app.showBox(that, '分享成功');
+        
         },
         fail: function (res) {
           app.showBox(that, '分享失败');
         }
       }
     }
+  
     
 
     let is_share = 0;
 
     that.setData({
-      is_share: is_share
+      is_share: is_share,
+    
     })
   },
 
@@ -829,7 +892,7 @@ if (app.globalData.token && app.globalData.token != '') {
             }
             page = comment_type == comments_type ? page+1 : 1;
 
-      //隐藏评价人的微信名
+               //隐藏评价人的微信名
             for (var i = 0; i < comments_list.length; i++) {
               comments_list[i].user_img = app.IMG(comments_list[i].user_img);
               if (comments_list[i].user_img == '') {
@@ -980,7 +1043,7 @@ Examine: function (event) {
       this.setData({
         animation: animation.export()
       })
-    }.bind(this), 50)
+    }.bind(this), 50);
     
     this.setData({
       sBuy: 0,
@@ -990,6 +1053,8 @@ Examine: function (event) {
       point: 0,
       animation: animation.export(),
       ladderPreferentialShow: 0,
+      TT:false,
+      TCL:false
     })
   },
 
@@ -1806,7 +1871,15 @@ Examine: function (event) {
       urls: urls,
     })
   },
-
+  /* 
+     选择分享方式
+   */
+  proChoose:function(){
+    this.setData({
+      TT:true
+    })
+  
+  },
   /**
    * 选择显示类型
    */
@@ -1822,5 +1895,219 @@ Examine: function (event) {
     wx.navigateTo({
       url: "/pages/payMembers/payMember/payMember",
     })
-  }
+  },
+//文本换行 参数：1、canvas对象，2、文本 3、距离左侧的距离 4、距离顶部的距离 5、6、文本的宽度  7字体大小
+
+drawText(ctx, str, leftWidth, initHeight, titleHeight, canvasWidth,FontSize) {        
+  var lineWidth = 0;        
+  var lastSubStrIndex = 0; //每次开始截取的字符串的索引
+
+  for (let i = 0; i < str.length; i++) { 
+      lineWidth += ctx.measureText(str[i]).width;            
+      if (lineWidth > canvasWidth) {  
+          ctx.setFontSize(FontSize) ;
+          ctx.setFillStyle('#000');              
+          ctx.fillText(str.substring(lastSubStrIndex, i), leftWidth, initHeight); //绘制截取部分                
+          initHeight += 18; //16为字体的高度   字体与字体相差的高度             
+          lineWidth = 0;                
+          lastSubStrIndex = i;                
+          titleHeight += 30;            
+      }            
+      if (i == str.length - 1) { //绘制剩余部分    
+        ctx.setFontSize(FontSize);  
+        ctx.setFillStyle('#000') ;          
+        ctx.fillText(str.substring(lastSubStrIndex, i + 1), leftWidth, initHeight);   
+
+      }        
+  }        // 标题border-bottom 线距顶部距离 
+       
+  titleHeight = titleHeight + 10;        
+  return titleHeight    
+},
+
+
+  /* 
+      海报制作中
+   */
+  producer:function(){
+    let that = this;
+    let NOW =that.data.windowWidth; 
+    that.setData({
+     TT :false, 
+   
+    })                   // 合成BC基础图片01---->
+    wx.getImageInfo({
+     src: that.data.base_img,
+     success: function(res) {
+       // width & height
+       console.log(res);
+       const ctx = wx.createCanvasContext('producer');
+       ctx.setFillStyle('#fff')
+       ctx.fillRect(0,0,NOW,750)
+       let setfixW = that.data.windowWidth-(that.data.windowWidth/2); //当前手机屏幕的宽度
+       let imgUrlW = setfixW / res.width;  //等比例计算
+       let imgUrlH = res.height * imgUrlW;
+       let  F01w=(that.data.windowWidth/2)/2;
+       ctx.drawImage(res.path, F01w, 30, setfixW, imgUrlH);
+       console.log(that.data.shop_img)
+                        // 合成BC基础商品首图02---->
+       wx.getImageInfo({
+       src: that.data.shop_img ,
+       success: function(res) {
+          // width & height
+          console.log(res);
+       let orign=that.data.windowWidth-(that.data.windowWidth/5);
+       let orignW = orign / res.width;  //等比例计算
+
+       let Q02=(orign / res.height) * res.width;
+       let orignH = res.height * orignW ;
+       let  H01w=(that.data.windowWidth/5)/2;
+       ctx.drawImage(res.path, H01w, imgUrlH + 50, orign, orignH);
+                 // 合成BC基础商品小程序图03---->
+        let R
+        let fsm = wx.getFileSystemManager();
+        // wx.removeStorageSync
+        // 因wx.getImageInfo获取不到base64的信息 
+        //转换base64解码
+        let buffer = that.data.codeUrl.replace('data:image/png;base64,', '');
+        // +new Date().getTime() 避免安卓缓存问题
+        let Yo=wx.env.USER_DATA_PATH + "/" + new Date().getTime() + ".png"
+        fsm.writeFile({
+          filePath:Yo, 
+          data: buffer,
+          encoding: 'base64',
+          success(res) {
+            console.log(res)
+            R = wx.env.USER_DATA_PATH + '/test.png';
+            // 获取图片信息
+            wx.getImageInfo({
+              src: Yo,
+              success: function (res) {
+                let HOS = that.data.windowWidth/ 4;
+                let W= (Q02+H01w)-HOS;
+                let All=imgUrlH+orignH + 80;
+                
+                console.log(Q02);
+                console.log(W);
+                console.log(HOS);
+                ctx.drawImage(res.path, W, All, HOS, HOS);
+                 // 合成BC商品说明文字04---->
+              let   text=that.data.goods_info.goods_name;
+              let   KFZ= (Q02/2)-HOS/5; //文字的的宽度
+              let  Fill= HOS/7;
+              let UrlH=All+HOS+10;
+             
+              that.drawText(ctx,text,H01w,All+Fill,0,KFZ,14);
+              console.log(UrlH)
+
+                  //  设计显示图片的大小
+                let  show_imgW=NOW/2;
+                // let  show_imgH=NOW/3;
+              that.setData({
+                UrlH:All+HOS+10,
+                show_imgW
+              })
+              
+                ctx.stroke()
+                ctx.draw();
+                 console.log('121331')
+                wx.showToast({
+                  title: '制作中',
+                  icon: 'loading',
+                  duration: 2000
+                });
+
+                 //  关闭但页面清除单前页面的定时器
+                 clearInterval(that.data.myTime);
+                 that.data.myTime= setTimeout(function () {
+                  wx.canvasToTempFilePath({
+                    x: 0,
+                    y: 0,
+                    width: NOW,
+                    height: UrlH,
+                    destWidth: NOW * 2,
+                    destHeight: UrlH * 2,
+                    canvasId: 'producer',
+                    success(res) {
+                      console.log(res.tempFilePath, '合成图片成功');
+                      let Imgs = res.tempFilePath;
+                      that.setData({
+                        compound_Img:Imgs,
+                        TCL:true 
+                      })
+                      
+                     
+                    }
+                  });
+                }, 2000);
+
+              },
+              fail() {
+                console.log(res)
+              },
+            });
+          }
+        })
+         //  codeUrl
+       }
+     })
+     }
+   })
+  },
+  /* 
+    保存到相册
+  */
+ Save: function () {
+  let that = this;
+  wx.getSetting({
+    success(res) {
+      if (!res.authSetting['scope.writePhotosAlbum']) {
+        wx.authorize({
+          scope: 'scope.writePhotosAlbum',
+          success() {
+          },
+          fail() {
+            that.file()
+          }
+        });
+      } else {
+        that.file();
+        // that.popupClose();
+      }
+    }
+  });
+},
+file: function () {
+  let that = this;
+  console.log(that.data.compound_Img, 'saveImg')
+  wx.saveImageToPhotosAlbum({
+    filePath: that.data.compound_Img,
+    success(res) {
+      wx.showToast({
+        title: '保存成功',
+        icon: 'success',
+        duration: 2000
+      });
+    },
+    fail(res) {
+      wx.showToast({
+        title: '保存失败',
+        icon: 'fail',
+        duration: 2000
+      });
+      wx.openSetting({
+        success(res) {
+          console.log(res.authSetting)
+          res.authSetting = {
+            "scope.writePhotosAlbum": true,
+          }
+        }
+      })
+
+
+    }
+
+  })
+
+},
 })

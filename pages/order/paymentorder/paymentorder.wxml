@@ -330,7 +330,7 @@
             <block wx:else>
               <view class="item-options">
                 <view class='label'>买家留言 </view>
-                <input class="leavemessag" placeholder="给卖家留言" maxlength="100" value='{{leavemessage}}'></input>
+                <input class="leavemessag" placeholder="给卖家留言" style="height: 45px;"maxlength="100" value='{{leavemessage}}'></input>
               </view>
             </block> 
 
@@ -427,14 +427,14 @@
             <view class='ul'>
                 <view class="li item" catchtap='selectCoupon' data-id="0" data-money="0.00">
                     <icon class="check-img {{use_coupon==0?'':'check-false'}}" type='{{use_coupon==0?"success":""}}'
-                          color='#3283FA' size='18'></icon>
+                          color='#000' size='18'></icon>
                     <view class="single">不使用优惠券</view>
                 </view>
                 <block wx:for='{{coupon_list}}' wx:key='' wx:for-item='coupon'>
                     <view class="li item" catchtap='selectCoupon' data-id="{{coupon.coupon_id}}"
                           data-code="{{coupon.coupon_code}}" data-money="{{coupon.money}}">
                         <icon class="check-img {{use_coupon==coupon.coupon_id?'':'check-false'}}"
-                              type='{{use_coupon==coupon.coupon_id?"success":""}}' color='#3283FA' size='18'></icon>
+                              type='{{use_coupon==coupon.coupon_id?"success":""}}' color='#000' size='18'></icon>
                         <view>
                             <view class="p font-size-12">{{coupon.coupon_name}}
                                 <view class="em pull-right">{{coupon.money}}元</view>
@@ -459,13 +459,13 @@
             <view class='ul'>
                 <view class="li item" data-flag="0" catchtap='selectPayType'>
                     <icon class="check-img {{pay_type==0?'':'check-false'}}" type='{{pay_type==0?"success":""}}'
-                          color='#3283FA' size='18'></icon>
+                          color='#000' size='18'></icon>
                     <view class="single">在线支付</view>
                 </view>
                 <block wx:if='{{shop_config.order_delivery_pay == 1}}'>
                     <view class="li item" data-flag="4" catchtap='selectPayType'>
                         <icon class="check-img {{pay_type==4?'':'check-false'}}" type='{{pay_type==4?"success":""}}'
-                              color='#3283FA' size='18'></icon>
+                              color='#000' size='18'></icon>
                         <view class="single">货到付款</view>
                     </view>
                 </block>
@@ -489,14 +489,14 @@
                     <block wx:if='{{shop_config.seller_dispatching == 1}}'>
                         <view class="li item" catchtap='deliveryTypeSelect' data-status='1'>
                             <icon class="check-img {{delivery_type==1?'':'check-false'}}"
-                                  type="{{delivery_type==1?'success':''}}" color='#3283FA' size='18'></icon>
+                                  type="{{delivery_type==1?'success':''}}" color='#000' size='18'></icon>
                             <view class="single">商家配送</view>
                         </view>
                     </block>
                     <block wx:if="{{shop_config.buyer_self_lifting == 1 && pay_type == 0}}">
                         <view class="li item" catchtap='deliveryTypeSelect' data-status='2'>
                             <icon class="check-img {{delivery_type==2?'':'check-false'}}"
-                                  type="{{delivery_type==2?'success':''}}" color='#3283FA' size='18'></icon>
+                                  type="{{delivery_type==2?'success':''}}" color='#000' size='18'></icon>
                             <view class="single">门店自提</view>
                         </view>
                     </block>
@@ -518,7 +518,7 @@
                     <view class="li item" catchtap='selectExpressCompany' data-id='{{company.co_id}}'
                           data-fee='{{company.express_fee}}' data-name='{{company.company_name}}'>
                         <icon class="check-img {{shipping_company_id==company.co_id?'':'check-false'}}"
-                              type='{{shipping_company_id==company.co_id?"success":""}}' color='#3283FA'
+                              type='{{shipping_company_id==company.co_id?"success":""}}' color='#000'
                               size='18'></icon>
                         <view class="single">{{company.company_name}}</view>
                     </view>
@@ -544,7 +544,7 @@
                           data-province='{{pickup.province_name}}' data-city='{{pickup.city_name}}'
                           data-disctrict='{{pickup.dictrict_name}}' data-address='{{pickup.address}}'>
                         <icon class="check-img {{pick_up==pickup.id?'':'check-false'}}"
-                              type='{{pick_up==pickup.id?"success":""}}' color='#3283FA' size='18'></icon>
+                              type='{{pick_up==pickup.id?"success":""}}' color='#000' size='18'></icon>
                         <view class="single">{{pickup.province_name + '　' + pickup.city_name + '　' +
                             pickup.dictrict_name + '　' + pickup.address}}
                         </view>
@@ -565,12 +565,12 @@
             <view class='ul'>
                 <view class="li item" data-status="0" catchtap='selectInvoice'>
                     <icon class="check-img {{invoice_need==0?'':'check-false'}}" type='{{invoice_need==0?"success":""}}'
-                          color='#3283FA' size='18'></icon>
+                          color='#000' size='18'></icon>
                     <view class="single">不需要发票</view>
                 </view>
                 <view class="li item" data-status="1" catchtap='selectInvoice'>
                     <icon class="check-img {{invoice_need==1?'':'check-false'}}" type='{{invoice_need==1?"success":""}}'
-                          color='#3283FA' size='18'></icon>
+                          color='#000' size='18'></icon>
                     <view class="single">需要发票</view>
                 </view>
             </view>
@@ -589,7 +589,7 @@
                 <block wx:for='{{shop_config.order_invoice_content_list}}' wx:key='' wx:for-item='voince'>
                     <view class="li item" catchtap='selectInvoiceContent' data-content='{{voince}}'>
                         <icon class="check-img {{invoice_content==voince?'':'check-false'}}"
-                              type='{{invoice_content==voince?"success":""}}' color='#3283FA' size='18'></icon>
+                              type='{{invoice_content==voince?"success":""}}' color='#000' size='18'></icon>
                         <view class="single">{{voince}}</view>
                     </view>
                 </block>

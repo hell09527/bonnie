@@ -513,29 +513,7 @@ font-size: 12px;
  transform: translateY(-100deg); */
 }
 
-.open{
- display:block;
- -webkit-transform: translateY(0);
- transform: translateY(0);
- -webkit-transition: all 2s;
- transition: all 2s;
 
-}
-/* .synthesize{
-  float: left;
-width:50%;
-height:120px;
-padding-top:20px;
-background-color:#FAA99A;
-
-} */
-/* .explain{
-  font-size:12px;
-font-weight:700;
-color:#fff;
-text-align:center;
-
-} */
 .explains{
   text-align:left;
 }

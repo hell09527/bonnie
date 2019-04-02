@@ -68,36 +68,83 @@ Page({
     app.restStatus(that, 'aClickFlag');
     app.restStatus(that, 'payFlag');
 
-    app.sendRequest({
-      url: 'api.php?s=order/getOrderList',
-      data: {
-        status: status
-      },
-      success: function (res) {
-        let code = res.code;
-        if (code == 0) {
-          let order_list = res.data.data;
 
-          for (let index in order_list){
-            order_list[index].create_time = time.formatTime(order_list[index].create_time,'Y-M-D h:m:s');
-            //图片处理
-            for (let key in order_list[index].order_item_list) {
-              let img = order_list[index].order_item_list[key].picture.pic_cover_small;
-              order_list[index].order_item_list[key].picture.pic_cover_small = app.IMG(img);
-            }
+
+
+if (app.globalData.token && app.globalData.token != '') {
+  app.sendRequest({
+    url: 'api.php?s=order/getOrderList',
+    data: {
+      status:status
+    },
+    success: function (res) {
+      let code = res.code;
+      if (code == 0) {
+        let order_list = res.data.data;
+
+        for (let index in order_list){
+          order_list[index].create_time = time.formatTime(order_list[index].create_time,'Y-M-D h:m:s');
+          //图片处理
+          for (let key in order_list[index].order_item_list) {
+            let img = order_list[index].order_item_list[key].picture.pic_cover_small;
+            order_list[index].order_item_list[key].picture.pic_cover_small = app.IMG(img);
           }
-          let page = order_list.length > 0 ? 2 : 1;
-          that.setData({
-            order_list: order_list,
-            page: page
-          })
-          // for (var i = 0; i < order_list.length;i++){
-          //   order_list[i].
-          // }
         }
-        console.log(res)
+        let page = order_list.length > 0 ? 2 : 1;
+        that.setData({
+          order_list: order_list,
+          page: page
+        })
+        // for (var i = 0; i < order_list.length;i++){
+        //   order_list[i].
+        // }
       }
-    })
+      console.log(res)
+    }
+  })
+} else {
+  app.employIdCallback = employId => {
+    if (employId != '') {
+      app.sendRequest({
+        url: 'api.php?s=order/getOrderList',
+        data: {
+          status:status
+        },
+        success: function (res) {
+          let code = res.code;
+          if (code == 0) {
+            let order_list = res.data.data;
+  
+            for (let index in order_list){
+              order_list[index].create_time = time.formatTime(order_list[index].create_time,'Y-M-D h:m:s');
+              //图片处理
+              for (let key in order_list[index].order_item_list) {
+                let img = order_list[index].order_item_list[key].picture.pic_cover_small;
+                order_list[index].order_item_list[key].picture.pic_cover_small = app.IMG(img);
+              }
+            }
+            let page = order_list.length > 0 ? 2 : 1;
+            that.setData({
+              order_list: order_list,
+              page: page
+            })
+            // for (var i = 0; i < order_list.length;i++){
+            //   order_list[i].
+            // }
+          }
+          console.log(res)
+        }
+      })
+    }
+
+  }
+}
+
+  
+
+
+
+
   },
 
   /**

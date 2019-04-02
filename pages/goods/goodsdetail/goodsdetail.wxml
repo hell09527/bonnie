@@ -2,6 +2,8 @@
 <!-- 引入tempalte -->
 <import src="/templates/dataLogin-template/dataLogin.wxml" />
 <scroll-view>
+     <!-- 制作   -->
+  <canvas canvas-id="producer"  style="width:100%;margin:0 auto; height:{{UrlH}}px;" ></canvas>
 <view class='{{maskShow==1?"noscroll":""}}' style="overflow:hidden;">
     <view class="motify {{prompt==''?'hide':''}}">
         <icon class="i show_type warning" type='warn' size='25' color='#FFF'></icon>
@@ -33,6 +35,12 @@
      <!-- <view class='d_l'>登陆</view> -->
     <!-- </button>
 </view> -->
+
+
+
+
+
+
     <block wx:if='{{selectType == "video"}}'>
         <video src='{{goods_info.goods_video_address}}' autoplay='false' style='height:{{swiperHeight}}px'></video>
     </block>
@@ -91,7 +99,7 @@
                 <text decode="true">{{goods_info.goods_name}}</text>
             </view>
             <text  decode="true"  class="p goods-introduction">{{goods_info.introduction}}</text>
-            <button class="span give-the-thumbs-up" open-type="share">
+            <button class="span give-the-thumbs-up" catchtap="proChoose">
                 <image src='/images/goods/icon_share.png' class="i fa fa-thumbs-up" mode='scaleToFill'></image>
                 分享
             </button>
@@ -788,7 +796,26 @@
         <!-- 适配全面屏 -->
         <view class="s '{{isIphoneX?'L-ise':''}}' "></view>
     </view>
-  <template is="dataLogin" data="{{showModal,Choice,layout}}" />
-  
+     <template is="dataLogin" data="{{showModal,Choice,layout}}" />
 </view>
+ <!-- 分享弹出框 +  制作海报 -->
+  <view class="mask " wx:if="{{TT}}" id="mask" catchtap='popupClose'></view>
+  <view class="orienation" wx:if="{{TT}}">
+  <button open-type="share"  >分享给好友</button>
+  <button catchtap="producer">制作海报</button>
+  <button catchtap='popupClose'>取消</button>
+  </view>  
+      
+<!-- catchtap='popupClose' -->
+ <view class="mask " wx:if="{{TCL}}" id="mask" ></view>
+ <view class="exhibition" wx:if="{{TCL}}" style="top:100rpx;left:125rpx;" >
+  <image  lazy-load="true" src="{{compound_Img}}"   style="width:500rpx;"  mode='widthFix'></image>
+   <view class="ng">
+       <view class="l" catchtap='popupClose'>关闭</view>
+       <view class="l" style='border-left: 1px solid #ccc;' catchtap='Save'>保存图片</view>
+   </view>
+  </view>  
+
+
+
 </scroll-view>
