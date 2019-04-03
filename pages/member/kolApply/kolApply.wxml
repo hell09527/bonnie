@@ -1,11 +1,61 @@
-<scroll-view>
+<scroll-view wx:if='{{isKol==2}}'>
+  <view class='article'>
+    <view class="pay-block">
+			<image src='https://static.bonnieclyde.cn/W56.png' mode='widthFix'/>
+		</view>
+        <view class='p' >{{kolText}}</view>
+       <button catchtap='toIndex'>返回首页</button>
+  </view>
+</scroll-view>
 
-<view class='occupy'> 
-
+<scroll-view wx:if='{{isKol==1}}'>
+    <view class="ft" style='font-size:60rpx;margin-top: 16rpx;'>JOIN US</view>
+    <view class="ft" style=' margin-bottom: 50rpx;'>极选师：Bonnie&Clyde 顶奢品牌推手</view>
+  <!-- 旋转木马 -->
+ <view class="swiper-container" style='width:100%'> 
+ <swiper class='swiperClass' autoplay='{{false}}' indicator-color="#a39f99" indicator-active-color="#f49641"   interval="2000" duration="1000" previous-margin="110rpx" next-margin="100rpx" circular bindchange="bindchange" style='height: {{swiperHeight}}rpx'>
+ <block wx:for="{{shop}}"  wx:key="{{index}}">
+ <swiper-item>
+ <image  style='width:{{windowWidth}}px' src="{{item}}" class="slide-image {{swiperIndex == index ? 'active' : 'quiet'}}" mode="widthFix">
+ </image>
+ </swiper-item>
+ </block>
+ </swiper>
+   <view class="dots">
+    <block wx:for="{{shop}}" wx:key="{{index}}">
+      <view class="dot{{index == swiperIndex ? ' active' : ''}}"></view>
+    </block>
+  </view>
+</view>  
+<!-- indicator-dots -->
+<view class="ul" style='width:{{windowWidth}}px'>
+    
+     <image  style='width:{{windowWidth}}px' src='https://static.bonnieclyde.cn/icon-all%20copy@3x.png'  mode="widthFix"></image>
+    <!-- <view class="li">
+        <image src='https://static.bonnieclyde.cn/3x01.png'  mode="widthFix"></image>
+    </view>
+    <view class="li">
+        <image src='https://static.bonnieclyde.cn/3x02.png'  mode="widthFix"></image>
+    </view>
+    <view class="li">
+        <image src='https://static.bonnieclyde.cn/3x03.png'  mode="widthFix"></image>
+    </view>
+    <view class="li">
+        <image src='https://static.bonnieclyde.cn/3x04.png'  mode="widthFix"></image>
+    </view>
+    <view class="li">
+        <image src='https://static.bonnieclyde.cn/3x05.png'  mode="widthFix"></image>
+    </view> -->
 </view>
+<view class="local" >
+    <block wx:if='{{unregistered==1}}' >
+             <button style='width:{{windowWidth}}px' catchtap='Crossdetails'>一键成为极选师</button>
+    </block>
+     <block wx:if='{{unregistered==0 }}' >
+         <button style='width:{{windowWidth}}px' catchtap='toApply' >一键成为极选师</button>
+    </block>
+    
 
-<view class="local" catchtap='toApply'>
-<button>一键加入极选师</button>
 </view>
 
 </scroll-view>

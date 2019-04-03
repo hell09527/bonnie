@@ -6,9 +6,19 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isKol:1,
     listData:{
     },    //全数据
     recommend:'',   //推荐人
+    shop:[
+     "https://static.bonnieclyde.cn/%E6%9E%81%E9%80%89%E5%B8%88-%E5%9B%BE0403-1.png",
+      "https://static.bonnieclyde.cn/%E6%9E%81%E9%80%89%E5%B8%88-%E5%9B%BE0403-2.png",
+      "https://static.bonnieclyde.cn/%E6%9E%81%E9%80%89%E5%B8%88-%E5%9B%BE0403-3.png",
+    ],
+    swiperHeight:688,
+    swiperIndex: 0 ,//这里不写第一次启动展示的时候会有问题
+    tel:'',
+    kolText: '',    //文本
   },
 
   /**
@@ -19,6 +29,7 @@ Page({
     var listData = this.data.listData;
     // console.log(app.globalData.token)
     console.log(options.scene, options.uid);
+    let updata = app.globalData.unregistered;
     var date = new Date;
     var year = date.getFullYear();
     var month = date.getMonth() + 1;
@@ -29,7 +40,7 @@ Page({
     God = (month < 10 ? "0" + God : God);
     var mydate = (year.toString() + '-' + month.toString()+'-' + God);
     that.setData({
-      mydate 
+      unregistered:updata 
     })
 
 
@@ -130,10 +141,14 @@ Page({
       })
     }
 
-    app.unregisteredCallback = unregistered => {
-      console.log(app.globalData.unregistered);
-      app.isLogin(app.globalData.unregistered);
-    }
+    // app.unregisteredCallback = unregistered => {
+    //   console.log(app.globalData.unregistered);
+    //   app.isLogin(app.globalData.unregistered);
+    // }
+
+
+
+
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -141,19 +156,65 @@ Page({
   onReady: function () {
     
   },
+ 
+   XXS_reuse:function(){
+    let that = this;
+
+    app.sendRequest({
+      url: "api.php?s=member/getMemberDetail",
+      success: function (res) {
+        let data = res.data
+        if (res.code == 0) {
+          let is_vip = data.is_vip;
+          app.globalData.is_vip = data.is_vip;
+          app.globalData.distributor_type = data.distributor_type;
+          let distributor_type = data.distributor_type;
+          app.globalData.uid = data.uid;
+          app.globalData.vip_gift = data.vip_gift;
+          app.globalData.vip_goods = data.vip_goods;
+          let tel = data.user_info.user_tel;
+          if (tel !== null || tel !== undefined || tel  !== '') {
+            console.log(111)
+          } else if (tel==''){
+            console.log(223)
+          } 
+
+          let updata = that.data.unregistered;
+          updata = app.globalData.unregistered;
+          console.log(updata, 'updata', '134', data.is_employee);
+          // console.log(app.globalData.is_vip)
+          that.setData({
+            is_vip: is_vip,
+            tel: tel,
+            distributor_type,
+            unregistered: updata,
+            is_employee: data.is_employee,
+          })
+         
+          
+   
+        }
+      }
+    })
+  },
 
   // 申请极选师
   toApply: function (event) {
     var that = this;
     var listData = this.data.listData;
     var experience=listData.work_experience;
- 
-      // 提交表格
+     
       app.sendRequest({
         url: 'api.php?s=Distributor/applyDistributor',
         data: listData,
         success: function (res) {
           console.log(res)
+          if(res.code==1){
+            wx.switchTab({
+              url: "/pages/member/member/member",
+            })
+
+          }
        
         }
       })
@@ -174,14 +235,30 @@ Page({
     var listData = this.data.listData;
     wx.hideShareMenu();
     console.log(app.globalData.unregistered);
-    if (app.globalData.unregistered == 1) {
-      wx.navigateTo({
-        url: '/pages/member/resgin/resgin',
-      })
-    }
+  
+
+
+    wx.getSystemInfo({
+      success(res) {
+        let windowWidth = (res.windowWidth/1.4);//当前手机屏幕的宽度
+
+        let windowHeight = res.windowHeight;
+        let screenWidth = res.windowWidth;
+        let screenHeight = res.windowHeight;
+        console.log(windowWidth)
+        console.log(windowHeight)
+        that.setData({
+          windowWidth: windowWidth,
+          windowHeight,
+          screenWidth,
+        })
+      }
+
+    })
 
     if (app.globalData.token && app.globalData.token != '') {
       //判断是否是付费会员的接口
+      that.XXS_reuse();
       app.sendRequest({
         url: "api.php?s=member/getMemberDetail",
         success: function (res) {
@@ -221,15 +298,19 @@ Page({
                   }
                 }
               })
-           
+              console.log(tel, uid)
+              that.setData({
+                listData,
+              })
             }
           }
         }
       })
     } else {
       app.employIdCallback = employId => {
-        console.log(employId)
         if (employId != '') {
+          //判断是否是付费会员的接口
+          that.XXS_reuse();
           app.sendRequest({
             url: "api.php?s=member/getMemberDetail",
             success: function (res) {
@@ -242,6 +323,7 @@ Page({
                     url: '/pages/member/resgin/resgin',
                   })
                 } else {
+    
                   // 判断是否是极选师
                   app.sendRequest({
                     url: 'api.php?s=distributor/checkApply',
@@ -267,15 +349,36 @@ Page({
                       }
                     }
                   })
-               
+                  console.log(tel, uid)
+                
+                  that.setData({
+                    listData,
+                  })
                 }
               }
             }
           })
+               
         }
+    
       }
     }
+
+    
+  
+
+
+
+
+
+  
   },
+  bindchange(e) {
+    console.log(e.detail.current)
+    this.setData({
+         swiperIndex: e.detail.current
+    })
+    },
 
   /**
    * 生命周期函数--监听页面隐藏
@@ -310,5 +413,23 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+      /**触发*/
+      Crossdetails:function(){
+        let _that=this;
+        let Tel=_that.data.tel;
+        console.log(213)
+        let suffix=_that.data.goods_id;
+        if (app.globalData.unregistered == 1 || Tel=='') {
+          wx.navigateTo({
+            url: '/pages/member/resgin/resgin',
+          })
+          }
+     },
+     toIndex: function () {
+      wx.switchTab({
+        url: '/pages/index/index',
+      })
+    },
+  
 })

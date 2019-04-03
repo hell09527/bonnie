@@ -10,7 +10,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.4.2",
-	"appid": "wxba4f30503c1ea656",
+	"appid": "wxd145d8a6e951dd1b",
 	"projectname": "%E6%B5%8B%E8%AF%95",
 	"isGameTourist": false,
 	"condition": {
@@ -31,12 +31,20 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 1,
 			"list": [
 				{
 					"id": -1,
 					"name": "1",
 					"pathName": "pages/member/supportCenter/supportCenter",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "2",
+					"pathName": "pages/member/kolApply/kolApply",
+					"query": "",
 					"scene": null
 				}
 			]

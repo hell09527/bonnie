@@ -254,13 +254,13 @@
 
              <view class='li' wx:if='{{distributor_type!=0}}'>
           <view class="a member_list_item" catchtap='listClick'     data-url="member/supportCenter/supportCenter?stu=1">
-            <image lazy-load="true" src='https://static.bonnieclyde.cn/help.png' />
+            <image lazy-load="true" src='https://static.bonnieclyde.cn/weng.png' />
             <view class='span'>帮助中心</view>
           </view>
         </view>
              <view class='li' wx:if='{{distributor_type!=0}}'>
           <view class="a member_list_item" catchtap='listClick'     data-url="member/supportCenter/supportCenter?stu=2">
-            <image lazy-load="true" src='https://static.bonnieclyde.cn/detail@2x.png' />
+            <image lazy-load="true" src='https://static.bonnieclyde.cn/bangs.png' />
             <view class='span'>规则说明</view>
           </view>
         </view>
@@ -270,6 +270,6 @@
   </view>
   
    <view wx:if="{{distributor_type ==0}}" catchtap='explain'  >
-              <image lazy-load="true"  style='width:100%;'  mode='widthFix'  src='https://static.bonnieclyde.cn/WechatIMG628.png'  />
+              <image lazy-load="true"  style='width:100%;'  mode='widthFix'  src='https://static.bonnieclyde.cn/banners.png'  />
    </view>
 </scroll-view>

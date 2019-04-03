@@ -7,7 +7,6 @@
     <view style='width:100%;text-align:center;margin-bottom:40rpx;' catchtap='toBack'>返回上一页</view>
   </view>
 </view>
-
   <!-- 手机号登录逻辑 -->
     <view class="login-modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{layout}}"></view>
     <view class="login-modal-dialog" wx:if="{{layout}}">

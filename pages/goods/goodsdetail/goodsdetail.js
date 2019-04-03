@@ -124,33 +124,7 @@ Page({
       })
 
     }  
-          
-         // 制作二维码
-
-    
-    app.sendRequest({
-      url: "api.php?s=Distributor/getDistributorGoodsWxCode",
-      data: {
-        goods_id: options.goods_id
-      },
-      success: function (res) {
-        let data = res.data;
-        that.setData({
-          codeUrl: data,
-        })
-
-      }
-    })
-
-
-
-
-
-
-
-
-
-
+  
 
     // 是否授权数据更新
     let updata = that.data.unregistered
@@ -332,19 +306,65 @@ Page({
       }
 }
 
-      
-         
+      if(app.globalData.token == ''){
+        app.sendRequest({
+          url: "api.php?s=Distributor/getDistributorGoodsWxCode",
+          data: {
+                distributor_type:0,
+              goods_id: that.data.goods_id
+                  },
+                 success: function (res) {
+                    let data = res.data;
+                    that.setData({
+                      codeUrl: data,
+                    })
+            
+                  }
+                  })
+      }
+ 
          
    
 
 if (app.globalData.token && app.globalData.token != '') {
-  //判断是否是付费会员的接口
-  that.XXS_reuse();
+             //判断是否是付费会员的接口
+               that.XXS_reuse();
+          let   originS=  that.data.distributor_type;
+   app.sendRequest({
+    url: "api.php?s=Distributor/getDistributorGoodsWxCode",
+    data: {
+      distributor_type:originS,
+      goods_id: that.data.goods_id
+            },
+           success: function (res) {
+              let data = res.data;
+              that.setData({
+                codeUrl: data,
+              })
+      
+            }
+          })
 } else {
   app.employIdCallback = employId => {
     if (employId != '') {
       //判断是否是付费会员的接口
       that.XXS_reuse();
+      let   originS=  that.data.distributor_type;
+              // 制作二维码
+     app.sendRequest({
+      url: "api.php?s=Distributor/getDistributorGoodsWxCode",
+      data: {
+        distributor_type:originS,
+        goods_id: that.data.goods_id
+      },
+      success: function (res) {
+        let data = res.data;
+        that.setData({
+          codeUrl: data,
+        })
+
+      }
+    })
     }
 
   }
