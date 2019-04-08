@@ -3,58 +3,58 @@
   <view class='Als' wx:if='{{jump==1}}'>
  <view class='cols'>
         <view class="headline">1. 分润是什么？</view>
-  <view class="head_texts ">分润类似于消费返现的概念。普通会员（或者极选师本人）通过极选师推广链接购买商品，极选
+  <view class="head_text ">分润类似于消费返现的概念。普通会员（或者极选师本人）通过极选师推广链接购买商品，极选
 师将获得商品售价分润比例的金额。目前平台已上架的商品基本已设定了分润比例。</view> 
  </view>
 
  <view class='cols'>
       <view class="headline">2. 分润金额到账需要多长时间？</view>   
-  <view class="head_texts ">从订单创建时间算起，如无特殊情况，需要8至15天，订单完成之后，极选师账户入账订单的商品分润。已入账的分润则是可提现金额。</view> 
+  <view class="head_text ">从订单创建时间算起，如无特殊情况，需要8至15天，订单完成之后，极选师账户入账订单的商品分润。已入账的分润则是可提现金额。</view> 
  </view>
 
  <view class='cols'>
        <view class="headline">3. 如何分享商品？</view>   
-    <view class="head_texts ">极选师在商品详情页中点击【分享】按钮分享至微信好友/群即可。</view> 
+    <view class="head_text ">极选师在商品详情页中点击【分享】按钮分享至微信好友/群即可。</view> 
  </view>
 
 
      <view class='cols'>
               <view class="headline">4. 如何修改商品价格？如何分享购物清单？</view> 
-               <view class="head_texts">1） 商品加入购物车</view>  
-               <view class="head_texts">2） 在购物车内点击【编辑】按钮进入编辑状态</view>  
-                <view class="head_texts">3） 极选师专属折扣的产品变成输入框</view>   
-                   <view class="head_texts">4） 输入折扣范围内的价格</view>  
-                    <view class="head_texts">5） 点击【完成】按钮保存</view> 
-                     <view class="head_texts">6） 右上角点击【转发】</view> 
-                      <view class="head_texts">7） 即可分享至微信群/好友</view>  
+               <view class="head_text">1） 商品加入购物车</view>  
+               <view class="head_text">2） 在购物车内点击【编辑】按钮进入编辑状态</view>  
+                <view class="head_text">3） 极选师专属折扣的产品变成输入框</view>   
+                   <view class="head_text">4） 输入折扣范围内的价格</view>  
+                    <view class="head_text">5） 点击【完成】按钮保存</view> 
+                     <view class="head_text">6） 右上角点击【转发】</view> 
+                      <view class="head_text">7） 即可分享至微信群/好友</view>  
      </view>
 
  <view class='cols'>
           <view class="headline">5. 如何生成分享海报？</view> 
-           <view class="head_texts">1） 极选师在个人中心进入海报制作</view> 
-               <view class="head_texts">2） 根据操作提示上传图片、选择商品</view>   
-                   <view class="head_texts">3） 生成的海报上会带有极选师专属的小程序</view> 
-                       <view class="head_texts">4） 扫码可以直接进入所选商品页面</view> 
+           <view class="head_text">1） 极选师在个人中心进入海报制作</view> 
+               <view class="head_text">2） 根据操作提示上传图片、选择商品</view>   
+                   <view class="head_text">3） 生成的海报上会带有极选师专属的小程序</view> 
+                       <view class="head_text">4） 扫码可以直接进入所选商品页面</view> 
             </view>            
  <view class='cols'>
           <view class="headline">6. 如何查看分润？如何提现分润？</view>  
-           <view class="head_texts">1） 极选师可在个人中心内进入极选师模块的分润统计查看【可提现金额】、【待入账金额】，还有
+           <view class="head_text">1） 极选师可在个人中心内进入极选师模块的分润统计查看【可提现金额】、【待入账金额】，还有
 【累计赚取金额】</view> 
-            <view class="head_texts">2） 点击“我要提现”按钮进入提现页面</view> 
-             <view class="head_texts">3） 根据页面提示输入提现金额后发起提现申
+            <view class="head_text">2） 点击“我要提现”按钮进入提现页面</view> 
+             <view class="head_text">3） 根据页面提示输入提现金额后发起提现申
 请</view> 
-              <view class="head_texts">4） 将会自动到账微信零钱。（目前暂不支持直接提现至银行卡）</view>  
+              <view class="head_text">4） 将会自动到账微信零钱。（目前暂不支持直接提现至银行卡）</view>  
  </view>
  
  <view class='cols'>
        <view class="headline">7. 如何查看商品分润比例？</view>   
-    <view class="head_texts ">1）极选师在个人中心进入极选师模块中的商品排行内查看商品的
+    <view class="head_text ">1）极选师在个人中心进入极选师模块中的商品排行内查看商品的
     分润比例。但目前仅支持查看分润比例前十的商品，请期待后续开放更多商品分润比例可查询。</view> 
  </view>
  
      <view class='cols'>
               <view class="headline">8. 如何查看极选师订单？</view>   
-    <view class="head_texts ">1）极选师可在个人中心内进入极选师模块的订单统计中查看订单，包括订单号、订单发货时间、商
+    <view class="head_text">1）极选师可在个人中心内进入极选师模块的订单统计中查看订单，包括订单号、订单发货时间、商
 品信息、商品分润比例、商品分润金额、订单状态等订单信息。并可以根据订单发货时间查询历
 史订单</view> 
      </view>

@@ -202,7 +202,9 @@ Page({
   toApply: function (event) {
     var that = this;
     var listData = this.data.listData;
-    var experience=listData.work_experience;
+    // listData.is_recommend=1; 
+    // listData.recommend_user = 122;
+  
      
       app.sendRequest({
         url: 'api.php?s=Distributor/applyDistributor',
@@ -235,9 +237,6 @@ Page({
     var listData = this.data.listData;
     wx.hideShareMenu();
     console.log(app.globalData.unregistered);
-  
-
-
     wx.getSystemInfo({
       success(res) {
         let windowWidth = (res.windowWidth/1.4);//当前手机屏幕的宽度

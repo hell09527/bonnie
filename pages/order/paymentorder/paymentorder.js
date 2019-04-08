@@ -795,12 +795,14 @@ console.log(data);
      * 动画效果
      */
     Animation:function(){
+        
         const animation = wx.createAnimation({
           duration: 200,
           timingFunction: 'ease',
         })
         this.animation = animation
         animation.translateY(170).step()
+        
         this.setData({
           animationData: animation.export()
         })

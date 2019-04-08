@@ -800,7 +800,7 @@
 </view>
  <!-- 分享弹出框 +  制作海报 -->
   <view class="mask " wx:if="{{TT}}" id="mask" catchtap='popupClose'></view>
-  <view class="orienation" wx:if="{{TT}}">
+  <view class="orienation" wx:if="{{TT}}" animation='{{animation}}'>
   <button open-type="share"  >分享给好友</button>
   <button catchtap="producer">制作海报</button>
   <button catchtap='popupClose'>取消</button>

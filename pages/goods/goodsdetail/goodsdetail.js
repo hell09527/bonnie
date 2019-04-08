@@ -959,7 +959,8 @@ if (app.globalData.token && app.globalData.token != '') {
    * 购买弹框(动画效果未实现)
    */
   sBuyShow: function(event) {
-    let that=this;
+    
+      let that=this;
       let popUp = 3
       let type = event.currentTarget.dataset.type;
       let status = 0;
@@ -1049,21 +1050,21 @@ Examine: function (event) {
    * 关闭弹框
    */
   popupClose: function (event) {
-    const animation = wx.createAnimation({
-      duration: 500,
-      timingFunction: 'ease',
-    })
+    // const animation = wx.createAnimation({
+    //   duration: 200,
+    //   timingFunction: 'ease',
+    // })
 
-    this.animation = animation
+    // this.animation = animation
 
-    animation.translateY(0)
+    // animation.translateY(0)
 
-    setTimeout(function () {
-      animation.translateY(-282).step()
-      this.setData({
-        animation: animation.export()
-      })
-    }.bind(this), 50);
+    // setTimeout(function () {
+    //   animation.translateY(-282).step()
+    //   this.setData({
+    //     animation: animation.export()
+    //   })
+    // }.bind(this), 50);
     
     this.setData({
       sBuy: 0,
@@ -1071,7 +1072,7 @@ Examine: function (event) {
       serviceShow: 0,
       maskShow: 0,
       point: 0,
-      animation: animation.export(),
+      // animation: animation.export(),
       ladderPreferentialShow: 0,
       TT:false,
       TCL:false
@@ -1895,8 +1896,28 @@ Examine: function (event) {
      选择分享方式
    */
   proChoose:function(){
+    let that=this;
+    console.log(this.data.animation)
+    const animation = wx.createAnimation({
+      duration: 300,
+      timingFunction: 'ease',
+    })
+  
+    this.animation = animation
+  
+    animation.translateY(192).step()
+  
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animation: animation.export()
+      })
+    }.bind(this), 30)
+    
+
     this.setData({
-      TT:true
+      TT:true,
+      animation: animation.export(),
     })
   
   },

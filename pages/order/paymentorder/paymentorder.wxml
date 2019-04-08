@@ -451,7 +451,7 @@
     </view>
 
     <!-- 支付方式 -->
-    <view class="mask-layer-control {{pay_box_status==1?'':'hide'}}" animation='{{animationData}}' animation='{{animationData}}'>
+    <view class="mask-layer-control {{pay_box_status==1?'':'hide'}}"  animation='{{animationData}}'>
         <view class="header">请选择支付方式
             <icon class="span close" catchtap='closePoupo' data-status='0' type='cancel' size='22' color='#666'></icon>
         </view>
