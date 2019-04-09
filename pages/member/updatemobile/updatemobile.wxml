@@ -1,6 +1,6 @@
 <scroll-view>
 <view class="alls">
-   <image  class="ims"  src="http://video.ushopal.com/Bonnie%20Clyde%20LOGO-01.png"></image>
+   <image  class="ims"  src="https://static.bonnieclyde.cn/BonnieClyde%20LOGO-01.png"></image>
 </view>
   <view class="motify {{prompt==''?'hide':''}}">
     <icon class="i show_type warning" type='warn' size='25' ></icon>

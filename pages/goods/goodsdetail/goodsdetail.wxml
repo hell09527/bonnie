@@ -812,7 +812,9 @@
   <image  lazy-load="true" src="{{compound_Img}}"   style="width:500rpx;"  mode='widthFix'></image>
    <view class="ng">
        <view class="l" catchtap='popupClose'>关闭</view>
-       <view class="l" style='border-left: 1px solid #ccc;' catchtap='Save'>保存图片</view>
+       <view  wx:if='{{!Again}}'class="l sssss" style='border-left: 1px solid #ccc;' catchtap='Save'>保存图片</view>
+       <view wx:else class="l     xxxxxx" style='border-left: 1px solid #ccc;' catchtap='Againadd'>保存图片</view>
+        
    </view>
   </view>  
 

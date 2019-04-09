@@ -1,4 +1,3 @@
-
 <!-- 商品列表外部 引入tempalte-->
 <import src="/templates/goods-item-template/goods-item-template.wxml" />
 
@@ -197,24 +196,4 @@
     </view>
     <image lazy-load="true" src="https://static.bonnieclyde.cn/WechatI3.png" mode='widthFix' style='margin:100rpx auto;display:block;width:300rpx;position: relative;'></image>
   </form>
-
-
-  <!-- 旋转木马 -->
- <!-- <view class="swiper-container">
- <swiper class='swiperClass' autoplay='{{false}}' indicator-color="#a39f99" indicator-active-color="#f49641"   interval="2000" duration="1000" previous-margin="50px" next-margin="50px" circular bindchange="bindchange" style='height: {{swiperHeight}}px'>
- <block wx:for="{{shop}}" wx:for-item='shops' wx:key="{{index}}">
- <swiper-item>
- <image  catchtap='listClick' data-has="{{shops.hasTarget}}" data-x="{{ shops.hasExtra }}" data-id="{{shops.id}}"  data-title="{{shops.title}}" data-url='/goods/goodsdetail/goodsdetail?goods_id={{shops.goodsId}}&&goods_name={{shops.goodsTitle}}'
- src="{{shops.imgUrl?shops.imgUrl:shops.pic}}" class="slide-image {{swiperIndex == index ? 'active' : 'quiet'}}" mode="widthFix">
- </image>
- </swiper-item>
- </block>
- </swiper>
-   <view class="dots">
-    <block wx:for="{{shop}}" wx:key="{{index}}">
-      <view class="dot{{index == swiperIndex ? ' active' : ''}}"></view>
-    </block>
-  </view>
-</view>   -->
-<!-- indicator-dots -->
 </scroll-view>

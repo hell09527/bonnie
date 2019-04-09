@@ -76,6 +76,7 @@ Page({
     shop_img:'', // 商品主图
     compound_Img:'',//合成图片
     UrlH:'',//canvas高度
+    Again:false,
   },
  
     //测试数据
@@ -328,8 +329,8 @@ Page({
 
 if (app.globalData.token && app.globalData.token != '') {
              //判断是否是付费会员的接口
-               that.XXS_reuse();
-          let   originS=  that.data.distributor_type;
+   that.XXS_reuse();
+   let   originS=  that.data.distributor_type;
    app.sendRequest({
     url: "api.php?s=Distributor/getDistributorGoodsWxCode",
     data: {
@@ -369,10 +370,6 @@ if (app.globalData.token && app.globalData.token != '') {
 
   }
 }
-
-
-
-
 
     app.restStatus(that, 'comboFlag');
     app.restStatus(that, 'comboPackagesFlag');
@@ -2095,28 +2092,62 @@ drawText(ctx, str, leftWidth, initHeight, titleHeight, canvasWidth,FontSize) {
      }
    })
   },
+  Againadd:function () {
+            let that=this;
+              wx.openSetting({
+              success: (res) => {
+                  console.log('授权成功');
+                  console.log(res.authSetting)
+                  res.authSetting = {
+                    "scope.writePhotosAlbum": true,
+                  }
+                  that.file();
+              }
+          })
+  },
   /* 
     保存到相册
   */
  Save: function () {
   let that = this;
-  wx.getSetting({
-    success(res) {
-      if (!res.authSetting['scope.writePhotosAlbum']) {
-        wx.authorize({
-          scope: 'scope.writePhotosAlbum',
-          success() {
-          },
-          fail() {
-            that.file()
-          }
-        });
-      } else {
-        that.file();
-        // that.popupClose();
-      }
-    }
-  });
+  that.file();
+  // wx.getSetting({
+  //   success(res) {
+  //     if (!res.authSetting['scope.writePhotosAlbum']) {
+  //       console.log('11')
+  //       // that.setData({
+  //       //   Again:true,
+  //       // })
+  //    wx.authorize({
+  //         scope: 'scope.writePhotosAlbum',
+  //         success() {
+  //           console.log('22')
+  //           that.file();
+  //         },
+  //         fail() {
+  //           console.log("打开设置窗口");
+  //           wx.openSetting({
+  //             success: (res) => {
+  //                 console.log('授权成功');
+  //                 console.log(res.authSetting)
+  //                 res.authSetting = {
+  //                   "scope.writePhotosAlbum": true,
+  //                 }
+  //                 that.file();
+  //             }
+  //         })
+       
+
+  //         }
+  //       });
+    
+  //     } else {
+  //       console.log('44')
+  //       that.file();
+  //       // that.popupClose();
+  //     }
+  //   }
+  // });
 },
 file: function () {
   let that = this;
@@ -2124,6 +2155,9 @@ file: function () {
   wx.saveImageToPhotosAlbum({
     filePath: that.data.compound_Img,
     success(res) {
+      that.setData({
+        TCL:false,
+      })
       wx.showToast({
         title: '保存成功',
         icon: 'success',
@@ -2131,19 +2165,15 @@ file: function () {
       });
     },
     fail(res) {
+        that.setData({
+         Again:true,
+       })
       wx.showToast({
-        title: '保存失败',
+        title: '保存图片开启相册权限',
         icon: 'fail',
         duration: 2000
       });
-      wx.openSetting({
-        success(res) {
-          console.log(res.authSetting)
-          res.authSetting = {
-            "scope.writePhotosAlbum": true,
-          }
-        }
-      })
+    
 
 
     }
