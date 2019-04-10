@@ -227,6 +227,7 @@ PP_reuse:function(){
     let goods_list = that.data.goods_list;
     let page = that.data.page;
     let new_brand_id = brand_id
+
     app.sendRequest({
       url: 'api.php?s=goods/getBrandGoodsList',
       data: {
@@ -251,6 +252,7 @@ PP_reuse:function(){
               // parm[parm_key] = new_goods_list[index];
             }
             goods_list = goods_list.concat(new_goods_list);
+            
             that.setData({
               goods_list,
             });

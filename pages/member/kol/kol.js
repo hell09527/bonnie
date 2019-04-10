@@ -12,6 +12,9 @@ Page({
     user_headimg: '',   //头像
     star_num: '',   //星级
     member_name: '',   //kol名字
+    DatCue:{},
+    page_index :1,
+    key:0
   },
   onLoad: function () {
     // console.log('onLoad')
@@ -20,6 +23,7 @@ Page({
     // console.log(that.getWeekEndDate());
     // console.log(that.getMonthStartDate());
     // console.log(that.getMonthEndDate());
+    let page_index=that.data.page_index;
     var date = new Date;
     var year = date.getFullYear();
     var month = date.getMonth() + 1;
@@ -52,42 +56,54 @@ Page({
         })
       }
     })
+    let  DatCue=that.data.DatCue;
+    DatCue={
+      page_index
+    }
+    
+    that.TWportion(DatCue);
 
-
-    //商品排行榜
-    app.sendRequest({
-      url: "api.php?s=goods/getGoodsRecommendList",
-      success: function (res) {
-        let listData = res.data
-        // console.log(listData)       
-        
-        for (let index in listData){
-          // console.log(listData[index].fraction)
-          listData[index].fraction = Number(listData[index].fraction*100).toFixed() + "%";
-        }
-        console.log(listData)
-        that.setData({
-          listData
-        })
-      }
-    })
-
-    //商品排行榜
-    app.sendRequest({
-      url: "api.php?s=goods/getGoodsSalesList",
-      success: function (res) {
-        let saveData = res.data
-        // console.log(saveData)
-
-
-        // for (let index in listData) {
-        //   listData[index].fraction = listData[index].fraction * 100 + "%"
+    // app.sendRequest({
+    //   url: "api.php?s=/distributor/kolProducts",
+    //   success: function (res) {
+    //     let listData = res.data
+    //     console.log(listData )       
+        // for (let index in listData){
+        //   listData[index].fraction = Number(listData[index].fraction*100).toFixed() + "%";
         // }
-        that.setData({
-          saveData
-        })
-      }
-    })
+        // console.log(listData)
+        // that.setData({
+        //   listData
+        // })
+    //   }
+    // })
+
+
+    //商品排行榜
+    // app.sendRequest({
+    //   url: "api.php?s=goods/getGoodsRecommendList",
+    //   success: function (res) {
+    //     let listData = res.data
+    //     for (let index in listData){
+    //       listData[index].fraction = Number(listData[index].fraction*100).toFixed() + "%";
+    //     }
+    //     console.log(listData)
+    //     that.setData({
+    //       listData
+    //     })
+    //   }
+    // })
+
+    //商品排行榜
+    // app.sendRequest({
+    //   url: "api.php?s=goods/getGoodsSalesList",
+    //   success: function (res) {
+    //     let saveData = res.data
+    //     that.setData({
+    //       saveData
+    //     })
+    //   }
+    // })
 
     // 
     app.sendRequest({
@@ -106,6 +122,63 @@ Page({
         }
       }
     })
+
+  },
+  TWportion:function(DatCue){
+    let that=this;
+    app.sendRequest({
+      url: "api.php?s=/distributor/kolProducts",
+      data:DatCue,
+      success: function (res) {
+        let head_list = res.data.head_list;
+        let product_list = res.data.product_list;
+          for (let index in product_list ){
+            product_list[index].fraction = Number(product_list[index].fraction*100).toFixed() + "%";
+        }
+        console.log(head_list) ;
+        that.setData({
+          head_list,
+          product_list 
+        })      
+      }
+    })
+
+  },
+   /**
+   * 顶部导航选中
+   */
+  selectCate: function (event) {
+    let that = this;
+    let  DatCue=that.data.DatCue;
+    let page_index  = that.data.page_index;
+    let head_list  = that.data.head_list;
+    let key = event.currentTarget.dataset.id;
+
+       for (let index in head_list ){
+           head_list[index].is_check= false;
+           if(head_list[index].key==key){
+            head_list[index].is_check= true;
+           }
+        }
+
+         DatCue={key, page_index:1};
+         app.sendRequest({
+          url: "api.php?s=/distributor/kolProducts",
+          data:DatCue,
+          success: function (res) {
+            let product_list = res.data.product_list;
+            for (let index in product_list ){
+              product_list[index].fraction = Number(product_list[index].fraction*100).toFixed() + "%";
+          }
+            console.log(head_list);
+            that.setData({
+              key,
+              page_index:1,
+              head_list ,
+              product_list 
+            })      
+          }
+        })
 
   },
   onReady: function () {
@@ -202,11 +275,24 @@ Page({
       }
     })
   },
+  onPageScroll:function(e){ // 获取滚动条当前位置
+     let that=this;
+  that.setData({
+    scrollTop: e.scrollTop
+  })
+    // console.log(e.scrollTop)//获取滚动条当前位置的值
+},
 
   topNav: function (event) {
     let that = this;
     let status = event.currentTarget.dataset.id;
     let order_status = status == 0 ? 'all' : status - 1;
+    let scrollTop=that.data.scrollTop;
+   if(scrollTop>0 && status!=1 ){
+    wx.pageScrollTo({
+      scrollTop: 0
+     });
+   }
     that.setData({
       _no: status,
       status: order_status,
@@ -500,6 +586,62 @@ Page({
     var monthEndDate = str + '-' + endDate;
     console.log(monthStartDate, monthEndDate);
     this.orders(monthStartDate, monthEndDate)
+  },
+    /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+    let that = this;
+    let key = that.data.key;
+    let product_list  = that.data.product_list ;
+    let page_index = that.data.page_index;
+
+      page_index = page_index >=2? page_index:2;
+      app.sendRequest({
+        url: 'api.php?s=/distributor/kolProducts',
+        data: {
+          key,
+          page_index
+        },
+        success: function (res) {
+          let code = res.code;
+          let data = res.data;
+          if (code == 0) {
+            let parm = {};
+            let parm_key = '';
+            let new_product_list= data.product_list;
+             console.log(new_product_list)
+  
+            if (new_product_list[0] != undefined){
+  
+              page_index++;
+              for (let index in new_product_list){
+                new_product_list[index].fraction = Number(new_product_list[index].fraction*100).toFixed() + "%";
+                let key = parseInt(new_product_list.length) + parseInt(index);
+                let img = new_product_list[index].pic_cover_small;
+                new_product_list[index].pic_cover_small = app.IMG(img);
+              }
+              product_list= product_list.concat(new_product_list);
+              
+              that.setData({
+                product_list,
+              });
+            }
+  
+            that.setData({
+              page_index:page_index,
+            })
+          }
+          console.log(res);
+        }
+      });
+    
+    
+ 
+    
+       
+
+  
   },
 })
 

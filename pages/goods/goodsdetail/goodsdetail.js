@@ -77,6 +77,7 @@ Page({
     compound_Img:'',//合成图片
     UrlH:'',//canvas高度
     Again:false,
+    exchange:false,
   },
  
     //测试数据
@@ -1238,6 +1239,9 @@ Examine: function (event) {
     let max_buy = parseInt(that.data.goods_info.max_buy);
     // let stock = parseInt(that.data.goods_info.stock);
     let min_buy = parseInt(that.data.goods_info.min_buy);
+    that.setData({
+      exchange: false,
+    })
 
     if (max_buy > 0 && num > max_buy) {
       app.showBox(that, '此商品限购，您最多购买' + max_buy + '件');
@@ -1262,7 +1266,7 @@ Examine: function (event) {
       num = 0;
     }
     that.setData({
-      goodsNum: num
+      goodsNum: num,
     })
   },
   /**
@@ -2048,7 +2052,7 @@ drawText(ctx, str, leftWidth, initHeight, titleHeight, canvasWidth,FontSize) {
               
                 ctx.stroke()
                 ctx.draw();
-                 console.log('121331')
+               console.log('121331');
                 wx.showToast({
                   title: '制作中',
                   icon: 'loading',
@@ -2136,8 +2140,6 @@ drawText(ctx, str, leftWidth, initHeight, titleHeight, canvasWidth,FontSize) {
   //                 that.file();
   //             }
   //         })
-       
-
   //         }
   //       });
     
@@ -2169,16 +2171,21 @@ file: function () {
          Again:true,
        })
       wx.showToast({
-        title: '保存图片开启相册权限',
+        title: '开启相册权限',
         icon: 'fail',
         duration: 2000
       });
-    
-
 
     }
 
   })
 
 },
+exchange:function(){
+  let that=this;
+  that.setData({
+    exchange: false,
+  })
+}
+
 })

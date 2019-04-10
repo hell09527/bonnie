@@ -5,7 +5,7 @@
  
  <view class="cf-container" data-reactid="2">
     <view class="cf-edge" data-reactid="3"></view>
-    <view class="cf-content" data-reactid="4">
+    <view class="cf-content {{_no== 1?'monika':''}}" data-reactid="4">
           <view class="cf-tab-item {{_no=='0'?'select':''}}" catchtap='topNav' data-id="0"><view class='a'>分润统计</view></view>
       <view class="cf-tab-item {{_no=='1'?'select':''}}" catchtap='topNav' data-id="1"><view class='a'>商品排行</view></view>
       <view class="cf-tab-item {{_no=='2'?'select':''}}" catchtap='topNav' data-id="2"><view class='a'>订单统计</view></view>
@@ -70,78 +70,35 @@
     </block>
         <!-- 分润规则说明  end -->
   <!-- 商品排行 -->
-  <view  wx:if='{{_no== 1}}' class="slick"> 
-  <view class="all" >
-    <view class='top_shop_box'>
-      <view class="top_shop {{isTopClick==1?'top_shop_click':''}}" catchtap='isTopClick' data-index='1'>商品推荐排行榜</view>
-      <view class="top_shop {{isTopClick==2?'top_shop_click':''}}" catchtap='isTopClick' data-index='2'>商品销售排行榜</view>
+  <view  wx:if='{{_no== 1}}' class="slick "  style='margin-top: 68rpx;'> 
+    <!-- 头部 -->
+  <view class="new-my-path">
+     <view class='nav'>
+       <view class='ul'>
+        <block wx:for='{{head_list}}' wx:key='' wx:for-item='cate'>
+              <view data-id="{{cate.key}}" class="li {{cate.is_check?'selected':''}}" catchtap="selectCate">{{cate.value}}</view>
+      </block>
     </view>
-    <view class="table">
-      <!-- <view class="bg-w">
-        <view class="sequence">排名</view>
-        <view class="brand">品牌</view>
-        <view class="name">名称</view>
-        <view class="ratio">分润</view>
-      </view> -->
+  </view>
+  </view>
+  
+     <!-- 显示数据 -->
 
-      <!-- 商品推荐排行榜 -->
-      <block wx:for="{{listData}}" wx:key="{{code}}"wx:for-item='item' wx:for-index='index' wx:if="{{isTopClick==1}}">
+          <!-- 商品推荐排行榜 -->
+          <view style='margin-top:70rpx;'> 
+              <block wx:for="{{product_list }}" wx:key="{{code}}"wx:for-item='item' wx:for-index='index' wx:if="{{isTopClick==1}}">
         <view class="tr" catchtap='skipClick' data-url='/goods/goodsdetail/goodsdetail?goods_id={{item.goods_id}}&&goods_name={{item.goods_name}}'>
           <template is="listItemTemplate" data="{{...item,index}}" />
-          <!-- 第一 -->
-          <view class="ratio" style='color:#d0021b' wx:if='{{index==0}}'>
-            <text>分润</text>
-            <text>{{item.fraction}}</text>
-          </view>
-          <!-- 第二 -->
-          <view class="ratio" style='color:#f57923' wx:elif='{{index==1}}'>
-            <text>分润</text>
-            <text>{{item.fraction}}</text>
-          </view>
-          <!-- 第三 -->
-          <view class="ratio" style='color:#f9b649' wx:elif='{{index==2}}'>
-            <text>分润</text>
-            <text>{{item.fraction}}</text>
-          </view>
           <!-- 其他 -->
-          <view class="ratio" wx:else>
+          <view class="ratio">
             <text>分润</text>
             <text>{{item.fraction}}</text>
           </view>
         </view>
       </block>
-
-
-      <!-- 商品销售排行榜 -->
-
-      <block wx:for="{{saveData}}" wx:key="{{code}}"wx:for-item='item' wx:for-index='index' wx:if="{{isTopClick==2}}">
-        <view class="tr" catchtap='skipClick' data-url='/goods/goodsdetail/goodsdetail?goods_id={{item.goods_id}}&&goods_name={{item.goods_name}}'>
-          <template is="listItemTemplate" data="{{...item,index}}" />
-          <!-- 第一 -->
-          <view class="ratio" style='color:#d0021b' wx:if='{{index==0}}'>
-            <text>销量</text>
-            <text>{{item.sales}}</text>
           </view>
-          <!-- 第二 -->
-          <view class="ratio" style='color:#f57923' wx:elif='{{index==1}}'>
-            <text>销量</text>
-            <text>{{item.sales}}</text>
-          </view>
-          <!-- 第三 -->
-          <view class="ratio" style='color:#f9b649' wx:elif='{{index==2}}'>
-            <text>销量</text>
-            <text>{{item.sales}}</text>
-          </view>
-          <!-- 其他 -->
-          <view class="ratio" wx:else>
-            <text>销量</text>
-            <text>{{item.sales}}</text>
-          </view>
-        </view>
-      </block>
+      
 
-      </view>
-    </view>
   </view>
   
   <view wx:if='{{_no== 2}}' class="slick">

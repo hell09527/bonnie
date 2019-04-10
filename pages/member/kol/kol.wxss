@@ -7,13 +7,11 @@ page{
   background:#fff;
 }
 
+/* 第二部分 废除css */
 .all{
   width: 100%;
-  /* background-color: #fff; */
+ 
   margin-bottom: 20px;
-}
-.sales{
-  background-color: #fff;
 }
 
 .top_shop_box{
@@ -22,6 +20,11 @@ page{
   background: #e5e5e5;
   justify-content: space-between;
   align-items: center;
+}
+
+
+.sales{
+  background-color: #fff;
 }
 .top_shop{
   font-size: 16px;
@@ -46,8 +49,8 @@ page{
   box-shadow: 0px 0px 20px rgba(0,0,0,0.1);
   /* border: 1px solid #e5e5e5; */
   letter-spacing:2px;
-  padding:20rpx 0;
-  margin-top: 20rpx;
+  padding:20rpx ;
+  /* margin-top: 20rpx; */
   align-items: center;
   background: #fff;
 }
@@ -68,25 +71,22 @@ page{
 width: 11%;
  margin: 0 auto;
 
-}
+} 
 .brand{
 width: 25%;
 height: 30px;
 line-height: 30px;
-  /* justify-content: center; */
  margin: 0 auto;
  
-}
+} 
 .names{
-  width: 70%;
-/* height: 68px; */
- /* line-height: 68px; */
+  width: 80%;
  display: flex;
   justify-content: flex-start; 
   align-items:center;
-  border-right: 1px solid #e5e5e5;
-}
-.ratio{
+  /* border-right: 1px solid #e5e5e5; */
+} 
+ .ratio{
  width: 18%;
  display: flex;
  flex-direction: column;
@@ -182,7 +182,7 @@ scroll-view .canvas {
 }
 
 .cf-container .cf-content{
-  position: relative;
+  /* position: relative; */
   color: #333;
   text-align: center;
   top: 0;
@@ -195,7 +195,14 @@ scroll-view .canvas {
   font-size: 1rem;
   list-style-position: outside;
   font-family: inherit;
+  background:#fff;
   width:100%;
+}
+.monika{
+  position: fixed;
+  z-index: 2019;
+  height: 68rpx;
+ 
 }
 
 .cf-container .cf-tab-item{
@@ -321,6 +328,7 @@ scroll-view .canvas {
   background: url('https://static.bonnieclyde.cn/8138945F-2DE9-4790-A9DF-873F8BDAFADE@2x.png') no-repeat;
   background-size: 100% 100%;
   height: 100%;
+  
 }
 .nav_qr{
   margin:40rpx;
@@ -468,7 +476,7 @@ text-align: right;
 }
 .w_book{
    /* float: left; */
- width: 330rpx;
+ width: 440rpx;
  /* height: 42px; */
  /* margin-top: 5px; */
  text-align:left;
@@ -734,4 +742,50 @@ background:#eeb85b;
 margin-top:40rpx;
 margin-bottom:40rpx;
 
+}
+
+
+/* 第二部分样式 */
+
+.new-my-path{
+  border-top: 1.5px solid #F5F5F5;
+}
+
+.new-my-path .nav {
+  position: fixed;
+  background: #ffffff;
+  padding: 10px;
+  overflow: scroll;
+  margin:0;
+  width:100%;
+height:96rpx;
+top:65rpx;
+
+}
+
+.new-my-path .nav .ul {
+  white-space: nowrap;
+}
+
+.nav::-webkit-scrollbar {
+  display: none;
+}
+
+.new-my-path .nav .ul .li {
+  padding: 0 10px;
+  border-radius: 10px;
+  border: 1px solid #EEE;
+  margin: 0 5px;
+  font-size: 13px;
+  white-space: pre-line;
+  display: inline-block;
+  color:#666;
+
+}
+
+.new-my-path .nav .ul .li.selected {
+  border: 1px solid #999999;
+  color: #000000;
+  background: #f1f1f1;
+  font-weight:900;
 }
