@@ -2,7 +2,6 @@
 <!-- 引入tempalte  -->
 <import src="/templates/dataChoose-template/dataChoose-template.wxml" />
 <import src="/templates/list-item-template/list-item-template.wxml" />
- 
  <view class="cf-container" data-reactid="2">
     <view class="cf-edge" data-reactid="3"></view>
     <view class="cf-content {{_no== 1?'monika':''}}" data-reactid="4">
@@ -81,9 +80,7 @@
     </view>
   </view>
   </view>
-  
-     <!-- 显示数据 -->
-
+         <!-- 显示数据 -->
           <!-- 商品推荐排行榜 -->
           <view style='margin-top:70rpx;'> 
               <block wx:for="{{product_list }}" wx:key="{{code}}"wx:for-item='item' wx:for-index='index' wx:if="{{isTopClick==1}}">
@@ -96,14 +93,13 @@
           </view>
         </view>
       </block>
-          </view>
-      
+     </view>
 
   </view>
   
   <view wx:if='{{_no== 2}}' class="slick">
     <view class="ck_blue">
-      <template is="dataChooseTemplate" data="{{datetime,nowData}}" />
+      <template is="dataChooseTemplate" data="{{datetime,nowData}}"/>
       <!-- <view class="ck-tab-item  {{ck=='1'?'tabck':''}}" catchtap='orders' data-id="1">
         <view class='a'>本周</view>
       </view>
@@ -146,8 +142,6 @@
                   <block wx:else>
                     <view class="sta"></view>
                   </block>
-
-                 
                 </view>
               </view>
             </block>
@@ -155,9 +149,7 @@
         </view>
       </block>
     </view>
-
   </view>
-      
 </block>  
 
 
