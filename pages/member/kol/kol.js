@@ -151,6 +151,7 @@ Page({
     let that = this;
     let  DatCue=that.data.DatCue;
     let page_index  = that.data.page_index;
+    let scrollTop = that.data.scrollTop;
     let head_list  = that.data.head_list;
     let key = event.currentTarget.dataset.id;
 
@@ -171,6 +172,12 @@ Page({
               product_list[index].fraction = Number(product_list[index].fraction*100).toFixed() + "%";
           }
             console.log(head_list);
+
+            if(scrollTop>100 ){
+              wx.pageScrollTo({
+                scrollTop: 0
+               });
+             }
             that.setData({
               key,
               page_index:1,
@@ -288,7 +295,7 @@ Page({
     let status = event.currentTarget.dataset.id;
     let order_status = status == 0 ? 'all' : status - 1;
     let scrollTop=that.data.scrollTop;
-   if(scrollTop>0 && status!=1 ){
+   if(scrollTop>100 ){
     wx.pageScrollTo({
       scrollTop: 0
      });
