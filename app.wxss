@@ -262,7 +262,7 @@ strong, b {
 .yuan{
   position: fixed;
   bottom:60rpx;
-  right:30rpx;
+  right:32rpx;
      width: 38px;   
     height: 38px;  
    border:0;  

@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    jump:1,
+    jump: 1,
     TistData: [
       { "code": "分润待结算状态", "text": "订单付款后，订单获得的分润" },
       { "code": "分润审核期", "text": "订单已收货后15天内的维权期" },
@@ -24,15 +24,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let that=this;
+    let that = this;
     let jump;
-    if(options.stu==1){
-      jump=1;
+    if (options.stu == 1) {
+      jump = 1;
       wx.setNavigationBarTitle({
         title: "极选师帮助中心",
       })
-    }else{
-      jump=2;
+    } else {
+      jump = 2;
       wx.setNavigationBarTitle({
         title: "极选师规格说明",
       })

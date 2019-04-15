@@ -42,7 +42,8 @@ Page({
     swiperIndex: 0,//这里不写第一次启动展示的时候会有问题
     title: '',//页面名
     user_tel: '',//手机号码
-    myTime:null
+    myTime:null,
+    isHide:0
   },
   //事件处理函数
   bindViewTap: function () {
@@ -871,7 +872,44 @@ Page({
     this.setData({
       swiperCurrent: e.detail.current
     })
-  }
+  },
+    // 页面滚动事件//滑动开始事件
+    handletouchtart: function (event) {
+      var touchMove = this.data.touchMove;
+      touchMove = event.touches[0].pageY;
+      // console.log(event.touches[0])
+      this.setData({
+        isHide: 1,
+        touchMove
+      })
+    },
+    // 滑动移动事件
+    handletouchmove: function (event) {
+      var touchMove = this.data.touchMove;
+      console.log(touchMove,event.touches[0].clientY)
+      if (touchMove - event.touches[0].clientY<0){
+        // console.log("向下滑了");
+        this.setData({
+          isFix: 0,
+        })
+      } else {
+        this.setData({
+          isFix: 1,
+        })
+      }
+      touchMove = event.touches[0].clientY;
+      this.setData({
+        isHide: 1,
+        touchMove
+      })
+    },
+    //滑动结束事件
+    handletouchend: function (event) {
+      this.setData({
+        isHide: 0
+      })
+    },
+  
 
 
 

@@ -25,7 +25,8 @@ Page({
     showModal: false,
     Choice: false,
     layout: false,
-    tel: ''
+    tel: '',
+    isHide:0
 
   },
   REUSE_member: function () {
@@ -565,7 +566,44 @@ Page({
       url: "/pages/member/kolApply/kolApply",
       // url: "/pages/member/supportCenter/supportCenter",
     })
-  }
+  },
+    // 页面滚动事件//滑动开始事件
+    handletouchtart: function (event) {
+      var touchMove = this.data.touchMove;
+      touchMove = event.touches[0].pageY;
+      // console.log(event.touches[0])
+      this.setData({
+        isHide: 1,
+        touchMove
+      })
+    },
+    // 滑动移动事件
+    handletouchmove: function (event) {
+      var touchMove = this.data.touchMove;
+      console.log(touchMove,event.touches[0].clientY)
+      if (touchMove - event.touches[0].clientY<0){
+        // console.log("向下滑了");
+        this.setData({
+          isFix: 0,
+        })
+      } else {
+        this.setData({
+          isFix: 1,
+        })
+      }
+      touchMove = event.touches[0].clientY;
+      this.setData({
+        isHide: 1,
+        touchMove
+      })
+    },
+    //滑动结束事件
+    handletouchend: function (event) {
+      this.setData({
+        isHide: 0
+      })
+    },
+  
 
 
 

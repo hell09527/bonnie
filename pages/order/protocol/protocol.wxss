@@ -1,59 +1,60 @@
 /* pages/order/protocol/protocol.wxss */
 .overall{
-width:96%;
-margin:30rpx 2%;
-background:#fff;
-padding:10rpx;
-
-}
-.o_left {
-  display:flex;
-  justify-content:space-between;
-  height:34px;
-line-height:34px;
-border-bottom:1px solid #eaeaea;
-
-}
-.o_left button {
-  background:#000;
-  color:#fff;
-  border-radius:0;
-  width:200rpx;
-  height:60rpx;
-  font-size:14px;
-  line-height:60rpx;
-
-}
-.moban{
-  box-shadow:0px 0px 20px rgba(0,0,0,0.1);
-  background:#fff;
-  margin:12rpx 15rpx;
-  margin-bottom:20rpx;
-  padding:5px 5px;
-  
-
-}
-
-.head_text{
-  margin: 10rpx 0 6rpx 0;
-}
-.see_hook{
-  width:100% ;
-  height: 80rpx;
-   margin:auto;
-
-}
-.o_left .li{
- width: 440rpx;
-
-}
-.site{
-  display:flex;
-  justify-content:space-between;
-  height: 100rpx;
-  line-height: 110rpx;
-}
-.site .li{
-  height: 80rpx;
-
-}
+    width:96%;
+    margin:30rpx 2%;
+    background:#fff;
+    padding:10rpx;
+    
+    }
+    .o_left {
+      display:flex;
+      justify-content:space-between;
+      height:34px;
+    line-height:34px;
+    border-bottom:1px solid #eaeaea;
+    
+    }
+    .o_left button {
+      background:#000;
+      color:#fff;
+      border-radius:0;
+      width:200rpx;
+      height:60rpx;
+      font-size:14px;
+      line-height:60rpx;
+    
+    }
+    .moban{
+      box-shadow:0px 0px 20px rgba(0,0,0,0.1);
+      background:#fff;
+      margin:12rpx 15rpx;
+      margin-bottom:20rpx;
+      padding:5px 5px;
+      
+    
+    }
+    
+    .head_text{
+      margin: 10rpx 0 6rpx 0;
+    }
+    .see_hook{
+      width:100% ;
+      height: 80rpx;
+       margin:auto;
+    
+    }
+    .o_left .li{
+     width: 440rpx;
+    
+    }
+    .site{
+      display:flex;
+      justify-content:space-between;
+      height: 100rpx;
+      line-height: 110rpx;
+    }
+    .site .li{
+      height: 80rpx;
+    
+    }
+    

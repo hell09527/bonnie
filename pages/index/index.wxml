@@ -145,7 +145,8 @@
             </button>
           </view>
           <!-- 往期话题 -->
-          <scroll-view class='indexShop-swiper' scroll-x>
+          
+          <!-- <scroll-view class='indexShop-swiper' scroll-x>
             <block wx:for='{{activities}}' wx:key='' wx:for-item='shops' wx:for-index='index'>
               <view class='shop-shuffing-item' catchtap='listClick' data-id="{{shops.id}}" data-title="{{shops.title}}">
                 <button form-type='submit' class="form-button">
@@ -162,7 +163,8 @@
                 <image  lazy-load="true" src="https://static.bonnieclyde.cn/We22.jpeg" style="height:292rpx;width:520rpx;"></image>
               </button>
             </view>
-          </scroll-view>
+          </scroll-view> -->
+
           <!-- 新品推荐 -->
           <image lazy-load="true" src="https://static.bonnieclyde.cn/Title@2x.png" mode='widthFix' style='margin:60rpx 20rpx 0;width:710rpx;'></image>
           <scroll-view class="indexLast-swiper" scroll-x>
@@ -196,4 +198,9 @@
     </view>
     <image lazy-load="true" src="https://static.bonnieclyde.cn/WechatI3.png" mode='widthFix' style='margin:100rpx auto;display:block;width:300rpx;position: relative;'></image>
   </form>
+   <!-- 定位客服 -->
+ <button class="a new-btn buy-cart" open-type="contact" session-from="weapp" class="{{isHide==0?'yuan':'hide-kf'}}" >
+     <view><image src="https://static.bonnieclyde.cn/icon111.jpg"  mode='widthFix' ></image></view>
+   </button>
+
 </scroll-view>

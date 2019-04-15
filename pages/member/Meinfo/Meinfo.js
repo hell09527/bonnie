@@ -13,14 +13,30 @@ Page({
    */
   onLoad: function (options) {
       let that=this;
-      let  Info= JSON.parse(options.info) ;
-      console.log(Info.name)
-      console.log(Info.issue)
-      that.setData({
-        name:Info.name,
-        Idcard:that.plusXing(Info.issue, 1, 4), 
-      })
+    if (options.info){
+        let Info = JSON.parse(options.info);
+        console.log(Info.name)
+        console.log(Info.issue)
+        that.setData({
+          name: Info.name,
+          Idcard: that.plusXing(Info.issue, 1, 4),
+        })
+      }
+   
+    app.sendRequest({
+      url: "api.php?s=distributor/outIdCardInfo",
+      success: function (res) {
+        let data = res.data;
+        console.log(data);
+        that.setData({
+          name:data.real_name,
+          Idcard: that.plusXing(data.idCard, 1, 4), 
+        })
+      
+      }
+    })
 
+    
 
   },
 

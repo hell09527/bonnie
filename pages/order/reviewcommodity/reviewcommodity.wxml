@@ -46,7 +46,6 @@
 			<view class="shop_count">
         <image src="/images/order/shop.png" mode='widthFix'/>
         <view class='span'>店铺评分</view>
-   
         <view class='span hint'>
              	<view class='span stars'>
 					  <view class='a' catchtap='ends' data-score='6'>

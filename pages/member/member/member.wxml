@@ -1,6 +1,6 @@
 <import src="/templates/dataLogin-template/dataLogin.wxml" />
 
-<scroll-view>
+<scroll-view bindtouchstart="handletouchtart" bindtouchend="handletouchend" bindtouchmove="handletouchmove">
   <view class="motify {{prompt==''?'hide':''}}">
     <icon class="i show_type warning" type='warn' size='25' color='#FFF'></icon>
     <view class="motify-inner">{{prompt}}</view>
@@ -272,4 +272,8 @@
    <view wx:if="{{distributor_type ==0}}" catchtap='explain'  >
               <image lazy-load="true"  style='width:100%;'  mode='widthFix'  src='https://static.bonnieclyde.cn/banners.png'  />
    </view>
+      <!-- 定位客服 -->
+ <button class="a new-btn buy-cart" open-type="contact" session-from="weapp" class="{{isHide==0?'yuan':'hide-kf'}}">
+     <view><image src="https://static.bonnieclyde.cn/icon111.jpg"  mode='widthFix' ></image></view>
+   </button>
 </scroll-view>

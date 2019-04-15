@@ -56,7 +56,7 @@ Page({
             }
           }
         }
-        // console.log(res.data.switchover);
+        console.log(res.data.switchover.switchover);
         let carry = {
           name: res.data.switchover.real_name,
           issue: res.data.switchover.idCard,

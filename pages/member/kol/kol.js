@@ -172,8 +172,7 @@ Page({
               product_list[index].fraction = Number(product_list[index].fraction*100).toFixed() + "%";
           }
             console.log(head_list);
-
-            if(scrollTop>100 ){
+            if(scrollTop>100){
               wx.pageScrollTo({
                 scrollTop: 0
                });
@@ -194,6 +193,7 @@ Page({
   },
   onShow: function () {
     let that = this;
+
     app.sendRequest({
       url: "api.php?s=order/getKolAchievementStatistics",
       success: function (res) {
@@ -221,7 +221,9 @@ Page({
         end_date: end_date
       },
       success: function (res) {
+
         let code = res.code;
+
         if (code == 0) {
           let order_list = res.data.data;
           // console.log(order_list )
@@ -233,7 +235,6 @@ Page({
               order_list[index].consign_time = time.formatTime(order_list[index].consign_time, 'Y-M-D');
               order_list[index].expect_time = that.expectTime(order_list[index].consign_time, 14);
             } else if (order_list[index].consign_time != 0 && order_list[index].sign_time != 0) {
-
               // 买家签收时间加上7天
               order_list[index].sign_time = time.formatTime(order_list[index].sign_time, 'Y-M-D');
               order_list[index].expect_time = that.expectTime(order_list[index].sign_time, 7);
@@ -252,6 +253,7 @@ Page({
             }
           }
           // console.log(parseInt(0.1))
+
           let page = order_list.length > 0 ? 2 : 1;
           that.setData({
             order_list: order_list,
@@ -262,13 +264,14 @@ Page({
       }
     })
 
+
   },
 
   /**
    * @Explain：获取设备信息
    */
   getDeviceInfo: function () {
-    let that = this;
+    let that = this
     wx.getSystemInfo({
       success: function (res) {
         that.setData({
@@ -276,30 +279,35 @@ Page({
           deviceH: res.windowHeight
         })
       }
-    });
+    })
   },
   onPageScroll:function(e){ // 获取滚动条当前位置
      let that=this;
   that.setData({
     scrollTop: e.scrollTop
-  });
+  })
     // console.log(e.scrollTop)//获取滚动条当前位置的值
 },
 
   topNav: function (event) {
     let that = this;
+    let key =that.data.key;
     let status = event.currentTarget.dataset.id;
     let order_status = status == 0 ? 'all' : status - 1;
     let scrollTop=that.data.scrollTop;
-   if(scrollTop>100 ){
-    wx.pageScrollTo({
-      scrollTop: 0
-     });
-   };
+
     that.setData({
       _no: status,
       status: order_status,
-    });
+    })
+  
+      if(scrollTop>100){
+        wx.pageScrollTo({
+          scrollTop: 0
+         });
+       }
+   
+   
   },
   orders: function (start_date, end_date) {
     let that = this;
@@ -348,7 +356,7 @@ Page({
           })
         }
       }
-    });
+    })
   },
 
   // 预计分润到账时间
@@ -484,7 +492,6 @@ Page({
     //   return false;
     // }
     // app.clicked(that, 'listClickFlag');
-
     wx.navigateTo({
       url: '/pages' + url,
     })
@@ -523,9 +530,14 @@ Page({
       wx.navigateTo({
         url: "/pages/member/supportCenter/supportCenter",
       })
-
     }
+
+   
+
+
+
   },
+
   // 商品排行标题点击
   isTopClick: function (e) {
     let index = e.currentTarget.dataset.index;
@@ -631,6 +643,13 @@ Page({
           console.log(res);
         }
       });
+    
+    
+ 
+    
+       
+
+  
   },
 })
 

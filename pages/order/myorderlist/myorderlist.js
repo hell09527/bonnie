@@ -22,6 +22,7 @@ Page({
     aClickFlag: 0,
     payFlag: 0,
     address:[],   //收货地址
+    isHide: 0
   },
 
   /**
