@@ -55,24 +55,25 @@
     <view class='identityCard' wx:if='{{FilePaths||recitePaths}}'>
       <view style='color:#aaa;width:100%;text-align:center;'>直接点击可更换图片</view>
     </view> 
-  </view>
 
-  <!-- 经历爱好 -->
-  <view class='hobby' wx:if='{{isShow==2}}'>
+     <view class='hobby' wx:if='{{listData.name}}'>
       <view class='table' >
       <view>
+         <view class="span color-red">*</view>
         <view class='table-text'>姓名</view>
         <input type='text' class='table-input'  value='{{listData.name}}'  bindinput='nameValue'  bindblur='nameWrok' ></input>
       </view> 
       <view>
+       <view class="span color-red">*</view>
         <view class='table-text'>性别</view>
         <radio-group class="radio-group" bindchange="radioChange" style='flex: 1;'>
           <label class="radio" wx:for="{{sexList}}" wx:key=''>
-            <radio value="{{item.name}}" checked="{{item.checked}}"/>{{item.name}}
+            <radio value="{{item.name}}"  color="#000" checked="{{item.checked}}"/>{{item.name}}
           </label>
         </radio-group>
       </view> 
       <view>
+       <view class="span color-red">*</view>
         <view class='table-text'>出生日期</view>
         <view class="section table-input">
           <view style='height:1.4rem'>{{listData.birthday}}</view>
@@ -82,6 +83,7 @@
         </view>
       </view> 
       <view>
+       <view class="span color-red">*</view>
         <view class='table-text'>现住址</view>
         <view class="table-input section" style='flex:1;'>
           <picker bindchange="bindProvincChange" mode='selector' value="{{provinceIndex}}" range="{{provinceArray}}" data-id='{{provinceArray[provinceIndex].province_id}}' range-key="province_name" class='addressText'>
@@ -98,32 +100,39 @@
         </view>
       </view> 
       <view style='height:80rpx;'>
+       <view class="span color-red">*</view>
         <view class='table-text'>详细住址</view>
         <!-- placeholder='详细住址' -->
         <input type='text'  placeholder='请填写您的详细地址' class='table-input' bindinput='addressValue' bindblur='addressWrok'    value='{{listData.Naddress}}'></input>
       </view> 
       <view>
+       <view class="span color-red">*</view>
         <view class='table-text'>手机号码</view>
         <input type='text' placeholder='请填写您的手机号码' class='table-input' value='{{listData.tel}}' bindinput='phoneValue'></input>
       </view> 
       <view>
-        <view class='table-text'>EMAIL</view>
+       <!-- <view class="span color-red" style='color:#333'>*</view> -->
+        <view class='table-text' style='margin-left:26rpx;'>EMAIL</view>
+
         <input type='text' placeholder='请填写您的电子邮箱' class='table-input' bindinput='emailValue' value='{{listData.email}}'></input>
       </view> 
       <view>
+      <view class="span color-red">*</view>
         <view class='table-text'>{{showTitle}}</view>
         <view class='table-input'>{{recommend}}</view>
       </view> 
     <view class='next-btn' catchtap='torealname'>下一步</view>
     </view>
   </view>
+  </view>
 
+  <!-- 经历爱好 -->
    <view class='hobby' wx:if='{{isShow==3}}'>
         <view class='table-text'>工作经历</view>
       <textarea  type='text' placeholder="请填写您的工作经历(10个字符以上)" placeholder-style='line-height:200rpx;color:#808080' class='table-textarea' bindinput='joinValue'  bindblur='joinWrok'   value='{{listData.work_experience}}'/>
     
        <view>
-      <view class='myInfor-text'>想要月入多少钱(元)</view>
+      <view class='myInfor-text'>未来三个月预估销售额</view>
       <input type='number' class='myInfor-input' placeholder='请填写一个金额'  bindinput='moneyValue' value='{{listData.estimate_money}}'></input>
     </view>
      <view class='hobby-btn'>

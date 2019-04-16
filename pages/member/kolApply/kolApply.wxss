@@ -183,7 +183,7 @@ page{
   width:140rpx;
   font-size: 14px;
   color:#000;
-  text-align: right;
+  text-align: left;
   margin-right: 60rpx;
 }
 .table-input{
@@ -288,6 +288,9 @@ page{
   border:1px solid #bbbbbb;
   padding: 3px;
   box-sizing: border-box;
+  margin-top:30rpx;
+  margin-bottom: 30rpx;
+
 }
 .hobby-btn{
   display: flex;
@@ -396,12 +399,16 @@ page{
 }
 .myInfor-text{
   line-height: 25px;
+  /* margin-left:30rpx; */
+
 }
 .myInfor-input{
   width:100%;
   border-bottom:1px solid #bbbbbb;
-  padding:0 10rpx;
+  /* padding:0 10rpx; */
   line-height: 30px;
+  /* margin-left:30rpx; */
+
 }
 .myInfor-btn{
   display:flex;
@@ -449,3 +456,10 @@ page{
   margin: 15px 0;
   line-height: 1.5;
 }
+.color-red{
+  color: red;
+  margin-right:10rpx;
+
+}
+
+

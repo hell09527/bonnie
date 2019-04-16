@@ -67,7 +67,7 @@ Page({
     kolText: '',    //文本
     recommend:'',   //推荐人
     showTitle:'', //展示文本
-    showTitle:'邀请人',
+    showTitle:'推荐人',
     Naddress:''
   },
 
@@ -104,20 +104,20 @@ Page({
         app.globalData.recommendUser = invitation; 
         app.globalData.is_recommend=2;
         listData.is_recommend=2; 
-        app.globalData.showTitle='邀请人';
+        // app.globalData.showTitle='邀请人';
         Uid=invitation; 
-        that.setData({
-          showTitle:'邀请人'
-        })
+        // that.setData({
+        //   showTitle:'邀请人'
+        // })
        }else if(invitation==0){
         app.globalData.recommendUser = uid; 
         app.globalData.is_recommend=1;
         listData.is_recommend=1; 
-        // app.globalData.showTitle='推荐人';
+        app.globalData.showTitle='推荐人';
         Uid=uid;  
-        // that.setData({
-        //   showTitle:'推荐人'
-        // })
+        that.setData({
+          showTitle:'推荐人'
+        })
        }
        console.log(Uid,'uid')
        if(Uid){
@@ -407,7 +407,7 @@ Page({
     // }
     this.setData({
       // navList: navList,
-      isShow: 2,
+      isShow: 1,
     })
   },
 
@@ -621,8 +621,9 @@ Page({
   },
   addressWrok:function(e){
     var address = e.detail.value;
+
     var listData = this.data.listData;
-    listData.address = address.replace(/\s+/g, '');
+    listData.Naddress = address.replace(/\s+/g, '');
     this.setData({
       listData,
     })
@@ -1154,9 +1155,9 @@ Page({
               })
               if (listData.issue && listData.name) {
                 console.log(listData)
-                _this.setData({
-                  isShow:2,
-                })
+                // _this.setData({
+                //   isShow:2,
+                // })
                 // _this.everlasting(_this, listData);
 
               }
@@ -1257,9 +1258,9 @@ Page({
                 })
                 if (listData.issue && listData.name) {
                   console.log(listData)
-                  _this.setData({
-                    isShow:2,
-                  })
+                  // _this.setData({
+                  //   isShow:2,
+                  // })
                   // _this.everlasting(_this, listData);
 
                 }

@@ -269,9 +269,9 @@
     </view>
   </view>
   
-   <view wx:if="{{distributor_type ==0}}" catchtap='explain'  >
+   <!-- <view wx:if="{{distributor_type ==0}}" catchtap='explain'  >
               <image lazy-load="true"  style='width:100%;'  mode='widthFix'  src='https://static.bonnieclyde.cn/banners.png'  />
-   </view>
+   </view> -->
       <!-- 定位客服 -->
  <button class="a new-btn buy-cart" open-type="contact" session-from="weapp" class="{{isHide==0?'yuan':'hide-kf'}}">
      <view><image src="https://static.bonnieclyde.cn/icon111.jpg"  mode='widthFix' ></image></view>

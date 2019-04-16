@@ -4,8 +4,8 @@ App({
  /a/dsa sadaswqwqewqkhhjhjhqqweqwewqewe  * 全局变量
    */
   globalData: {
-    // siteBaseUrl: "https://www.bonnieclyde.cn/", //服务器url
-    siteBaseUrl: "https://store-test.91xdb.com/", //服务器url
+    siteBaseUrl: "https://www.bonnieclyde.cn/", //服务器url
+    // siteBaseUrl: "https://store-test.91xdb.com/", //服务器url
     wx_info: null,
     encryptedData: '',
     iv: '',
