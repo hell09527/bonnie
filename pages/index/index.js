@@ -422,6 +422,18 @@ Page({
     let that = this;
     let url = event.currentTarget.dataset.url;
     let title = event.currentTarget.dataset.title;
+    let spc=0;
+    console.log(title )
+    if(title!=undefined){
+      if(title.indexOf("&")!=-1){
+        spc=-1;
+      }
+    }
+  
+    
+    // title.replace("&", "%26")
+    // console.log(title.replace("&", "%26"));
+    
     let hasTarget = event.currentTarget.dataset.has;
     let x = event.currentTarget.dataset.x;
     // let goodsId = event.currentTarget.dataset.goodsid;
@@ -464,13 +476,31 @@ Page({
         url: '/pages' + url,
       })
     }else if (projectData.id) {
-    // 跳转活动详情页
+      if(spc==-1){
+        console.log('111')
+        projectData=JSON.stringify(projectData);
+
+            // 跳转活动详情页
+      app.aldstat.sendEvent('首页活动点击', {
+        "活动名称":title
+      });
+      wx.navigateTo({
+        url: '/pages/index/projectIndex/projectIndex?data=' + encodeURIComponent(projectData),
+      })
+      }else{
+        console.log('222')
+           // 跳转活动详情页
       app.aldstat.sendEvent('首页活动点击', {
         "活动名称":title
       });
       wx.navigateTo({
         url: '/pages/index/projectIndex/projectIndex?data=' + JSON.stringify(projectData),
       })
+      }
+
+  
+
+
     }else if (hasTarget == 0) {
       //判断这个图片是否跳转
       return false;

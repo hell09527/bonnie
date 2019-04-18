@@ -1,5 +1,5 @@
 <scroll-view>
-  <!-- <button catchtap='last'>我的清单</button> -->
+  <button catchtap='last'>我的清单</button>
   <view class="motify {{prompt==''?'hide':''}}">
     <icon class="i show_type warning" type='warn' size='25' color='#FFF'></icon>
     <view class="motify-inner">{{prompt}}</view>

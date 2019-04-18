@@ -106,24 +106,45 @@ App({
     }
   },
 
+
   onShow: function () {
     let that = this;
-    wx.getSystemInfo({
-      success: res => {
-        let modelmes = res.model;
-        console.log(modelmes,'手机');
-        if (res.screenHeight - res.windowHeight - res.statusBarHeight - 46 > 70) {
-          　　　　　　　　　　//  处理相关逻辑
-          console.log('jinlai')
-             that.globalData.isIphoneX = true;
-        }
-        // if (modelmes.search('iPhone X') != -1) {
-        //   console.log('进来了')
-        //   that.globalData.isIphoneX = true;
-        // }
+    that.isIphoneX()
+  },
+  isIphoneX:function(){
+    let that = this;
+      wx.getSystemInfo({
+        success: res => {
+          let modelmes = res.model;
+          console.log(modelmes,'手机');
+          console.log(modelmes,res.screenHeight);
+          console.log(modelmes,res.windowHeight );
+          console.log(modelmes,res.statusBarHeight );
+          console.log(res.screenHeight - res.windowHeight - res.statusBarHeight - 46 );
+          // iPhone X
+          // if(res.model=="android"){
+          //   winHeight-=45;
+          // }
+          
+       if(res.model.indexOf("iPhone X")!=-1){
+        that.globalData.isIphoneX = true;
+       }else{
 
-      }
-    })
+       }
+          
+          
+          // if (res.screenHeight - res.windowHeight - res.statusBarHeight - 46 > 70) {
+          //   　　　　　　　　　　//  处理相关逻辑
+          //   console.log('jinlai')
+          //    that.globalData.isIphoneX = true;
+          // }else{
+          //   console.log('宁不是')
+          // }
+  
+        }
+      })
+   
+  
   },
 
   //app登录

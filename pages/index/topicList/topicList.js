@@ -63,14 +63,27 @@ Page({
 
   // 跳转活动详情页
   toDetail: function (event) {
+    let that=this;
+    let title= event.currentTarget.dataset.title;
+    let spc=0;
+    if(title.indexOf("&")!=-1){
+      spc=-1;
+    }
     let projectData = {
       id: event.currentTarget.dataset.id,
-      title: event.currentTarget.dataset.title,
+      title,
     }
+if(spc==-1){
+  projectData=JSON.stringify(projectData);
+  wx.navigateTo({
+    url: '/pages/index/projectIndex/projectIndex?data=' + encodeURIComponent(projectData),
+  })
+}else{
+  wx.navigateTo({
+    url: '/pages/index/projectIndex/projectIndex?data=' + JSON.stringify(projectData),
+  })
+}
 
-    wx.navigateTo({
-      url: '/pages/index/projectIndex/projectIndex?data=' + JSON.stringify(projectData),
-    })
     that.setData({
       projectData
     })

@@ -622,5 +622,5 @@ text-align:center;
 
 }
 .Lise{
-  height:140rpx ;
+  bottom:40rpx;
 }

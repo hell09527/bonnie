@@ -360,9 +360,9 @@ Page({
     let explain_type = that.data.explain_type;
     let is_anonymous = that.data.is_anonymous;
 
-    if (commentvFlag == 1) {
-      return false;
-    }
+    // if (commentvFlag == 1) {
+    //   return false;
+    // }
     app.clicked(that, 'commentvFlag');
 
     for (let index in goodsEvaluate) {

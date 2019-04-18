@@ -20,11 +20,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let that = this;
+   
     var scene = decodeURIComponent(options.scene)
     if (options.uid) {
       app.globalData.identifying = options.uid;
     }
-  
+   
 
 
     if (options.id){
@@ -43,11 +45,13 @@ Page({
         title: title
       };
     } else {
-      var data = JSON.parse(options.data);
+      var data = JSON.parse(decodeURIComponent(options.data));
+      console.log(data )
       var id = data.id;
+      console.log(id )
       var title = data.title;
     }
-    var that = this;
+   
     let is_vip = app.globalData.is_vip
     // 专题页标题
     wx.setNavigationBarTitle({

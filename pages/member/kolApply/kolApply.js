@@ -649,15 +649,7 @@ Page({
     })
   },
 
-  // 教育经历修改
-  educationValue: function (e) {
-    var educational_experience = e.detail.value;
-    var listData = this.data.listData;
-    listData.educational_experience = educational_experience;
-    this.setData({
-      listData,
-    })
-  },
+
 
   // 工作经历修改
   joinValue: function (e) {
@@ -679,75 +671,6 @@ Page({
     })
   },
 
-  // 爱好特长修改
-  hobbyValue: function (e) {
-    var hobbies = e.detail.value;
-    var listData = this.data.listData;
-    listData.hobbies = hobbies;
-    this.setData({
-      listData,
-    })
-  },
-
-  // 银行账号修改
-  bankNumValue: function (e) {
-    var bank_account_number = e.detail.value;
-    var listData = this.data.listData;
-    listData.bank_account_number = bank_account_number;
-    this.setData({
-      listData,
-    })
-  },
-
-  // 银行名称修改
-  bankNameValue: function (e) {
-    var bank_name = e.detail.value;
-    var listData = this.data.listData;
-    listData.bank_name = bank_name;
-    this.setData({
-      listData,
-    })
-  },
-
-  // 银行名称修改
-  banKDetailValue: function (e) {
-    var bank_open_name = e.detail.value;
-    var listData = this.data.listData;
-    listData.bank_open_name = bank_open_name;
-    this.setData({
-      listData,
-    })
-  },
-
-  // 流动入口及销售方向修改
-  describe1Value: function (e) {
-    var describe1 = e.detail.value;
-    var listData = this.data.listData;
-    listData.describe1 = describe1;
-    this.setData({
-      listData,
-    })
-  },
-
-  // 你眼中的BC修改
-  describe2Value: function (e) {
-    var describe2 = e.detail.value;
-    var listData = this.data.listData;
-    listData.describe2 = describe2;
-    this.setData({
-      listData,
-    })
-  },
-
-  // 为何选择极选师修改
-  describe3Value: function (e) {
-    var describe3 = e.detail.value;
-    var listData = this.data.listData;
-    listData.describe3 = describe3;
-    this.setData({
-      listData,
-    })
-  },
 
   // 未来三个月预估销售额修改
   moneyValue: function (e) {

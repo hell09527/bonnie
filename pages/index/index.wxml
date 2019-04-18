@@ -131,7 +131,7 @@
       </block>
       <view class="bodyBox">
         <image lazy-load="true" src="https://static.bonnieclyde.cn/WechatIM19.jpeg" mode='widthFix' style='width:750rpx;'></image>
-        <image lazy-load="true" src="https://static.bonnieclyde.cn/WechatIM23.png" mode='widthFix' style='margin:60rpx 20rpx;width:710rpx;'></image>
+        <image lazy-load="true" src="https://static.bonnieclyde.cn/WechatIMG829.png" mode='widthFix' style='margin:60rpx 20rpx;width:710rpx;'></image>
         <view wx:if='{{shop}}'>
           <!-- 最新话题 -->
           <image lazy-load="true" src="https://static.bonnieclyde.cn/Wecha.png" mode='widthFix' style='margin:60rpx 20rpx 0;width:710rpx;' wx:if="{{lastOne.pic}}"></image>
@@ -146,7 +146,7 @@
           </view>
           <!-- 往期话题 -->
           
-          <!-- <scroll-view class='indexShop-swiper' scroll-x>
+          <scroll-view class='indexShop-swiper' scroll-x>
             <block wx:for='{{activities}}' wx:key='' wx:for-item='shops' wx:for-index='index'>
               <view class='shop-shuffing-item' catchtap='listClick' data-id="{{shops.id}}" data-title="{{shops.title}}">
                 <button form-type='submit' class="form-button">
@@ -163,7 +163,7 @@
                 <image  lazy-load="true" src="https://static.bonnieclyde.cn/We22.jpeg" style="height:292rpx;width:520rpx;"></image>
               </button>
             </view>
-          </scroll-view> -->
+          </scroll-view>
 
           <!-- 新品推荐 -->
           <image lazy-load="true" src="https://static.bonnieclyde.cn/Title@2x.png" mode='widthFix' style='margin:60rpx 20rpx 0;width:710rpx;'></image>

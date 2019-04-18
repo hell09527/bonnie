@@ -1224,6 +1224,7 @@ Page({
       }
 
     } else {
+      
       return {
         imageUrl: 'https://static.bonnieclyde.cn/hui.jpg',
         title: ' 分享给你的购物清单',
@@ -1236,6 +1237,7 @@ Page({
           app.showBox(that, '分享失败');
         }
       }
+
     }
   },
 

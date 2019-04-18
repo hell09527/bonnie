@@ -464,20 +464,21 @@
     <view class="ul evaluation-pics" wx:if="{{comment.image[0]}}">
                  <view class="comment-imgAll">{{comment.image.length}}张</view>
                         <view class='li'>
-                            <image src="{{comment.image[0]}}" class="comment-pic"/>
+                            <image mode="aspectFill" src="{{comment.image[0]}}" class="comment-pic"/>
                         </view>
                 </view>  
                </view> 
              </block> 
-             <view class="comment-more" catchtap='moreEvaluation' data-type='0'>
+             <!-- wx:if='{{ts_list>1}}' -->
+             <view class="comment-more"   catchtap='moreEvaluation' data-type='0'>
               <text>更多评论</text>
               <hr/>
               <text>See more</text>
             </view> 
     </scroll-view>
-    <view class="check-more">
+    <!-- <view class="check-more">
                 <button catchtap='moreEvaluation' data-type='0'>查看更多评价</button>
-            </view>
+            </view> -->
    </view>  
       </block> 
       <block wx:else>
@@ -682,33 +683,59 @@
                     </block>
                 </block>
 
-
                 <block wx:if='{{flys==1}}'>
-                    <block wx:if="{{popUp==1}}">
+                  <!-- 查看规格按钮并且库存不为0 -->
+                    <block wx:if="{{popUp==1 && stock!=0 }}">
+                        <block wx:if='{{buyButtonStatus==0}}'>
+                            <button class="buy-s" catchtap="addGift">礼物盒</button>
+                        </block>
+                        <view class="a btn spk {{buyButtonStatus==0?'':'hide'}} {{stock==0?'disabled':''}} {{goods_info.state==0?'disabled':''}}" id="submit_ok" catchtap="{{stock==0?'nullStock':'buyNext'}}" tag="buyBtn1">
+                            {{goods_info.state==0?'已下架':'直接购买'}}
+                        </view>
+                    </block>
+                    <!-- 查看规格按钮并且库存为0 -->
+                    <block wx:if="{{popUp==1 && stock==0}}">
+                             <block wx:if='{{buyButtonStatus==0}}'>
+                            <button class="buy-s" catchtap="addGift">礼物盒</button>
+                            </block>
+                        <view class="a btn spk {{buyButtonStatus==0?'':'hide'}} {{stock==0?'disabled':''}} {{goods_info.state==0?'disabled':''}}" id="submit_ok" catchtap="{{stock==0?'nullStock':'buyNext'}}" tag="buyBtn1">
+                            {{goods_info.state==0?'已下架':'直接购买'}}
+                        </view>
+                    </block>
+                    <!-- 加入或者直接购买按钮库存不为0 -->
+                    <block wx:if="{{popUp==3 && stock!=0}}">
+                    <block wx:if='{{buyButtonStatus==1 }}'>
+                            <view class="a btn spc  {{stock==0?'disabled':''}} {{goods_info.state==0?'disabled':''}}"
+                              id="submit_ok"
+                                catchtap="{{stock==0?'nullStock':'addGift'}}" tag="buyBtn1">{{goods_info.state==0?'已下架':'下一步'}}
+                        </view>
+                    </block>
+                    <block wx:if='{{buyButtonStatus==0}}'>
+                          <view class="a btn spc  {{stock==0?'disabled':''}} {{goods_info.state==0?'disabled':''}}"
+                              id="submit_ok"
+                                catchtap="{{stock==0?'nullStock':'buyNext'}}" tag="buyBtn1">{{goods_info.state==0?'已下架':'下一步'}}
+                        </view>
+                    </block>
+                    </block>
+                       <!-- 加入或者直接购买按钮库存为0 -->
+                       <block wx:if="{{popUp==3 && stock==0}}">
+                          <block wx:if='{{buyButtonStatus==1 && goods_info.state!=0 && stock!=0}}'>
+                            <button class="buy-s" catchtap="addGift">礼物盒</button>
+                            </block>
+                         <view class="a btn spc  {{stock==0?'disabled':''}} {{goods_info.state==0?'disabled':''}}"
+                      id="submit_ok"
+                      catchtap="{{stock==0?'nullStock':'buyNext'}}" tag="buyBtn1">{{goods_info.state==0?'已下架':'下一步'}}
+                        </view>
+                    </block>
+                    <!-- <block wx:if="{{popUp==1}}">
                         <block wx:if='{{buyButtonStatus==0 }}'>
                             <view class="buy-s" catchtap="addGift">礼物盒</view>
                         </block>
                         <view class="a btn spk {{buyButtonStatus==0?'':'hide'}} {{stock==0?'disabled':''}} {{goods_info.state==0?'disabled':''}}" id="submit_ok" catchtap="{{stock==0?'nullStock':'buyNext'}}" tag="buyBtn1">
                             {{goods_info.state==0?'已下架':'直接购买'}}
                         </view>
-                    </block>
+                    </block> -->
                 </block>
-
-                <!-- <block wx:if="{{popUp==3}}">
-                    <view class="a btn spc {{buyButtonStatus==0?'':'hide'}} {{stock==0?'disabled':''}} {{goods_info.state==0?'disabled':''}}" id="submit_ok" catchtap="{{stock==0?'nullStock':'buyNext'}}" tag="buyBtn1">
-                        {{goods_info.state==0?'已下架':'下一步'}}
-                    </view>
-                </block>
-                <block wx:if='{{flys==0}}'>
-                    <view class="a btn {{buyButtonStatus==1?'':'hide'}} {{stock==0?'disabled':''}} {{goods_info.state==0?'disabled':''}}" id="submit_ok" catchtap="{{stock==0?'nullStock':'addCart'}}" tag="buyBtn1">
-                        {{goods_info.state==0?'已下架':'下一步'}}
-                    </view>
-                </block>
-                <block wx:if='{{flys==1}}'>
-                    <view class="a btn {{buyButtonStatus==1?'':'hide'}} {{stock==0?'disabled':''}} {{goods_info.state==0?'disabled':''}}" id="submit_ok" catchtap="{{stock==0?'nullStock':'addGift'}}" tag="buyBtn1">
-                        {{goods_info.state==0?'已下架':'下一步'}}
-                    </view>
-                </block> -->
                 <view class="a btn {{buyButtonStatus==3?'':'hide'}} {{stock==0?'disabled':''}} {{goods_info.state==0?'disabled':''}}" id="submit_ok" catchtap="{{stock==0?'nullStock':'groupBooking'}}" tag="buyBtn1">
                     {{goods_info.state==0?'已下架':'下一步'}}
                 </view>

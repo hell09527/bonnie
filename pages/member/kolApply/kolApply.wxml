@@ -142,6 +142,7 @@
         </form>
       </view>
       </view>
+
   <!-- 实名制认证 -->
   <!-- <view class='realname-box' wx:if='{{isShow==3}}'>
     <view style='margin:20rpx 0;'>
@@ -207,6 +208,7 @@
     </view> -->
       <!-- <view class='hobby-next-btn' catchtap='toApply'>申请成为极选师</view> -->
   <!-- </view> --> 
+  
 </scroll-view>
 
 

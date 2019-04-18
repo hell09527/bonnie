@@ -133,7 +133,7 @@
         <view class="btn-positive" bindtap="onConf" data-status="confirm">确定</view>
     </view>
     </view>
-    <template is="dataLogin" data="{{showModal,Choice,layout}}" />
+    <template is="dataLogin" data="{{showModal,Choice,layout}}"/>
 
 
  

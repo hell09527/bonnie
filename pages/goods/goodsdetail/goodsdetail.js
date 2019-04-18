@@ -137,7 +137,7 @@ Page({
       unregistered:app.globalData.unregistered
     });
 
-
+ 
 
     wx.getSystemInfo({
       success(res) {
@@ -201,6 +201,7 @@ Page({
       copyRight: copyRight,
     })
   },
+
 
   hideModal:function(){
    this.setData({
@@ -279,6 +280,7 @@ Page({
     let is_employee = that.data.is_employee;
     console.log(is_employee)
     let isIphoneX = app.globalData.isIphoneX;
+    console.log(isIphoneX )
  
   
 
@@ -736,6 +738,7 @@ if (app.globalData.token && app.globalData.token != '') {
     let defaultImg = that.data.defaultImg.value.default_headimg;
     let base = that.data.Base;
     let parm = {};
+    
     let parm_key = "comments_list[" + index + "].user_img";
 
     if (defaultImg.indexOf('http://') == 1 || defaultImg.indexOf('https://') == 1) {
@@ -936,6 +939,7 @@ if (app.globalData.token && app.globalData.token != '') {
               comments_list: comments_list,
               comments_type: comment_type,
               page: page,
+              ts_list:comments_list.length
               // appraisers: that.plusXing(appraiser, 1)
             })
           }else{
@@ -1689,7 +1693,12 @@ Examine: function (event) {
     let that = this;
     let goods_id = that.data.goods_id;
     let evaluation_type = e.currentTarget.dataset.type;
+    let comments_list=that.data.comments_list;
     let moreEvaluationFlag = that.data.moreEvaluationFlag;
+    // console.log(comments_list.length)
+    // if((comments_list.length-1)==0){
+    //   return false;
+    // }
 
     if (moreEvaluationFlag == 1){
       return false;
