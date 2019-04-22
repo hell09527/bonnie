@@ -198,6 +198,8 @@
     </view>
     <image lazy-load="true" src="https://static.bonnieclyde.cn/WechatI3.png" mode='widthFix' style='margin:100rpx auto;display:block;width:300rpx;position: relative;'></image>
   </form>
+    <!-- <image lazy-load="true" src="http://3gimg.qq.com/BabytingWeb/micpro/play.gif" mode='widthFix' style='margin:100rpx auto;display:block;width:300rpx;position: relative;'></image> -->
+
    <!-- 定位客服 -->
  <button class="a new-btn buy-cart" open-type="contact" session-from="weapp" class="{{isHide==0?'yuan':'hide-kf'}}" >
      <view><image src="https://static.bonnieclyde.cn/icon111.jpg"  mode='widthFix' ></image></view>

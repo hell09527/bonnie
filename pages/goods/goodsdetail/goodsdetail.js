@@ -78,6 +78,7 @@ Page({
     UrlH:'',//canvas高度
     Again:false,
     exchange:false,
+    Man: true
   },
  
     //测试数据
@@ -315,7 +316,7 @@ Page({
           url: "api.php?s=Distributor/getDistributorGoodsWxCode",
           data: {
                 distributor_type:0,
-              goods_id: that.data.goods_id
+                goods_id: that.data.goods_id
                   },
                  success: function (res) {
                     let data = res.data;
@@ -333,7 +334,8 @@ Page({
 if (app.globalData.token && app.globalData.token != '') {
              //判断是否是付费会员的接口
    that.XXS_reuse();
-   let   originS=  that.data.distributor_type;
+   let   originS=  app.globalData.distributor_type;
+   console.log(originS);
    app.sendRequest({
     url: "api.php?s=Distributor/getDistributorGoodsWxCode",
     data: {
@@ -564,7 +566,17 @@ if (app.globalData.token && app.globalData.token != '') {
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+ 
+  },
+  cancleMan:function(){
+    let that=this;
+    let Man=that.data.Man;
+    if(Man)
+    Man=false;
+    else  Man=true;
+    this.setData({
+      Man
+      })
   },
 
   /**

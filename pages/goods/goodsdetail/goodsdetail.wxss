@@ -188,8 +188,8 @@ swiper {
 }
 
 .buy_area .price{
-  float: left;
-  width:80%;
+  /* float: left;
+  width:80%; */
   font-size: 18px;
   line-height: 25px;
   margin-right: 10px;
@@ -1805,6 +1805,7 @@ video{
   max-height: 100%;
   vertical-align: middle;
   border-radius: 50%;
+  
 }
 
 .mask-layer-spelling button {
@@ -1824,6 +1825,8 @@ video{
   color:#333;
 text-decoration:line-through;
 font-size: 14px;
+line-height:25px;
+
 }
 .DMSbuy{
    padding:20rpx;
@@ -1993,6 +1996,10 @@ canvas{
  color: #666;
  height:88rpx ;
  line-height: 88rpx;
+}
+.gl{
+  display: flex;
+  justify-content: flex-start;
 }
 
 

@@ -105,24 +105,27 @@
             </button>
         </view>
         <view class="price_wrap">
-            <view class="span price" wx:if='{{is_employee==1&&is_inside_sell==1}}'>
+         <view class='gl' wx:if='{{is_employee==1&&is_inside_sell==1}}'>
+            <view class="span price" > 
                 ￥{{parseInt(goods_info.promotion_price)< parseInt(goods_info.inside_price)?goods_info.promotion_price:goods_info.inside_price}}
-                <block wx:if='{{sum==1}}'>
-                    <text class="sos" id="priceTitle" wx:if="{{goods_info.market_price - goods_info.price > 0}}">
+            </view>
+                
+                    <view  wx:if='{{sum==1}}' class="sos" id="priceTitle" wx:if="{{goods_info.market_price - goods_info.price > 0}}">
                         ￥{{goods_info.market_price}}
-                    </text>
-                </block>
+                    </view>
+               
                 <!-- <block wx:if='{{goods_info.point_exchange_type == 1}}'>
                     <view class='span point'>+{{goods_info.point_exchange}}积分</view>
                 </block> -->
+           
             </view>
-            <view class="span price" wx:else>
+            <view class='gl' wx:else>
+            <view class="span price">
                 ￥{{parseInt(goods_info.promotion_price)< parseInt(goods_info.price)?goods_info.promotion_price:goods_info.price}}
-                <block wx:if='{{sum==1}}'>
-                    <text class="sos" id="priceTitle" wx:if="{{goods_info.market_price - goods_info.price > 0}}">
+            </view>
+                    <view wx:if='{{sum==1}}' class="sos" id="priceTitle" wx:if="{{goods_info.market_price - goods_info.price > 0}}">
                         ￥{{goods_info.market_price}}
-                    </text>
-                </block>
+                    </view>
                 <!-- <block wx:if='{{goods_info.point_exchange_type == 1}}'>
                 <view class='span point'>+{{goods_info.point_exchange}}积分</view>
               </block> -->
@@ -161,8 +164,8 @@
     </view> -->
     <!-- 满减送 -->
     <block wx:if='{{goods_info.mansong_name != "" && goods_info.mansong_name != undefined && goods_info.mansong_name != null}}'>
-        <view class="price_postage">
-            <view class="span price_postage_tit js-reduced-send single">
+        <view class="price_postage" catchtap='cancleMan'>
+            <view class="span price_postage_tit js-reduced-send {{Man?'single':''}}''">
                 <view class='i goods_tab'>满减</view>
                 {{goods_info.mansong_name}}
             </view>

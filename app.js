@@ -132,7 +132,6 @@ App({
 
        }
           
-          
           // if (res.screenHeight - res.windowHeight - res.statusBarHeight - 46 > 70) {
           //   　　　　　　　　　　//  处理相关逻辑
           //   console.log('jinlai')
