@@ -123,5 +123,6 @@
     "navigationBarTitleText": "BonnieClyde",
     "backgroundColor": "#000",
     "navigationBarTextStyle": "white"
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }
