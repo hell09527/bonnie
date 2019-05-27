@@ -1,180 +1,112 @@
-// pages/index/brand/brand.js
-const app = getApp();
-
+// pages/index/topicList/topicList.js
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    brand:'',
-    isActive:1,   //商品品牌按钮点击
-    category_list:[],   //分类
-    category_goods:[],  //分类商品
-    searchVal:'',  //输入框的值
-    isFixed:0,    //导航固定
-    category_id:'',    //分类id
-    page:1,   //页数
+    activities:'',    //活动列表
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that=this;
-   console.log(app)
+    var that =this;
+
     if (options.uid) {
+      console.log(options.uid)
       app.globalData.identifying = options.uid;
-      console.log('options.uid', options.uid)
     }
-
-
-
-    // 品牌获取
+    //  获取活动列表
     app.sendRequest({
-      url: "api.php?s=/index/getGoodsBrandListRecommend",
+      url: "api.php?s=/Activity/activityList",
       data: {},
-      method: 'POST',
+      method: 'GET',
       success: function (res) {
-        let brand = res.data
-        console.log(res.data)
+        for (let index in res.data) {
+          let img = res.data[index].pic;
+          res.data[index].pic = app.IMG(img);
+        }
+
         that.setData({
-          brand: brand
+          activities: res.data
         })
       }
     });
+  },
 
-    //商品标题 
+  AA:function(){
+    var that =this;
     app.sendRequest({
-      url: "api.php?s=/index/categoryLists",
+      url: "api.php?s=/Activity/activityList",
       data: {},
-      method: 'POST',
+      method: 'GET',
       success: function (res) {
-        let category_list = res.data
-        // console.log(res.data)
-
-        for (let index in category_list) {
-          category_list[index].select = 1;
+        for (let index in res.data) {
+          let img = res.data[index].pic;
+          res.data[index].pic = app.IMG(img);
         }
-        category_list[0].select = 2;
+
         that.setData({
-          category_list: category_list
-        })
-      }
-    });
-    this.toGoods(9, 1)
-  },
-
-  // 跳转品牌专区
-  toBrand(e) {
-    "use strict";
-    let is_show = e.currentTarget.dataset.show
-    let id = e.currentTarget.dataset.id
-    let title = e.currentTarget.dataset.title
-    console.log(is_show)
-    console.log(id)
-   
-   
-    if (is_show == 0) {
-      app.aldstat.sendEvent('品牌点击事件',{
-        "品牌名称":title
-      });
-      wx.navigateTo({
-        url: '/pages/goods/brandlist/brandlist?id=' + id,   //+'&store_id=1'
-      })
-    } else {
-      return false;
-    }
-  },
-
-  // 商品品牌点击
-  toCheckActive:function(e){
-    var id = e.currentTarget.dataset.id
-    if (id == 1 ) {
-      this.setData({
-        isActive: 1
-      })
-    } else {
-      this.setData({
-        isActive: 2
-      })
-    }
-  },
-
-  toGoods:function(id,page){
-    var that = this;
-    var category_goods = that.data.category_goods;
-    var page = that.data.page;
-    // 获取商品分类标题点击的商品
-    app.sendRequest({
-      url: "api.php?s=/index/branchPro",
-      data: {
-        category_id: id,
-        page_index:page,
-      },
-      method: 'POST',
-      success: function (res) {
-        let new_category_goods = res.data.pro.data;
-        if (new_category_goods[0] != undefined) {
-          page++;
-        }
-        let category_pic = res.data.category_pic;
-        category_goods=category_goods.concat(new_category_goods)
-        // console.log(category_goods)
-        that.setData({
-          category_goods: category_goods,
-          category_pic: category_pic,
-          page:page,
+          activities: res.data
         })
       }
     });
   },
-
-  // 商品标题点击
-  selectCheck: function (e) {
-    var id = e.currentTarget.dataset.id
-    var category_list = this.data.category_list;
-    for (var i = 0; i < category_list.length;i++){
-      category_list[i].select=1;
-      if (category_list[i].category_id==id){
-        category_list[i].select=2;
-      }
-    }
-    this.setData({
-      category_list: category_list,
-      category_goods:[],
-      category_id: id,
-      page: 1,
-    })
-    this.toGoods(id,1)
-  },
-
-  // 商品详情
-  listClick: function (event) {
+  TWO_reeuse: function () {
     let that = this;
-    let url = event.currentTarget.dataset.url;
-    let title = event.currentTarget.dataset.title;
-    wx.navigateTo({
-      url: '/pages' + url,
+    app.sendRequest({
+      url: "api.php?s=member/getMemberDetail",
+      success: function (res) {
+        let data = res.data
+        if (res.code == 0) {
+          let is_vip = data.is_vip;
+          app.globalData.is_vip = data.is_vip;
+          app.globalData.distributor_type = data.distributor_type;
+          let distributor_type = data.distributor_type;
+          app.globalData.uid = data.uid;
+          app.globalData.vip_gift = data.vip_gift;
+          app.globalData.vip_goods = data.vip_goods;
+          app.globalData.vip_overdue_time = data.vip_overdue_time;
+          // console.log(app.globalData.is_vip)
+          that.setData({
+            is_vip: is_vip,
+            distributor_type
+          })
+        }
+      }
     })
   },
 
-  // 搜索
-  searchInput:function(e){
-    var val = e.detail.value;
-    console.log(e.detail.value);
-    this.setData({
-      searchVal:val
-    })
-  },
-
-  // 跳转搜索页
-  toSearch:function(){
-    if (this.data.searchVal!=''){
-      wx.navigateTo({
-        url: '/pages/goods/goodssearchlist/goodssearchlist?search_text=' + this.data.searchVal,
-      }) 
+  // 跳转活动详情页
+  toDetail: function (event) {
+    let that=this;
+    let title= event.currentTarget.dataset.title;
+    let spc=0;
+    if(title.indexOf("&")!=-1){
+      spc=-1;
     }
+    let projectData = {
+      id: event.currentTarget.dataset.id,
+      title,
+    }
+if(spc==-1){
+  projectData=JSON.stringify(projectData);
+  wx.navigateTo({
+    url: '/pages/index/projectIndex/projectIndex?data=' + encodeURIComponent(projectData),
+  })
+}else{
+  wx.navigateTo({
+    url: '/pages/index/projectIndex/projectIndex?data=' + JSON.stringify(projectData),
+  })
+}
+
+    that.setData({
+      projectData
+    })
+
   },
 
   /**
@@ -188,13 +120,22 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var that = this;
-    this.setData({
-      searchVal: '',
-      // isActive: 1,
-      // isFixed: 0
-    })
+    let that = this;
+    if (app.globalData.token && app.globalData.token != '') {
+      //判断是否是付费会员的接口
+      that.TWO_reeuse();
+    } else {
 
+      app.employIdCallback = employId => {
+        if (employId != '') {
+          //判断是否是付费会员的接口
+          that.TWO_reeuse();
+        }
+
+
+
+      }
+    }
   },
 
   /**
@@ -215,71 +156,63 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    console.log('jkjjjjjj')
+      var that=this;
+      // wx.showNavigationBarLoading();
+      that.AA();
+      wx.stopPullDownRefresh();
+    
+   
+     
+    
+ 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    if(this.data.isActive==2){
-      let that = this;
-      let category_id = that.data.category_id;
-      let category_goods = that.data.category_goods;
-      let page = that.data.page;
-      this.toGoods(category_id, page);
-    }
+
   },
 
   /**
-   * 用户点击右上角分享
-   */
+  * 用户点击右上角分享
+  */
   onShareAppMessage: function () {
+    let that = this;
+    let data = this.data.data;
     let uid = app.globalData.uid;
-    if (app.globalData.distributor_type == 0) {
+    let projectData = that.data.projectData;
+    let TWO_share_url = '/pages/index/topicList/topicList?data=' +JSON.stringify(projectData)
+    console.log(data);
+    if (that.data.distributor_type == 0) {
       return {
-        title: '品牌专区',
-        path: '/pages/index/brand/brand',
-        // imageUrl: imgUrl,
+        title: 'BonnieClyde',	
+        path: TWO_share_url,
         success: function (res) {
           app.showBox(that, '分享成功');
         },
         fail: function (res) {
           app.showBox(that, '分享失败');
         }
-      }
-    } else {
-      return {
-        title: '品牌专区',
-        path: '/pages/index/brand/brand?uid=' + uid ,
-        // imageUrl: imgUrl,
-        success: function (res) {
-          app.showBox(that, '分享成功');
-
-        },
-        fail: function (res) {
-          app.showBox(that, '分享失败');
-        }
-      }
-    } 
-
-  },
-
-
-  // 页面滚动监听事件
-  onPageScroll: function (event) {
-    if (this.data.isActive == 2) {
-      // console.log(event.scrollTop)
-      var scrollTop = event.scrollTop;
-      if (scrollTop > 91){
-        this.setData({
-          isFixed:1
-        })
-      }else{
-        this.setData({
-          isFixed: 0
-        })
       }
     }
+    else {
+      return {
+        title: 'BonnieClyde',
+        path: TWO_share_url + '&uid=' + uid,
+        success: function (res) {
+          app.showBox(that, '分享成功');
+        },
+        fail: function (res) {
+          app.showBox(that, '分享失败');
+        }
+      }
+    }
+
+
+
+
+
   },
 })

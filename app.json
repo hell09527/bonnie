@@ -19,6 +19,7 @@
     "pages/articlecenter/articlecenter",
     "pages/index/noticelist/noticelist",
     "pages/index/brand/brand",
+    "pages/index/Categorylist/Categorylist",
     "pages/index/projectIndex/projectIndex",
     "pages/index/topicCollection/topicCollection",
     "pages/index/topicList/topicList",
@@ -52,7 +53,6 @@
     "pages/member/mycollection/mycollection",
     "pages/member/updatememberaddress/updatememberaddress",
     "pages/member/addmemberaddress/addmemberaddress",
-    "pages/member/updatenickname/updatenickname",
     "pages/member/updatemobile/updatemobile",
     "pages/member/updateemail/updateemail",
     "pages/member/balancewater/balancewater",
@@ -98,47 +98,48 @@
   "tabBar": {
     "borderStyle": "black",
     "color": "#808080",
-    "selectedColor": "#fff",
-    "backgroundColor": "#000",
+    "selectedColor": "#000",
+    "backgroundColor": "#fff",
     "list": [
       {
-        "iconPath": "images/bottom/home_uncheck.png",
-        "selectedIconPath": "images/bottom/home_check.png",
+        "iconPath": "images/bottom/home_check.png",
+        "selectedIconPath": "images/bottom/home_uncheck.png",
         "pagePath": "pages/index/index",
         "text": "首页"
       },
       {
-        "iconPath": "images/bottom/WechatIMG5.png",
-        "selectedIconPath": "images/bottom/icon-2.png",
+        "iconPath": "images/bottom/22-1-min.png",
+        "selectedIconPath":"images/bottom/22-2-min.png" ,
         "pagePath": "pages/index/brand/brand",
-        "text": "分类"
+        "text": "极选"
       },
       {
-        "iconPath": "images/bottom/cart_uncheck.png",
-        "selectedIconPath": "images/bottom/cart_check.png",
+        "iconPath": "images/bottom/cart_check.png",
+        "selectedIconPath": "images/bottom/cart_uncheck.png",
         "pagePath": "pages/goods/cart/cart",
         "text": "购物车"
       },
       {
-        "iconPath": "images/bottom/user_uncheck.png",
-        "selectedIconPath": "images/bottom/user_check.png",
+        "iconPath": "images/bottom/user_check.png",
+        "selectedIconPath": "images/bottom/user_uncheck.png",
         "pagePath": "pages/member/member/member",
         "text": "个人中心"
       }
     ]
   },
   "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#000",
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "BonnieClyde",
-    "backgroundColor": "#000",
-    "navigationBarTextStyle": "white"
+    "backgroundColor": "#fff",
+    "navigationBarTextStyle": "black"
+  
+  
   },
-
-
   "navigateToMiniProgramAppIdList": [
     "wx56c8f077de74b07c",
     "wxba4f30503c1ea656",
     "wxd145d8a6e951dd1b"
-  ]
+  ],
+  "sitemapLocation": "sitemap.json"
 }

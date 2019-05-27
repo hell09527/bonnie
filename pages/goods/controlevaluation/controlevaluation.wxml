@@ -10,7 +10,7 @@
         </swiper-item>
       </block>
     </swiper>
-    <image src="https://static.bonnieclyde.cn/WechatIMG3.png" mode="widthFix" class="close" catchtap='toHideSwiper' ></image>
+    <image src="https://static.bonnieclyde.cn/WechatIMG3.png" mode="aspectFill" class="close" catchtap='toHideSwiper' ></image>
     </view>
 
 		<view class="evaluation-container" wx:else>
@@ -61,7 +61,7 @@
               <view class="ul evaluation-pics" wx:if="{{evaluates.image.length>0}}">
                 <block wx:for='{{evaluates.image}}' wx:key='' wx:for-item='img' wx:index="index">
                   <view class='li'>
-                    <image src="{{img}}" catchtap='amplificationImg' data-urls="{{evaluates.image}}" data-index="{{index}}" class="comment-pic" mode='aspectFill'/>
+                    <image src="{{img}}" catchtap='amplificationImg' data-urls="{{evaluates.image}}" data-index="{{index}}" class="comment-pic"  mode="aspectFill"/>
                   </view>
                 </block>
               </view>

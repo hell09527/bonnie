@@ -38,15 +38,8 @@
           <view  class="loText">点击“下一步”生成带有小程序码的海报</view >
           <view  class="loText">并可以将海报保存至本地</view >
           </view >
-
             <view class='line'></view>
-
         </view>
-
-
-
-
-
 
     <!-- 固定操作页 -->
     <view class='fixaction'>
@@ -54,7 +47,7 @@
       <view class='ul' wx:if='{{Fixtitle==1}}'>
       
         <view class='li' wx:if="{{maKestep==1}}"  style='width:100%;' catchtap='uploading'> 
-           <view class='Utype'>
+           <view class='Utype {{isIphoneX==1?"typeX":""}}' >
               <image  lazy-load="true" class='Uicon' src='https://static.bonnieclyde.cn/camera@2x.png'></image>
             上传图片 
            </view> 
@@ -62,14 +55,14 @@
          </view>
          <!-- 固定页面状态显示 -->
         <view class='li'   wx:if="{{maKestep==2}}" style='width:100%;'  catchtap='commodity'>
-            <view class='Utype'>
+            <view class='Utype {{isIphoneX==1?"typeX":""}}'>
               <image lazy-load="true" class='Uicon' src='https://static.bonnieclyde.cn/Group%2013%20Copy@2x.png'></image>
             选择商品
            </view> 
            </view>
 
          <view class='li'wx:if="{{maKestep==3}}" style='width:100%;'  catchtap='achieve'>
-              <view class='Utype'>
+              <view class='Utype  {{isIphoneX==1?"typeX":""}}'>
               <image class='Uicon' lazy-load="true" src='https://static.bonnieclyde.cn/photo@2x.png'></image>
             制作海报
            </view> 
@@ -78,19 +71,27 @@
               <!-- 固定页面状态显示 -->
    <view class='ul' wx:if='{{Fixtitle==2}}'>
         <view class='li' style="width:33.3%" catchtap='Jump'>
-               <view class='Utype'>
+               <view class='Utype  {{isIphoneX==1?"typeX":""}}'>
               <image lazy-load="true" class='Uicon' src='https://static.bonnieclyde.cn/photo@2x.png'></image>
                 继续制作
              </view> 
         </view>
-        <view class='li' style="width:33.3%;font-weight: 500;" catchtap='Save' >
-            <view class='Utype'>
+
+        <view  wx:if='{{!Again}}'  class='li' style="width:33.3%;font-weight: 500;" catchtap='Save' >
+            <view class='Utype {{isIphoneX==1?"typeX":""}}'>
               <image lazy-load="true" class='Uicon' src='https://static.bonnieclyde.cn/down@2x.png'></image>
                  下载到相册
              </view> 
           </view>
+             <view wx:else  class='li' style="width:33.3%;font-weight: 500;" catchtap='Againadd' >
+            <view class='Utype  {{isIphoneX==1?"typeX":""}}'>
+              <image lazy-load="true" class='Uicon' src='https://static.bonnieclyde.cn/down@2x.png'></image>
+                 下载到相册
+             </view> 
+          </view>
+
         <view class='li' style="width:33.3%"  catchtap='countermand'>
-           <view class='Utype'>
+           <view class='Utype  {{isIphoneX==1?"typeX":""}}'>
               <image lazy-load="true" class='Uicon' src='https://static.bonnieclyde.cn/back@2x.png'></image>
                  返回列表
              </view> 
@@ -98,7 +99,7 @@
       </view>
 
       <!-- 适配全面屏 -->
-        <view class="s '{{isIphoneX?'L-ise':''}}' "></view>
+        <view class="s '{{isIphoneX==1?'L-ise':''}}' "></view>
 
     </view>
     <!-- 选择商品 -->
@@ -106,7 +107,7 @@
       <view class="choose_shop" wx:if="{{lucency}}">
        <view class="controlSearch">
               <view class="control-search-input">
-            <input type="text" class="search-input custom-search-input" bindinput='searchInput' placeholder="搜索商品" value='{{search_text}}'/>
+            <input type="text" class="search-input custom-search-input" confirm-type="done" bindconfirm='search'  bindinput='searchInput' placeholder="搜索商品" value='{{search_text}}'/>
             <image src='/images/goods/search_icon_2.png' class="search-button custom-search-button" catchtap='search'/>
           </view>
     </view>

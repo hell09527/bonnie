@@ -596,8 +596,17 @@ console.log(data);
                     let order_info = data;
                     //图片处理
                     for (let index in order_info.itemlist) {
+                     
                         let img = order_info.itemlist[index].picture_info.pic_cover_small;
                         order_info.itemlist[index].picture_info.pic_cover_small = app.IMG(img);
+
+                         //预售发货时间
+                        if(order_info.itemlist[index].sale_type==2){
+                           order_info.itemlist[index].send_sale =  that.sale_timing(that,order_info.itemlist[index].delivery_end_time,order_info.itemlist[index].sale_end_time);
+                    
+                        }
+
+                        
                     }
                     //赠品图片处理
                     for (let index in order_info.goods_mansong_gifts) {
@@ -610,8 +619,8 @@ console.log(data);
                       discount_money = Number(discount_money) - Number(that.data.max)
                     
                     }
-
-
+                    console.log(order_info);
+                    
 
                     that.setData({
                         order_info: order_info,
@@ -699,6 +708,86 @@ console.log(data);
             }
         }
     },
+    /* 
+  展示预售商品发货时间
+ */
+
+sale_timing: function (that, Send_array,sale_tms) {
+   let  cdns={};
+   console.log('jinlail')
+    // let current_time = that.data.sale_end_time;
+    // console.log(current_time)
+    let count_second = (Send_array * 1000 - sale_tms * 1000) / 1000;
+    //首次加载
+    if (count_second > 0) {
+      count_second--;
+      //时间计算
+      let day = Math.floor((count_second / 3600) / 24);
+      let hour = Math.floor((count_second / 3600) % 24);
+      let minute = Math.floor((count_second / 60) % 60);
+      let second = Math.floor(count_second % 60);
+      
+      //赋值
+      cdns.day = day;
+      cdns.hour = hour;
+      cdns.minute = minute;
+      cdns.second = second;
+      cdns.end = 0;
+      
+         if(hour>1){
+           console.log(day)
+           cdns.day = Number(day) + 1;
+        console.log(cdns)
+       }else{
+        cdns.day = day;
+        console.log(cdns)
+       }
+       console.log(cdns)
+       return cdns;
+    //    that.setData({
+    //      Send_array: Send_array
+    //    })
+    
+    
+      } 
+  
+    //开始计时
+    // let timer = setInterval(function () {
+    //   if (count_second > 0) {
+    //     count_second--;
+    //     //时间计算
+    //     let day = Math.floor((count_second / 3600) / 24);
+    //     let hour = Math.floor((count_second / 3600) % 24);
+    //     let minute = Math.floor((count_second / 60) % 60);
+    //     let second = Math.floor(count_second % 60);
+    //     //赋值
+        
+    //     console.log(day)
+    //    if(hour>1){
+    //     Send_array.day = day + 1;
+    //     console.log(Send_array)
+    //    }else{
+    //     Send_array.day = day;
+    //     console.log(Send_array)
+    //    }
+    //     //  Send_array.hour = hour;
+    //     // Send_array.minute = minute;
+    //     // Send_array.second = second;
+    //     Send_array.end = 0;
+    //       that.setData({
+    //         Send_array: Send_array
+    //       })
+    //   } 
+    //   else {
+    //       Send_array.end = 1;
+    //       that.setData({
+    //         Send_array: Send_array
+    //       })
+  
+    //     clearInterval(timer);
+    //   }
+    // }, 1000)
+  },
 
     /**
      * 赠品图片加载失败

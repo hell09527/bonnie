@@ -4,8 +4,8 @@ App({
  /a/dsa sadaswqwqewqkhhjhjhqqweqwewqewe  * 全局变量
    */
   globalData: {
-    siteBaseUrl: "https://www.bonnieclyde.cn/", //服务器url
-    // siteBaseUrl: "https://store-test.91xdb.com/", //服务器url
+    // siteBaseUrl: "https://www.bonnieclyde.cn/", //服务器url
+    siteBaseUrl: "https://store-test.91xdb.com/", //服务器url
     wx_info: null,
     encryptedData: '',
     iv: '',
@@ -42,7 +42,7 @@ App({
       technical_support: '',
     },
     projectData: {},    //二级页参数
-    unregistered: 0,
+    unregistered: '',
     recommendUser:'',   //极选师推荐人
     traffic_acquisition_source: '' //引流来源
   },
@@ -50,16 +50,11 @@ App({
   onLaunch: function (options) {
     let that = this;
     if (options.referrerInfo.extraData){
-      // traffic_acquisition_source      引流来源
-      // console.log(options.referrerInfo.extraData.traffic_acquisition_source, 'traffic_acquisition_source');
        that.globalData.traffic_acquisition_source = options.referrerInfo.extraData.traffic_acquisition_source;
-      that.yielding(that.globalData.traffic_acquisition_source)
-    
+       that.yielding(that.globalData.traffic_acquisition_source)
     }
-
     const updateManager = wx.getUpdateManager()
     updateManager.onCheckForUpdate(function (res) {
-
     })
 
     updateManager.onUpdateReady(function () {
@@ -77,20 +72,7 @@ App({
       // 新的版本下载失败
     })
    
-    wx.getUserInfo({
-      success: res => {
-        console.log('获取用户信息成功', res);
-        let unregistered = 0;
-        that.setRegister(unregistered)
-        this.app_login();
-      },
-      fail(res) {
-        console.log('获取用户信息失败', res);
-        let unregistered = 1;
-        that.setRegister(unregistered)
-        that.unregisteredCallback(unregistered)
-      }
-    })
+    this.app_login();
     that.defaultImg();
     that.webSiteInfo();
     that.copyRightIsLoad();
@@ -116,42 +98,25 @@ App({
       wx.getSystemInfo({
         success: res => {
           let modelmes = res.model;
-          console.log(modelmes,'手机');
-          console.log(modelmes,res.screenHeight);
-          console.log(modelmes,res.windowHeight );
-          console.log(modelmes,res.statusBarHeight );
-          console.log(res.screenHeight - res.windowHeight - res.statusBarHeight - 46 );
-          // iPhone X
-          // if(res.model=="android"){
-          //   winHeight-=45;
-          // }
-          
+          console.log(res.system,'手机');
+            // <==区别机型而导致的导航的样式问题==>
        if(res.model.indexOf("iPhone X")!=-1){
-        that.globalData.isIphoneX = true;
+        that.globalData.isIphoneX = 1;
+       }else if(res.system.indexOf("Android")!=-1){
+        that.globalData.isIphoneX = 2;
        }else{
-
+        that.globalData.isIphoneX = 3;
        }
-          
-          // if (res.screenHeight - res.windowHeight - res.statusBarHeight - 46 > 70) {
-          //   　　　　　　　　　　//  处理相关逻辑
-          //   console.log('jinlai')
-          //    that.globalData.isIphoneX = true;
-          // }else{
-          //   console.log('宁不是')
-          // }
   
         }
       })
-   
-  
   },
-
   //app登录
   app_login: function () {
     let that = this;
     wx.login({
       success: function (res) {
-        console.log(res.code)
+        //  得到code ==>
         that.globalData.code = res.code;
         that.getwechatUserInfo();
       }
@@ -163,6 +128,7 @@ App({
     // 查看是否授权
     wx.getSetting({
       success: (res) => {
+
         wx.getUserInfo({
           success: res => {
             // console.log(res)
@@ -170,6 +136,9 @@ App({
             that.setWxInfo(res.rawData);
             that.setEncryptedData(res.encryptedData);
             that.setIv(res.iv);
+
+            let unregistered = 0;
+            that.setRegister(unregistered);
             //wx.setStorageSync("userInfo", res.rawData);
             // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
             // 所以此处加入 callback 以防止这种情况
@@ -177,8 +146,18 @@ App({
               this.userInfoReadyCallback(res)
             }
             that.wechatLogin(); //自动登录或注册
+          },
+          fail(res) {
+            console.log('获取用户信息失败', res);
+            let unregistered = 1;
+            that.setRegister(unregistered)
+            that.unregisteredCallback(unregistered)
+            console.log(that.globalData.unregistered)
           }
         })
+
+
+        
       }
     })
   },
@@ -209,13 +188,14 @@ App({
       success: function (res) {
         let code = res.code;
         if (code == 0 || code == 10) {
-          
           // that.setOpenid(res.data);
           that.setOpenid(res.data.openid)
           that.globalData.token = res.data.token;
           if (that.employIdCallback) {
             that.employIdCallback(res.data.token)
-          } that.setToken(res.data.token);
+          } 
+          that.setToken(res.data.token);
+          
         }
         // console.log(res)
       }

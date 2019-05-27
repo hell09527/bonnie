@@ -15,7 +15,7 @@
             <button class="btn-confirm" data-status="mobile" catchtap='Branch'>确定</button>
         </view>
     </view>
-
+ 
 <view class="ck-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
     <view class="ck-dialog" wx:if="{{showModal}}">
         <view class="ck-title">手机号授权绑定成功</view>

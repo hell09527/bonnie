@@ -1,6 +1,5 @@
 <import src="/templates/dataLogin-template/dataLogin.wxml" />
-
-<scroll-view bindtouchstart="handletouchtart" bindtouchend="handletouchend" bindtouchmove="handletouchmove">
+<scroll-view bindtouchstart="handletouchtart" bindtouchend="handletouchend" bindtouchmove="handletouchmove" scroll-y="{{true}}">
   <view class="motify {{prompt==''?'hide':''}}">
     <icon class="i show_type warning" type='warn' size='25' color='#FFF'></icon>
     <view class="motify-inner">{{prompt}}</view>
@@ -206,7 +205,15 @@
           </view>
           <view class='span'>我的礼物</view>
         </view> 
-         </view>  
+         </view> 
+
+           <view class='li' >
+          <view class="a member_list_item" catchtap='listClick'     data-url="member/posterList/posterList">
+            <image lazy-load="true" src='https://static.bonnieclyde.cn/icon21.png' />
+            <view class='span'>海报制作</view>
+          </view>
+        </view>
+
                <!-- <view class='li' wx:if='{{(distributor_type==2||distributor_type==3||distributor_type==4) && tel!=""}}'>
         <view class="a member_list_item" catchtap='listClick' data-url="member/kol/kol">
           <image src='https://static.bonnieclyde.cn/WIMG23.png'/>
@@ -225,12 +232,12 @@
 </view>
 
 <!-- 极选师功能目录 -->
-  <view class='member_list {{ distributor_type ==0 ?"Permissions": ""}}' wx:if='{{tel!=""}}'>
+  <view class='member_list {{ distributor_type ==0 ?"Permissions": ""}}' wx:if='{{tel!="" && distributor_type!=0 &&distributor_type!=1}}'>
     <view class='ul'>
       <block wx:if='{{(distributor_type!=0 &&distributor_type!=1)}}'>
         <view class='li'>
       <view class="a member_list_item" catchtap='listClick' data-url="member/kol/kol">
-          <image lazy-load="true"  src='https://static.bonnieclyde.cn/50-50.png' />
+          <image lazy-load="true"  src='https://static.bonnieclyde.cn/WechatIMG463-min.png' />
           <view class='span'>极选师</view>
         </view>
         </view>
@@ -245,22 +252,17 @@
       </block>
       <block >
 
-        <view class='li' wx:if='{{distributor_type!=0}}'>
-          <view class="a member_list_item" catchtap='listClick'     data-url="member/posterList/posterList">
-            <image lazy-load="true" src='https://static.bonnieclyde.cn/icon21.png' />
-            <view class='span'>海报制作</view>
-          </view>
-        </view>
+      
 
              <view class='li' wx:if='{{distributor_type!=0}}'>
           <view class="a member_list_item" catchtap='listClick'     data-url="member/supportCenter/supportCenter?stu=1">
-            <image lazy-load="true" src='https://static.bonnieclyde.cn/weng.png' />
+            <image lazy-load="true" src='https://static.bonnieclyde.cn/WechatIMG462-min.png' />
             <view class='span'>帮助中心</view>
           </view>
         </view>
              <view class='li' wx:if='{{distributor_type!=0}}'>
           <view class="a member_list_item" catchtap='listClick'     data-url="member/supportCenter/supportCenter?stu=2">
-            <image lazy-load="true" src='https://static.bonnieclyde.cn/bangs.png' />
+            <image lazy-load="true" src='https://static.bonnieclyde.cn/WechatIMG46-min.png' />
             <view class='span'>规则说明</view>
           </view>
         </view>

@@ -1,11 +1,54 @@
 
-@import "/templates/goods-item-template/goods-item-template.wxss";
-
 /* .scroll-view{
      background: url('https://static.bonnieclyde.cn/WechatIMG27.png') no-repeat;
       background-size:100% 100%; 
+       background: #fff;
 }  */
+.top_title{
+position: fixed;
+top: 0;
+left: 0;
+width:100%;
+height:72px;
+line-height:60px;
+background:#fff;
+z-index: 888;
+text-align:center;
 
+}
+.top_X{
+  position: fixed;
+top: 0;
+left: 0;
+width:100%;
+height:88px;
+line-height:80px;
+background:#fff;
+z-index: 888;
+text-align:center;
+}
+
+.top_P{
+position: fixed;
+top: 0;
+left: 0;
+width:100%;
+height:64px;
+line-height:54px;
+background:#fff;
+z-index: 888;
+text-align:center;
+}
+.top_img{
+  width: 34%;
+  /* height: 72rpx; */
+ 
+
+}
+.so_l{
+height: 170rpx;
+
+}
 /* 
 齐刘海的样式 
 */
@@ -30,16 +73,39 @@ position: fixed;
  height: 68rpx;
 top: -1px;
 }
-.backgroundImage{
-  position: fixed;
-  z-index: 0;
-  width:100%;
-  height:100%;
+/* .backgroundImage{
+  position:fixed;
   top:0;
+  left: 0;
+  bottom:0 ;
+  width:100%;
+  height:100%; 
+   background: #fff; 
 }
 .backgroundImage>image{
   width:100%;
   height:100%;
+} */
+
+.swiper_dots{
+  position: absolute;
+  bottom:0px;
+  z-index: 100;
+  width:100%;
+  display: flex;
+  justify-content: center;
+}
+.swiper_dots-item{
+  width:20rpx;
+  height:20rpx;
+  background: #E5E5E5;
+  border-radius: 50%;
+  margin:0 8rpx;
+  transition: all 0.5s;
+}
+.swiper_dots_item_active{
+  width:20rpx;
+  background:#999;
 }
 
 
@@ -285,6 +351,7 @@ top: -1px;
 */
 .bodyBox{
   position: relative;
+  width: 100%;
   z-index: 100;
 }
 
@@ -292,6 +359,7 @@ top: -1px;
   padding:0;
   margin:0;
   /* position: relative; */
+box-shadow:0px 2px 10px #ccc;
   background: transparent;
   outline: none;    
   border-radius: 0;
@@ -301,6 +369,7 @@ top: -1px;
 }
 .form-button image{
   border-radius: 2px;
+
 }
 .a{
   width:100%;
@@ -309,9 +378,9 @@ top: -1px;
 .uo button{
   border-radius: 0px;
 }
-.uo:nth-child(1){
+/* .uo:nth-child(1){
     padding: 0;
-}
+} */
 .uo{
  padding: 20rpx 30rpx; 
 }
@@ -319,11 +388,30 @@ top: -1px;
   width:100%;
 }
 
+.index_slide{
+  position: relative;
+  /* padding: 20rpx 20rpx; */
+ 
 
+}
 
 .index-swiper{
   width: 100%;
-  height:732rpx;
+  /* border-radius: 5px; */
+  overflow: hidden;
+   /* background-color:rgba(255,255,255,0.5); */
+   /* box-shadow:4px 5px 10px rgba(0,0,0,0.7); */
+  position: relative;
+  
+  
+}
+.slide-image{
+  /* margin-top: 20rpx; */
+  /* border-radius: 5px; */
+  width: 100%;
+  height: 100%;
+  position: relative;
+  
 }
 /* 小样 */
 .galley{
@@ -820,5 +908,222 @@ display: -webkit-box;
   width:100%;
   margin: 50rpx 0;
 }
+.slide-ims{
+  width: 100%;
+  height: 100%;
+  /* border-radius: 2px; */
+  /* box-shadow:0px 5px 10px rgba(0,0,0,0.7); */
+}
+.index_simgs{
+  width: 100%;
+  /* padding: 20rpx 20rpx; */
+ 
+  /* border-radius: 5px; */
+}
+.smock-img{
+  width: 100%;
+  padding-top: 6rpx;
 
+}
+.smock-box{
+  position: absolute;
+  top:730rpx;
+  width: 94%;
+
+  height: 243rpx;
+  background: url('https://static.bonnieclyde.cn/white.jpg') no-repeat;
+  margin-left:3%;
+  /* margin-bottom: 20px; */
+  
+
+
+  text-align: center;
+  
+}
+.ock-box{
+  /* width: 100%;
+  text-align: center; */
+  margin-top: 120px;
+}
+.bai{
+  width:100% ;
+  height: 210rpx;
+  background: #fff;
+}
+
+/* 品牌列表 */
+
+
+.brand-detail-item>image{
+  width:100%;
+margin-top: 6rpx;
+  display: block;
+}
+.crs{
+  width: 100%;
+  z-index: 123;
+  display: flex;
+  /* center  */
+  /* space-around */
+  justify-content:center;
+  /* align-content: left; */
+  flex-flow: row wrap;
+}
+.crs-li{
+  width: 33.3%;
+ 
+
+}
+
+.crs-li>image{
+  width: 100%;
+  /* float: left; */
+}
+
+
+
+
+
+
+
+
+/* .banner{
+  width:750rpx;
+  height:600rpx;
+  position: relative;
+}
+.pic{
+  display:block;
+  width:750rpx;
+  height:600rpx;   
+  position:absolute; 
+  top:0;
+  left:0;
+} */
+
+
+
+.goods_all{
+  width:50%;
+  float: left;
+  /* box-shadow:0px 2px 5px #ccc; */
+  box-sizing: border-box;
+}
+.goods_all:nth-child(2n)>.all-box{
+  margin:0 20rpx 20rpx 10rpx;
+}
+.all-box{
+  margin:0 10rpx 20rpx 20rpx;
+  background: #fff;
+    box-shadow:0px 2px 5px #ccc;
+  box-sizing: border-box;
+}
+.all-box>image{
+  width:100%;
+    /* box-shadow:0px 2px 5px #ccc; */
+  display: block;
+}
+.shop-detail{
+  padding:10px;
+}
+.title{
+  font-size: 12px;
+  line-height: 18px;
+  height:36px;
+  display: -webkit-box; 
+-webkit-line-clamp: 2; 
+-webkit-box-orient: vertical; 
+overflow: hidden;
+}
+
+.shop-detail-price{
+  display: flex;
+  justify-content: space-between;
+  padding:10rpx 0 0;
+  align-items: center;
+}
+.shop-detail-price>text{
+  color:#000;
+  margin-right: 10px;
+  font-weight:700;
+}
+.i.goods_tab {
+  font-style: normal;
+  font-size: 12px !important;
+  background: #333;
+  color: #fff !important;
+  padding: 1px 3px;
+  margin-right: 2px;
+  border-radius: 2px;
+  font-weight: normal !important;
+}
+
+ .sale_tab {
+  font-style: normal;
+  font-size: 12px !important;
+  background: #F3B85F;
+  color: #fff !important;
+  padding: 1px 3px;
+  margin-right: 2px;
+  border-radius: 2px;
+  font-weight: normal !important;
+}
+.collect{
+  width: 36rpx;
+  height: 36rpx;
+  line-height:20rpx;
+
+}
+.collect>image{
+  width: 36rpx;
+  height: 36rpx;
+}
+
+
+.fix_top{
+  position: fixed;
+  bottom:160rpx;
+  right:32rpx;
+     width: 38px;   
+    height: 38px;  
+   border:0;  
+  font-size: 12px;
+  color: #000;
+  border-radius: 50%;
+   padding:0;
+   margin:0;
+   background-color: #fff; 
+   transition:right 0.5s;
+   outline:none;
+  box-shadow: 0px 0px 20px #cbcbcb;
+  text-align: center;
+  z-index: 1000;
+} 
+
+.hide-tp{
+  position: fixed;
+  bottom:160rpx;
+  right:-40rpx;
+    width: 38px;   
+    height: 38px;  
+   font-size: 12px;
+   color: #000;
+   padding:0;
+   margin:0;
+   border-radius: 50%;
+   background-color: #fff; 
+   transition:right 0.5s;
+   z-index: 1000;
+   outline:none;
+  box-shadow: 0px 0px 20px #cbcbcb; 
+  
+}
+
+.fi_image{
+  width: 32px;
+  margin:3px auto;
+  display: block;
+  border-radius: 50%;
+  border:0;
+}
 

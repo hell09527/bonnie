@@ -595,10 +595,24 @@ image{
 .fde{
   height:240px;
 }
+.slick{
+  margin-bottom: 30rpx;
+}
 
 .body{
   padding:10rpx 0;
   box-sizing: border-box;
   display: table;
   width:100%;
+  height:100%; 
+   background: #fff; 
 }
+/* .backgroundImage{
+  position:fixed;
+  top:0;
+  left: 0;
+  bottom:0 ;
+  width:100%;
+  height:100%; 
+   background: #fff; 
+} */

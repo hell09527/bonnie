@@ -35,6 +35,12 @@ Page({
     let base = app.globalData.siteBaseUrl;
     let defaultImg = app.globalData.defaultImg;
 
+    if(options.uid) {
+      console.log('options.uid', options.uid)
+      app.globalData.identifying = options.uid;
+      app.globalData.breakpoint = options.breakpoint;
+    }
+
     if (category_id != undefined){
       that.setData({
         category_id: category_id
@@ -60,6 +66,23 @@ Page({
     let that = this;
     let base = that.data.Base;
 
+
+    if (app.globalData.token && app.globalData.token != '') {
+      //判断是否是付费会员的接口
+       that.XXS_reuse();
+
+
+            } else {
+app.employIdCallback = employId => {
+if (employId != '') {
+//判断是否是付费会员的接口
+that.XXS_reuse();
+
+}
+
+}
+}
+
     app.restStatus(that, 'aClickFlag');
     app.sendRequest({
       url: 'api.php?s=index/getDiscountData',
@@ -68,6 +91,7 @@ Page({
 
         let code = res.code;
         let data = res.data;
+        
         if (code == 0) {
           let discount_adv = data.discount_adv;
           for (let index in discount_adv.adv_list){
@@ -75,16 +99,71 @@ Page({
             discount_adv.adv_list[index].adv_image = app.IMG(img);
           }
 
+          
+          let ap_intro= discount_adv.ap_intro;
+             ap_intro==''?'限时体验':ap_intro;
+
+                console.log(ap_intro)
+             // 专题页标题
+             wx.setNavigationBarTitle({
+              title:  ap_intro,
+          })
+          
+          
+
           that.setData({
             current_time: data.current_time,
             discount_adv: discount_adv,
-            goods_category_list: data.goods_category_list
+            goods_category_list: data.goods_category_list,
+            ap_intro
           })
           that.getGoodsList(that);
         }
         console.log(res);
       }
     });
+
+  },
+  XXS_reuse:function(){
+    let that = this;
+    app.sendRequest({
+      url: "api.php?s=member/getMemberDetail",
+      success: function (res) {
+        let data = res.data
+        if (res.code == 0) {
+          let is_vip = data.is_vip;
+          app.globalData.is_vip = data.is_vip;
+          app.globalData.distributor_type = data.distributor_type;
+          let distributor_type = data.distributor_type;
+          
+          app.globalData.uid = data.uid;
+          console.log(data.uid);
+          app.globalData.vip_gift = data.vip_gift;
+          app.globalData.vip_goods = data.vip_goods;
+          let tel = data.user_info.user_tel;
+          if (tel !== null || tel !== undefined || tel  !== '') {
+            console.log(111)
+          } else if (tel==''){
+            console.log(223)
+          } 
+
+          let updata = that.data.unregistered;
+          updata = app.globalData.unregistered;
+          console.log(updata, 'updata', '134', data.is_employee);
+          // console.log(app.globalData.is_vip)
+          that.setData({
+            is_vip: is_vip,
+            tel: tel,
+            distributor_type,
+            unregistered: updata,
+            is_employee: data.is_employee,
+          })
+         
+           console.log(that.data.distributor_type)
+   
+        }
+      }
+    })
   },
 
   /**
@@ -300,5 +379,42 @@ Page({
     wx.navigateTo({
       url: '/pages'+url,
     })
-  }
+  },
+      /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function (){
+    let _yhm=this;
+    let uid = app.globalData.uid;
+    console.log(uid);
+    let XS_share_url = "/pages/index/discount/discount";
+        if(_yhm.data.distributor_type==0){
+      return {
+        title: _yhm.data.ap_intro,
+        path: XS_share_url,
+        imageUrl: '',
+        success: function (res) {
+          app.showBox(that, '分享成功');
+        },
+        fail: function (res) {
+          app.showBox(that, '分享失败');
+        }
+      }
+    }else{
+     return {
+        title: _yhm.data.ap_intro,
+        path: XS_share_url + "?uid=" + uid,
+        imageUrl: '',
+        success: function (res) {
+          app.showBox(that, '分享成功');
+        
+        },
+        fail: function (res) {
+          app.showBox(that, '分享失败');
+        }
+      }
+    }
+  },
+
+
 })

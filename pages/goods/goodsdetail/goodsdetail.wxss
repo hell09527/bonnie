@@ -136,7 +136,7 @@ swiper {
   right: 30rpx;
   text-align: center;
   font-size: 12px;
-  margin-top: 13px;
+  margin-top: 16rpx;
   background: #FFF;
 }
 
@@ -177,7 +177,7 @@ swiper {
 
 .buy_area .price_wrap{
   padding: 0 10px;
-  line-height: 30px;
+  line-height: 24px;
   overflow: hidden;
 }
 
@@ -209,10 +209,10 @@ swiper {
 .buy_area .flag{
   float: left;
   font-size: 12px;
-  color: #fff;
+  color: #000;
   padding: 0 4px;
   border-radius: 7px;
-  line-height: 20px;
+  line-height: 23px;
 }
 .openMember{
   background: #000;
@@ -658,6 +658,21 @@ image{
   margin-left: 7px;
   z-index: 2;
 }
+.tips{
+  position: absolute;
+  width: 32rpx;
+  height: 32rpx;
+  background: #000;
+  border: 1px solid #000;
+  border-radius: 50%;
+  font-size: 10px;
+  line-height: 30rpx;
+  text-align: center;
+  color: #fff;
+  z-index: 10;
+  right: 10px;
+  top: 3px;
+}
 
 .big-btn{
   line-height: 50px;
@@ -981,7 +996,7 @@ image.jiantou {
 }
 
 .evaluation-container {
-  padding: 6px;
+   padding:6px 20rpx;
   background: #fff;
 }
 
@@ -1375,21 +1390,21 @@ button::after{
 .goods-activity .goods-price {
   position: relative;
   width: 100%;
-  min-height: 50px;
+  min-height: 100rpx;
   padding-top: 0px;
   background-color: #000;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   line-height: inherit;
-  padding-right: 115px;
-  padding: 10px 10px 2px;
+  padding-right: 230rpx;
+  padding: 12rpx 20rpx 4rpx;
   text-align: left;
 }
 
 .goods-activity .goods-price .current-price.activity-price, .goods-activity .goods-price .cur-price.activity-price {
   color: #fff;
-  font-size: 20px;
+  /* font-size: 20px; */
 }
 
 .current-price .span {
@@ -1408,23 +1423,23 @@ button::after{
 
 .current-price .price {
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: top;
   font-size: 18px;
 }
 
 .goods-activity .goods-price .current-price .price, .goods-activity .goods-price .cur-price .price {
-  font-size: 30px;
-  vertical-align: baseline;
+  font-size: 16px;
+  vertical-align: top;
   color: #FFF;
 }
 
 .goods-activity .goods-price .price-title {
   position: absolute;
-  background-color: #000;
-  top: -21px;
+  background-color: #F3B85F;
+  top: -26px;
   left: 0;
   font-size: 12px;
-  padding: 4px 8px;
+  padding: 4px 16px;
   border-radius: 0 4px 0 0;
   color: #fff;
 }
@@ -1453,7 +1468,7 @@ button::after{
   position: absolute;
   right: 0;
   top: 50%;
-  margin-top: -24px;
+  margin-top: -23px;
   font-size: 12px;
   line-height: 1;
 }
@@ -1464,6 +1479,8 @@ button::after{
   padding: 7px 10px 0;
   width: auto;
   color: #fff;
+  font-size:12px;
+
 }
 
 .goods-activity .overview-countdown .countdown {
@@ -1822,11 +1839,11 @@ video{
 }
 
 .sos{
-  color:#333;
+color:#333;
 text-decoration:line-through;
 font-size: 14px;
 line-height:25px;
-
+ vertical-align:6%;
 }
 .DMSbuy{
    padding:20rpx;
@@ -1979,12 +1996,15 @@ canvas{
   width: 500rpx;
   text-align: center;
   z-index:2000 ;
-  /* background: #fff; */
+  background: #fff;
   box-shadow:0px 0px 20px rgba(0,0,0,0.1);
+  left:50%;
+  top:50%;
+  transform: translateX(-50%) translateY(-60%);
 
 }
 .ng{
-  width: 500rpx;
+  width: 100%;
   display: flex;
   justify-content: flex-start;
   background:#fff;
@@ -2001,7 +2021,83 @@ canvas{
   display: flex;
   justify-content: flex-start;
 }
+.ori{
+  color: #fff;
+  font-size: 12px;
+  margin-left: 2px;
+   line-height:4px;
+   margin-top: 10rpx;
+}
+.yus{
+  display: inline-block;
+  font-size: 12px;
+  color:#fff;
+ 
 
+}
+.lostkol{
+  display: flex;
+  justify-content: space-between;
+}
+.js-li{
+  width: 50%;
+  height: 54rpx;
+  text-align: center;
+  margin: 0 auto;
+  line-height: 54rpx;
+  color:#fff;
+}
+.indoor{
+  color: #000;
+  font-size: 12px;
+}
+
+/* 品牌推荐-你可能还想看 */
+.recommended-box{
+  width: 100%;
+   white-space:nowrap;
+   padding:10rpx 0;
+  background: #fff;
+}
+.recommended-goods-item{
+  margin: 10rpx;
+  padding:10rpx;
+  display:inline-block;
+  width:260rpx;
+  box-shadow:0px 2px 4px #ccc;
+
+  /* box-shadow: 0px 0px 8px #cbcbcb; */
+}
+.recommended-goods-item>image{
+  width:240rpx;
+}
+.recommended-goods-item .activity_text{
+  height:34px;
+  margin:10rpx 0;
+  font-size: 12px;
+  color:#333;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  white-space:pre-line;
+}
+.recommended-goods-item .brand_goods_price{
+  color:#e40046;
+  font-size: 12px;
+}
+.brand-box>image{
+  width:120rpx;
+  margin-right: 20rpx;
+}
+.more{
+width:10rpx;
+margin-left:6rpx;
+}
+.detail_list image{
+  margin:0 auto;
+  display: block;
+}
 
 
 

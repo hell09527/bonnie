@@ -63,7 +63,7 @@ input{
 
 page{
   height: 100%;
-  background:#F5F5F5;
+  background:#fff;
 }
 
 .a{
@@ -291,6 +291,7 @@ strong, b {
   border-radius: 50%;
    background-color: #fff; 
    transition:right 0.5s;
+   z-index: 1000;
    outline:none;
   box-shadow: 0px 0px 20px #cbcbcb; 
 }
@@ -301,7 +302,8 @@ strong, b {
    border:0; 
 }
 .yuan image,.hide-kf image{
-   width: 38px;
+   width: 32px;
+   margin: 3px auto;
    display: block;
    border-radius: 50%;
   border:0;
@@ -429,3 +431,5 @@ line-height:80rpx;
   height: 40rpx;
   background:#fff; 
 }
+
+

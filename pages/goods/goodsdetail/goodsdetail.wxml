@@ -4,8 +4,8 @@
 <scroll-view>
      <!-- 制作   -->
   <canvas canvas-id="producer"  style="width:100%;margin:0 auto; height:{{UrlH}}px;" ></canvas>
-<view class='{{maskShow==1?"noscroll":""}}' style="overflow:hidden;">
-    <view class="motify {{prompt==''?'hide':''}}">
+  <view class='{{maskShow==1?"noscroll":""}}' style="overflow:hidden;">
+  <view class="motify {{prompt==''?'hide':''}}">
         <icon class="i show_type warning" type='warn' size='25' color='#FFF'></icon>
         <view class="motify-inner">{{prompt}}</view>
     </view>
@@ -36,11 +36,6 @@
     <!-- </button>
 </view> -->
 
-
-
-
-
-
     <block wx:if='{{selectType == "video"}}'>
         <video src='{{goods_info.goods_video_address}}' autoplay='false' style='height:{{swiperHeight}}px'></video>
     </block>
@@ -57,7 +52,7 @@
             <image class="i fac fa-heart-o" src='/images/goods/collection{{goods_info.is_member_fav_goods==0?"":"_check"}}.png' catchtap='collection'></image>
         </view>
     </block>
-    <!-- 商品图，价格 -->
+    <!-- 商品图，价格   限时体验-->
     <block wx:if="{{goods_info.promotion_type == 2 && goods_info.promotion_detail != ''}}">
         <view class="goods-header js-goods-header goods-activity clearfix">
             <view class="goods-price {{timer_array.end==1?'gray':''}}">
@@ -69,10 +64,10 @@
                     </view>
                 </view>
                 <!-- <view class='em' class="original-price">{{goods_info.price}}</view> -->
-                <view class="font-size-12 overview-countdown js-activity-tips started">
+                <view class="font-size-12 overview-countdown js-activity-tips started" style="margin-top:-54rpx;">
                     <block wx:if='{{timer_array.end == 0}}'>
                         <view class="countdown-title">距结束仅剩</view>
-                        <view class="js-discount-time countdown">
+                        <view class="js-discount-time countdown" >
                             <view class="span js-day">{{timer_array.day}}</view>
                             天
                             <view class="span js-hour">{{timer_array.hour}}</view>
@@ -90,40 +85,93 @@
             </view>
         </view>
     </block>
+
+        <!-- 商品图，价格   预售-->
+    <block wx:if="{{goods_info.sale_type == 2 && goods_info.sale_end_time!= ''}}">
+        <view class="goods-header js-goods-header goods-activity clearfix">
+            <view class="goods-price {{Send_array.end==1?'gray':''}}">
+                
+                <view class="current-price activity-price">
+                  <view  class="span price-title js-price-title "> 预售 </view>
+                </view>
+                      <view class="lostkol">
+                         <view class="js-li " style=' text-align: left; font-size: 18px;font-weight: 700;' >￥{{goods_info.promotion_price}}</view>
+                          <view class="js-li" wx:if='{{sale_timer_array.end == 0}}'>距离预售结束仅剩</view>
+                        <view class="js-li" style='font-size:20px;line-height:50px;' wx:else>预售已结束</view>
+                      </view>
+
+                <view class="lostkol">
+                        <view  class="js-li" style=' text-align: left;font-size: 12px;' >预售结束后{{Send_array.day}}内天发货</view>
+                       
+                        <view class="js-li" wx:if='{{sale_timer_array.end == 0}}'>
+                            <view class="yus yu-js-day">{{sale_timer_array.day}}</view>
+                            天
+                            <view class="yus yu-js-hour">{{sale_timer_array.hour}}</view>
+                            时
+                            <view class="yus yu-js-min">{{sale_timer_array.minute}}</view>
+                            分
+                            <view class="yus yu-js-sec">{{sale_timer_array.second}}</view>
+                            秒
+                        </view>
+                          <view class="js-li" wx:else>
+                    
+                        </view>
+
+
+                </view>
+                <!-- <view class="font-size-12 overview-countdown js-activity-tips started">
+                        <view class="countdown-title">距离预售结束仅剩</view>
+                        <view class="js-discount-time countdown">
+                            <view class="yus yu-js-day">{{sale_timer_array.day}}</view>
+                            天
+                            <view class="yus yu-js-hour">{{sale_timer_array.hour}}</view>
+                            时
+                            <view class="yus yu-js-min">{{sale_timer_array.minute}}</view>
+                            分
+                            <view class="yus yu-js-sec">{{sale_timer_array.second}}</view>
+                            秒
+                        </view>
+                  
+                </view> -->
+
+            </view>
+        </view>
+    </block>
+
+
     <view class="buy_area">
         <view class="fn_wrap" style="position: relative;">
             <view decode="{{true}}" class="h1 title" id="itemName">
                 <block wx:for='{{goods_info.goods_group_list}}' wx:key='' wx:for-item='vo'>
                     <i class="goods_tab">{{vo.group_name}}</i>
                 </block>
-                <text decode="true">{{goods_info.goods_name}}</text>
+                <text decode="true" >{{goods_info.goods_name}}</text>
             </view>
-            <text  decode="true"  class="p goods-introduction">{{goods_info.introduction}}</text>
+            <text  decode="true" wx:if="{{goods_info.introduction!=''}}" class="p goods-introduction">{{goods_info.introduction}}</text>
             <button class="span give-the-thumbs-up" catchtap="proChoose">
                 <image src='/images/goods/icon_share.png' class="i fa fa-thumbs-up" mode='scaleToFill'></image>
                 分享
             </button>
         </view>
         <view class="price_wrap">
-         <view class='gl' wx:if='{{is_employee==1&&is_inside_sell==1}}'>
-            <view class="span price" > 
-                ￥{{parseInt(goods_info.promotion_price)< parseInt(goods_info.inside_price)?goods_info.promotion_price:goods_info.inside_price}}
+         <view  wx:if='{{is_employee==1 && is_inside_sell==1}}'>
+            <view class="span price"  wx:if='{{goods_info.sale_type==1}}'>￥{{goods_info.promotion_price}}</view> 
+               <view  wx:if='{{sum==1}}' class="span sos" id="priceTitle" wx:if="{{goods_info.market_price - goods_info.price > 0}}">
+               ￥{{goods_info.market_price}}
             </view>
-                
-                    <view  wx:if='{{sum==1}}' class="sos" id="priceTitle" wx:if="{{goods_info.market_price - goods_info.price > 0}}">
-                        ￥{{goods_info.market_price}}
-                    </view>
-               
+               <view class="indoor"  id="priceDis" >
+                   内购价:￥{{parseInt(goods_info.promotion_price)< parseInt(goods_info.inside_price)?goods_info.promotion_price:goods_info.inside_price}}
+            </view>
                 <!-- <block wx:if='{{goods_info.point_exchange_type == 1}}'>
                     <view class='span point'>+{{goods_info.point_exchange}}积分</view>
                 </block> -->
            
             </view>
             <view class='gl' wx:else>
-            <view class="span price">
+            <view class="span price"  wx:if='{{goods_info.sale_type==1}}'>
                 ￥{{parseInt(goods_info.promotion_price)< parseInt(goods_info.price)?goods_info.promotion_price:goods_info.price}}
             </view>
-                    <view wx:if='{{sum==1}}' class="sos" id="priceTitle" wx:if="{{goods_info.market_price - goods_info.price > 0}}">
+                    <view wx:if='{{sum==1}}' class="span sos" id="priceTitle" wx:if="{{goods_info.market_price - goods_info.price > 0}}">
                         ￥{{goods_info.market_price}}
                     </view>
                 <!-- <block wx:if='{{goods_info.point_exchange_type == 1}}'>
@@ -263,19 +311,16 @@
             <view class="hr with-margin-l"></view>
         </block>
     </block>
-    <block wx:if='{{goods_info.source_type == 1}}'>
-        <view class="DMSbuy_s">
-            <view class="say">说明:</view>
-            <view class="bao_s">
-                <view class="circle"></view>
-                <view class="titles">假一赔十</view>
-            </view>
-            <view class="bao_l">
-                <view class="circle"></view>
-                <view class="titles">7天无忧退货</view>
-            </view>
+    <view class="DMSbuy" wx:if='{{goods_info.goods_group_list.length>0}}'> 
+     <block wx:for='{{goods_info.goods_group_list}}' wx:key='' wx:for-item='vo'>
+        <view class="bao">
+          <view class="circle">
+            <!-- <image src='/images/goods/cartp2.png'></image> -->
+          </view>
+          <view class="titles">{{vo.group_name}}</view>
         </view>
-    </block>
+      </block> 
+    </view>
     <block wx:if='{{goods_info.source_type >1}}'>
         <view class="DMSbuy">
             <view class="say">说明:</view>
@@ -493,7 +538,64 @@
             </view>
         </view>
     </block>  
-    <view class="hr divider-line"></view>  
+    <view class="hr divider-line"></view>
+
+
+ <!-- 品牌 -->
+    <block>
+      <view class="evaluation-container {{brand_name && category_show==1?'':'hide'}}" catchtap='toBrand'>
+        <view class='flex' style='justify-content: space-between;'>
+          <view class='brand-box flex'>
+            <image src="{{brand_ads}}" mode="widthFix"/>
+            <text style='font-size:16px;color:#333'>{{brand_name}}</text>
+          </view>
+          <view class='flex'>进入品牌
+            <image src="https://static.vitasantee.com/65F560A3-B030-42AE-8C27-D6FAA5C87C94@2x.png" class="more" mode="widthFix" style='margin-left:12rpx;'/>
+          </view>
+        </view>
+      </view>
+
+      <view class="hr divider-line {{brand_name && category_show==1?'':'hide'}}"></view>
+    </block>
+
+
+    <!-- 品牌推荐 -->
+    <block wx:if="{{recommended_goods[0]!=undefined&&category_show==1}}">
+      <view class="evaluation-container">
+        <view class='tab-module-title'>你可能还想看</view>
+        <view class="hr with-margin-l"></view>
+        <scroll-view class="recommended-box" scroll-x>
+          <block wx:for="{{recommended_goods}}" wx:key='' wx:for-item='item' wx:for-index='index' wx:if="{{index<10}}">
+            <view class='recommended-goods-item'  catchtap='toGood' data-id='{{item.goods_id}}'>
+              <image src="{{item.pic_cover_small}}" mode="widthFix"/>
+              <text class='activity_text'>{{item.goods_name}}</text>
+              <view class='brand_goods_price'>
+                <text>￥{{item.promotion_price}}</text>
+              </view>
+            </view>
+          </block>
+        </scroll-view>
+      </view>
+    <view class="hr divider-line"></view>
+    </block>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <!-- 商品属性 -->
     <block wx:if="{{goods_info.goods_attribute_list[0]!=undefined}}">
         <view class="tab-module-title">商品属性</view>
@@ -501,7 +603,7 @@
         <view class="detail_info_wrap p-attribute" id="p-attribute">
             <view class="ul attribute-ul">
                 <block wx:for='{{goods_info.goods_attribute_list}}' wx:key='' wx:for-item='attribute'>
-                    <view class='li'>
+                    <view class='li' wx:if="{{attribute.attr_value_name!=''&&attribute.attr_value!=''}}">
                         <view class='em'>{{attribute.attr_value}}：</view>
                         <view class="span goods-attr-value">{{attribute.attr_value_name}}</view>
                     </view>
@@ -512,12 +614,16 @@
     </block>
     <!-- <block wx:if='{{selectType == "video"}}'>  </block> -->
     <block wx:if='{{detail_id != 0}}'>
-        <view class="tab-module-title">商品详情</view>
-        <view class="hr with-margin-l"></view>
-        <view class="detail_info_wrap" id="p-detail">
-            <block wx:if='{{goods_info.goods_video_address != "" && goods_info.goods_video_address != undefined && brand_id ==11}}'>
+       <view class="evaluation-container" style='padding:6px 0;'>
+        <view class="tab-module-title" style='padding:0 20rpx;'>商品详情</view>
+        <view class="hr with-margin-l" style='margin:0 20rpx;'></view>
+            <block wx:if='{{goods_info.goods_video_address != "" && goods_info.goods_video_address != undefined }}'>
+                <!-- <video src='{{goods_info.goods_video_address}}'  poster="https://static.bonnieclyde.cn/list.jpg" 
+              autoplay="{{false}}" objectFit='fill'></video> -->
+              <block wx:if="{{point==0 && (brand_id==11 || brand_id==12 || brand_id==2)}}">
+                   <block wx:if='{{goods_info.goods_video_address != "" && goods_info.goods_video_address != undefined && brand_id ==11}}'>
                 <view class="video" data-id="{{goods_info.brand_id}}" bindtap="videoPlay">
-                    <video wx:if="{{curr_id == goods_info.brand_id && point==0}}" id='myVideo' src="{{goods_info.goods_video_address}}" poster='https://static.bonnieclyde.cn/algologie.jpg' objectFit='fill'></video>
+                    <video wx:if="{{curr_id == goods_info.brand_id && point==0}}" controls="false"  id='myVideo' src="{{goods_info.goods_video_address}}" poster='https://static.bonnieclyde.cn/algologie.jpg' objectFit='fill'></video>
                     <view wx:else>
                         <image class="model-img" mode="aspectFill" src='https://static.bonnieclyde.cn/algologie.jpg' style="width:100%;height:225px"></image>
                         <view class="model-btn">
@@ -532,7 +638,7 @@
                 <!-- <video src='{{goods_info.goods_video_address}}'  poster="https://static.bonnieclyde.cn/list.jpg" 
               autoplay="{{false}}" objectFit='fill'></video> -->
                 <view class="video" data-id="{{goods_info.brand_id}}" bindtap="videoPlay">
-                    <video wx:if="{{curr_id == goods_info.brand_id && point==0}}" id='myVideo' src="{{goods_info.goods_video_address}}" poster="https://static.bonnieclyde.cn/list.jpg" objectFit='fill'></video>
+                    <video wx:if="{{curr_id == goods_info.brand_id && point==0}}" controls="false"  bindpause='dex' id='myVideo' src="{{goods_info.goods_video_address}}" poster="https://static.bonnieclyde.cn/list.jpg" objectFit='fill'></video>
                     <view wx:else>
                         <image class="model-img" mode="aspectFill" src="https://static.bonnieclyde.cn/list.jpg" style="width:100%;height:225px"></image>
                         <view class="model-btn">
@@ -542,8 +648,22 @@
                 </view>
             </block>
             <block wx:if='{{goods_info.goods_video_address != "" && goods_info.goods_video_address != undefined && brand_id ==2}}'>
-                <video src='{{goods_info.goods_video_address}}' poster="https://static.bonnieclyde.cn/chunyan.jpg" autoplay="{{false}}" objectFit='contain'></video>
+                <video src='{{goods_info.goods_video_address}}' controls="false"  poster="https://static.bonnieclyde.cn/chunyan.jpg" autoplay="{{false}}" objectFit='contain'></video>
             </block>
+
+
+              </block>
+              <block wx:if="{{brand_id!=11 && brand_id!=12 && brand_id!=2}}">
+             <view class="video" data-id="{{goods_info.brand_id}}" bindtap="videoPlay">
+                      <video wx:if='{{goods_info.brand_id!=12 && goods_info.brand_id!=11 && goods_info.brand_id!=2 }}' controls="false" id='myVideo' src="{{goods_info.goods_video_address}}" objectFit='fill'></video>
+                   </view>
+              </block>
+                
+
+            </block>
+            <!-- <block wx:if='{{goods_info.goods_video_address != "" && goods_info.goods_video_address != undefined && brand_id ==2}}'>
+                <video src='{{goods_info.goods_video_address}}' poster="https://static.bonnieclyde.cn/chunyan.jpg" autoplay="{{false}}" objectFit='contain'></video>
+            </block> -->
             <view class="detail_list" id="content">
                 <template is="wxParse" data="{{wxParseData:description.nodes}}" />
             </view>
@@ -585,8 +705,9 @@
                 <view class="pro-info">
                     <!-- {{buyButtonStatus==3||buyButtonStatus==4?goods_info.goods_pintuan.tuangou_money:member_price}} -->
                     <text decode="{{true}}" class="p name">{{goods_info.goods_name}}</text>
-                    <!-- is_employee    是否为员工   is_inside_sell是否是内购商品 -->
-                    <view class="p pro-price" id="price" wx:if='{{is_employee==1 && is_inside_sell==1}}'>
+
+                    <!-- is_employee 是否为员工   is_inside_sell是否是内购商品 -->
+                    <view class="p pro-price" id="price" wx:if='{{is_employee==1 &&  is_inside_sell==1}}'>
                         ￥{{parseInt(goods_info.promotion_price)< parseInt(goods_info.inside_price)?goods_info.promotion_price:goods_info.inside_price}}
                     </view>
                     <view class="p pro-price" id="price" wx:else>
@@ -639,8 +760,10 @@
         </view>
         <view class="ul s-buy-ul">
             <view class="s-buy-btn">
-            
+                      <!-- 区分是否是礼物商品还是正常商品flys==1正常商品 -->
                 <block wx:if='{{flys==0}}'>
+                            <!-- 区分是否是预售商品sale_type == 2是预售商品 -->
+                <!-- <block wx:if='{{goods_info.sale_type == 1}}'> -->
                       <!-- 查看规格按钮并且库存不为0 -->
                     <block wx:if="{{popUp==1 && stock!=0 }}">
                         <block wx:if='{{buyButtonStatus==0}}'>
@@ -683,7 +806,8 @@
                       id="submit_ok"
                       catchtap="{{stock==0?'nullStock':'buyNext'}}" tag="buyBtn1">{{goods_info.state==0?'已下架':'下一步'}}
                         </view>
-                    </block>
+                    <!-- </block> -->
+                    </block>  
                 </block>
 
                 <block wx:if='{{flys==1}}'>
@@ -739,6 +863,8 @@
                         </view>
                     </block> -->
                 </block>
+
+
                 <view class="a btn {{buyButtonStatus==3?'':'hide'}} {{stock==0?'disabled':''}} {{goods_info.state==0?'disabled':''}}" id="submit_ok" catchtap="{{stock==0?'nullStock':'groupBooking'}}" tag="buyBtn1">
                     {{goods_info.state==0?'已下架':'下一步'}}
                 </view>
@@ -749,7 +875,7 @@
             </view>
         </view>
                    <!-- 适配全面屏 -->
-     <view class="s '{{isIphoneX?'L-ise':''}}' "></view>
+     <view class="s '{{isIphoneX==1?'L-ise':''}}' "></view>
     </view>
     <view class="js-bottom-opts bottom-fix">
         <view class="responsive-wrapper">
@@ -761,10 +887,12 @@
                 <image src="/images/goods/kefux.png" mode='scaleToFill'></image>
                 <view class="span desc">客服</view>
             </button>
+
             <block wx:if='{{flys == 0}}'>
                 <block wx:if='{{goods_info.goods_pintuan == undefined}}'>
-                    <view id="global-cart" class="a new-btn buy-cart {{unregistered==0 && tel!='' && goods_info.cart_count>0?'buy-cart-msg':''}}" catchtap='tapSwitch' data-url='/goods/cart/cart'>
+                    <view id="global-cart" class="a new-btn buy-cart" catchtap='tapSwitch' data-url='/goods/cart/cart'>
                         <image src='/images/goods/cart_uncheck.png' mode='scaleToFill'></image>
+                        <view  wx:if='{{unregistered==0 && tel!="" && goods_info.cart_count>0}}'  class="tips" >{{goods_info.cart_count>99?"99":goods_info.cart_count}}</view>
                         <view class="span desc">购物车</view>
                     </view>
                 </block>
@@ -779,9 +907,12 @@
             </block>
             <view class="big-btn-2-1">
                 <block wx:if='{{ stock==0 }}'>
-                    <form bindsubmit='message' report-submit="true">
+                    <form bindsubmit='message' report-submit="true" wx:if='{{goods_info.sale_type == 1 || sale_timer_array.end==0}}'>
                         <button class="commodity" formType="submit">到货通知</button>
                     </form>
+                       <block wx:if='{{ goods_info.sale_type == 2 && sale_timer_array.end==1}}'>
+                              <button class="commodity" disabled>预售已结束</button>
+                              </block>
                 </block>
                 <block wx:else>
                     <!-- 判断是否为礼物盒 -->
@@ -795,12 +926,21 @@
                             </button>
                         </view>
                         <view wx:if='{{unregistered==0 && tel!="" }}'>
+                           <!-- 区分是否是预售商品sale_type == 2是预售商品 -->
+                            <block wx:if='{{goods_info.sale_type == 1 || sale_timer_array.end==0}}'>
                             <view class="a big-btn orange-btn  c-addcard-btn" catchtap='sBuyShow' id="addCart" data-type='addCart'>
                                 加入购物车
                             </view>
                             <view class="a big-btn red-btn c-buy-btn" catchtap='sBuyShow' id="buyBtn1" data-type='buy'>
                                 立即购买
                             </view>
+                         </block>
+                              <block wx:if='{{goods_info.sale_type == 2 && sale_timer_array.end==1}}'>
+                              <button class="commodity" disabled>预售已结束</button>
+                              </block>
+
+
+
                         </view>
                     </block>
                     <block wx:if='{{flys==1}}'>
@@ -822,10 +962,11 @@
                         </view>
                     </block>
                 </block>
+
             </view>
         </view>
         <!-- 适配全面屏 -->
-        <view class="s '{{isIphoneX?'L-ise':''}}' "></view>
+        <view class="s '{{isIphoneX==1?'L-ise':''}}' "></view>
     </view>
      <template is="dataLogin" data="{{showModal,Choice,layout}}" />
 </view>
@@ -839,12 +980,12 @@
       
 <!-- catchtap='popupClose' -->
  <view class="mask " wx:if="{{TCL}}" id="mask" ></view>
- <view class="exhibition" wx:if="{{TCL}}" style="top:100rpx;left:125rpx;" >
-  <image  lazy-load="true" src="{{compound_Img}}"   style="width:500rpx;"  mode='widthFix'></image>
+ <view class="exhibition" wx:if="{{TCL}}">
+  <image  lazy-load="true" src="{{compound_Img}}"   style="width:100%;"  mode='widthFix'></image>
    <view class="ng">
        <view class="l" catchtap='popupClose'>关闭</view>
-       <view  wx:if='{{!Again}}'class="l sssss" style='border-left: 1px solid #ccc;' catchtap='Save'>保存图片</view>
-       <view wx:else class="l     xxxxxx" style='border-left: 1px solid #ccc;' catchtap='Againadd'>保存图片</view>
+       <view  wx:if='{{!Again}}'class="l" style='border-left: 1px solid #ccc;' catchtap='Save'>保存图片</view>
+       <view wx:else class="l" style='border-left: 1px solid #ccc;' catchtap='Againadd'>保存图片</view>
         
    </view>
   </view>  

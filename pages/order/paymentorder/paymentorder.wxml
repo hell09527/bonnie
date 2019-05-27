@@ -146,6 +146,9 @@
                             </view>
                         </view>
                     </view>
+                    <view class="bao_sale">
+                               <view class="sale_title" wx:if='{{goods.sale_type==2 && goods.sale_end_time!=""}}'>预售结束后{{goods.send_sale.day}}天内发货</view>
+                    </view>
                 </view>
             </view>
         </block>
@@ -414,7 +417,7 @@
                 <!-- <button class="commit-bill-btn" catchtap='sidShow'>提交订单</button> -->
             </block>
         </view>
-       <view class="s '{{isIphoneX?'L-ise':''}}' "></view>
+       <view class="s '{{isIphoneX==1?'L-ise':''}}' "></view>
     </view>
 
     <view class="mask-layer {{mask_status==1?'':'hide'}}" catchtap='closePoupo'></view>

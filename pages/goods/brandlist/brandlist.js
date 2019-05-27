@@ -118,6 +118,7 @@ PP_reuse:function(){
         app.globalData.is_vip = data.is_vip;
         app.globalData.distributor_type = data.distributor_type;
         let distributor_type = data.distributor_type;
+        console.log(data.uid)
         app.globalData.uid = data.uid;
         app.globalData.vip_gift = data.vip_gift;
         app.globalData.vip_goods = data.vip_goods;
@@ -178,7 +179,9 @@ PP_reuse:function(){
     //   pic: this.data.brind_image,
     //   title: this.data.title
     // }
-    let uid = app.globalData.uid;
+   
+    let uid = app.globalData.uid
+    console.log(uid)
     let PP_share_url = '/pages/goods/brandlist/brandlist?id=' + id;
     if (app.globalData.distributor_type == 0){
       return {
@@ -287,7 +290,8 @@ PP_reuse:function(){
         if (code == 0) {
           let goods_list = data.data;
           let brand_name = data.brand_name
-          let brand_pic = data.brand_pic
+          let brand_pic = data.brand_pic;
+          console.log(brand_pic)
           wx.setNavigationBarTitle({
             title:brand_name
           })

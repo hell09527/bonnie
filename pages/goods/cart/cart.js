@@ -1,5 +1,6 @@
 const app = new getApp();
-var time = require("../../../utils/dataTime.js");
+// var time = require("../../../utils/util.js");
+var sale_time = require("../../../utils/util.js");
 Page({
   /**
    * 页面的初始数据
@@ -58,7 +59,8 @@ Page({
     showStatus:0,   // 原价的展示
     showTitle:0,//是否提示普通极选师修改价格
     showEide:0,
-    exchange:false
+    exchange:false,
+    isFoll:true
   },
   // 测试数据
   last: function () {
@@ -95,13 +97,15 @@ Page({
     let that = this;
     console.log(that.data.personnel)
     let defaultImg = app.globalData.defaultImg;
-    var times = time.formatTime(new Date());
-    console.log(times)
+    // var times = sale_time.formatTime(new Date());
+  
+    // console.log(times)
     that.setData({
       defaultImg: defaultImg,
-      times
+      // times
     });
-
+  
+     
     //   let timestamp = Date.parse(new Date);
     //   if (app.globalData.identifying!=0){
     //     let overtime = timestamp + 43200000;
@@ -221,69 +225,7 @@ Page({
   GWC_reuse: function () {
     let that = this;
     let siteBaseUrl = app.globalData.siteBaseUrl;
-    app.sendRequest({
-      url: 'api.php?s=goods/cart',
-      data: {},
-      success: function (res) {
-        let code = res.code;
-        let total_price = 0.00;
-        if (code == 0) {
-          let data = res.data;
-          console.log(data)
-          for (let index in data) {
-            for (let key in data[index]) {
-              data[index][key].isTouchMove = false //默认全隐藏删除
-
-              // 测试代码
-              // data[index][key].Move=0;
-
-              if (that.in_array(data[index][key].cart_id, that.data.unselected_list)) {
-                data[index][key].status = 0;
-                that.setData({
-                  check_all: 0,
-                });
-              } else {
-                data[index][key].status = 1;
-              }
-              console.log(data)
-           
-              let num = parseInt(data[index][key].num);
-              if (data[index][key].status == 1) {
-                let promotion_price ;
-                if(data[index][key].is_inside== 0){
-                  promotion_price = parseFloat(data[index][key].promotion_price);
-                }else{
-                  promotion_price = parseFloat(data[index][key].interior_price);
-                }
-                total_price = parseFloat(total_price) + parseFloat(promotion_price * num);
-              }
-
-              //图片处理
-              if (data[index][key].picture_info != undefined && data[index][key].picture_info != null) {
-                let img = data[index][key].picture_info.pic_cover_small;
-                data[index][key].picture_info.pic_cover_small = app.IMG(img);
-              } else {
-                data[index][key].picture_info = {};
-                data[index][key].picture_info.pic_cover_small = '';
-              }
-            }
-          }
-
-
-          // console.log(data[0])
-          // console.log(data)
-          that.setData({
-            Base: siteBaseUrl,
-            cart_list: data,
-            total_price: total_price.toFixed(2),
-            //check_all: 1,
-            edit: 0,
-            is_checked: 1
-          });
-        }
-        // console.log(res);
-      }
-    })
+   
 
 
     app.sendRequest({
@@ -316,16 +258,92 @@ Page({
    */
   onShow: function () {
     let that = this;
+    let isFoll;
     let siteBaseUrl = app.globalData.siteBaseUrl;
     //判断是否是付费会员
     let is_vip = app.globalData.is_vip;
     let distributor_type = app.globalData.distributor_type;
     let uid = app.globalData.uid;
     let isIphoneX = app.globalData.isIphoneX;
+    let  cart_list=that.data.cart_list
   
     let updata = app.globalData.unregistered;
     console.log(updata)
-    console.log(distributor_type, uid)
+    console.log(distributor_type, uid);
+
+    app.sendRequest({
+      url: 'api.php?s=goods/cart',
+      data: {},
+      success: function (res) {
+        let code = res.code;
+        let total_price = 0.00;
+        if (code == 0) {
+          let data = res.data;
+          console.log(data)
+          for (let index in data) {
+            for (let key in data[index]) {
+              data[index][key].isTouchMove = false //默认全隐藏删除
+              data[index][key].isInput = 1; //解决ipx input的bug
+        
+
+              if(data[index][key].sale_type==2){ //预售时间提示
+                data[index][key].send_sale = sale_time.formatTime(data[index][key].sale_end_time, 'Y年M月D日h:s')+'预售结束';
+              }
+
+              // 测试代码
+              // data[index][key].Move=0;
+
+              if (that.in_array(data[index][key].cart_id, that.data.unselected_list)) {
+                data[index][key].status = 0;
+                that.setData({
+                  check_all: 0,
+                });
+              } else {
+                data[index][key].status = 1;
+              }
+              console.log(data)
+           
+              let num = parseInt(data[index][key].num);
+              if (data[index][key].status == 1) {
+                let promotion_price ;
+                if(data[index][key].is_inside== 0){
+                  promotion_price = parseFloat(data[index][key].promotion_price);
+                }else{
+                  promotion_price = parseFloat(data[index][key].interior_price);
+                }
+                total_price = parseFloat(total_price) + parseFloat(promotion_price * num);
+              }
+               
+              //图片处理
+              if (data[index][key].picture_info != undefined && data[index][key].picture_info != null) {
+                let img = data[index][key].picture_info.pic_cover_small;
+                data[index][key].picture_info.pic_cover_small = app.IMG(img);
+              } else {
+                data[index][key].picture_info = {};
+                data[index][key].picture_info.pic_cover_small = '';
+              }
+            }
+          }
+
+          if( data.length  == undefined) isFoll =true; else  isFoll =false;
+          // console.log(data[0])
+          console.log(data)
+          that.setData({
+            Base: siteBaseUrl,
+            cart_list: data,
+            total_price: total_price.toFixed(2),
+            isFoll,
+            //check_all: 1,
+            edit: 0,
+            is_checked: 1
+          });
+        }
+        // console.log(res);
+      }
+    })
+   
+
+   
 
     that.setData({
       is_vip,
@@ -333,6 +351,7 @@ Page({
       showStatus:0,
       distributor_type,
       isIphoneX: isIphoneX,
+       showModal: false, // 显示弹框的 cust
       uid
     })
 
@@ -522,7 +541,7 @@ Page({
         }
       }
     }
-
+     console.log(cart_list)
     that.setData({
       cart_list: cart_list,
       is_checked: is_checked,
@@ -600,6 +619,7 @@ Page({
     let id = event.currentTarget.dataset.id;
     let numAdjustFlag = that.data.numAdjustFlag;
     let cart_list = that.data.cart_list;
+    console.log(cart_list )
     let num = cart_list[i][k].num;
     let total_price = that.data.total_price;
 
@@ -659,6 +679,13 @@ Page({
           total_price = 0.00;
           for (let index in cart_list) {
             for (let key in cart_list[index]) {
+
+              if(cart_list[index][key].sale_type==2){ //预售时间提示
+                console.log('jinlail')
+                console.log(cart_list[index][key].sale_end_time);
+                new_cart_list[index][key].send_sale = sale_time.formatTime(Number(cart_list[index][key].sale_end_time), 'Y年M月D日h:s')+'预售结束';
+              }
+
               new_cart_list[index][key].status = cart_list[index][key].status;
               new_cart_list[index][key].promotion_price = cart_list[index][key].promotion_price;
 
@@ -687,6 +714,13 @@ Page({
             },
             success: function (res) {
               let code = res.data;
+              for (let index in new_cart_list) {
+                for (let key in new_cart_list[index]) {
+                  new_cart_list[index][key].isInput = 1
+                }
+              }
+
+
               if (code > 0) {
                 that.setData({
                   cart_list: new_cart_list,
@@ -703,7 +737,19 @@ Page({
       }
     })
   },
+  inputEnum:function(event){
+    let that = this;
+    let id = event.currentTarget.dataset.id;
+    let num = event.detail.value;
+      // 修改bindblur不能及时拿到数据
+    that.setData({
+      Xu_num:num ,
+      Xu_id:id 
+    });
+   
 
+
+  },
   /**
    * 输入数量调节
    */
@@ -712,16 +758,11 @@ Page({
     let i = event.currentTarget.dataset.index;
     let k = event.currentTarget.dataset.key;
     let id = event.currentTarget.dataset.id;
-   
-
     let cart_list = that.data.cart_list;
-    // 调节ios的input  value 
-    let num = this.num;
+        //  判断修改num拿到是对应的商品的num
+    let num=that.data.Xu_id==id?that.data.Xu_num:event.detail.value;
     let total_price = that.data.total_price;
-
-    that.setData({
-      exchange:false
-    });
+    console.log(num )
 
     app.sendRequest({
       url: 'api.php?s=goods/cart',
@@ -767,6 +808,10 @@ Page({
           total_price = 0;
           for (let index in cart_list) {
             for (let key in cart_list[index]) {
+              if(cart_list[index][key].sale_type==2){ //预售时间提示
+                cart_list[index][key].send_sale = sale_time.formatTime(cart_list[index][key].sale_end_time, 'Y年M月D日h:s')+'预售结束';
+              }
+
               new_cart_list[index][key].status = cart_list[index][key].status;
              
               let promotion_price ;
@@ -795,6 +840,11 @@ Page({
             },
             success: function (res) {
               let code = res.data;
+              for (let index in new_cart_list) {
+                for (let key in new_cart_list[index]) {
+                  new_cart_list[index][key].isInput = 1
+                }
+              }
               if (code > 0) {
                 that.setData({
                   cart_list: new_cart_list,
@@ -807,6 +857,30 @@ Page({
           })
         }
       }
+    })
+  },
+ 
+
+   /**
+   * 解决层级问题ipx
+   */
+  
+  toInput: function (e) {
+    var that = this;
+    var cart_list = this.data.cart_list;
+    var index = e.currentTarget.dataset.index;
+    var k = e.currentTarget.dataset.key;
+    var cart = e.currentTarget.dataset.list;
+    for (let index in cart_list) {
+      for (let key in cart_list[index]) {
+        if(key==k){
+          cart_list[index][k].isInput=0
+        }
+      }
+    }
+    // var isInput = 'cart_list[' + index + ']['+k+'].isInput';
+    this.setData({
+      cart_list,
     })
   },
 
@@ -850,16 +924,25 @@ Page({
 
                 for (let index in cart_list) {
                   for (let key in cart_list[index]) {
+
+                    if(cart_list[index][key].sale_type==2){ //预售时间提示
+                      cart_list[index][key].send_sale = sale_time.formatTime(cart_list[index][key].sale_end_time, 'Y年M月D日h:s')+'预售结束';
+                    }
+
+
                     cart_list[index][key].status = 0;
+                    cart_list[index][key].isInput = 1;
                     let promotion_price = parseFloat(cart_list[index][key].promotion_price);
                     let num = parseInt(cart_list[index][key].num);
                     total_price = parseFloat(total_price) + parseFloat(promotion_price * num);
                   }
                 }
-
+                let isFoll;
+                if( cart_list.length != 0 && cart_list != undefined ) isFoll =true; else  isFoll =false;
                 that.setData({
                   cart_list: cart_list,
                   total_price: total_price.toFixed(2),
+                  isFoll
                 })
 
                 app.showBox(that, '操作成功');
@@ -946,6 +1029,9 @@ Page({
             total_price_1 += parseFloat(cart_list[index][key].num) * parseFloat(cart_list[index][key].price)
             total_num_1 += cart_list[index][key].num
             cart_1.push(cart_list[index][key]);
+            that.setData({
+              send_type: 1, 
+            })
           } else if (cart_list[index][key].source_type == 2 && cart_list[index][key].is_inside == 0) {
             // 跨境普通商品
             p++;
@@ -957,6 +1043,9 @@ Page({
             total_price_2 += parseFloat(cart_list[index][key].num) * parseFloat(cart_list[index][key].price)
             total_num_2 += cart_list[index][key].num
             cart_2.push(cart_list[index][key]);
+            that.setData({
+              send_type: 2, 
+            })
           } else if (cart_list[index][key].source_type == 2 && cart_list[index][key].is_inside == 1) {
             // 跨境内购商品
             p++;
@@ -1243,6 +1332,9 @@ Page({
 
   //手指触摸动作开始 记录起点X坐标
   touchstart: function (e) {
+    let that=this;
+   let isFoll=true;
+ 
     //开始触摸时 重置所有删除
     var data = this.data.cart_list;
     for (let index in data) {
@@ -1254,11 +1346,14 @@ Page({
       startX: e.changedTouches[0].clientX,
       startY: e.changedTouches[0].clientY,
       cart_list: data,
+      isFoll
     })
   },
   //滑动事件处理
   touchmove: function (e) {
-    var that = this,
+    
+   console.log('jjj')
+    var that = this, 
       index = e.currentTarget.dataset.index,//当前索引
       startX = that.data.startX,//开始X坐标
       startY = that.data.startY,//开始Y坐标
@@ -1266,22 +1361,43 @@ Page({
       touchMoveY = e.changedTouches[0].clientY,//滑动变化坐标
       //获取滑动角度
       angle = that.angle({ X: startX, Y: startY }, { X: touchMoveX, Y: touchMoveY });
+      console.log(angle)
     var data = this.data.cart_list;
+    let isFoll;
     for (let i in data) {
       for (let key in data[i]) {
         // console.log(index,key)
         // console.log(data[i][key].isTouchMove)
         //滑动超过30度角 return
-        if (Math.abs(angle) > 30) return;
+        if (Math.abs(angle) > 30) return false;
         if (key == index) {
           // console.log(touchMoveX > startX);
           if (touchMoveX > startX) //右滑
-            data[i][key].isTouchMove = false
+            data[i][key].isTouchMove = false;
           else //左滑
-            data[i][key].isTouchMove = true
+            data[i][key].isTouchMove = true;
+
+            if(data[i][key].isTouchMove==true){
+              isFoll=false;
+            //   that.setData({
+            //    isFoll
+            //  })
+   
+           }else{
+            isFoll=true;
+            that.setData({
+             isFoll
+           })
+           }
+
         }
+   
+        
+
       }
     }
+
+  console.log(isFoll)
     // that.data.cart_list.forEach(function (v, i) {
     //   v.isTouchMove = false
     //   //滑动超过30度角 return
@@ -1295,7 +1411,8 @@ Page({
     // })
     //更新数据
     that.setData({
-      cart_list: data
+      cart_list: data,
+      isFoll
     })
   },
   /**
@@ -1339,7 +1456,14 @@ Page({
 
                 for (let index in cart_list) {
                   for (let key in cart_list[index]) {
+
+                    if(cart_list[index][key].sale_type==2){ //预售时间提示
+                      cart_list[index][key].send_sale = sale_time.formatTime(cart_list[index][key].sale_end_time, 'Y年M月D日h:s')+'预售结束';
+                    }
+
+
                     cart_list[index][key].status = 1;
+                    cart_list[index][key].isInput =1;
                     let promotion_price = parseFloat(cart_list[index][key].promotion_price);
                     let num = parseInt(cart_list[index][key].num);
                     total_price = parseFloat(total_price) + parseFloat(promotion_price * num);
@@ -1459,6 +1583,8 @@ Page({
     this.setData({
       exchange:true
     })
-  }
+  },
+
+
 })
 

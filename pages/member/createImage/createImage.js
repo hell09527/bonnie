@@ -22,7 +22,7 @@ Page({
     name: '',
     category: 1,//商品或品牌类别
     bRands: { category_id: "X", category_name: "综合", },//拟定数据
-    grabble: { category_id: 0, category_name: "精选", },//拟定数据
+    grabble: { category_id: 0, category_name: "全部", },//拟定数据
     synthesize_list: [],//综合类别数据
     // search_list:[],//搜索列表
     searchFlag: 0,//避免重复点击
@@ -30,6 +30,7 @@ Page({
     Fixtitle: 1 , //固定页面状态显示
     maKestep: 1,//制作步骤
     myTime:null,
+    Again:false,
   },
   /**
    * 生命周期函数--监听页面加载
@@ -170,30 +171,11 @@ Page({
   onReady: function () {
 
   },
-  Save: function () {
 
-    let that = this;
-    wx.getSetting({
-      success(res) {
-        if (!res.authSetting['scope.writePhotosAlbum']) {
-          wx.authorize({
-            scope: 'scope.writePhotosAlbum',
-            success() {
-            },
-            fail() {
-              that.file()
-            }
-          });
-        } else {
-          that.file();
-          // that.popupClose();
-        }
-      }
-    });
-  },
   file: function () {
     let that = this;
     console.log(that.data.saveImg, 'saveImg')
+
     wx.saveImageToPhotosAlbum({
       filePath: that.data.saveImg,
       success(res) {
@@ -204,19 +186,14 @@ Page({
         });
       },
       fail(res) {
-        wx.showToast({
-          title: '保存失败',
-          icon: 'fail',
-          duration: 2000
-        });
-        wx.openSetting({
-          success(res) {
-            console.log(res.authSetting)
-            res.authSetting = {
-              "scope.writePhotosAlbum": true,
-            }
-          }
+        that.setData({
+          Again:true,
         })
+       wx.showToast({
+         title: '开启相册权限',
+         icon: 'fail',
+         duration: 2000
+       });
 
 
       }
@@ -224,6 +201,28 @@ Page({
     })
 
   },
+    /* 
+    保存到相册
+  */
+ Save: function () {
+  let that = this;
+  that.file();
+},
+
+//  重新开启相册权限
+Againadd:function () {
+  let that=this;
+    wx.openSetting({
+    success: (res) => {
+        console.log('授权成功');
+        console.log(res.authSetting)
+        res.authSetting = {
+          "scope.writePhotosAlbum": true,
+        }
+        that.file();
+    }
+})
+},
   
   popupClose: function () {
     let that = this;
@@ -296,6 +295,7 @@ Page({
         })
       }
     });
+    
   },
   //商品标题 
   tocomposite: function () {

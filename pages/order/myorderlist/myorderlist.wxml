@@ -51,6 +51,9 @@
                       <view class='b'>{{goods.num}}件</view>
                     </view>
                   </view>
+                  <view class="bao_sale">
+                               <view class="sale_title" wx:if='{{goods.sale_type==2 && goods.sale_end_time!="" && goods.shipping_status==0}}'>预售结束后{{goods.send_sale.day}}天内发货</view>
+                    </view>
                 </view>
                 <view class="bottom-div">
                   <view class='bottom-div-child'>

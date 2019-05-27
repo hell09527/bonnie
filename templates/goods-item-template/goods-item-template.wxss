@@ -4,10 +4,11 @@
   box-sizing: border-box;
 }
 .goods_all:nth-child(2n)>.all-box{
-  margin:0 20rpx 20rpx 10rpx;
+  margin:0 10rpx 20rpx 20rpx;
 }
 .all-box{
-  margin:0 10rpx 20rpx 20rpx;
+  margin:0 20rpx 20rpx 10rpx;
+  box-shadow:0px 2px 5px #ccc;
   background: #fff;
   box-sizing: border-box;
 }
@@ -48,4 +49,25 @@ overflow: hidden;
   margin-right: 2px;
   border-radius: 2px;
   font-weight: normal !important;
+}
+
+.sale_tab {
+  font-style: normal;
+  font-size: 12px !important;
+  background: #F3B85F;
+  color: #fff !important;
+  padding: 1px 3px;
+  margin-right: 2px;
+  border-radius: 2px;
+  font-weight: normal !important;
+}
+.collect{
+  width: 36rpx;
+  height: 36rpx;
+  line-height:20rpx;
+
+}
+.collect>image{
+  width: 36rpx;
+  height: 36rpx;
 }

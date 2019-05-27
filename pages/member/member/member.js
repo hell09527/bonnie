@@ -86,9 +86,13 @@ Page({
     let base = app.globalData.siteBaseUrl;
     let defaultImg = app.globalData.defaultImg;
 
+
+   
+
     that.setData({
       Base: base,
-      defaultImg: defaultImg
+      defaultImg: defaultImg,
+     
     })
 
   },
@@ -110,10 +114,10 @@ Page({
     let updata = app.globalData.unregistered;
     console.log(updata)
     let vip_overdue_time = app.globalData.vip_overdue_time
-    // console.log(vip_overdue_time)
+    console.log(vip_overdue_time)
     //会员有效期
-    let vip_validity = time.formatTime(vip_overdue_time, 'Y年M月D日');
-    // console.log(time.formatTime(vip_overdue_time, 'Y年M月D日'))
+    let vip_validity = time.formatTime(1556617871, 'Y年M月D日');
+    console.log(vip_validity, 'Y年M月D日')
     let tab_parm = app.globalData.tab_parm;
     let tab_type = app.globalData.tab_type;
     let tab = app.globalData.tab;
@@ -152,11 +156,13 @@ Page({
     app.restStatus(that, 'listClickFlag');
     //回调解决执行的先后顺序的问题
     if (app.globalData.token && app.globalData.token != '') {
+      console.log("////")
       //判断是否是付费会员的接口
       that.REUSE_member();
     } else {
       app.employIdCallback = employId => {
         if (employId != '') {
+          console.log("////>>>>>")
           //判断是否是付费会员的接口
           that.REUSE_member();
 

@@ -392,3 +392,17 @@
 .cks{
   bottom: 125rpx;
 }
+.bao_sale{
+  display: flex;
+  justify-content: flex-start;
+  margin-top:46rpx;
+width:100%;
+
+}
+.sale_title{
+  color:#DE222B;
+  font-size: 12px;
+  /* font-size: 16px; */
+  letter-spacing:2px;
+
+}

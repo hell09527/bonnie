@@ -124,7 +124,6 @@ Page({
       "use strict";
       if (share_last == '') {
         share_last = v.sku_id + ':' + v.num + ':' + v.price;
-
       } else {
         share_last += ',' + v.sku_id + ':' + v.num + ':' + v.price;
       }

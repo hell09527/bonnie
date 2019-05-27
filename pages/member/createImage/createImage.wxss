@@ -344,3 +344,7 @@ width: 0;
 height: 0;
 color: transparent;
 }
+.typeX{
+  line-height:50px;
+
+}

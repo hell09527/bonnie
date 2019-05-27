@@ -60,7 +60,7 @@
     </view>
   <block wx:if="{{cart_list.length != 0 && cart_list != undefined}}">
         <view class="fixed bottom">
-            <view class="btn_wrap btn_wrap_static  '{{isIphoneX?'Lise':''}}' ">
+            <view class="btn_wrap btn_wrap_static  '{{isIphoneX==1?'Lise':''}}' ">
               <view class="btn ttn_server" id="div_selected" wx:if='{{distributorType!=1}}'>
                     <view class='div'>
                         <image src='/images/goods/{{check_all==1?"cartp2.png":"cartp1.png"}}' mode='widthFix' catchtap='checkAll'></image>
@@ -97,11 +97,8 @@
             <view class="p text">您的购物车还没有商品！</view>
             <view class="a btn" catchtap="aIndex" data-url='/pages/index/index'>发现更多惊喜</view>
         </view>
-
     </block>
-
 </scroll-view>
-
 <!--<button class="show-btn" bindtap="showDialogBtn">弹窗</button>-->
 <!--弹窗-->
 <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{show}}"></view>
@@ -138,7 +135,6 @@
 
  
 <!-- //客服 -->
-           <!-- <button class="a new-btn buy-cart" open-type="contact" session-from="weapp" class="{{isHide==0?'yuan':'hide-kf'}}" style='bottom:120rpx;'>
-                <view><image src="https://static.bonnieclyde.cn/tt.png"  mode='widthFix' ></image></view>
-
-            </button>  -->
+  <!-- <button class="a new-btn buy-cart" open-type="contact" session-from="weapp" class="{{isHide==0?'yuan':'hide-kf'}}" style='bottom:120rpx;'>
+      <view><image src="https://static.bonnieclyde.cn/tt.png"  mode='widthFix' ></image></view>
+  </button>  -->

@@ -129,7 +129,6 @@ button{
   line-height:50rpx;
   border:1px solid #9b9b9b;
   margin: 0;
-  color: #fff;
   background-color: #000;
   border-radius: 0;
   top:10rpx;

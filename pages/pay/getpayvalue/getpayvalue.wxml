@@ -39,7 +39,7 @@
           <button class="alipay" formType="submit">确认支付￥{{pay_money}}</button>
       </form>
         <!-- 适配全面屏 -->
-        <view class="s '{{isIphoneX?'L-ise':''}}' "></view>
+        <view class="s '{{isIphoneX==1?'L-ise':''}}' "></view>
     <!--<button class="alipay" catchtap='payOrder'>确认支付￥{{pay_money}}</button>-->
   </view>
 </scroll-view>
