@@ -30,7 +30,7 @@
                     <image src="{{goods.picture.pic_cover_small==''?0:goods.picture.pic_cover_small}}" binderror='errorImg' data-index='{{index}}' data-key='{{key}}'/>
                   </view>
                   <view decode="true" class="text">
-                    <text class="pro-name span">{{goods.goods_name}}
+                    <text  decode="true"  class="pro-name span">{{goods.goods_name}}
                       <block wx:if='{{goods.gift_flag > 0}}'>
                         <view class='i gift'>赠品</view>
                       </block>
@@ -51,28 +51,37 @@
                       <view class='b'>{{goods.num}}件</view>
                     </view>
                   </view>
+                  <view class="bao_sale">
+                               <view class="sale_title" wx:if='{{goods.sale_type==2 && goods.sale_end_time!="" && goods.shipping_status==0}}'>预售结束后{{goods.send_sale.day}}天内发货</view>
+                    </view>
                 </view>
                 <view class="bottom-div">
                   <view class='bottom-div-child'>
                     <view style="width:20%;float:left;height:26px;line-height:26px;">
-                      <block wx:if='{{goods.refund_status==-3}}'>{{order.status_name}}</block>
-                      <block wx:if='{{goods.refund_status==-1}}'>{{order.status_name}}</block>                        
-                      <block wx:if='{{goods.refund_status==0}}'>{{order.status_name}}</block>
+                      <block wx:if='{{goods.refund_status==-3}}'>{{goods.status_name}}</block>
+                      <block wx:if='{{goods.refund_status==-1}}'>{{goods.status_name}}</block>                        
+                      <block wx:if='{{goods.refund_status==0}}'>{{goods.status_name}}</block>
                       <block wx:if='{{goods.refund_status==1}}'>退款中</block>
                       <block wx:if='{{goods.refund_status==4}}'>退款中</block>
                       <block wx:if='{{goods.refund_status==5}}'>已退款</block>
                     </view>
                     <block wx:if='{{order.order_status != 5 && order.order_status !=0 && order.order_status !=3 && order.order_status !=4 && goods.gift_flag != 1}}'>
-                      <view type='button' class='child-button' catchtap='refund' data-id='{{goods.order_goods_id}}'> 
-                        <block wx:if='{{goods.refund_status==0}}'>申请售后</block>
-                        <block wx:else>{{goods.status_name}}</block>
+                      <view type='button' class='child-button' catchtap='refund' data-id='{{goods.order_goods_id}}' data-name="{{goods.goods_name}}" data-ship="{{goods.shipping_status}}"  data-status="{{goods.refund_status}}"> 
+                         <block wx:if='{{goods.shipping_status==0 }}'>
+                             <block wx:if='{{(goods.refund_status==0 )}}'>申请售后</block>
+                             <block wx:else>{{goods.status_name}}</block>
+                         </block>  
+                        <block wx:if="{{ goods.shipping_status==1}}">
+                          <block wx:if='{{goods.refund_total_num!=goods.num && (goods.refund_status==0 || goods.refund_status==5)}}'>申请售后</block>
+                          <block wx:else>{{goods.status_name}}</block>
+                        </block>
                       </view>
                     </block>
-                    <block wx:if='{{goods.refund_status==5}}'>
+                    <!-- <block wx:if='{{goods.refund_status==5}}'>
                       <view type='button' class='child-button' catchtap='refund' data-id='{{goods.order_goods_id}}'>
                         退款成功
                       </view>
-                    </block>
+                    </block> -->
                     <block wx:if='{{order.order_status == 3 || order.order_status == 4 && order.is_evaluate != 2 && order.order_type!=5}}'>
                       <view type='button' class='child-button' catchtap='{{order.is_evaluate==0?"evaluation":order.is_evaluate==1?"evaluationAgain":""}}' data-id='{{order.order_id}}'>
                         <block wx:if='{{order.is_evaluate==0}}'>我要评价</block>
@@ -95,6 +104,7 @@
             <block wx:for='{{order.member_operation}}' wx:key='' wx:for-item='button'>
               <view class="button [radius round] a" catchtap='{{button.no}}' data-id='{{order.order_id}}' data-no='{{order.out_trade_no}}' style='background-color:{{button.color}};border-color:{{button.color}}'>{{button.name}}</view>
             </block>
+            <view wx:if='{{order.order_status==1}}' class="button [radius round] a" catchtap='amendAddress' data-no='{{order.order_no}}' data-index='{{index}}' style='background-color:#000;border-color:#000'>修改地址</view>
           </view>
         </view>
       </block>

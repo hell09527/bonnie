@@ -27,9 +27,9 @@
       </view> 
 
       <!--图片  -->
-      <view class='project-image' data-title='{{acticities.goods_info.goods_name}}' data-id='{{acticities.pid}}'  data-url="{{acticities.pic_link}}" data-info="{{acticities.goods_info}}" catchtap='toLink'>
-        <image wx:if='{{acticities.pic_pro}}' src="{{acticities.pic_pro}}" mode='widthFix' style='width:680rpx;margin:0 auto;'></image>
-        <image wx:if='{{acticities.pic}}' src="{{acticities.pic}}" mode='widthFix' style='width:100%'></image>
+      <view class='project-image'    data-src='{{acticities.pic}}'      data-title='{{acticities.goods_info.goods_name}}' data-id='{{acticities.pid}}'  data-url="{{acticities.pic_link}}" data-info="{{acticities.goods_info}}" catchtap='toLink'>
+        <image  class='sss' wx:if='{{acticities.pic_pro}}' src="{{acticities.pic_pro}}" mode='widthFix' style='width:680rpx;margin:0 auto;'></image>
+        <image  class='lll' wx:if='{{acticities.pic}}' src="{{acticities.pic}}" mode='widthFix' style='width:100%'></image>
       </view>
 
 
@@ -84,37 +84,41 @@
 
  <!--轮播  -->
 
-<scroll-view wx:if="{{actList[0] == undefined}}" style="margin-top:400px;" class='indexShop-swiper' scroll-x>
+<view wx:if="{{actList[0] == undefined}}" style="margin-top:400px;" class='index-xi' >
   <block wx:for='{{activities}}' wx:key='' wx:for-item='shops' wx:for-index='index'>
+    <!-- style="height:292rpx;width:520rpx;" -->
       <view class='shop-shuffing-item' catchtap='listClick' data-id="{{shops.id}}" data-title="{{shops.title}}" > 
-        <image src="{{shops.pic}}" style="height:292rpx;width:520rpx;"> </image> 
-        <view class='lase-shuffing-mask'>
+        <image src="{{shops.pic}}"  mode='widthFix'> </image> 
+        <!-- <view class='lase-shuffing-mask'>
           <text>{{shops.title}}</text>  
           <image src='/images/index/right.png'></image>
-        </view>
+        </view> -->
       </view>
   </block>
 
-  <view class='shop-shuffing-item' catchtap='toTopicList'  wx:if='{{activities}}'> 
-        <image src="https://static.bonnieclyde.cn/We22.jpeg" style="height:292rpx;width:520rpx;"> </image> 
+<!-- style="height:292rpx;width:520rpx;" -->
+  <view class='shop-xi' catchtap='toTopicList'  wx:if='{{activities}}'> 
+        <image src="https://static.bonnieclyde.cn/WechatIMG1026.jpeg"  mode='awidthFix'> </image> 
       </view>
-</scroll-view> 
+</view> 
 
-<scroll-view wx:else class='indexShop-swiper' scroll-x>
+<view wx:else class='index-xi' >
   <block wx:for='{{activities}}' wx:key='' wx:for-item='shops' wx:for-index='index'>
       <view class='shop-shuffing-item' catchtap='listClick' data-id="{{shops.id}}" data-title="{{shops.title}}" > 
-        <image src="{{shops.pic}}" style="height:292rpx;width:520rpx;border-radius:2px"> </image> 
-        <view class='lase-shuffing-mask'>
+        <image src="{{shops.pic}}"  mode='widthFix'> </image> 
+        <!-- style="border-radius:2px" -->
+        <!-- <view class='lase-shuffing-mask'>
           <text>{{shops.title}}</text>  
           <image src='/images/index/right.png'></image>
-        </view>
+        </view> -->
       </view>
   </block>
 
+<!-- style="height:292rpx;width:520rpx;" -->
   <view class='shop-shuffing-item' catchtap='toTopicList' wx:if='{{activities}}'> 
-        <image src="https://static.bonnieclyde.cn/We22.jpeg" style="height:292rpx;width:520rpx;"> </image> 
+        <image src="https://static.bonnieclyde.cn/WechatIMG1026.jpeg"  mode='widthFix'> </image> 
       </view>
-</scroll-view> 
+</view> 
 
 </view>
 

@@ -72,6 +72,7 @@ Page({
         token: '',
         origin_money: 0,
          ask:0,
+         animationData: {},
 
         // 身份证类
         edit_card:false,
@@ -99,6 +100,8 @@ Page({
         let tag = options.tag;
         let cart_list = options.cart_list;
         let share_last = options.share_last;
+        let is_inside = options.is_inside;
+        console.log(is_inside);
       
         let base = app.globalData.siteBaseUrl;
         let defaultImg = app.globalData.defaultImg;
@@ -131,7 +134,7 @@ Page({
             tag,
         })
 
-        if (tag == 1) {
+        if (tag == 1) {   //立即购买
             tag = 'buy_now';
             let sku = options.sku;
             let goods_type = options.goods_type;
@@ -144,8 +147,9 @@ Page({
                 order_type: options.order_type
             })
         } else if (tag == 2) {
-            tag = 'cart';
+            tag = 'cart';    //购物车
             let cart_list = options.cart_list
+          console.log(cart_list)
             let source_type = options.type;
             that.setData({
               order_source_type: source_type,
@@ -154,7 +158,7 @@ Page({
               order_type: options.order_type
             })
         } else if (tag == 3) {
-            tag = 'combination_packages';
+            tag = 'combination_packages';    //
             let sku = options.sku;
             let goods_type = options.goods_type;
             let combo_id = options.combo_id;
@@ -167,7 +171,7 @@ Page({
                 order_type: options.order_type
             })
         } else if (tag == 4) {
-            tag = 'groupbuy';
+            tag = 'groupbuy';      //套餐购买
             let sku = options.sku;
             let goods_type = options.goods_type;
             that.setData({
@@ -176,7 +180,7 @@ Page({
                 order_type: options.order_type
             })
         } else if(tag==5){
-          tag = 'share_buy';
+          tag = 'share_buy';       //分享购买
           let share_last = options.share_last;
           console.log('share_last', share_last)
           let source_type = options.type;
@@ -205,6 +209,7 @@ Page({
             copyRight: copyRight,
             balance: balance,
             order_invoice_money: order_invoice_money,
+          is_inside,
         })
     },
   /**
@@ -399,6 +404,10 @@ Page({
 
         let myAddressFlag = that.data.myAddressFlag;
         let cancle_pay = that.data.cancle_pay;
+        let isIphoneX = app.globalData.isIphoneX;
+        that.setData({
+            isIphoneX
+        })
         app.restStatus(that, 'myAddressFlag');
 
         if (cancle_pay == 1) {
@@ -478,6 +487,7 @@ Page({
             return false;
         }
 
+      console.log(parm)
         app.sendRequest({
             url: 'api.php?s=order/getOrderData',
             data: parm,
@@ -586,8 +596,17 @@ console.log(data);
                     let order_info = data;
                     //图片处理
                     for (let index in order_info.itemlist) {
+                     
                         let img = order_info.itemlist[index].picture_info.pic_cover_small;
                         order_info.itemlist[index].picture_info.pic_cover_small = app.IMG(img);
+
+                         //预售发货时间
+                        if(order_info.itemlist[index].sale_type==2){
+                           order_info.itemlist[index].send_sale =  that.sale_timing(that,order_info.itemlist[index].delivery_end_time,order_info.itemlist[index].sale_end_time);
+                    
+                        }
+
+                        
                     }
                     //赠品图片处理
                     for (let index in order_info.goods_mansong_gifts) {
@@ -600,8 +619,8 @@ console.log(data);
                       discount_money = Number(discount_money) - Number(that.data.max)
                     
                     }
-
-
+                    console.log(order_info);
+                    
 
                     that.setData({
                         order_info: order_info,
@@ -689,6 +708,86 @@ console.log(data);
             }
         }
     },
+    /* 
+  展示预售商品发货时间
+ */
+
+sale_timing: function (that, Send_array,sale_tms) {
+   let  cdns={};
+   console.log('jinlail')
+    // let current_time = that.data.sale_end_time;
+    // console.log(current_time)
+    let count_second = (Send_array * 1000 - sale_tms * 1000) / 1000;
+    //首次加载
+    if (count_second > 0) {
+      count_second--;
+      //时间计算
+      let day = Math.floor((count_second / 3600) / 24);
+      let hour = Math.floor((count_second / 3600) % 24);
+      let minute = Math.floor((count_second / 60) % 60);
+      let second = Math.floor(count_second % 60);
+      
+      //赋值
+      cdns.day = day;
+      cdns.hour = hour;
+      cdns.minute = minute;
+      cdns.second = second;
+      cdns.end = 0;
+      
+         if(hour>1){
+           console.log(day)
+           cdns.day = Number(day) + 1;
+        console.log(cdns)
+       }else{
+        cdns.day = day;
+        console.log(cdns)
+       }
+       console.log(cdns)
+       return cdns;
+    //    that.setData({
+    //      Send_array: Send_array
+    //    })
+    
+    
+      } 
+  
+    //开始计时
+    // let timer = setInterval(function () {
+    //   if (count_second > 0) {
+    //     count_second--;
+    //     //时间计算
+    //     let day = Math.floor((count_second / 3600) / 24);
+    //     let hour = Math.floor((count_second / 3600) % 24);
+    //     let minute = Math.floor((count_second / 60) % 60);
+    //     let second = Math.floor(count_second % 60);
+    //     //赋值
+        
+    //     console.log(day)
+    //    if(hour>1){
+    //     Send_array.day = day + 1;
+    //     console.log(Send_array)
+    //    }else{
+    //     Send_array.day = day;
+    //     console.log(Send_array)
+    //    }
+    //     //  Send_array.hour = hour;
+    //     // Send_array.minute = minute;
+    //     // Send_array.second = second;
+    //     Send_array.end = 0;
+    //       that.setData({
+    //         Send_array: Send_array
+    //       })
+    //   } 
+    //   else {
+    //       Send_array.end = 1;
+    //       that.setData({
+    //         Send_array: Send_array
+    //       })
+  
+    //     clearInterval(timer);
+    //   }
+    // }, 1000)
+  },
 
     /**
      * 赠品图片加载失败
@@ -781,13 +880,42 @@ console.log(data);
             url: '/pages/member/memberaddress/memberaddress'
         })
     },
-
+    /**
+     * 动画效果
+     */
+    Animation:function(){
+        
+        const animation = wx.createAnimation({
+          duration: 200,
+          timingFunction: 'ease',
+        })
+        this.animation = animation
+        animation.translateY(170).step()
+        
+        this.setData({
+          animationData: animation.export()
+        })
+   
+   
+        setTimeout(function () {
+          animation.translateY(0).step()
+          this.setData({
+            animationData: animation.export()
+          })
+        }.bind(this), 20)
+   
+        this.setData({
+          animationData: animation.export(),
+        })
+     },
     /**
      * 支付方式
      */
     payType: function (event) {
         let that = this;
         let status = event.currentTarget.dataset.status;
+        console.log('donghua ')
+        this.Animation();
 
         that.setData({
             pay_box_status: status,
@@ -857,7 +985,7 @@ console.log(data);
     deliveryType: function (event) {
         let that = this;
         let status = event.currentTarget.dataset.status;
-
+        this.Animation();
         that.setData({
             delivery_status: status,
             mask_status: status
@@ -919,7 +1047,6 @@ console.log(data);
      * 身份验证弹框(动画效果未实现)
      */
     sidShow: function (event) {
-     
         let type = event.currentTarget.dataset.type;
         let status = 0;
         let animation = wx.createAnimation({
@@ -1016,7 +1143,7 @@ console.log(data);
      */
     couponStatus: function (e) {
         let that = this;
-
+        this.Animation();
         that.setData({
             coupon_status: 1,
             mask_status: 1
@@ -1489,7 +1616,6 @@ console.log(data);
             pay_money = pay_money < 0 ? 0.00 : pay_money;
 
             //is_use_card判断
-
             if (that.data.is_use_card == 1) {
                 pay_money = that.data.pay_money
                 pay_money = Number(pay_money) - Number(that.data.max)
@@ -1517,7 +1643,8 @@ console.log(data);
         //console.log(card_id)
         //console.log(card_token)
         console.log(that.data.uid)
-      
+      console.log(' app.globalData.traffic_acquisition_source',app.globalData.traffic_acquisition_source)
+     
         app.sendRequest({
             url: url,
             data: {
@@ -1544,9 +1671,12 @@ console.log(data);
                 store_id: app.globalData.store_id,
                 from_type: that.data.order_type,
                 count_money: that.data.count_money,
-                uid:that.data.uid
+                uid:that.data.uid,
+                is_inside: that.data.is_inside ? that.data.is_inside:0,
+              traffic_acquisition_source: app.globalData.traffic_acquisition_source,// 引流来源
             },
             success: function (res) {
+              console.log(res);
                 let code = res.code;
                 let data = res.data;
 

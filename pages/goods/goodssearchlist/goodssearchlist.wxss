@@ -1568,9 +1568,10 @@
 }
 
 .goods_tab{
+  display: inline-block;
   font-style: normal;
   font-size: 12px!important;
-  background: #f44;
+  background: #101010;
   color: #fff;
   padding: 1px 3px;
   margin-right: 2px;

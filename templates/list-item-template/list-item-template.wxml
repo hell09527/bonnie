@@ -1,0 +1,9 @@
+<template name="listItemTemplate">
+  <!-- 其他 -->
+  <!-- <view class="sequence">{{index+1}}</view> -->
+  <!-- <view class="brand">{{text}}</view> -->
+  <view class="names">
+    <image class="img" src='{{pic_cover_small}}'></image>
+    <view class="w_book">{{goods_name}}</view>
+  </view>
+</template>

@@ -38,10 +38,10 @@ Page({
     // 选中列表
     unselected_list: [],
     isHide: 0,    //客服按钮是否影藏
-    unregistered: 0,
+    // unregistered: 0,
     tel:'',
-    show:false,
     Choice: false,
+    layout: false,
     distributorType:'',    //会员类型
 
   },
@@ -60,67 +60,7 @@ Page({
         // console.log(app.globalData.identifying,'app.globalData.identifying')
         app.globalData.breakpoint = options.breakpoint;
       }
-      // else{
-      //     if (app.globalData.token && app.globalData.token != '') {
-      //         //判断是否是付费会员的接口
-      //         app.sendRequest({
-      //             url: "api.php?s=member/getMemberDetail",
-      //             success: function (res) {
-      //                 let data = res.data
-      //                 if (res.code == 0) {
-      //                     let is_vip = data.is_vip
-      //                     app.globalData.is_vip = data.is_vip
-      //                     app.globalData.member_level = data.member_level
-      //                     let member_level = data.member_level
-      //                     app.globalData.uid = data.uid
-      //                     app.globalData.vip_gift = data.vip_gift
-      //                     app.globalData.vip_goods = data.vip_goods
-      //                     app.globalData.vip_overdue_time = data.vip_overdue_time
-      //                     // console.log(app.globalData.is_vip)
-      //                     that.setData({
-      //                         is_vip: is_vip,
-      //                         member_level
-      //                     })
-      //                 }
-      //             }
-      //         })
-      //
-      //
-      //
-      //     } else {
-      //
-      //         app.employIdCallback = employId => {
-      //             if (employId != '') {
-      //                 //判断是否是付费会员的接口
-      //
-      //                 app.sendRequest({
-      //                     url: "api.php?s=member/getMemberDetail",
-      //                     success: function (res) {
-      //                         let data = res.data
-      //                         if (res.code == 0) {
-      //                             let is_vip = data.is_vip
-      //                             app.globalData.is_vip = data.is_vip
-      //                             app.globalData.member_level = data.member_level
-      //                             let member_level = data.member_level
-      //                             app.globalData.uid = data.uid
-      //                             app.globalData.vip_gift = data.vip_gift
-      //                             app.globalData.vip_goods = data.vip_goods
-      //                             app.globalData.vip_overdue_time = data.vip_overdue_time
-      //                             //  console.log(app.globalData.is_vip)
-      //                             that.setData({
-      //                                 is_vip: is_vip,
-      //                                 member_level
-      //                             })
-      //                         }
-      //                     }
-      //                 })
-      //             }
-      //
-      //
-      //
-      //         }
-      //     }
-      // }
+      
 
 
 
@@ -144,7 +84,7 @@ Page({
   // custom start
   showDialogBtn: function () {
     this.setData({
-      showModal: true
+      show: true
     })
   },
   /**
@@ -153,24 +93,19 @@ Page({
   preventTouchMove: function () {
 
   },
-  hide: function () {
-    this.setData({
-      show: false
-    });
-  },
   /**
    * 隐藏模态对话框
    */
-  hideModal: function () {
+  showhideModal: function () {
     this.setData({
-      showModal: false
+      show: false
     });
   },
   /**
    * 对话框取消按钮点击事件
    */
   onCancel: function () {
-    this.hideModal();
+    this.showhideModal();
   },
   /**
    * 对话框确认按钮点击事件
@@ -189,7 +124,6 @@ Page({
       "use strict";
       if (share_last == '') {
         share_last = v.sku_id + ':' + v.num + ':' + v.price;
-
       } else {
         share_last += ',' + v.sku_id + ':' + v.num + ':' + v.price;
       }
@@ -201,7 +135,7 @@ Page({
     })
 
 
-    this.hideModal();
+    this.showhideModal();
   },
   // custom end
 
@@ -311,13 +245,21 @@ Page({
     let that = this;
     let siteBaseUrl = app.globalData.siteBaseUrl;
     let share_sku_list = that.data.share_sku_list;
+    let isIphoneX = app.globalData.isIphoneX;
+    console.log(share_sku_list)
+    console.log(isIphoneX )
     //判断是否是付费会员
     let is_vip = app.globalData.is_vip;
   
-    // console.log(is_vip)
-
+    //是否授权数据更新
+    let updata = that.data.unregistered
+    updata = app.globalData.unregistered;
+    // console.log(updata)
+    
     that.setData({
-      is_vip
+      unregistered: updata,
+      is_vip,
+      isIphoneX
     })
 
     that.setData({
@@ -336,6 +278,21 @@ Page({
 
     app.restStatus(that, 'settlementFlag');
     app.restStatus(that, 'goodsDetailFlag');
+
+
+    if (app.globalData.token && app.globalData.token != '') {
+      that.QD_reuse();
+    } else {
+      app.employIdCallback = employId => {
+        if (employId != '') {
+          // console.log(2, app.globalData.unionid)
+          that.QD_reuse();
+        }
+      }
+    }
+
+
+
   
 
     app.sendRequest({
@@ -410,16 +367,7 @@ Page({
     })
 
 
-    if (app.globalData.token && app.globalData.token != '') {
-      that.QD_reuse();
-    } else {
-      app.employIdCallback = employId => {
-        if (employId != '') {
-          // console.log(2, app.globalData.unionid)
-          that.QD_reuse();
-        }
-      }
-    }
+   
 
 
  
@@ -460,6 +408,7 @@ Page({
     this.setData({
       showModal: false,
       Choice: false,
+      layout: false,
     })},
   /**登录分支点*/
   Branch: function (e) {
@@ -467,7 +416,8 @@ Page({
     let branch = e.currentTarget.dataset.status;
  if (branch == "mobile") {
    _that.setData({
-     Choice: false
+     Choice: false,
+     layout: false,
    })
       wx.navigateTo({
         url: '/pages/member/updatemobile/updatemobile?cho=1',
@@ -482,9 +432,15 @@ Page({
   /**触发*/
   Crossroad: function () {
     let _that = this;
-    _that.setData({
-      Choice: true
-    })
+    let Tel=_that.data.tel;
+    // 目录后缀
+    let  suffix=_that.data.share_sku_list;
+    if (app.globalData.unregistered == 1 || Tel=='') {
+      wx.navigateTo({
+        url: '/pages/member/resgin/resgin?suffix='+ suffix,
+      })
+    }
+
   },
   inputChange(e) {
     "use strict";
@@ -1006,7 +962,7 @@ Page({
       })
       console.log(that.data.unregistered)
       //判断是否继续弹出获取个人信息弹窗
-      if (that.data.unregistered == 0) {
+      if (app.globalData.unregistered== 0) {
         wx.login({
           success: function (res) {
             let coco = res.code;
@@ -1030,7 +986,7 @@ Page({
         })
       } else {
         that.setData({
-          show: true,
+          showModal: true,
           Choice: false
         })
       }
@@ -1040,81 +996,133 @@ Page({
   //获取头像
   bindgetuserinfo: function (res) {
     let that = this;
-    if (res.detail.iv){
-     let iv = res.detail.iv;
-     let encryptedData = res.detail.encryptedData;
-     app.globalData.iv = res.detail.iv;
-     app.globalData.encryptedData = res.detail.encryptedData;
-     app.globalData.unregistered = 0;
-     console.log(res.detail.iv
-     )
-     console.log(res.detail.userInfo.avatarUrl)
-     console.log(res.detail.userInfo.nickName)
-     let heder_img = res.detail.userInfo.avatarUrl
-     let wx_name = res.detail.userInfo.nickName
+    if (res.detail.iv) {
+      let iv = res.detail.iv;
+      let encryptedData = res.detail.encryptedData;
+      app.globalData.iv = res.detail.iv;
+      app.globalData.encryptedData = res.detail.encryptedData;
+      app.globalData.unregistered = 0;
+      console.log(res.detail.iv
+      )
+      console.log(res.detail.userInfo.avatarUrl)
+      console.log(res.detail.userInfo.nickName)
+      let heder_img = res.detail.userInfo.avatarUrl
+      let wx_name = res.detail.userInfo.nickName
+      let branch = res.currentTarget.dataset.status;
+      this.setData({
+        showModal: false,
+        Choice: false
+      })
+      console.log(branch, 'branch ')
+      if (branch == "mobile") {
+        this.setData({
+          layout: true,
+        })
 
-
-     this.setData({
-       show: false,
-     })
-
-      wx.login({
-        success: function (res) {
-          let coco = res.code;
-          app.sendRequest({
-            url: 'api.php?s=Login/getWechatEncryptInfo',
-            data: {
-              code: coco,
-              encryptedData: encryptedData,
-              iv: iv
-            },
-            success: function (res) {
-              if (res.code == 0) {
-                let lpl = res.data.token;
-                app.globalData.openid = res.data.openid;
-                app.globalData.token = res.data.token;
-                that.setData({
-                  unregistered: 0,
-                })
-                wx.login({
-                  success: function (res) {
-                    let coco = res.code;
-                    app.sendRequest({
-                      url: 'api.php?s=Login/getWechatMobile',
-                      data: {
-                        code: coco,
-                        mobileEncryptedData: that.data.setEncryptedData,
-                        mobileIv: that.data.setIv,
-                        token: lpl
-                      },
-                      success: function (res) {
-                        if (res.code == 0) {
-                          that.setData({
-                            tel: res.data.user_tel
-                          })
-
-
-                        }
-
-                      }
-                    });
-                  }
-                })
-
-
+        wx.login({
+          success: function (res) {
+            let coco = res.code;
+            app.sendRequest({
+              url: 'api.php?s=Login/getWechatEncryptInfo',
+              data: {
+                code: coco,
+                encryptedData: encryptedData,
+                iv: iv
+              },
+              success: function (res) {
+                if (res.code == 0) {
+                  let lpl = res.data.token;
+                  app.globalData.openid = res.data.openid;
+                  app.globalData.token = res.data.token;
+                  that.setData({
+                    unregistered: 0,
+                    wx_name: wx_name,
+                    heder_img
+                  })
+                  that.QD_reuse();
+                }
 
               }
+            });
+          }
+        })
 
-            }
-          });
-        }
-      })
+      } else {
+        wx.login({
+          success: function (res) {
+            let coco = res.code;
+            app.sendRequest({
+              url: 'api.php?s=Login/getWechatEncryptInfo',
+              data: {
+                code: coco,
+                encryptedData: encryptedData,
+                iv: iv
+              },
+              success: function (res) {
+                if (res.code == 0) {
+                  let lpl = res.data.token;
+                  app.globalData.openid = res.data.openid;
+                  app.globalData.token = res.data.token;
+                
+                  that.setData({
+                    unregistered: 0,
+                    wx_name: wx_name,
+                    heder_img
+                  })
+                  wx.login({
+                    success: function (res) {
+                      let coco = res.code;
+                      app.sendRequest({
+                        url: 'api.php?s=Login/getWechatMobile',
+                        data: {
+                          code: coco,
+                          mobileEncryptedData: that.data.setEncryptedData,
+                          mobileIv: that.data.setIv,
+                          token: lpl
+                        },
+                        success: function (res) {
+                          that.QD_reuse();
+                          if (res.code == 0) {
+                            that.setData({
+                              unregistered: 0,
+                              wx_name: wx_name,
+                              tel: res.data.user_tel,
+                              heder_img
+                            })
+                           
 
-   }else{
+                          }
+
+                        }
+                      });
+                    }
+                  })
+
+
+
+                }
+
+              }
+            });
+          }
+        })
+      }
+
+
+
+
+
+
+    } else {
       this.setData({
-        show: false,
+        showModal: false,
       })
-   }
+    }
+
+
+
+
+
   },
   
 })

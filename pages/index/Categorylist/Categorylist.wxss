@@ -1,0 +1,2 @@
+/* pages/index/Categorylist/Categorylist.wxss */
+@import "/templates/goods-item-template/goods-item-template.wxss";

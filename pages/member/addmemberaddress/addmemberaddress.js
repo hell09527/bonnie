@@ -270,7 +270,9 @@ Page({
       app.restStatus(that, 'saveAddressFlag');
       return;
     }
-    let myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+
+    let myreg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
+    // let myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
     if (mobile.length != 11 || !myreg.test(mobile)){
       app.showBox(that, '请输入正确的手机号');
       app.restStatus(that, 'saveAddressFlag');
@@ -286,16 +288,16 @@ Page({
       app.restStatus(that, 'saveAddressFlag');
       return;
     }
-    if (district == 0) {
-      app.showBox(that, '请选择区县');
-      app.restStatus(that, 'saveAddressFlag');
-      return;
-    }
+    // if (district == 0) {
+    //   app.showBox(that, '请选择区县');
+    //   app.restStatus(that, 'saveAddressFlag');
+    //   return;
+    // }
     if (address == '') {
       app.showBox(that, '请输入详细地址');
       app.restStatus(that, 'saveAddressFlag');
       return;
-    }
+    } 
     app.sendRequest({
       url: 'api.php?s=member/addmemberaddress',
       data: {

@@ -43,9 +43,9 @@
                   <view class="all-box">
                     <image class='lazy' data-index='{{index}}' binderror='errorImg' src="{{goods.pic_cover_small}}" mode='widthFix'/>
                     <view class="shop-detail">
-                      <text  decode="true" class="title">
+                      <text decode="true" class="title">
                         <block wx:for='{{goods.gorup_list}}' wx:key='' wx:for-item='vo'>
-                          <i class="goods_tab">{{vo.group_name}}</i>
+                          <text class="goods_tab">{{vo.group_name}}</text>
                         </block>{{goods.goods_name}}
                       </text>
                       <view class="shop-detail-price">

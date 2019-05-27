@@ -169,10 +169,11 @@ swiper{
   position: fix;
   bottom: 0;
   margin:20rpx 0 40rpx;
-  height:292rpx;
+  height:500rpx;
   white-space:nowrap;
+  vertical-align:text-top;
 }
-.shop-shuffing-item{
+/* .shop-shuffing-item{
   height:292rpx;
   width:540rpx;
    padding:0 10rpx; 
@@ -188,7 +189,7 @@ swiper{
 }
 .shop-shuffing-item:last-child{
   padding-right: 20rpx;
-}
+} */
 .shop-shuffing-item>image{
   width:100%;
   height:100%;

@@ -5,13 +5,19 @@
 		"es6": true,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true
+		"newFeature": true,
+		"nodeModules": true,
+		"autoAudits": false,
+		"uglifyFileName": true,
+		"checkInvalidKey": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.2.5",
-	"appid": "wxd145d8a6e951dd1b",
-	"projectname": "BC1",
+	"libVersion": "2.6.6",
+	"appid": "wxba4f30503c1ea656",
+	"projectname": "bonnie-clyde%20%E6%B5%8B%E8%AF%95%E6%B5%8B%E8%AF%95",
 	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -30,74 +36,34 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 10,
+			"current": 3,
 			"list": [
 				{
 					"id": -1,
 					"name": "1",
-					"pathName": "pages/member/kol/kol",
-					"query": ""
+					"pathName": "pages/member/supportCenter/supportCenter",
+					"query": "",
+					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "2",
-					"pathName": "pages/member/kol/kol",
-					"query": ""
-				},
-				{
-					"id": 4,
-					"name": "1",
-					"pathName": "pages/index/index",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "8",
-					"pathName": "pages/backPage/backPage",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "领取礼物",
-					"pathName": "pages/backPage/fetchGift/fetchGift",
-					"query": ""
-				},
-				{
-					"id": 6,
-					"name": "erweima",
-					"pathName": "pages/index/projectIndex2/projectIndex",
-					"query": "scene={'id' = 1}"
-				},
-				{
-					"id": 7,
-					"name": "折扣页",
-					"pathName": "pages/index/activityDiscount/discount",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "888",
-					"pathName": "pages/order/paymentorder/paymentorder",
-					"query": ""
-				},
-				{
-					"id": 8,
-					"name": "级选师申请",
 					"pathName": "pages/member/kolApply/kolApply",
-					"query": ""
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "商品详情",
+					"pathName": "pages/goods/goodsdetail/goodsdetail",
+					"query": "goods_id=910"
 				},
 				{
 					"id": -1,
-					"name": "审核页面",
-					"pathName": "pages/member/kolSuccess/kolSuccess",
-					"query": ""
-				},
-				{
-					"id": 10,
-					"name": "购物清单",
-					"pathName": "pages/goods/shareRepertoire/shareRepertoire",
-					"query": "share_li=90:1:0.01,89:1:0.01&tag=2&store=0&distributor_type=0"
-
+					"name": "扫二维码进入",
+					"pathName": "pages/index/index",
+					"query": "",
+					"scene": "1011"
 				}
 			]
 		}

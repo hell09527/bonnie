@@ -118,7 +118,6 @@ Page({
   onReady: function () {
 
   },
-
   /**
    * 生命周期函数--监听页面显示
    */
@@ -544,9 +543,7 @@ Page({
         let data = res.data;
         if (code == 0) {
           let goods_list = data.goods_list;
-
           if (goods_list != undefined) {
-
             for (let index in goods_list) {
               let img = goods_list[index].pic_cover_small;
               goods_list[index].pic_cover_small = app.IMG(img);
@@ -708,7 +705,6 @@ Page({
             min_price: min_price,
             max_price: max_price
           })
-
           that.closePoupo();
         }
       }

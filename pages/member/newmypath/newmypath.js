@@ -203,7 +203,7 @@ Page({
       url: 'api.php?s=member/delMyPath',
       data: {
         'type': 'browse_id',
-         value: id,
+        value: id,
       },
       success: function (res) {
         let code = res.code;

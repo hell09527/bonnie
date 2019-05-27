@@ -21,6 +21,8 @@ Page({
     evaluationAgainFlag: 0,
     aClickFlag: 0,
     payFlag: 0,
+    address:[],   //收货地址
+    isHide: 0
   },
 
   /**
@@ -66,33 +68,106 @@ Page({
     app.restStatus(that, 'evaluationAgainFlag');
     app.restStatus(that, 'aClickFlag');
     app.restStatus(that, 'payFlag');
-    app.sendRequest({
-      url: 'api.php?s=order/getOrderList',
-      data: {
-        status: status
-      },
-      success: function (res) {
-        let code = res.code;
 
-        if (code == 0) {
-          let order_list = res.data.data;
-          for (let index in order_list){
-            order_list[index].create_time = time.formatTime(order_list[index].create_time,'Y-M-D h:m:s');
-            //图片处理
-            for (let key in order_list[index].order_item_list) {
-              let img = order_list[index].order_item_list[key].picture.pic_cover_small;
-              order_list[index].order_item_list[key].picture.pic_cover_small = app.IMG(img);
-            }
+
+
+
+if (app.globalData.token && app.globalData.token != '') {
+  app.sendRequest({
+    url: 'api.php?s=order/getOrderList',
+    data: {
+      status:status
+    },
+    success: function (res) {
+      let code = res.code;
+      if (code == 0) {
+        let order_list = res.data.data;
+
+        for (let index in order_list){
+          order_list[index].create_time = time.formatTime(order_list[index].create_time,'Y-M-D h:m:s');
+          //图片处理
+          for (let key in order_list[index].order_item_list) {
+            let img = order_list[index].order_item_list[key].picture.pic_cover_small;
+            order_list[index].order_item_list[key].picture.pic_cover_small = app.IMG(img);
+
+                  //预售发货时间
+                  if(order_list[index].order_item_list[key].sale_type==2){
+                    // console.log(order_list[index].order_item_list[key]);
+                    // console.log(order_list[index].order_item_list[key].delivery_end_time);
+                    // console.log(order_list[index].order_item_list[key].sale_end_time);
+                    order_list[index].order_item_list[key].send_sale =  that.sale_timing(that,order_list[index].order_item_list[key].delivery_end_time,order_list[index].order_item_list[key].sale_end_time);
+             
+                 }
+
+
           }
-          let page = order_list.length > 0 ? 2 : 1;
-          that.setData({
-            order_list: order_list,
-            page: page
-          })
         }
-        console.log(res)
+
+        console.log(order_list);
+        let page = order_list.length > 0 ? 2 : 1;
+        that.setData({
+          order_list: order_list,
+          page: page
+        })
+        // for (var i = 0; i < order_list.length;i++){
+        //   order_list[i].
+        // }
       }
-    })
+      console.log(res)
+    }
+  })
+} else {
+  app.employIdCallback = employId => {
+    if (employId != '') {
+      app.sendRequest({
+        url: 'api.php?s=order/getOrderList',
+        data: {
+          status:status
+        },
+        success: function (res) {
+          let code = res.code;
+          if (code == 0) {
+            let order_list = res.data.data;
+  
+            for (let index in order_list){
+              order_list[index].create_time = time.formatTime(order_list[index].create_time,'Y-M-D h:m:s');
+              //图片处理
+              for (let key in order_list[index].order_item_list) {
+                let img = order_list[index].order_item_list[key].picture.pic_cover_small;
+                order_list[index].order_item_list[key].picture.pic_cover_small = app.IMG(img);
+
+                     //预售发货时间
+                     if(order_list[index].order_item_list[key].sale_type==2){
+                      // console.log(order_list[index].order_item_list[key]);
+                      // console.log(order_list[index].order_item_list[key].delivery_end_time);
+                      // console.log(order_list[index].order_item_list[key].sale_end_time);
+                      order_list[index].order_item_list[key].send_sale =  that.sale_timing(that,order_list[index].order_item_list[key].delivery_end_time,order_list[index].order_item_list[key].sale_end_time);
+               
+                   }
+              }
+            }
+            let page = order_list.length > 0 ? 2 : 1;
+            that.setData({
+              order_list: order_list,
+              page: page
+            })
+            // for (var i = 0; i < order_list.length;i++){
+            //   order_list[i].
+            // }
+          }
+          console.log(res)
+        }
+      })
+    }
+
+  }
+}
+
+  
+
+
+
+
   },
 
   /**
@@ -145,7 +220,20 @@ Page({
             for (let key in new_order_list[index].order_item_list) {
               let img = new_order_list[index].order_item_list[key].picture.pic_cover_small;
               new_order_list[index].order_item_list[key].picture.pic_cover_small = app.IMG(img);
+
+     //预售发货时间
+     if(order_list[index].order_item_list[key].sale_type==2){
+      // console.log(order_list[index].order_item_list[key]);
+      // console.log(order_list[index].order_item_list[key].delivery_end_time);
+      // console.log(order_list[index].order_item_list[key].sale_end_time);
+      order_list[index].order_item_list[key].send_sale =  that.sale_timing(that,order_list[index].order_item_list[key].delivery_end_time,order_list[index].order_item_list[key].sale_end_time);
+
+   }
+
             }
+            
+
+
             //优化数据传入
             let key = "order_list[" + (parseInt(order_list.length) + parseInt(index)) + "]";
             d[key] = new_order_list[index];
@@ -204,6 +292,16 @@ Page({
             for (let key in order_list[index].order_item_list){
               let img = order_list[index].order_item_list[key].picture.pic_cover_small;
               order_list[index].order_item_list[key].picture.pic_cover_small = app.IMG(img);
+
+
+                   //预售发货时间
+                   if(order_list[index].order_item_list[key].sale_type==2){
+                    // console.log(order_list[index].order_item_list[key]);
+                    // console.log(order_list[index].order_item_list[key].delivery_end_time);
+                    // console.log(order_list[index].order_item_list[key].sale_end_time);
+                    order_list[index].order_item_list[key].send_sale =  that.sale_timing(that,order_list[index].order_item_list[key].delivery_end_time,order_list[index].order_item_list[key].sale_end_time);
+             
+                 }
             }
           }
 
@@ -228,6 +326,88 @@ Page({
       url: url,
     })
   },
+      /* 
+  展示预售商品发货时间
+ */
+
+sale_timing: function (that, Send_array,sale_tms) {
+  let  cdns={};
+  console.log('jinlail')
+   // let current_time = that.data.sale_end_time;
+   // console.log(current_time)
+   console.log(Send_array);
+   console.log(sale_tms)
+   let count_second = (Send_array * 1000 - sale_tms * 1000) / 1000;
+   //首次加载
+   if (count_second > 0) {
+     count_second--;
+     //时间计算
+     let day = Math.floor((count_second / 3600) / 24);
+     let hour = Math.floor((count_second / 3600) % 24);
+     let minute = Math.floor((count_second / 60) % 60);
+     let second = Math.floor(count_second % 60);
+     
+     //赋值
+     cdns.day = day;
+     cdns.hour = hour;
+     cdns.minute = minute;
+     cdns.second = second;
+     cdns.end = 0;
+     
+        if(hour>1){
+          console.log(day)
+          cdns.day = Number(day) + 1;
+       console.log(cdns)
+      }else{
+       cdns.day = day;
+       console.log(cdns)
+      }
+      console.log(cdns)
+      return cdns;
+   //    that.setData({
+   //      Send_array: Send_array
+   //    })
+   
+   
+     } 
+ 
+   //开始计时
+   // let timer = setInterval(function () {
+   //   if (count_second > 0) {
+   //     count_second--;
+   //     //时间计算
+   //     let day = Math.floor((count_second / 3600) / 24);
+   //     let hour = Math.floor((count_second / 3600) % 24);
+   //     let minute = Math.floor((count_second / 60) % 60);
+   //     let second = Math.floor(count_second % 60);
+   //     //赋值
+       
+   //     console.log(day)
+   //    if(hour>1){
+   //     Send_array.day = day + 1;
+   //     console.log(Send_array)
+   //    }else{
+   //     Send_array.day = day;
+   //     console.log(Send_array)
+   //    }
+   //     //  Send_array.hour = hour;
+   //     // Send_array.minute = minute;
+   //     // Send_array.second = second;
+   //     Send_array.end = 0;
+   //       that.setData({
+   //         Send_array: Send_array
+   //       })
+   //   } 
+   //   else {
+   //       Send_array.end = 1;
+   //       that.setData({
+   //         Send_array: Send_array
+   //       })
+ 
+   //     clearInterval(timer);
+   //   }
+   // }, 1000)
+ },
   
   /**
    * 点击操作
@@ -309,6 +489,16 @@ Page({
                   for (let key in order_list[index].order_item_list) {
                     let img = order_list[index].order_item_list[key].picture.pic_cover_small;
                     order_list[index].order_item_list[key].picture.pic_cover_small = app.IMG(img);
+
+
+                         //预售发货时间
+                  if(order_list[index].order_item_list[key].sale_type==2){
+                    // console.log(order_list[index].order_item_list[key]);
+                    // console.log(order_list[index].order_item_list[key].delivery_end_time);
+                    // console.log(order_list[index].order_item_list[key].sale_end_time);
+                    order_list[index].order_item_list[key].send_sale =  that.sale_timing(that,order_list[index].order_item_list[key].delivery_end_time,order_list[index].order_item_list[key].sale_end_time);
+             
+                 }
                   }
                 }
                 that.setData({
@@ -454,15 +644,18 @@ Page({
   refund: function(event){
     let that = this;
     let refundFlag = that.data.refundFlag;
-    let status = that.data.status;
+    // let status = that.data.status;
     let order_goods_id = event.currentTarget.dataset.id;
+    let name= event.currentTarget.dataset.name;
+   let ship=event.currentTarget.dataset.ship;
+      let status=event.currentTarget.dataset.status
 
     if (refundFlag == 1){
       return false;
     }
     app.clicked(that, 'refundFlag');
     wx.navigateTo({
-      url: '/pages/order/refunddetail/refunddetail?id=' + order_goods_id + '&status=' + status,
+      url: '/pages/order/refunddetail/refunddetail?id=' + order_goods_id + '&status=' + status + '&name=' + name+ '&ship=' + ship,
     })
   },
 
@@ -502,6 +695,27 @@ Page({
     })
   },
 
+  // 跳转修改地址页面
+  amendAddress:function(e){
+    var order_no = e.currentTarget.dataset.no;
+    var index = e.currentTarget.dataset.index;
+    var order_list = this.data.order_list;
+    var address = {};
+    address.address = order_list[index].receiver_address;
+    address.city = order_list[index].receiver_city;
+    address.city_name = order_list[index].receiver_city_name;
+    address.district = order_list[index].receiver_district;
+    address.district_name = order_list[index].receiver_district_name;
+    address.mobile = order_list[index].receiver_mobile;
+    address.name = order_list[index].receiver_name;
+    address.province = order_list[index].receiver_province;
+    address.province_name = order_list[index].receiver_province_name;
+    address.zip = order_list[index].receiver_zip;
+    wx.navigateTo({
+      url: '/pages/order/amendAdder/amendAdder?order_no=' + order_no+'&address='+JSON.stringify(address),
+    })
+  },
+
   // 页面滚动事件//滑动开始事件
   handletouchtart: function (event) {
     this.setData({
@@ -521,4 +735,5 @@ Page({
       isHide: 0
     })
   },
+  
 })

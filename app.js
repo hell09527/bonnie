@@ -4,8 +4,8 @@ App({
  /a/dsa sadaswqwqewqkhhjhjhqqweqwewqewe  * 全局变量
    */
   globalData: {
-   siteBaseUrl: "https://www.bonnieclyde.cn/", //服务器url
-    // siteBaseUrl: "https://store-test.91xdb.com/", //服务器url
+    // siteBaseUrl: "https://www.bonnieclyde.cn/", //服务器url
+    siteBaseUrl: "https://store-test.91xdb.com/", //服务器url
     wx_info: null,
     encryptedData: '',
     iv: '',
@@ -42,15 +42,21 @@ App({
       technical_support: '',
     },
     projectData: {},    //二级页参数
-    unregistered: 0
+    unregistered: '',
+    recommendUser:'',   //极选师推荐人
+    traffic_acquisition_source: '' //引流来源
   },
   //app初始化函数
-  onLaunch: function () {
+  onLaunch: function (options) {
+    let that = this;
+    if (options.referrerInfo.extraData){
+       that.globalData.traffic_acquisition_source = options.referrerInfo.extraData.traffic_acquisition_source;
+       that.yielding(that.globalData.traffic_acquisition_source)
+    }
     const updateManager = wx.getUpdateManager()
     updateManager.onCheckForUpdate(function (res) {
-
     })
-    
+
     updateManager.onUpdateReady(function () {
       wx.showModal({
         title: '更新提示',
@@ -65,47 +71,52 @@ App({
     updateManager.onUpdateFailed(function () {
       // 新的版本下载失败
     })
-    let that = this;
-    wx.getUserInfo({
-      success: res => {
-        console.log('获取用户信息成功', res);
-        let unregistered = 0;
-        that.setRegister(unregistered)
-
-        this.app_login();
-      },
-      fail(res) {
-        console.log('获取用户信息失败', res);
-        let unregistered = 1;
-        that.setRegister(unregistered)
-
-      }
-    })
-
+   
+    this.app_login();
     that.defaultImg();
     that.webSiteInfo();
     that.copyRightIsLoad();
   },
 
-  onShow: function () {
-    let that = this;
-    wx.getSystemInfo({
-      success: res => {
-
-        let modelmes = res.model;
-        if (modelmes.search('iPhone X') != -1) {
-          that.globalData.isIphoneX = true
-        }
-      }
-    })
+  // 判断是否登录
+  isLogin: function (unregistered){
+    console.log(unregistered)
+    if (unregistered == 1){
+      wx.navigateTo({
+        url: '/pages/member/resgin/resgin',
+      })
+    }
   },
 
+
+  onShow: function () {
+    let that = this;
+    that.isIphoneX()
+  },
+  isIphoneX:function(){
+    let that = this;
+      wx.getSystemInfo({
+        success: res => {
+          let modelmes = res.model;
+          console.log(res.system,'手机');
+            // <==区别机型而导致的导航的样式问题==>
+       if(res.model.indexOf("iPhone X")!=-1){
+        that.globalData.isIphoneX = 1;
+       }else if(res.system.indexOf("Android")!=-1){
+        that.globalData.isIphoneX = 2;
+       }else{
+        that.globalData.isIphoneX = 3;
+       }
+  
+        }
+      })
+  },
   //app登录
   app_login: function () {
     let that = this;
     wx.login({
       success: function (res) {
-        console.log(res.code)
+        //  得到code ==>
         that.globalData.code = res.code;
         that.getwechatUserInfo();
       }
@@ -117,6 +128,7 @@ App({
     // 查看是否授权
     wx.getSetting({
       success: (res) => {
+
         wx.getUserInfo({
           success: res => {
             // console.log(res)
@@ -124,6 +136,9 @@ App({
             that.setWxInfo(res.rawData);
             that.setEncryptedData(res.encryptedData);
             that.setIv(res.iv);
+
+            let unregistered = 0;
+            that.setRegister(unregistered);
             //wx.setStorageSync("userInfo", res.rawData);
             // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
             // 所以此处加入 callback 以防止这种情况
@@ -131,14 +146,28 @@ App({
               this.userInfoReadyCallback(res)
             }
             that.wechatLogin(); //自动登录或注册
+          },
+          fail(res) {
+            console.log('获取用户信息失败', res);
+            let unregistered = 1;
+            that.setRegister(unregistered)
+            that.unregisteredCallback(unregistered)
+            console.log(that.globalData.unregistered)
           }
         })
+
+
+        
       }
     })
   },
   wechatLogin: function () {
     let that = this;
     let code = that.globalData.code;
+    // 引流来源
+    let traffic_acquisition_source = that.globalData.traffic_acquisition_source;
+    // console.log('进来了')
+    // console.log('引流来源', traffic_acquisition_source)
     let store_id = that.globalData.store_id;
     let wx_info = that.globalData.wx_info;
     let encryptedData = that.globalData.encryptedData;
@@ -150,21 +179,23 @@ App({
     that.sendRequest({
       url: "api.php?s=Login/getWechatEncryptInfo",
       data: {
-        code:code,
+        code: code,
         encryptedData: encryptedData,   //微信信息
         iv: iv,
-        store_id
+        store_id,
+        traffic_acquisition_source
       },
       success: function (res) {
         let code = res.code;
         if (code == 0 || code == 10) {
-
           // that.setOpenid(res.data);
           that.setOpenid(res.data.openid)
           that.globalData.token = res.data.token;
           if (that.employIdCallback) {
             that.employIdCallback(res.data.token)
-          } that.setToken(res.data.token);
+          } 
+          that.setToken(res.data.token);
+          
         }
         // console.log(res)
       }
@@ -220,7 +251,6 @@ App({
             'content-type': 'application/json'
           },
           success: function (res) {
-
             wx.hideLoading()
             //请求失败
             if (res.statusCode && res.statusCode != 200) {
@@ -256,25 +286,6 @@ App({
             typeof param.fail == 'function' && param.fail(res.data);
           },
 
-          // fail: (e) => {
-          //   console.log(e, 999)
-          //   if (e.errMsg === "request:fail "){
-          //     wx.showModal({
-          //       title: '提示',
-          //       content: '请求失败,请检查网络',
-          //       showCancel: false,
-          //       confirmColor: '#0f77ff',
-          //       success: (res) => { }
-          //     });
-          //   } else{
-
-          //   }
-
-          //   typeof param.fail == 'function' && param.fail(res.data);
-
-          // },
-
-
           complete: function (res) {
             param.hideLoading || that.hideToast();
             typeof param.complete == 'function' && param.complete(res.data);
@@ -283,6 +294,7 @@ App({
       }
     })
   },
+
   //微信提示 函数
   showToast: function (param) {
     wx.showToast({
@@ -380,6 +392,11 @@ App({
 
     }
   },
+  unregisteredCallback: function (unregistered) {
+    if (unregistered != '') {
+
+    }
+  },
   // setSessionKey:function(session_key){
   //   this.globalData.session_key = session_key;
   // },
@@ -397,6 +414,9 @@ App({
   },
   setIv: function (iv) {
     this.globalData.iv = iv;
+  },
+  yielding:function(lo){
+    this.globalData.lo = lo;
   },
   setToken: function (token) {
     this.globalData.token = token;

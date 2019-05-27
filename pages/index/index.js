@@ -1,23 +1,23 @@
 const app = getApp()
-
 Page({
   data: {
     prompt: '',
     Base: '',  //库路径
     defaultImg: {},
     index_notice: {},  //公告ist.goods_list
-    goods_platform_list: {},  //标签板块
-    block_list: {},  //楼层板块
+    // goods_platform_list: {},  //标签板块
+    // block_list: {},  //楼层板块
     top10_list: {},  //top10
     coupon_list: {},  //优惠券
     discount_list: {},  //限时折扣
-    current_time: 0,  //当前时间
+    // current_time: 0,  //当前时间
     timer_array: {},  //限时折扣计时
     search_text: '',  //搜索内容
     mei_alls: '',  //某一个品牌的商品
-    webSiteInfo: {},//小程序基本配置
+    swiperCurrent:0,
+    // webSiteInfo: {},//小程序基本配置
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-     //轮播图属性
+    //轮播图属性
     imgUrls: [],
     indicatorDots: true,
     autoplay: true,
@@ -26,25 +26,45 @@ Page({
     circular: true,
     indicatorColor: '#AAA',
     indicatorActiveColor: '#FFF',
-    swiperHeight: 153,
     copyRight: {
       is_load: 1,
       default_logo: '/images/index/logo_copy.png',
       technical_support: '',
     },
-    is_login: 0,
-    maskStatus: 0,
+    // is_login: 0,
+    // maskStatus: 0,
     listClickFlag: 0,
     noticeContentFlag: 0,
     exponent: '',
     model: false,
     is_vip: 0,  //是否是vip
-    isHide: 0,  //客服按钮是否影藏
-    brand:[],//品牌数据
-    isFix:0,  //顶部导航固定否
+    brand: [],//品牌数据
+    isFix: 0,  //顶部导航固定否
     swiperIndex: 0,//这里不写第一次启动展示的时候会有问题
-    title:'',//页面名
-    user_tel:''//手机号码
+    title: '',//页面名
+    tel: '',//手机号码
+    myTime:null,
+    isHide:0,
+    currentTab: 0, //预设当前项的值
+    smock:[
+      {src:'https://static.bonnieclyde.cn/fadeIn.png'},
+      {src:'https://static.bonnieclyde.cn/ce12.jpg'},
+    ],
+    IMGm:[
+      {src:'https://static.bonnieclyde.cn/ce12.jpg'},
+      {src:'https://static.bonnieclyde.cn/ce13.jpg'},
+      {src:'https://static.bonnieclyde.cn/ce14.jpg'},
+      {src:'https://static.bonnieclyde.cn/ce15.jpg'},
+      {src:'https://static.bonnieclyde.cn/ce16.jpg'},
+      {src:'https://static.bonnieclyde.cn/ce17.jpg'},
+      {src:'https://static.bonnieclyde.cn/ce18.jpg'},
+      {src:'https://static.bonnieclyde.cn/ce19.jpg'},
+    ],
+    swperStatu:1,   //判断几张轮播图
+    j:1,
+    page_index:1,
+    floorstatus: false, //回到顶部按钮
+
   },
   //事件处理函数
   bindViewTap: function () {
@@ -58,40 +78,63 @@ Page({
     //   url: '/pages/goods/shareRepertoire/shareRepertoire?share_li=90:1:0.01,89:1:0.01&tag=2&store=0',
     // })
     wx.navigateTo({
-      url: "/pages/member/kolApply/kolApply",
-      // url: "/pages/member/kolSuccess/kolSuccess",
+      url: "/pages/index/discount/discount",
+      // url:  "/pages/member/supportCenter/supportCenter",
+    //  url:    "/pages/goods/goodsclassificationlist/goodsclassificationlist",
     })
 
   },
+    //获取会员所有信息
+    SY_reuse: function () {
+      let that = this;
+      app.sendRequest({
+        url: "api.php?s=member/getMemberDetail",
+        success: function (res) {
+          let data = res.data
+          if (res.code == 0) {
+            let is_vip = data.is_vip;
+            app.globalData.is_vip = data.is_vip;
+            app.globalData.distributor_type = data.distributor_type;
+            app.globalData.uid = data.uid;
+            app.globalData.vip_gift = data.vip_gift;
+            app.globalData.vip_goods = data.vip_goods;
+            app.globalData.vip_overdue_time = data.vip_overdue_time;
+            console.log(data.user_info.user_tel)
+            app.globalData.user_tel = data.user_info.user_tel;
+            //  console.log(app.globalData.is_vip)
+            that.setData({
+              tel:data.user_info.user_tel,
+              is_vip
+            })
+          }
+        }
+      })
+    },
   onLoad: function (options) {
     let that = this;
+    let  activities; //往期话题数据 
+    let   activities_list; //最新话题数据下的商品
+    let  lastOne;//最新话题数据
+    let shop;//新品推荐
   
-      if(options.uid){
-         // 这个字段是转发过后承载uid     identifying
-        app.globalData.identifying = options.uid;
-        app.globalData.breakpoint = options.breakpoint;
-        console.log('ui', options.breakpoint);
-        console.log('u', options.uid);
-      }
-        if (options.scene) {
-          // 扫码进入
-          var scene = decodeURIComponent(options.scene);
-          let store_id = scene.split('&')[0];
-          let kol_id = scene.split('&')[1];
 
-          console.log("********kol_id", kol_id);
-          console.log("********store_id", store_id);
-          if (store_id == 0){
-            app.globalData.kol_id = kol_id;
-            console.log("********kol_idj", kol_id);
-         }else{
-            app.globalData.store_id = store_id;
-            console.log("********store_idj", store_id);
-         }
-        }
+  
 
-
-
+    if (options.uid) {
+      // 这个字段是转发过后承载uid     identifying
+      app.globalData.identifying = options.uid;
+      app.globalData.breakpoint = options.breakpoint;
+      console.log('ui', options.breakpoint);
+      console.log('u', options.uid);
+    }
+    if (options.scene) {
+      // 扫码进入
+      var scene = decodeURIComponent(options.scene);
+      console.log("scene ", scene);
+      let kol_id = scene.split('&')[0];
+      app.globalData.kol_id = kol_id;
+      console.log("********kol_id", kol_id);
+    }
     //  极选师扫码12小时内有分销来源
     // let timestamp = Date.parse(new Date);
     // if (app.globalData.kol_id != 0) {
@@ -106,12 +149,12 @@ Page({
     // }
 
     // IphoneX齐刘海
-
     let isIphoneX = app.globalData.isIphoneX;
     this.setData({
       isIphoneX: isIphoneX
     })
 
+    
     let category_alias = "";
     wx.setNavigationBarTitle({
       title: category_alias,
@@ -123,55 +166,43 @@ Page({
       times++;
       let token = app.globalData.token;
       if (token != '') {
-        app.showBox(that, '登陆成功');
-        that.setData({
-          is_login: 1,
-          maskStatus: 0
-        })
+        // app.showBox(that, '登陆成功');
+        that.SY_reuse();
+        console.log('登陆成功')
+        // that.setData({
+        //   is_login: 1,  //加载。。。。
+        //   maskStatus: 0
+        // })
         clearInterval(load_timer);
       } else if (times == 15) {
-        app.showBox(that, '登录超时...');
-        that.setData({
-          maskStatus: 0,
-          is_login: 1,
-        })
+        console.log('登录超时...')
+        // app.showBox(that, '登录超时...');
+
+        // that.setData({
+        //   maskStatus: 0,
+        //   is_login: 1,
+        // })
         clearInterval(load_timer);
         return;
       }
     }, 1000);
-    that.webSiteInfo();
+    // console.log('2121212')
 
-    //  获取最新话题
-    app.sendRequest({
-      url: "api.php?s=/activity/hotTopic",
-      data: { limit:1},
-      method: 'POST',
-      success: function (res) {
-        console.log(res.data);
-        // 获取最新话题下面商品
-        app.sendRequest({
-          url: "api.php?s=/Activity/activityInfo",
-          data: { master_id: res.data.data.id },
-          success: function (res) {
-
-            var new_actList = [];
-            var actList = res.data.data
-            for (var i = 0; i < actList.length; i++) {
-              if (actList[i].goods_info) {
-                new_actList.push(actList[i]);
-              }
-            }
-            console.log(res)
-            that.setData({
-              activities_list: new_actList,
-            })
-          }
-        });
-        that.setData({
-          lastOne: res.data.data,
-        })
-      }
-    });
+    // console.log(app.globalData.token)
+    // if (app.globalData.token && app.globalData.token != '') {
+    //   //判断是否是付费会员的接口
+    //   console.log('111')
+    //   that.SY_reuse();
+    // } else {
+    //   app.employIdCallback = employId => {
+    //     if (employId != '') {
+    //       console.log('222')
+    //       //判断是否是付费会员的接口
+    //       that.SY_reuse();
+    //     }
+    //   }
+    // }
+    // that.webSiteInfo();
 
     //  获取往期话题
     app.sendRequest({
@@ -180,57 +211,85 @@ Page({
       method: 'POST',
       success: function (res) {
         console.log(res.data.data);
-
-        that.setData({
-          activities: res.data.data
-        })
+       activities=res.data.data; 
+       that.setData({
+        activities,
+      })
+      
       }
     });
+
+//  获取最新话题
+   app.sendRequest({
+  url: "api.php?s=/activity/hotTopic",
+  data: { limit: 1 },
+  method: 'POST',
+  success: function (res) {
+    console.log(res.data);
+    lastOne=res.data.data;
+  
+    // 获取最新话题下面商品
+    app.sendRequest({
+      url: "api.php?s=/Activity/activityInfo",
+      data: { master_id: res.data.data.id },
+      success: function (res) {
+
+        var new_actList = [];
+        var actList = res.data.data
+        for (var i = 0; i < actList.length; i++) {
+          if (actList[i].goods_info) {
+            new_actList.push(actList[i]);
+          }
+        }
+       activities_list= new_actList;
+       that.setData({
+        activities_list,
+      })
+      
+      }
+    });
+    that.setData({
+      lastOne,
+    })
+  }
+});
 
     app.sendRequest({
       url: "index.php?s=/api/index/getindeximglist",
       data: {},
       success: function (res) {
-        var shop = res;
         for (let index in shop) {
           let img = shop[index].imgUrl;
           shop[index].imgUrl = app.IMG(img);
-        } 
+        }
+        shop = res;
+        // console.log(shop )
         that.setData({
-          shop: shop
+          shop,
         })
       }
     });
-
-    // 品牌获取
-    app.sendRequest({
-      url: "api.php?s=/goods/getGoodsBrandListRecommend",
-      data: {},
-      method: 'POST',
-      success: function (res) {
-        let brand = res.data.data;
-        // console.log(res.data)
-        for (let index in brand) {
-          let img = brand[index].brand_ads;
-          brand[index].brand_ads = app.IMG(img);
+       // 品牌获取
+       app.sendRequest({
+        url: "api.php?s=/index/getGoodsBrandListRecommend",
+        data: {},
+        method: 'POST',
+        success: function (res) {
+          let brand = res.data
+          console.log(res.data)
+          that.setData({
+            brand: brand
+          })
         }
-        that.setData({
-          brand: brand
-        })
-      }
-    });
+      });
+    
 
-    if (app.globalData.token && app.globalData.token != '') {
-      //判断是否是付费会员的接口
-      that.SY_reuse();
-    } else {
-      app.employIdCallback = employId => {
-        if (employId != '') {
-          //判断是否是付费会员的接口
-          that.SY_reuse();
-        }
-      }
-    }
+      
+     
+
+ 
+
+  
 
     app.sendRequest({
       url: "api.php?s=goods/getDefaultImages",
@@ -245,34 +304,36 @@ Page({
       }
     });
 
-    that.copyRightIsLoad();
+    // that.copyRightIsLoad();
+    that.data.myTime= setTimeout(function () {
+      that.setData({
+        activities,
+        lastOne,
+        shop,
+        
+      })
+    }, 1500);
+
   },
 
-  //获取会员所有信息
-  SY_reuse:function(){
-    let that = this;
-    app.sendRequest({
-      url: "api.php?s=member/getMemberDetail",
-      success: function (res) {
-        let data = res.data
-        if (res.code == 0) {
-          let is_vip = data.is_vip;
-          app.globalData.is_vip = data.is_vip;
-          app.globalData.distributor_type = data.distributor_type;
-          app.globalData.uid = data.uid;
-          app.globalData.vip_gift = data.vip_gift;
-          app.globalData.vip_goods = data.vip_goods;
-          app.globalData.vip_overdue_time = data.vip_overdue_time;
-          console.log(data.user_info.user_tel)
-          app.globalData.user_tel = data.user_info.user_tel;
-          //  console.log(app.globalData.is_vip)
-          that.setData({
-            is_vip
-          })
+     /**触发*/
+     Cross: function () {
+      let _that = this;
+      console.log('Cross')
+      let Tel=_that.data.tel;
+      if (app.globalData.unregistered == 1 || Tel=='') {
+        wx.navigateTo({
+          url: '/pages/member/resgin/resgin',
+        })
         }
-      }
-    })
-  },
+    },
+
+  onUnload () {
+    //  关闭但页面清除单前页面的定时器
+  clearInterval(this.data.myTime);
+},
+
+
 
   // 跳转top10页面
   toTopic: function () {
@@ -292,12 +353,13 @@ Page({
   toSwiperDetail: function (event) {
     let url = event.currentTarget.dataset.url;
     wx.navigateTo({
-      url: '/'+url,
+      url: '/' + url,
     })
   },
 
   onShow: function () {
     let that = this;
+ 
     //  极选师扫码12小时内有分销来源
     // if (app.globalData.distributor_type != 0) {
 
@@ -314,16 +376,32 @@ Page({
     //     app.globalData.scanCode = scanCode;
     //   } else {
     //     console.log(333333);
-     
+
     //   }
     // }
+    let updata = app.globalData.unregistered;
+    console.log(updata,'updata');
+    that.setData({
+      unregistered:updata 
+    })
+ 
 
-
+    that.TC_reuse();
 
     app.restStatus(that, 'listClickFlag');
     app.restStatus(that, 'noticeContentFlag');
 
-
+  },
+  // 小程序之间的跳转和携带参数；eg
+  skip: function () {
+    wx.navigateToMiniProgram({
+      appId: 'wxd145d8a6e951dd1b',
+      path: 'pages/goods/brandlist/brandlist?id=22',
+      envVersion: 'trial',
+      extraData: {
+        traffic_acquisition_source : '小红书'
+      },
+    })
   },
 
   /**
@@ -332,7 +410,7 @@ Page({
   onShareAppMessage: function () {
     let title = 'BonnieClyde';
     let uid = app.globalData.uid;
-    if (app.globalData.distributor_type == 0){
+    if (app.globalData.distributor_type == 0) {
       return {
         title: 'BonnieClyde',
         path: '/pages/index/index',
@@ -347,7 +425,7 @@ Page({
       wx.showShareMenu({
         title: title
       })
-    } 
+    }
     else {
       return {
         title: 'BonnieClyde',
@@ -365,10 +443,6 @@ Page({
         title: title
       })
     }
-    
-
-
-
 
   },
   /**
@@ -420,82 +494,109 @@ Page({
     let that = this;
     let url = event.currentTarget.dataset.url;
     let title = event.currentTarget.dataset.title;
+    let spc=0;
+    console.log(title )
+    if(title!=undefined){
+      if(title.indexOf("&")!=-1){
+        spc=-1;
+      }
+    }
+  
+    
+    // title.replace("&", "%26")
+    // console.log(title.replace("&", "%26"));
+    
     let hasTarget = event.currentTarget.dataset.has;
     let x = event.currentTarget.dataset.x;
     // let goodsId = event.currentTarget.dataset.goodsid;
-    let types = event.currentTarget.dataset.types==1?'大贸':'跨境';
+    let types = event.currentTarget.dataset.types == 1 ? '大贸' : '跨境';
     let code = event.currentTarget.dataset.code;
     let projectData = {
-      id:event.currentTarget.dataset.id,
+      id: event.currentTarget.dataset.id,
       title: event.currentTarget.dataset.title,
     }
     let listClickFlag = that.data.listClickFlag;
-    // console.log(url);
-    // //特殊点 跳转到二级页
-    // if (!x == 0) {
-    //   wx.navigateTo({
-    //     url: '/pages' + x,
-    //   })
-    // }
+    console.log(x,hasTarget);
 
-    // 跳转活动详情页
-    if (projectData.id) {
-      app.aldstat.sendEvent('首页 '+title+'活动');
+    //特殊点 跳转到黑科技商品
+    if (x==0) {
+      console.log('首页黑科技商品点击', {
+        "商品标题": title,
+        "商品类型": types,
+        "物料编码": code
+      });
+      app.aldstat.sendEvent('首页黑科技商品点击', {
+        "商品标题": title,
+        "商品类型": types,
+        "物料编码": code
+      });
+      wx.navigateTo({
+        url: '/pages' + url,
+      })
+    } else if(x == 1) {
+      console.log('首页新品推荐点击', {
+        "商品标题": title,
+        "商品类型": types,
+        "物料编码": code
+      });
+      app.aldstat.sendEvent('首页新品推荐点击', {
+        "商品标题": title,
+        "商品类型": types,
+        "物料编码": code
+      });
+      wx.navigateTo({
+        url: '/pages' + url,
+      })
+    }else if (projectData.id) {
+      if(spc==-1){
+        console.log('111')
+        projectData=JSON.stringify(projectData);
+
+            // 跳转活动详情页
+      app.aldstat.sendEvent('首页活动点击', {
+        "活动名称":title
+      });
+      wx.navigateTo({
+        url: '/pages/index/projectIndex/projectIndex?data=' + encodeURIComponent(projectData),
+      })
+      }else{
+        console.log('222')
+           // 跳转活动详情页
+      app.aldstat.sendEvent('首页活动点击', {
+        "活动名称":title
+      });
       wx.navigateTo({
         url: '/pages/index/projectIndex/projectIndex?data=' + JSON.stringify(projectData),
       })
-    }
-    else if (hasTarget == 0) {
+      }
+
+  
+
+
+    }else if (hasTarget == 0) {
       //判断这个图片是否跳转
       return false;
     } else if (listClickFlag == 1) {
       //防止多次点击
       return false;
     } else {
-      console.log('首页 ' + title + '(' + types + '-' + code + ')');
-      app.aldstat.sendEvent('首页 '+title+'('+types+'-'+code+')');
-   
+      console.log('wo')
+      console.log('首页BC精选商品点击', {
+        "商品标题": title,
+        "商品类型": types,
+        "物料编码": code
+      });
+      app.aldstat.sendEvent('首页BC精选商品点击', {
+        "商品标题": title,
+        "商品类型": types,
+        "物料编码": code
+      });
+
       wx.navigateTo({
         url: '/pages' + url,
       })
     }
     app.clicked(that, 'listClickFlag');
-    // //判断这个图片是否跳转
-    // if (hasTarget == 0) {
-    //   return false;
-    // }
-    // //防止多次点击
-    // if (listClickFlag == 1) {
-    //   return false;
-    // }
-    // app.clicked(that, 'listClickFlag');
-
-    // wx.navigateTo({
-    //   url: '/pages' + url,
-    // })
-  },
-
-  // 跳转品牌专区
-  toBrand(e) {
-    "use strict";
-    let is_show = e.currentTarget.dataset.show
-    let id = e.currentTarget.dataset.id
-    let title = e.currentTarget.dataset.title
-    console.log(is_show)
-    console.log(id)
-    // let data = {
-    //   id: e.currentTarget.dataset.data.brand_id,
-    //   pic: e.currentTarget.dataset.data.brand_pic,
-    //   title: e.currentTarget.dataset.data.brand_name
-    // }
-    if (is_show == 0) {
-      app.aldstat.sendEvent('首页 ' + title + '品牌');
-      wx.navigateTo({
-        url: '/pages/goods/brandlist/brandlist?id=' + id,   //+'&store_id=1'
-      })
-    } else {
-      return false;
-    }
   },
 
   tabBar: function (event) {
@@ -507,12 +608,12 @@ Page({
   /**
    * 输入框绑定事件
    */
-  searchInput: function (event) {
-    let search_text = event.detail.value;
-    this.setData({
-      search_text: search_text
-    })
-  },
+  // searchInput: function (event) {
+  //   let search_text = event.detail.value;
+  //   this.setData({
+  //     search_text: search_text
+  //   })
+  // },
   /**
    * 领取优惠券
    */
@@ -626,12 +727,79 @@ Page({
    * 首页初始化
    */
   indexInit: function (that) {
+
+    app.sendRequest({
+      url: "index.php?s=/api/index/getindeximglist",
+      data: {},
+      success: function (res) {
+        for (let index in shop) {
+          let img = shop[index].imgUrl;
+          shop[index].imgUrl = app.IMG(img);
+        }
+        shop = res;
+        that.setData({
+          shop,
+        })
+      }
+    });
+       // 品牌获取
+       app.sendRequest({
+        url: "api.php?s=/index/getGoodsBrandListRecommend",
+        data: {},
+        method: 'POST',
+        success: function (res) {
+          let brand = res.data
+          console.log(res.data)
+          that.setData({
+            brand: brand
+          })
+        }
+      });
+    
+    let shop;//新品推荐
+    app.sendRequest({
+      url: "index.php?s=/api/index/getindeximglist",
+      data: {},
+      success: function (res) {
+        for (let index in shop) {
+          let img = shop[index].imgUrl;
+          shop[index].imgUrl = app.IMG(img);
+        }
+        shop = res;
+        that.setData({
+          shop,
+        })
+      }
+    });
+  
+
     let base = app.globalData.siteBaseUrl;
     let timeArray = {};
 
+   
+
+    if (app.globalData.token && app.globalData.token != '') {
+      //判断是否是付费会员的接口
+      that.TC_reuse();
+    } else {
+      app.employIdCallback = employId => {
+        if (employId != '') {
+          //判断是否是付费会员的接口
+          that.TC_reuse();
+        }
+      }
+    }
+  
+    
+  },
+
+  TC_reuse:function(){
+    let that=this;
+    let timeArray = {};
     app.sendRequest({
       url: 'api.php?s=index/getIndexData',
-      data: {},
+      data: {
+      },
       success: function (res) {
         // console.log(res)
         let code = res.code;
@@ -640,15 +808,16 @@ Page({
           let data = res.data;
           //当前时间初始化
           let current_time = data.current_time;
-          that.setData({
-            current_time: current_time
-          })
+          var assist={};
+          // that.setData({
+          //   current_time: current_time
+          // })
 
           //广告轮播初始化
           if (data.adv_list != undefined && data.adv_list.adv_index != undefined && data.adv_list.adv_index.adv_list != undefined) {
             let adv_index = data.adv_list.adv_index;
             let adv_list = adv_index.adv_list;
-
+            console.log(adv_list);
             if (adv_list.length == 1) {
               indicatorDots = false;
             }
@@ -660,9 +829,31 @@ Page({
             } else {
               adv_list = [];
             }
+            console.log(adv_list.length );
+            // 首页轮播图为一张的时候
+            if(adv_list.length==1){
+              console.log(adv_list[0].adv_image);
+              console.log(adv_list[0].adv_url);
+              console.log(adv_list[0].adv_title);
+              that.setData({
+                Derimgs: adv_list[0].adv_image,
+                Der_url:adv_list[0].adv_url,
+                advs_title:adv_list[0].adv_title,
+              })
+              // adv_list[0].adv_image= adv_list;
+            }else{
+              that.setData({
+                swperStatu:2
+              })
+            }
+            assist.adv_image = data.adv_list.adv_index_two.adv_list[0].adv_image
+            assist.url = adv_list[0].adv_url;
+
+            // console.log(adv_list)
             that.setData({
               imgUrls: adv_list,
-              swiperHeight: adv_index.ap_height
+              swiperHeight: adv_index.ap_height,
+              assist,
             })
           } else {
             that.setData({
@@ -685,10 +876,11 @@ Page({
           }
           //商品楼层图片处理
           // console.log(data);
-          let four_list = data.four_list;
-          let block_list = data.block_list;
-          let top_list = data.top_goods_list;
-          let index_goods_list = data.index_goods_list; 
+          // let four_list = data.four_list;
+          // let block_list = data.block_list;
+          // let top_list = data.top_goods_list;
+
+          // let index_goods_list = data.index_goods_list;
           let new_pro = data.new_pro;
           let small_sample_list = data.small_sample_list;
           let exponent = "";
@@ -699,62 +891,124 @@ Page({
             small_sample_list[index].exponent = exponent;
           }
 
-          for (let index in top_list) {
-            let img = top_list[index].pic_cover_big;
-            exponent = (parseInt(top_list[index].material_black) + parseInt(top_list[index].material_black) + parseInt(top_list[index].effect_black)) / 3
-            top_list[index].pic_cover_small = that.IMG(img);
-            top_list[index].exponent = exponent;
-            that.setData({
-              exponent: exponent
-            })
-          }
+          // for (let index in top_list) {
+          //   let img = top_list[index].pic_cover_big;
+          //   exponent = (parseInt(top_list[index].material_black) + parseInt(top_list[index].material_black) + parseInt(top_list[index].effect_black)) / 3
+          //   top_list[index].pic_cover_small = that.IMG(img);
+          //   top_list[index].exponent = exponent;
+          //   that.setData({
+          //     exponent: exponent
+          //   })
+          // }
 
-          for (let index in index_goods_list) {
-            let img = index_goods_list[index].pic_cover_big;
-            exponent = (parseInt(index_goods_list[index].material_black) + parseInt(index_goods_list[index].material_black) + parseInt(index_goods_list[index].effect_black)) / 3
-            index_goods_list[index].pic_cover_small = that.IMG(img);
-            index_goods_list[index].exponent = exponent
-            that.setData({
-              exponent: exponent
-            })
-          }
-
-
-          for (let index in block_list) {
-            for (let key in block_list[index].goods_list) {
-              let img = block_list[index].goods_list[key].pic_cover_small;
-              block_list[index].goods_list[key].pic_cover_small = that.IMG(img);
-            }
-          }
-          let sqk_alls = data.block_list[0];
+          // for (let index in index_goods_list) {
+          //   let img = index_goods_list[index].pic_cover_big;
+          //   exponent = (parseInt(index_goods_list[index].material_black) + parseInt(index_goods_list[index].material_black) + parseInt(index_goods_list[index].effect_black)) / 3
+          //   index_goods_list[index].pic_cover_small = that.IMG(img);
+          //   index_goods_list[index].exponent = exponent
+          //   // that.setData({
+          //   //   exponent: exponent
+          //   // })
+          // }
 
 
+          // for (let index in block_list) {
+          //   for (let key in block_list[index].goods_list) {
+          //     let img = block_list[index].goods_list[key].pic_cover_small;
+          //     block_list[index].goods_list[key].pic_cover_small = that.IMG(img);
+          //   }
+          // }
+          // let sqk_alls = data.block_list[0];
+          console.log(data.goods_category_first);
+          
           //(某一个品牌的商品)
           // let mei_alls = data.block_list[2].goods_list;
 
-
+             console.log(data.adv_list.adv_index_two.adv_list);   
           that.setData({
-            Base: base,
+            // Base: base,
+            adv_category:data.adv_list.adv_category,// 首页手机分类广告位
+            adv_index_two:data.adv_list.adv_index_two.adv_list, //首页轮播副图
+            goods_category_first:data.goods_category_first,//首页分类列表
             indicatorDots: indicatorDots,
             index_notice: data.notice.data,
-            goods_platform_list: data.goods_platform_list,
-            sqk_alls: '',
-            block_list: block_list,
+            // goods_platform_list: data.goods_platform_list,
+            // sqk_alls: '',
+            // block_list: block_list,
             // mei_alls: mei_alls,
-            top_list: top_list,  //Top10
-            index_goods_list: index_goods_list,   //商品列表
+            // top_list: top_list,  //Top10
+            // index_goods_list: index_goods_list,   //商品列表
             new_pro: new_pro,   //新品推荐
-            topShopsIcon:data.icon,
-            coupon_list: data.coupon_list,
-            discount_list: discount_list,
-            small_sample_list: small_sample_list,
-            four_list: four_list,
+            // topShopsIcon: data.icon,
+            // coupon_list: data.coupon_list,
+            // discount_list: discount_list,
+            // small_sample_list: small_sample_list,
+            // four_list: four_list,
           });
         }
         // console.log(res);
       }
     })
+
+ 
+
+    let page_index=that.data.page_index;
+
+    app.sendRequest({
+      url: "api.php?s=index/getIndexPro",
+      data: {
+        page_index,
+      },
+      success: function (res) {
+        console.log(res)
+        let code = res.code;
+        let index_goods_list = res.data;
+        
+        page_index++;
+        if (code == 0) {
+          that.setData({
+             index_goods_list: index_goods_list,   //商品列表
+             page_index
+          })
+        }
+        // console.log(res);
+      }
+    })
+ 
+
+
+
   },
+
+  All_shop:function(page_index){
+    let that=this;
+    // let index_goods_list=that.data.index_goods_list;
+    app.sendRequest({
+      url: "api.php?s=index/getIndexPro",
+      data: {
+        page_index,
+      },
+      success: function (res) {
+        console.log(res)
+        let code = res.code;
+        let index_goods_list = res.data;
+        // if (new_index_goods_list[0] != undefined) { }
+          page_index++;
+        // index_goods_list=index_goods_list.concat(new_index_goods_list)
+        if (code == 0) {
+          that.setData({
+             index_goods_list: index_goods_list,   //商品列表
+             page_index
+          })
+        }
+        // console.log(res);
+      }
+    })
+  },
+
+ 
+
+
 
   /**
    * 底部加载
@@ -770,7 +1024,7 @@ Page({
         let data = res.data;
         if (code == 0) {
           let copyRight = data;
-          copyRight.technical_support = 'shopal技术支持';
+          copyRight.technical_support = 'ushopal技术支持';
           copyRight.default_logo = '/images/index/logo_copy.png';
 
           if (copyRight.is_load == 0) {
@@ -807,6 +1061,15 @@ Page({
     })
   },
 
+    /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+     let that=this;
+     console.log(that.data.unregistered,'结束打印')
+     console.log(that.data.tel,'电话结束打印')
+  },
+
   /**
    * 图片路径处理
    */
@@ -823,34 +1086,160 @@ Page({
   /**
    * 基础配置
    */
-  webSiteInfo: function () {
+  // webSiteInfo: function () {
+  //   let that = this;
+  //   app.sendRequest({
+  //     url: "api.php?s=login/getWebSiteInfo",
+  //     data: {},
+  //     success: function (res) {
+  //       // console.log(res)
+  //       let code = res.code;
+  //       let data = res.data;
+  //       if (code == 0) {
+  //         that.setData({
+  //           webSiteInfo: data
+  //         })
+  //         if (data.title != '' && data.title != undefined) {
+  //           wx.setNavigationBarTitle({
+  //             title: data.title,
+  //           })
+  //         }
+  //       }
+  //       // console.log(res);
+  //     }
+  //   })
+  // },
+  
+  // 获取滚动条当前位置
+  onPageScroll: function (e) {
+    // console.log(e.scrollTop)
+    if (e.scrollTop > 1900) {
+      this.setData({
+        floorstatus: true
+      });
+    } else{ 
+      this.setData({
+        floorstatus: false
+      });
+    }
+  },
+/* 
+    回到顶部
+ */
+  goTop:function(){
+    let  that=this;
+    let  floorstatus=that.data.floorstatus;
+    if(floorstatus){
+      wx.pageScrollTo({
+        scrollTop: 0
+      })
+
+    }
+
+  },
+
+  /* 
+   首页轮播图跳转以及阿拉丁统计
+  */
+  toGood: function(e) {
+    var that = this;
+    var id = e.currentTarget.dataset.id;
+    var fob= e.currentTarget.dataset.x;
+    var title= e.currentTarget.dataset.title;
+    var url = e.currentTarget.dataset.url;
+    let assist=that.data.assist;
+
+    if(fob=='x'){
+      if (url) {
+        console.log('首页轮播图商品点击', {
+          "商品标题": title,
+     
+        });
+        app.aldstat.sendEvent('首页轮播图商品点击', {
+          "商品标题": title,
+        });
+        wx.navigateTo({
+          url: '/' + url,
+        })
+      } else {
+        wx.navigateTo({
+          url: '/pages/goods/goodsdetail/goodsdetail?goods_id=' + id,
+        })
+      }
+    }else if(fob=='y'){
+      
+      if(that.data.swperStatu==1){
+        let Der_url=that.data.Der_url;
+        wx.navigateTo({
+          url: '/' + Der_url,
+        })
+      }else{
+        console.log(assist.url)
+        wx.navigateTo({
+          url: '/' + assist.url,
+        })
+      }
+     
+      
+    }
+  
+  },
+
+   /**
+   * 收藏
+   */
+  collect: function(e){
     let that = this;
+    let id = e.currentTarget.dataset.id;
+    let page_index=that.data.page_index;
+    console.log('老师傅');
+    console.log(id)
+    let index_goods_list= that.data.index_goods_list;
+     console.log(index_goods_list)
+     let goods_name;
+     let is_fav ;
+     
+    for(let i in index_goods_list){
+      if(index_goods_list[i].goods_id==id ){
+       is_fav = index_goods_list[i].is_member_fav_goods;
+        goods_name=index_goods_list[i].goods_name;
+      }
+    }
+    let method = is_fav == 0 ? 'FavoritesGoodsorshop' : 'cancelFavorites';
+    let message = is_fav == 0 ? '收藏' : '取消收藏';
+    is_fav = is_fav == 0 ? 1 : 0;
+
     app.sendRequest({
-      url: "api.php?s=login/getWebSiteInfo",
-      data: {},
+      url: 'api.php?s=member/' + method,
+      data: {
+        fav_id: id ,
+        fav_type: 'goods',
+        log_msg: goods_name
+      },
       success: function (res) {
-        // console.log(res)
         let code = res.code;
         let data = res.data;
         if (code == 0) {
-          that.setData({
-            webSiteInfo: data
-          })
-          if (data.title != '' && data.title != undefined) {
-            wx.setNavigationBarTitle({
-              title: data.title,
+          if(data > 0){
+            app.showBox(that, message + '成功');
+            that.All_shop(page_index)
+            // that.indexInit(that)
+            that.setData({
+              index_goods_list
             })
+          }else{
+            app.showBox(that, message + '失败');
           }
         }
-        // console.log(res);
       }
-    })
+    });
   },
+
   songGift: function (event) {
     let that = this
     // let out_trade_no = that.data.out_trade_no
     wx.request({
-      url: app.globalData.siteBaseUrl+'api.php?s=order/getTrialGoodsTemplate',
+      url: app.globalData.siteBaseUrl + 'api.php?s=order/getTrialGoodsTemplate',
       data: {
         openid: app.globalData.openid,
         formid: event.detail.formId,
@@ -865,57 +1254,148 @@ Page({
     })
   },
 
-  // 页面滚动事件//滑动开始事件
-  handletouchtart: function (event) {
-    var touchMove = this.data.touchMove;
-    touchMove = event.touches[0].pageY;
-    // console.log(event.touches[0])
-    this.setData({
-      isHide: 1,
-      touchMove
-    })
-  },
-  // 滑动移动事件
-  handletouchmove: function (event) {
-    var touchMove = this.data.touchMove;
-    console.log(touchMove,event.touches[0].clientY)
-    if (touchMove - event.touches[0].clientY<0){
-      // console.log("向下滑了");
-      this.setData({
-        isFix: 0,
-      })
-    } else {
-      this.setData({
-        isFix: 1,
-      })
-    }
-    touchMove = event.touches[0].clientY;
-    this.setData({
-      isHide: 1,
-      touchMove
-    })
-  },
-  //滑动结束事件
-  handletouchend: function (event) {
-    this.setData({
-      isHide: 0
-    })
-  },
-
-  bindchange(e) {
-    this.setData({
-      swiperIndex: e.detail.current
-    })
-  },
 
 
   swiperChange: function (e) {
-    // console.log(e.detail.current)
-    this.setData({
+      var that = this;
+      let assist={};
+     let  imgUrls=that.data.imgUrls;
+      let E=e.detail.current;
+      // console.log(E)
+      let data=  that.data.adv_index_two;
+      for (let index in data) {
+        assist.adv_image=data[index].adv_image;
+        assist.url=imgUrls[E].adv_url;
+              if( E==index){
+                 that.setData({
+                  assist,
+                  swperStatu:2,
+              })
+            }
+      }
+ 
+      that.setData({
       swiperCurrent: e.detail.current
-    })}
+    })
+  },
+    // 页面滚动事件//滑动开始事件
+    handletouchtart: function (event) {
+      var touchMove = this.data.touchMove;
+      touchMove = event.touches[0].pageY;
+      // console.log(event.touches[0])
+      this.setData({
+        isHide: 1,
+        touchMove
+      })
+    },
+    // 滑动移动事件
+    handletouchmove: function (event) {
+      var touchMove = this.data.touchMove;
+      console.log(touchMove,event.touches[0].clientY)
+      if (touchMove - event.touches[0].clientY<0){
+        // console.log("向下滑了");
+        this.setData({
+          isFix: 0,
+        })
+      } else {
+        this.setData({
+          isFix: 1,
+        })
+      }
+      touchMove = event.touches[0].clientY;
+      this.setData({
+        isHide: 1,
+        touchMove
+      })
+    },
+    //滑动结束事件
+    handletouchend: function (event) {
+      this.setData({
+        isHide: 0
+      })
+    },
+     // 跳转品牌专区
+  toBrand(e) {
+    "use strict";
+    let is_show = e.currentTarget.dataset.show
+    let id = e.currentTarget.dataset.id
+    let title = e.currentTarget.dataset.title
+    console.log(is_show)
+    console.log(id)
+   
+   
+    if (is_show == 0) {
+      app.aldstat.sendEvent('品牌点击事件',{
+        "品牌名称":title
+      });
+      wx.navigateTo({
+        url: '/pages/goods/brandlist/brandlist?id=' + id,   //+'&store_id=1'
+      })
+    } else {
+      return false;
+    }
+  },
+  toList(e){
+    let that=this;
+    let id = e.currentTarget.dataset.id;
+    console.log(id)
 
+    wx.navigateTo({
+      url: '/pages/index/Categorylist/Categorylist?id=' + id ,
+    })
 
+    
+  },
+ 
+  onPullDownRefresh:function(){
+    var that=this;
+    this.indexInit(that);
+    that.TC_reuse();
+    wx.stopPullDownRefresh()
+    // if(this.data.currentTab>1){
+     
+    // }
+    
+  
+  
+  
+  },
 
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+    let that=this;
+   let page_index=that.data.page_index;
+   that.All_shop(page_index)
+    wx.showNavigationBarLoading();
+    // that.Ashop();
+    wx.stopPullDownRefresh;
+  },
+     //渐入，渐出实现 
+  show : function(that,param,opacity){
+    var animation = wx.createAnimation({
+      //持续时间800ms
+      duration: 800,
+      timingFunction: 'ease',
+    });
+    //var animation = this.animation
+    animation.opacity(opacity).step(
+    
+    )
+    //将param转换为key
+    var json = '{"' + param + '":""}'
+    // console.log(json);
+    json = JSON.parse(json);
+    // console.log(json);
+    json[param] = animation.export()
+    //设置动画
+    that.setData(json)
+  },
+  Fadein:function(){
+    this.show(this, 'slide_up1', 0)
+  },
+
+  
 
 })

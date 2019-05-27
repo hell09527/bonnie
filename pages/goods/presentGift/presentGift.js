@@ -68,7 +68,7 @@ Page({
   },
   BackMember: function () {
     let that = this
-    // let x = that.data.order_id
+    let x = that.data.order_id
     // console.log(x)
     // wx.navigateTo({
     //   url: "/pages/backPage/fetchGift/fetchGift?order_id=" + x,

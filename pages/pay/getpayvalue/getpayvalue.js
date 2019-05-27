@@ -13,12 +13,17 @@ Page({
         payOrderFlag: 0,
         present:0,  //判断支付来源  0：正常商品 1：礼物商品 
     },
+    
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
         let that = this;
         let ty = options.Ty
+      let isIphoneX = app.globalData.isIphoneX;
+      that.setData({
+        isIphoneX
+      })
         console.log(ty)
         if (ty==8){
           that.setData({
@@ -93,7 +98,11 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-      console.log(app.globalData.openid, '97')
+      let that=this;
+      let isIphoneX = app.globalData.isIphoneX;
+      that.setData({
+        isIphoneX
+      })
     },
 
     /**
@@ -156,13 +165,15 @@ Page({
                 }
                 let out_trade_no = that.data.out_trade_no;
                 console.log(res, "iuhygtfrewdewc",that.data.ty)
+
                 wx.requestPayment({
                     timeStamp: data.timestamp.toString(),
                     nonceStr: data.nonce_str,
                     'package': 'prepay_id=' + data.prepay_id,
                     signType: 'MD5',
                     paySign: data.PaySign,
-                    success: function () {
+                    success: function (res) {
+                   console.log(res,'UId');
                        //  优惠卷
                       app.sendRequest({
                         url: 'api.php?s=Order/giveFullOfGifts',
@@ -203,6 +214,7 @@ Page({
                                 }else{
                                   // console.log(333)
                                   app.aldstat.sendEvent('普通商品支付成功');
+                                  
                                   wx.navigateTo({
                                     url: '/pages/pay/paycallback/paycallback?status=1&out_trade_no=' + out_trade_no,
                                   })
@@ -234,4 +246,5 @@ Page({
             }
         })
     }
+    
 })

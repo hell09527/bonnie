@@ -8,6 +8,7 @@ Page({
     unregistered: 1,
     tel: '',
     Choice: false,
+    layout: false,
   },
   onLoad: function (option) {
     let that=this
@@ -27,6 +28,15 @@ Page({
   onShow:function(){
     let that=this;
     let order_id = this.data.order_id;
+
+    //是否授权数据更新
+    let updata = that.data.unregistered
+    updata = app.globalData.unregistered;
+    console.log(updata)
+
+    that.setData({
+      unregistered: updata,
+    })
 
     let order_status =11;
     that.setData({
@@ -92,11 +102,7 @@ Page({
           }
         }
       })
-
-
-
     } else {
-
       app.employIdCallback = employId => {
         if (employId != '') {
           //判断是否是付费会员的接口
@@ -124,9 +130,6 @@ Page({
             }
           })
         }
-
-
-
       }
     }
   
@@ -143,6 +146,7 @@ Page({
     this.setData({
       showModal: false,
       Choice: false,
+      layout: false,
     })},
   /**登录分支点*/
   Branch: function (e) {
@@ -150,6 +154,7 @@ Page({
     let branch = e.currentTarget.dataset.status;
     if (branch == "mobile") {
       _that.setData({
+        layout: false,
         Choice: false
       })
       wx.navigateTo({
@@ -160,14 +165,17 @@ Page({
         Choice: false
       })
     }
-
   },
   /**触发*/
   Crossroad: function () {
     let _that = this;
-    _that.setData({
-      Choice: true
-    })
+    let suffix=_that.data.order_id;
+    let Tel=_that.data.tel;
+    if (app.globalData.unregistered == 1 || Tel=='') {
+      wx.navigateTo({
+        url: '/pages/member/resgin/resgin?suffix='+suffix,
+      })
+    }
   },
   //获取微信手机号
   getPhoneNumber: function (e) {
@@ -236,69 +244,126 @@ Page({
       console.log(res.detail.userInfo.nickName)
       let heder_img = res.detail.userInfo.avatarUrl
       let wx_name = res.detail.userInfo.nickName
-
-
+      let branch = res.currentTarget.dataset.status;
       this.setData({
         showModal: false,
+        Choice: false
       })
+      console.log(branch, 'branch ')
+      if (branch == "mobile") {
+        this.setData({
+          layout: true,
 
-      wx.login({
-        success: function (res) {
-          let coco = res.code;
-          app.sendRequest({
-            url: 'api.php?s=Login/getWechatEncryptInfo',
-            data: {
-              code: coco,
-              encryptedData: encryptedData,
-              iv: iv
-            },
-            success: function (res) {
-              if (res.code == 0) {
-                let lpl = res.data.token;
-                app.globalData.openid = res.data.openid;
-                app.globalData.token = res.data.token;
-                that.setData({
-                  unregistered: 0,
-                })
-                wx.login({
-                  success: function (res) {
-                    let coco = res.code;
-                    app.sendRequest({
-                      url: 'api.php?s=Login/getWechatMobile',
-                      data: {
-                        code: coco,
-                        mobileEncryptedData: that.data.setEncryptedData,
-                        mobileIv: that.data.setIv,
-                        token: lpl
-                      },
-                      success: function (res) {
-                        if (res.code == 0) {
-                          that.setData({
-                            tel: res.data.user_tel
-                          })
+        })
 
+        wx.login({
+          success: function (res) {
+            let coco = res.code;
+            app.sendRequest({
+              url: 'api.php?s=Login/getWechatEncryptInfo',
+              data: {
+                code: coco,
+                encryptedData: encryptedData,
+                iv: iv
+              },
+              success: function (res) {
+                if (res.code == 0) {
+                  let lpl = res.data.token;
+                  app.globalData.openid = res.data.openid;
+                  app.globalData.token = res.data.token;
+                  that.setData({
+                    unregistered: 0,
+                    wx_name: wx_name,
+                    heder_img
+                  })
 
-                        }
+                
 
-                      }
-                    });
-                  }
-                })
-
-
+                }
 
               }
+            });
+          }
+        })
 
-            }
-          });
-        }
-      })
+
+
+
+
+      } else {
+        wx.login({
+          success: function (res) {
+            let coco = res.code;
+            app.sendRequest({
+              url: 'api.php?s=Login/getWechatEncryptInfo',
+              data: {
+                code: coco,
+                encryptedData: encryptedData,
+                iv: iv
+              },
+              success: function (res) {
+                if (res.code == 0) {
+                  let lpl = res.data.token;
+                  app.globalData.openid = res.data.openid;
+                  app.globalData.token = res.data.token;
+                  that.setData({
+                    unregistered: 0,
+                    wx_name: wx_name,
+                    heder_img
+                  })
+                  wx.login({
+                    success: function (res) {
+                      let coco = res.code;
+                      app.sendRequest({
+                        url: 'api.php?s=Login/getWechatMobile',
+                        data: {
+                          code: coco,
+                          mobileEncryptedData: that.data.setEncryptedData,
+                          mobileIv: that.data.setIv,
+                          token: lpl
+                        },
+                        success: function (res) {
+
+                         
+                          if (res.code == 0) {
+                            that.setData({
+                              unregistered: 0,
+                              wx_name: wx_name,
+                              tel: res.data.user_tel,
+                              heder_img
+                            })
+
+                          }
+                        }
+                      });
+                    }
+                  })
+
+
+
+                }
+
+              }
+            });
+          }
+        })
+      }
+
+
+
+
+
 
     } else {
       this.setData({
         showModal: false,
+
       })
     }
+
+
+
+
 
   },
 })

@@ -20,11 +20,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let that = this;
+   
     var scene = decodeURIComponent(options.scene)
     if (options.uid) {
       app.globalData.identifying = options.uid;
     }
-  
+   
 
 
     if (options.id){
@@ -43,11 +45,13 @@ Page({
         title: title
       };
     } else {
-      var data = JSON.parse(options.data);
+      var data = JSON.parse(decodeURIComponent(options.data));
+      console.log(data )
       var id = data.id;
+      console.log(id )
       var title = data.title;
     }
-    var that = this;
+   
     let is_vip = app.globalData.is_vip
     // 专题页标题
     wx.setNavigationBarTitle({
@@ -84,6 +88,7 @@ Page({
       success: function (res) {
         var new_actList=[];
         var actList= res.data.data
+
         for (var i = 0; i < actList.length;i++){
           if (actList[i].goods_info){
             new_actList.push(actList[i]);
@@ -95,11 +100,17 @@ Page({
         let expiration = timestamp + 3000000;
         wx.setStorageSync('act_List', actList);
         wx.setStorageSync('expiration', expiration);
-        wx.setStorageSync('ids', id)
+        wx.setStorageSync('ids', id);
+        console.log(res.data.title);
+            // 专题页标题
+         wx.setNavigationBarTitle({
+            title: res.data.title,
+        })
         that.setData({
           actList:actList,
           new_actList: new_actList,
-          imgUrl: res.data.detail_pic
+          imgUrl: res.data.icon_link,
+          title:res.data.title
         })
       }
     });
@@ -241,6 +252,7 @@ Page({
     let is_vip = this.data.is_vip;
     let title = e.currentTarget.dataset.title;
     let id = e.currentTarget.dataset.id;
+    let src = e.currentTarget.dataset.src;
     let info = e.currentTarget.dataset.info;
     console.log(info,url)
 
@@ -276,6 +288,7 @@ Page({
       })
     } else if (url == "") {
       // console.log(8888)
+      // preivewImg
       return;
     }else {
       wx.navigateTo({
@@ -284,11 +297,24 @@ Page({
     }
 
   },
+    /**
+   * 图片预览
+   */
+  // preivewImg: function (e) {
+  //   let imgUrls = e.currentTarget.dataset.img;
+  //   let urls = [];
+
+  //   urls.push(imgUrls);
+  //   wx.previewImage({
+  //     current: urls[0],
+  //     urls: urls,
+  //   })
+  // },
 
   // 跳转话题列表页
   toTopicList: function () {
-    wx.navigateTo({
-      url: '/pages/index/topicList/topicList',
+    wx.switchTab({
+      url: '/pages/index/brand/brand',
     })
   },
 

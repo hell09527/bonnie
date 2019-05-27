@@ -1,4 +1,5 @@
-<scroll-view>
+<import src="/templates/dataLogin-template/dataLogin.wxml" />
+<scroll-view bindtouchstart="handletouchtart" bindtouchend="handletouchend" bindtouchmove="handletouchmove" scroll-y="{{true}}">
   <view class="motify {{prompt==''?'hide':''}}">
     <icon class="i show_type warning" type='warn' size='25' color='#FFF'></icon>
     <view class="motify-inner">{{prompt}}</view>
@@ -15,13 +16,15 @@
 
           </button>
         </view>
-
                 <view class="member_face"  wx:if='{{unregistered==0 && tel!=""}}'>
-    <image id='user_head_img' src='{{heder_img?heder_img:member_info.user_info.user_headimg}}' mode='widthFix'             catchtap='listClick' data-url="member/personaldata/personaldata" binderror='errorHeadImg'>
+    <image id='user_head_img' src='{{heder_img?heder_img:member_info.user_info.user_headimg}}' lazy-load="true" mode='widthFix'             catchtap='listClick' data-url="member/personaldata/personaldata" binderror='errorHeadImg'>
           </image>
         </view>
       </view>
     </view>
+  
+       
+      <!-- </view> -->
 
     <!-- <view class='info-content-top'>
       <text catchtap='listClick' data-url="member/balancewater/balancewater">余额</text>
@@ -35,11 +38,11 @@
       </view> 
       <view class="member-name" wx:if='{{unregistered==1 || tel==""}}'>
         <button class="level" catchtap='Crossroad'>点击头像登录</button>
-         <image src="https://static.bonnieclyde.cn/48-48.png" style="width:48rpx;height:48rpx;display:block;" wx:if="{{is_vip==1}}"></image> 
+         <image  lazy-load="true" src="https://static.bonnieclyde.cn/48-48.png" style="width:48rpx;height:48rpx;display:block;" wx:if="{{is_vip==1}}"></image> 
       </view>
           <view class="member-ns" wx:if='{{unregistered==0 && tel!=""}}'>
         <view class="level">{{wx_name?wx_name:member_info.member_name}}</view>
-         <image src="https://static.bonnieclyde.cn/48-48.png" style="width:48rpx;height:48rpx;display:block;" wx:if="{{is_vip==1}}"></image> 
+         <image lazy-load="true" src="https://static.bonnieclyde.cn/48-48.png" style="width:48rpx;height:48rpx;display:block;" wx:if="{{is_vip==1}}"></image> 
       </view>
        <view  data-url="member/integralwater/integralwater">
        <!-- catchtap='listClick' -->
@@ -69,9 +72,6 @@
       成为会员
     </view>
   </view>             -->
- 
-<!-- <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"> 你好</button>  -->
-
   <view class='control'>
     <view class='control_l_content selected'>
       普通订单
@@ -80,7 +80,7 @@
       查看全部订单
     </view>
   </view>
-   <!-- <button open-type="getUserInfo" bindgetuserinfo="bindgetuserinfo">点击刷新个人信息</button>  -->
+   <!-- <button open-type="getUserInfo" bindgetuserinfo="userinfo">点击刷新个人信息</button>  -->
   <view class='member-nav'>
     <view class="member-nav_item" catchtap='listClick' data-url='order/myorderlist/myorderlist?status=1'>
       <image src='/images/member/pay.png'/>
@@ -177,7 +177,7 @@
 
       <view class='li'>
         <view class="a member_list_item" catchtap='listClick' data-url="member/mycollection/mycollection">
-          <image src='/images/member/icon_myCollection.png'/>
+          <image lazy-load="true" src='/images/member/icon_myCollection.png'/>
           <view class='span'>我的收藏</view>
         </view>
       </view>
@@ -185,7 +185,7 @@
       <block wx:if='{{is_verification == 1}}'>
         <view class='li'>
           <view class="a member_list_item" catchtap='listClick' data-url="verification/verificationplatform/verificationplatform">
-            <image src='/images/member/icon_virtualGoods.png'/>
+            <image  lazy-load="true" src='/images/member/icon_virtualGoods.png'/>
             <view class='span'>核销台</view>
           </view>
         </view>
@@ -193,26 +193,34 @@
 
       <view class='li'>
         <view class="a member_list_item" catchtap='listClick' data-url="member/newmypath/newmypath">
-          <image src='/images/member/icon_newMyPath.png'/>
+          <image lazy-load="true" src='/images/member/icon_newMyPath.png'/>
           <view class='span'>我的足迹</view>
         </view>
       </view>
            <view class='li'>
         <view class="a member_list_item" catchtap='listClick' data-url="member/givingRecords/givingRecords">
-          <image src='http://video.ushopal.com/WechatIMG73.png'/>
+          <image lazy-load="true" src='https://static.bonnieclyde.cn/WechatIMG73.png'/>
           <view wx:if="{{unregistered==0 && tel!=''}}">
           <view class="list {{giftGiveOrder>0?'':'hide'}}"></view>
           </view>
           <view class='span'>我的礼物</view>
         </view> 
-         </view>  
-               <view class='li' wx:if='{{(distributor_type==2||distributor_type==3||distributor_type==4) && tel!=""}}'>
+         </view> 
+
+           <view class='li' >
+          <view class="a member_list_item" catchtap='listClick'     data-url="member/posterList/posterList">
+            <image lazy-load="true" src='https://static.bonnieclyde.cn/icon21.png' />
+            <view class='span'>海报制作</view>
+          </view>
+        </view>
+
+               <!-- <view class='li' wx:if='{{(distributor_type==2||distributor_type==3||distributor_type==4) && tel!=""}}'>
         <view class="a member_list_item" catchtap='listClick' data-url="member/kol/kol">
           <image src='https://static.bonnieclyde.cn/WIMG23.png'/>
           <view class='span'>极选师</view>
         </view> 
-     </view>
- 
+     </view> -->
+
        <!-- <view class='li'>
         <view class="a member_list_item" catchtap='listClick' data-url="member/givingRecords/givingRecords">
           <image src='http://video.ushopal.com/WechatIMG73.png'/>
@@ -220,26 +228,54 @@
         </view> 
          </view>  -->
     </view>
-
-    
-<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
-    <!-- 登录弹出框 -->
-    <view class="modal-dialog" wx:if="{{showModal}}">
-  <view class="gift_title">手机号授权绑定成功
-  </view>
-  <view class="modal-footer">
-   <button  class="btn-confirm"  data-status="confirm" open-type="getUserInfo" bindgetuserinfo="bindgetuserinfo">确   定</button>
-  </view> 
+<template is="dataLogin" data="{{showModal,Choice,layout}}" />
 </view>
-  </view>
-   <!-- 选择登录方式  -->
-   <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{Choice}}"></view>
-  <view class="modal-dialog" wx:if="{{Choice}}">
-     <view class="gift_title">您未登录!
+
+<!-- 极选师功能目录 -->
+  <view class='member_list {{ distributor_type ==0 ?"Permissions": ""}}' wx:if='{{tel!="" && distributor_type!=0 &&distributor_type!=1}}'>
+    <view class='ul'>
+      <block wx:if='{{(distributor_type!=0 &&distributor_type!=1)}}'>
+        <view class='li'>
+      <view class="a member_list_item" catchtap='listClick' data-url="member/kol/kol">
+          <image lazy-load="true"  src='https://static.bonnieclyde.cn/WechatIMG463-min.png' />
+          <view class='span'>极选师</view>
+        </view>
+        </view>
+      </block>
+      <block>
+        <view class='li' wx:if='{{distributor_type==1}}'>
+        <view class="a member_list_item" catchtap='listClick' data-url="index/coupon/coupon">
+          <image lazy-load="true" src='https://static.bonnieclyde.cn/WechatIMG1.png'/>
+          <view class='span'>优惠券分享</view>
+        </view> 
+        </view> 
+      </block>
+      <block >
+
+      
+
+             <view class='li' wx:if='{{distributor_type!=0}}'>
+          <view class="a member_list_item" catchtap='listClick'     data-url="member/supportCenter/supportCenter?stu=1">
+            <image lazy-load="true" src='https://static.bonnieclyde.cn/WechatIMG462-min.png' />
+            <view class='span'>帮助中心</view>
           </view>
-     <button  class="btn-common"  open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" >微信登录</button>
-    <button  class="btn-common"  data-status="mobile"  catchtap='Branch'>手机号登录</button>
-   <button  class="btn-common"  data-status="no" catchtap='Branch'>暂不登录</button>
-   </view>
-   <!-- 选择登录方式   end-->
+        </view>
+             <view class='li' wx:if='{{distributor_type!=0}}'>
+          <view class="a member_list_item" catchtap='listClick'     data-url="member/supportCenter/supportCenter?stu=2">
+            <image lazy-load="true" src='https://static.bonnieclyde.cn/WechatIMG46-min.png' />
+            <view class='span'>规则说明</view>
+          </view>
+        </view>
+      </block>
+
+    </view>
+  </view>
+  
+   <!-- <view wx:if="{{distributor_type ==0}}" catchtap='explain'  >
+              <image lazy-load="true"  style='width:100%;'  mode='widthFix'  src='https://static.bonnieclyde.cn/banners.png'  />
+   </view> -->
+      <!-- 定位客服 -->
+ <button class="a new-btn buy-cart" open-type="contact" session-from="weapp" class="{{isHide==0?'yuan':'hide-kf'}}">
+     <view><image src="https://static.bonnieclyde.cn/icon111.jpg"  mode='widthFix' ></image></view>
+   </button>
 </scroll-view>

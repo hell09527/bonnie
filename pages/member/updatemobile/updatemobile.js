@@ -32,8 +32,10 @@ Page({
     let base = app.globalData.siteBaseUrl;
     
     if (options.cho) {
+
       that.setData({
-        cho: options.cho
+        cho: options.cho,
+        suffix:options.suffix,
       })
     }
 
@@ -206,6 +208,7 @@ Page({
             let code = that.data.code;
             console.log(code);
           }
+          
           that.setData({
             codeMobile: data.value.pc,
           })
@@ -423,7 +426,8 @@ Page({
    * 保存
    */
   save: function (that, mobile) {
-      //  let  that=this;
+
+   let  suffix=that.data.suffix;
     app.sendRequest({
       url: "api.php?s=member/modifymobile",
       data: {
@@ -436,9 +440,41 @@ Page({
           if (data > 0) {
            if(that.data.cho==1){
              app.showBox(that, '完成页面');
-              wx.navigateBack({
-               delta: 1
-             })
+
+             var pages = getCurrentPages();
+             var currPage = pages[pages.length - 1];  //当前页面
+             var prevPage = pages[pages.length - 3]; //上上一个页面
+             //console.log(currPage, prevPage);
+
+             if (prevPage.route == "pages/member/kolApply/kolApply") {
+               //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
+               wx.navigateTo({
+                 url: "/pages/member/kolApply/kolApply?uid="+app.globalData.recommendUser,
+               })
+             } else if(prevPage.route == "pages/goods/goodsdetail/goodsdetail"){
+              //  商品详情页面
+              wx.navigateTo({
+                url: "/pages/goods/goodsdetail/goodsdetail?goods_id=" +suffix,
+              })
+             }else if(prevPage.route == "pages/member/member/member"){
+              //  个人中心页面
+              wx.switchTab({
+                url: "/pages/member/member/member", 
+              })
+             }else if(prevPage.route == "pages/goods/shareRepertoire/shareRepertoire"){
+              //  购物清单页面
+              wx.navigateTo({
+                url: "/pages/goods/shareRepertoire/shareRepertoire?share_li=" +suffix, 
+              })
+             }else if(prevPage.route == "pages/backPage/fetchGift/fetchGift"){
+              //  领取礼物页面
+              wx.navigateTo({
+                url: "/pages/backPage/fetchGift/fetchGift?order_id=" +suffix, 
+              })
+             }
+
+
+
            }else{
              wx.navigateTo({
                url: "/pages/member/excessive/excessive",

@@ -76,9 +76,12 @@
 
 .btn-confirm {
   width: 50%;
-  color: #000;
+  color: #fff;
   font-weight:900;
   text-align: center;
+  height:86rpx;
+  line-height:86rpx;
+  font-size: 14px;
 }
 
 .goods-type-icon{
@@ -87,9 +90,8 @@
   font-size:12px;
   padding:1px 4px;
   margin-right:3px;
-  height: 20px;
+  height: 18px;
   text-align: center;
-  float: left;
 }
 
 /* cust end ========================= */
@@ -112,18 +114,32 @@ input {
 }
 
 .cart-prolist {
-  background-color: #fff;
-  margin-bottom: 80px;
+  /* background-color: #fff; */
+  /* margin-bottom: 80px; */
+  padding-bottom:80px;
+
+}
+
+.weChat-cart{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 44rpx;
+  width:100%;
+}
+.weChat-cart image{
+  width:40rpx;
+  margin-right:20rpx;
 }
 
 .cart-prolist-ul {
   padding: 0px;
   background: #fff;
   border: 0;
-  display: flex;
- justify-content: space-between;
+  /* display: flex;
+ justify-content: space-between; */
  width: 100%;
- overflow: hidden;
+ position: relative;
 }
 
 .cart-prolist .title {
@@ -152,17 +168,23 @@ input {
 }
 
 .cart-list-li {
-  border: 0;
   border-bottom: 1px solid #F8F8F8;
   justify-content: space-between;
   width:100%;
-  padding: 10px;
+  padding: 20rpx;
+  position: relative;
+  z-index: 10;
+  min-height:240rpx;
+  box-sizing: border-box;
+    height: 100%;
+  overflow-y: hidden;
+  overflow:auto;-webkit-overflow-scrolling: touch;
 }
-
 .checkbox {
-  cursor: pointer;
-  width: 20px;
-  height: 20px;
+  display: inline-block;
+  vertical-align:120%;
+  width: 40rpx;
+  height: 40rpx;
   margin-right: 10rpx;
  -webkit-transition: all 0.4s;
  transition: all 0.4s;
@@ -170,20 +192,29 @@ input {
  transform: translateX(90px);
  margin-left: -90px;
 }
+/* .checkbox>image{
+  width: 40rpx;
+  height: 40rpx;
+  display: inline-block
+} */
+
 
 .cart-list-li .product {
-  width:100%;
+  width:670rpx;
+  /* display: flex; */
   padding:0 10px 0 0;
     -webkit-transition: all 0.4s;
  transition: all 0.4s;
  -webkit-transform: translateX(90px);
  transform: translateX(90px);
- /* margin-left: -90px  */
+ position: relative;
+ z-index: 10;
+  -webkit-backface-visibility: hidden;
 }
 
 .cart-list-li .product .pic {
   margin-right: 10px;
-  border: 1px solid #E4E3DD;
+  /* border: 1px solid #E4E3DD; */
   border-radius: 3px;
 
 }
@@ -196,6 +227,7 @@ input {
 .cart-list-li .product .pic image {
   width: 80px;
   height: 80px;
+   border: 1px solid #E4E3DD;
   vertical-align: middle;
 }
 
@@ -205,6 +237,8 @@ input {
   justify-content: flex-start;
   /* height: 80px; */
   flex: 1;
+  position: relative;
+  z-index: 10;
 }
 
 .cart-list-li .product .info-name {
@@ -220,7 +254,6 @@ input {
   -webkit-box-orient: vertical;
   overflow: hidden;
   font-size: 14px;
-  line-height: 22px;
 }
 
 .cart-list-li .product .info-name .a .sku {
@@ -243,10 +276,21 @@ input {
 
 .edit_num{
   display: flex;
-  justify-content: flex-end;
+  justify-content:space-between;
+ height: 68rpx;
   align-items: center;
+  position: relative;
+  z-index: 100;
 }
-
+.edit_show{
+  display: flex;
+  justify-content:space-between;
+  height: 68rpx;
+   align-items: center;
+   position: relative;
+   z-index: 100;
+  
+}
 .cart-list-li .ui-number .decrease, .cart-list-li .ui-number .increase {
   color: initial;
   width: 25px;
@@ -575,25 +619,38 @@ body .fixed.bottom {
   display:block;
 }  
 .del {
- background-color: orangered;
- width: 90px;
+ /* width: 240rpx; */
+ -webkit-transform: translateX(100px);
+ transform: translateX(100px);
+ -webkit-transition: all 0.4s;
+ transition: all 0.4s; 
+ position: absolute;
+ top:0;
+ right:-240rpx;
+ z-index: 100;
+ height:100%;
+}
+
+.del>view{
+  background-color: orangered;
   display: flex;
  align-items: center;
  justify-content: center; 
  font-size: 14px;
  color: #fff;
- -webkit-transform: translateX(100px);
- transform: translateX(100px);
- -webkit-transition: all 0.4s;
- transition: all 0.4s;
- height: 200rpx;
+ margin:20rpx;
+ box-sizing: border-box;
+ min-height:200rpx;
+ width: 160rpx;
 }
 .touch-move-active .checkbox,
 .touch-move-active .product,
-.touch-move-active .del {
+.touch-move-del{
  -webkit-transform: translateX(0);
  transform: translateX(0);
-}      
+ right:0;
+ -webkit-backface-visibility: hidden;
+}        
 
 .goods_price-input{
   border:1px solid #dedede;
@@ -602,6 +659,7 @@ body .fixed.bottom {
   width:140rpx;
   padding:0 10rpx;
   text-align: left;
+  margin-left: 4rpx;
 }                      
 .Login{
   width: 100%;
@@ -650,14 +708,19 @@ width:100%;
 .choose{
   display:inline-block;
 }
-/* .d_l{
-  float: left;
-   line-height: 20px; 
-   width: 60px;
-   height: 20px;
- text-align: center;
-  margin-top: 8px;
-   border: 1px solid #000;
-   background-color: red;
-   color: #fff;
-} */
+.flld{
+  display:flex;
+  justify-content:flex-start;
+  
+}
+page {
+  height: 100%;
+  overflow-y: hidden;
+}
+ 
+/* scroll-view容器 */
+
+.is_Du{
+  height: 100%;
+  background: #fff;
+}

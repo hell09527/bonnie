@@ -59,19 +59,11 @@ Page({
       console.log(2222)
       var scene = decodeURIComponent(options.scene);
       let brind_id = scene.split('&')[0];
-      let store_id = scene.split('&')[1];
-      let kol_id= scene.split('&')[2];
+      let kol_id= scene.split('&')[1];
       console.log("********品牌id", brind_id);
-      console.log("********st_id", store_id);
       console.log("********kol_id", kol_id);
-      if (store_id == 0){
-        console.log("********kol_idj", kol_id);
-        app.globalData.kol_id = kol_id;
-    }else{
-        console.log("********st_idj", store_id);
-        app.globalData.store_id = store_id;
-    }
-
+      app.globalData.kol_id = kol_id;
+   
 
       if (app.globalData.token && app.globalData.token != '') {
         //判断是否是付费会员的接口
@@ -83,6 +75,7 @@ Page({
             that.PP_reuse();
           }
         }
+        
       }
 
       that.setData({
@@ -125,6 +118,7 @@ PP_reuse:function(){
         app.globalData.is_vip = data.is_vip;
         app.globalData.distributor_type = data.distributor_type;
         let distributor_type = data.distributor_type;
+        console.log(data.uid)
         app.globalData.uid = data.uid;
         app.globalData.vip_gift = data.vip_gift;
         app.globalData.vip_goods = data.vip_goods;
@@ -185,7 +179,9 @@ PP_reuse:function(){
     //   pic: this.data.brind_image,
     //   title: this.data.title
     // }
-    let uid = app.globalData.uid;
+   
+    let uid = app.globalData.uid
+    console.log(uid)
     let PP_share_url = '/pages/goods/brandlist/brandlist?id=' + id;
     if (app.globalData.distributor_type == 0){
       return {
@@ -216,11 +212,6 @@ PP_reuse:function(){
       }
     }
 
-   
-
- 
-
-
   },
 
   /**
@@ -239,6 +230,7 @@ PP_reuse:function(){
     let goods_list = that.data.goods_list;
     let page = that.data.page;
     let new_brand_id = brand_id
+
     app.sendRequest({
       url: 'api.php?s=goods/getBrandGoodsList',
       data: {
@@ -263,6 +255,7 @@ PP_reuse:function(){
               // parm[parm_key] = new_goods_list[index];
             }
             goods_list = goods_list.concat(new_goods_list);
+            
             that.setData({
               goods_list,
             });
@@ -297,7 +290,8 @@ PP_reuse:function(){
         if (code == 0) {
           let goods_list = data.data;
           let brand_name = data.brand_name
-          let brand_pic = data.brand_pic
+          let brand_pic = data.brand_pic;
+          console.log(brand_pic)
           wx.setNavigationBarTitle({
             title:brand_name
           })
@@ -383,7 +377,7 @@ PP_reuse:function(){
   /**
    * 商品详情
    */
-  aClick: function (event) {
+  listClick: function (event) {
     let that = this;
     let url = event.currentTarget.dataset.url;
     let aClickFlag = that.data.aClickFlag;

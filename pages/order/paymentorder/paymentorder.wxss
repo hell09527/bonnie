@@ -281,11 +281,6 @@
 .top-fix{
   border: 0;
   display: block;
-  z-index: 100;
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
   text-align: right;
   padding: 6px 7px;
   border-top: 1px solid #e5e5e5;
@@ -521,6 +516,7 @@
   max-height: 240px;
   overflow-y: scroll;
   background-color: #fff;
+  -webkit-overflow-scrolling: touch;
 }
 
 .mask-layer-control .list .item{
@@ -568,8 +564,8 @@
 }
 
 .btn-green{
-  background-color: #06bf04;
-  border-color: #03b401;
+  background-color: #000;
+  border-color: #000;
   border: 0;
   text-align: center;
   width: 100%;
@@ -664,6 +660,7 @@
   padding-bottom: 6px;
   height: 250px;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .mask-layer-control .date-list .li {
@@ -793,3 +790,22 @@ width:100%;
 height:1px;
 background:#000;
 }  */
+.L-ise{
+  width:100% ;
+  height: 40rpx;
+  background:#fff; 
+}
+.bao_sale{
+  display: flex;
+  justify-content: flex-start;
+  margin-top:46rpx;
+width:100%;
+
+}
+.sale_title{
+  color:#DE222B;
+  font-size: 12px;
+  /* font-size: 16px; */
+  letter-spacing:2px;
+
+}

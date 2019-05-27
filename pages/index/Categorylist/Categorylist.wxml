@@ -1,0 +1,12 @@
+<!--pages/index/Categorylist/Categorylist.wxml-->
+<!-- 引入tempalte  -->
+<import src="/templates/goods-item-template/goods-item-template.wxml" />
+
+ <view class='body'>
+   <image src='{{category_pic}}' mode='widthFix' style='width:100%;display:block; margin-bottom: 30rpx; ' lazy-load='true'></image>
+   <!-- <view class='goods-title'>NB</view> -->
+ <block wx:for='{{category_goods}}' wx:key='' wx:for-item='shops' wx:for-index='index'>
+  <template is="goodsItemTemplate" data="{{...shops}}" />
+  </block>
+   </view>
+

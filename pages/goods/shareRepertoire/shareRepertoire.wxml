@@ -1,6 +1,8 @@
+<import src="/templates/dataLogin-template/dataLogin.wxml" />
+
 <scroll-view>
   <view class='backgroundImage'>
-    <image src="http://p6yljnwkf.bkt.clouddn.com/Wechat1.png"></image>
+    <!-- <image src="http://p6yljnwkf.bkt.clouddn.com/Wechat1.png"></image> -->
   </view> 
     <view class="motify {{prompt==''?'hide':''}}">
         <icon class="i show_type warning" type='warn' size='25' color='#FFF'></icon>
@@ -44,7 +46,8 @@
                 <view class="edit_num"  wx:if='{{distributorType!=1}}'>
                   <view class="span ui-number">
                     <view class="decrease" data-type='minus' data-index='{{index}}' style="border-right:1px solid #ccc;" catchtap='numAdjust'>-</view>
-                     <input class="num" value="{{cart.num}}" data-index='{{index}}' data-id='{{cart.cart_id}}' bindblur='inputAdjust'/> 
+                     <!-- <input    class="num" value="{{cart.num}}" data-index='{{index}}' data-id='{{cart.cart_id}}' bindblur='inputAdjust'/>  -->
+                     <view   class="num" data-index='{{index}}' data-id='{{cart.cart_id}}'>{{cart.num}}</view>
                     <view class="increase" data-type='add' data-index='{{index}}' style="border-left:1px solid #ccc;" catchtap='numAdjust'>+</view>
                   </view>
                 </view>
@@ -57,7 +60,7 @@
     </view>
   <block wx:if="{{cart_list.length != 0 && cart_list != undefined}}">
         <view class="fixed bottom">
-            <view class="btn_wrap btn_wrap_static">
+            <view class="btn_wrap btn_wrap_static  '{{isIphoneX==1?'Lise':''}}' ">
               <view class="btn ttn_server" id="div_selected" wx:if='{{distributorType!=1}}'>
                     <view class='div'>
                         <image src='/images/goods/{{check_all==1?"cartp2.png":"cartp1.png"}}' mode='widthFix' catchtap='checkAll'></image>
@@ -82,7 +85,6 @@
                       catchtap='settlemenT'>
                         <view class='span {{edit==0?"":"hide"}}' id="settlement" style='font-size: 16px;font-weight: 500;'>结算</view>
                 </view>
-  
 
             </view>
         </view>
@@ -95,15 +97,12 @@
             <view class="p text">您的购物车还没有商品！</view>
             <view class="a btn" catchtap="aIndex" data-url='/pages/index/index'>发现更多惊喜</view>
         </view>
-
     </block>
-
 </scroll-view>
-
 <!--<button class="show-btn" bindtap="showDialogBtn">弹窗</button>-->
 <!--弹窗-->
-<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
-<view class="modal-dialog" wx:if="{{showModal}}">
+<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{show}}"></view>
+<view class="modal-dialog" wx:if="{{show}}">
     <view class="modal-title">
         <span>您选中的商品包含国际跨境商品</span>
         <view class="modal-title-desc">需要和其它商品分开结算</view>
@@ -128,35 +127,14 @@
     </view>
     <view class="modal-footer">
         <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
-        <view class="btn-confirm" bindtap="onConf" data-status="confirm">确定</view>
+        <view class="btn-positive" bindtap="onConf" data-status="confirm">确定</view>
     </view>
     </view>
-    <!-- bindtap="hide" -->
-<view class="ck-mask"   catchtouchmove="preventTouchMove" wx:if="{{show}}"></view>
-    <!-- 登录弹出框 -->
-    <view class="ck-dialog" wx:if="{{show}}">
- 
-  <view class="gift_title">手机号授权绑定成功
-  </view>
-  <view class="ck-footer">
-   <button  class="btn-confir"  data-status="confirm" open-type="getUserInfo" bindgetuserinfo="bindgetuserinfo">确   定</button>
-  </view> 
-</view>
+    <template is="dataLogin" data="{{showModal,Choice,layout}}"/>
 
- <!-- 选择登录方式  -->
-<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{Choice}}"></view>
-  <view class="modal-dialog" wx:if="{{Choice}}">
-     <view class="gift_title">您未登录!
-          </view>
-     <button  class="btn-common"  open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" >微信登录</button>
-    <button  class="btn-common"  data-status="mobile"  catchtap='Branch'>手机号登录</button>
-   <button  class="btn-common"  data-status="no" catchtap='Branch'>暂不登录</button>
-   </view>
-   <!-- 选择登录方式   end-->
 
  
 <!-- //客服 -->
-           <!-- <button class="a new-btn buy-cart" open-type="contact" session-from="weapp" class="{{isHide==0?'yuan':'hide-kf'}}" style='bottom:120rpx;'>
-                <view><image src="https://static.bonnieclyde.cn/tt.png"  mode='widthFix' ></image></view>
-
-            </button>  -->
+  <!-- <button class="a new-btn buy-cart" open-type="contact" session-from="weapp" class="{{isHide==0?'yuan':'hide-kf'}}" style='bottom:120rpx;'>
+      <view><image src="https://static.bonnieclyde.cn/tt.png"  mode='widthFix' ></image></view>
+  </button>  -->

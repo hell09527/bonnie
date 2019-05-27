@@ -23,7 +23,7 @@
 
 .evaluation-container .evaluation-type .li {
   float: left;
-  background-color: #FEE;
+  background-color:#E5E5E5;
   color: #666;
   margin: 6px 3px;
   padding: 5px 5px;
@@ -34,7 +34,7 @@
 }
 
 .evaluation-container .evaluation-type .li.current {
-  background-color: #FF0036;
+  background-color: #000;
   color: #FFF;
 }
 

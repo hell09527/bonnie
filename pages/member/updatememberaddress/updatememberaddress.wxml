@@ -5,15 +5,15 @@
   </view>
   <view class="form-info">
     <view class="div-item">
-      <view class='span'>姓名</view> <input type="text" placeholder="请输入收件人姓名" bindblur='inputEvent' data-type='consigner' value="{{consigner}}"/>
+      <view class='span'>姓名</view> <input type="text" placeholder="请输入收件人姓名" bindinput='inputEvent' data-type='consigner' value="{{consigner}}"/>
     </view>
 
     <view class="div-item">
-      <view class='span'>手机</view> <input type="number" maxlength='11' placeholder="请输入手机号" bindblur='inputEvent' data-type='mobile' value="{{mobile}}"/>
+      <view class='span'>手机</view> <input type="number" maxlength='11' placeholder="请输入手机号" bindinput='inputEvent' data-type='mobile' value="{{mobile}}"/>
     </view>
 
     <view class="div-item">
-      <view class='span'>固定电话</view> <input type="number" bindblur='inputEvent' data-type='phone' placeholder="固定电话（选填）" value="{{phone}}"/>
+      <view class='span'>固定电话</view> <input type="number" bindinput='inputEvent' data-type='phone' placeholder="固定电话（选填）" value="{{phone}}"/>
     </view>
 
     <view class="div-item">
@@ -46,7 +46,7 @@
 
     <view class="div-item">
       <view class='span'>详细地址</view>
-      <input type="text" placeholder="请输入详细地址" bindblur='inputEvent' data-type='address' value="{{address}}"/>
+      <input type="text" placeholder="请输入详细地址" bindinput='inputEvent' data-type='address' value="{{address}}"/>
     </view>
   </view>
   <button class="btn-save" catchtap='saveAddress'>保存</button>

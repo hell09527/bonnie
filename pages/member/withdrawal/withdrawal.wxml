@@ -1,0 +1,80 @@
+<!--pages/member/withdrawal/withdrawal.wxml-->
+<!-- 引入tempalte  -->
+<import src="/templates/dataChoose-template/dataChoose-template.wxml" />
+<scroll-view>
+<!-- 提示 -->
+  <view class="motify {{prompt==''?'hide':''}}">
+    <icon class="i show_type warning" type='warn' size='25'color='#fff' ></icon>
+    <view class="motify-inner">{{prompt}}</view>
+  </view>
+  <view class='head-box'>
+    <view class='head-top'>
+      <view class='head-top-title'>
+           <view style='color:#fff;' class='tpop'> 可提现金额  </view>
+           <view class='list' style='text-align:left;'>
+              <span class='style' wx:if="{{remain}}" > ￥{{remainPrice}} </span>
+              <span class='style' wx:if="{{!remain}}" > ￥{{rewardPrice}} </span>
+           </view>
+           <view class='all_money ' catchtap='collect' >提现全部</view>
+      </view>
+      <view class="head-text head-text-center">
+        <!-- <text style='color:#4a4a4a;' wx:if='{{isBindInput}}'></text> -->
+        <input type='digit' placeholder='￥ 输入金额数值要大于{{minMoey}}且小于{{maxMoey}}'  placeholder-style='color:#4a4a4a;'  bindinput='priceValue' value='{{RunPrice}}'/>
+      </view>
+           <view style='color:#585858;font-size: 14px;' wx:if='{{hint==0}}'>当日提现金额上限{{maxMoey}}元，提现立即到微信零钱。</view>
+           <view style='color:red;font-size: 14px;' wx:if='{{hint==1}}'>输入金额已超过单日可提现额度</view>
+            <view style='color:red;font-size: 14px;' wx:if='{{hint==2}}'>输入金额不可低于{{minMoey}}元</view>
+             <view style='color:red;font-size: 14px;' wx:if='{{hint==3}}'>输入金额已超过可提现金额</view>
+      <form bindsubmit="toApply" report-submit="true">
+        <block></block>
+          <button  wx:if='{{Astop && switchover==1}}'  class='head-btn'  formType="submit" >立即提现</button>
+          <button  wx:if='{{!Astop || switchover==0}}'  class='head-btn'  formType="submit" disabled='false'>立即提现</button>
+      </form>
+       <view style='color:red;font-size: 14px;' wx:if='{{switchover==0}}'>请您前往信息认证后再进行提现</view>
+      <view class="switch"  wx:if="{{remain}}" catchtap='isReward'>{{rewardPrice!=0?'奖金提现 >':''}} </view>
+      <view   class="switch"  wx:if="{{!remain}}" catchtap='isRemain'>{{remainPrice!=0?'分润金额 >':''}} </view>
+    </view>
+  </view>
+   <view class='moneyBox'>
+         <view class='xuans'>
+          <view class='c_money'>
+            <view>个人信息认证</view>
+          </view>
+          <view class='edu' catchtap='open'>
+          <text wx:if='{{switchover==0}}'>前往提交信息</text>
+          <text wx:if='{{switchover==1}}' style='color:#ffb24c'>身份证已上传</text>
+          <image lazy-load="true" class="direction " src='https://static.bonnieclyde.cn/WechatIMG240.png'></image> </view>
+        </view>
+    </view>
+  <view class='detail-box'>
+    <view class='detail-head'>
+      <template is="dataChooseTemplate" data="{{datetime,nowData}}" />
+    </view>
+   
+    <!-- 本月事件 -->
+    <block wx:for="{{separationRecords}}" wx:key="" wx:for-item='separationRecordsItem' wx:for-index='separationRecordsIndex' wx:if="{{separationRecords.length>0}}">
+      <view class='detail-item'>
+        <view class='detail-item-title'>
+          <view>{{separationRecordsItem.date}}</view>
+          <view>账单明细</view>
+        </view>
+        <view class='detail-text-box'>
+          <block wx:for="{{separationRecordsItem.accountRecords}}" wx:key="" wx:for-item='item' wx:for-index='index'>
+            <view class='detail-text'>
+              <view>
+                <text>{{item.text}}</text>
+                <text class="{{item.isGreen?'green':''}}">{{item.money}}</text>
+              </view>
+              <view>
+                <text wx:if='{{item.order_no}}'>订单号：{{item.order_no}}</text>
+                <text wx:else></text>
+                <text>{{item.settlement_time}}</text>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+    </block>
+
+  </view>
+</scroll-view>
