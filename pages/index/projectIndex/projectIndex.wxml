@@ -30,6 +30,8 @@
       <view class='project-image'    data-src='{{acticities.pic}}'      data-title='{{acticities.goods_info.goods_name}}' data-id='{{acticities.pid}}'  data-url="{{acticities.pic_link}}" data-info="{{acticities.goods_info}}" catchtap='toLink'>
         <image  class='sss' wx:if='{{acticities.pic_pro}}' src="{{acticities.pic_pro}}" mode='widthFix' style='width:680rpx;margin:0 auto;'></image>
         <image  class='lll' wx:if='{{acticities.pic}}' src="{{acticities.pic}}" mode='widthFix' style='width:100%'></image>
+               <!-- 先添加的video -->
+          <!-- <video id="myVideo" wx:if='{{acticities.movie_show==1}}' src="{{acticities.movie_link}}" objectFit='cover' controls style='width:100%'></video> -->
       </view>
 
 

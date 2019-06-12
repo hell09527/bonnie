@@ -2,8 +2,9 @@
   "pages": [
     "pages/index/index",
     "pages/member/resgin/resgin",
+    "pages/goods/lineActivity/lineActivity",
+    "pages/goods/lineParticulars/lineParticulars",
     "pages/goods/goodslist/goodslist",
-    "pages/goods/goodslast/goodslast",
     "pages/goods/cart/cart",
     "pages/goods/giftDone/giftDone",
     "pages/goods/presentGift/presentGift",
@@ -133,8 +134,6 @@
     "navigationBarTitleText": "BonnieClyde",
     "backgroundColor": "#fff",
     "navigationBarTextStyle": "black"
-  
-  
   },
   "navigateToMiniProgramAppIdList": [
     "wx56c8f077de74b07c",

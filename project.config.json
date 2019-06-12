@@ -9,12 +9,20 @@
 		"nodeModules": true,
 		"autoAudits": false,
 		"uglifyFileName": true,
-		"checkInvalidKey": true
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"enhance": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.6.6",
-	"appid": "wxba4f30503c1ea656",
-	"projectname": "bonnie-clyde%20%E6%B5%8B%E8%AF%95%E6%B5%8B%E8%AF%95",
+	"libVersion": "2.7.1",
+	"appid": "wxd145d8a6e951dd1b",
+	"projectname": "BC",
 	"isGameTourist": false,
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
@@ -36,7 +44,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 3,
+			"current": 5,
 			"list": [
 				{
 					"id": -1,
@@ -64,6 +72,19 @@
 					"pathName": "pages/index/index",
 					"query": "",
 					"scene": "1011"
+				},
+				{
+					"id": -1,
+					"name": "门店活动列表",
+					"pathName": "pages/goods/lineActivity/lineActivity",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "门店活动详情页",
+					"pathName": "pages/goods/lineParticulars/lineParticulars",
+					"scene": null
 				}
 			]
 		}

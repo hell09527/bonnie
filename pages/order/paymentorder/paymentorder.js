@@ -1644,6 +1644,7 @@ sale_timing: function (that, Send_array,sale_tms) {
         //console.log(card_token)
         console.log(that.data.uid)
       console.log(' app.globalData.traffic_acquisition_source',app.globalData.traffic_acquisition_source)
+      console.log(' store_id',app.globalData.store_id)
      
         app.sendRequest({
             url: url,
@@ -1668,12 +1669,12 @@ sale_timing: function (that, Send_array,sale_tms) {
                 tx_type: ts_type,
                 card_name: that.data.card_name,
                 card_no: that.data.card_no,
-                store_id: app.globalData.store_id,
+                store_id: app.globalData.store_id, //门店码
                 from_type: that.data.order_type,
                 count_money: that.data.count_money,
                 uid:that.data.uid,
                 is_inside: that.data.is_inside ? that.data.is_inside:0,
-              traffic_acquisition_source: app.globalData.traffic_acquisition_source,// 引流来源
+                traffic_acquisition_source: app.globalData.traffic_acquisition_source,// 引流来源
             },
             success: function (res) {
               console.log(res);

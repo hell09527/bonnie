@@ -99,41 +99,11 @@ Page({
     let defaultImg = app.globalData.defaultImg;
     // var times = sale_time.formatTime(new Date());
   
-    // console.log(times)
     that.setData({
       defaultImg: defaultImg,
       // times
     });
-  
-     
-    //   let timestamp = Date.parse(new Date);
-    //   if (app.globalData.identifying!=0){
-    //     let overtime = timestamp + 43200000;
-    //     console.log(timestamp)
-    //     let uid = app.globalData.identifying;
-    //     let breakpoint = app.globalData.breakpoint
-    //     wx.setStorageSync('breakpoint', breakpoint);
-    //     wx.setStorageSync('uid', uid)
-    //     wx.setStorageSync('overtime', overtime);
-    //  }
 
-    //   if (app.globalData.distributor_type != 0){
-    //     let breakpoints = wx.getStorageSync('breakpoint');
-    //     console.log(breakpoints, 'breakpoints')
-    //     let uids = wx.getStorageSync('uid')
-    //     console.log(uids, 'uids')
-    //     let overtimes = wx.getStorageSync('overtime');
-    //     if (timestamp < overtimes) {
-    //       console.log(211111)
-    //       app.globalData.identifying = uids;
-
-    //       app.globalData.breakpoint = breakpoints;
-    //     } else {
-    //       console.log(333333)
-    //     }
-    //   }else{
-
-    //   }
   },
 
 

@@ -55,7 +55,7 @@ Page({
     })
   },
   onUnload () {
-      //  关闭但页面清除单前页面的定时器
+   //  关闭但页面清除单前页面的定时器
     clearInterval(this.data.myTime);
   },
   //绘画

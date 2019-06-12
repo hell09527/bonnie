@@ -45,7 +45,6 @@
     <view class='fixaction'>
 
       <view class='ul' wx:if='{{Fixtitle==1}}'>
-      
         <view class='li' wx:if="{{maKestep==1}}"  style='width:100%;' catchtap='uploading'> 
            <view class='Utype {{isIphoneX==1?"typeX":""}}' >
               <image  lazy-load="true" class='Uicon' src='https://static.bonnieclyde.cn/camera@2x.png'></image>

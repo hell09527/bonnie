@@ -90,12 +90,12 @@
     <block wx:if="{{goods_info.sale_type == 2 && goods_info.sale_end_time!= ''}}">
         <view class="goods-header js-goods-header goods-activity clearfix">
             <view class="goods-price {{Send_array.end==1?'gray':''}}">
-                
                 <view class="current-price activity-price">
                   <view  class="span price-title js-price-title "> 预售 </view>
                 </view>
                       <view class="lostkol">
-                         <view class="js-li " style=' text-align: left; font-size: 18px;font-weight: 700;' >￥{{goods_info.promotion_price}}</view>
+                         <view  wx:if='{{scale==1}}'  class="js-li " style=' text-align: left; font-size: 18px;font-weight: 700;' >￥{{goods_info.promotion_price}}</view>
+                         <view  wx:else  class="js-li " style=' text-align: left; font-size: 18px;font-weight: 700;' >￥{{Min_ori}}-{{Max_ori}}</view>
                           <view class="js-li" wx:if='{{sale_timer_array.end == 0}}'>距离预售结束仅剩</view>
                         <view class="js-li" style='font-size:20px;line-height:50px;' wx:else>预售已结束</view>
                       </view>
@@ -154,6 +154,7 @@
             </button>
         </view>
         <view class="price_wrap">
+        <!-- 内购价格显示 -->
          <view  wx:if='{{is_employee==1 && is_inside_sell==1}}'>
             <view class="span price"  wx:if='{{goods_info.sale_type==1}}'>￥{{goods_info.promotion_price}}</view> 
                <view  wx:if='{{sum==1}}' class="span sos" id="priceTitle" wx:if="{{goods_info.market_price - goods_info.price > 0}}">
@@ -167,13 +168,27 @@
                 </block> -->
            
             </view>
+            <!-- 常规商品价格 -->
             <view class='gl' wx:else>
-            <view class="span price"  wx:if='{{goods_info.sale_type==1}}'>
+            <block  wx:if="{{scale==1}}">
+              <view class="span price"  wx:if='{{goods_info.sale_type==1}}'>
                 ￥{{parseInt(goods_info.promotion_price)< parseInt(goods_info.price)?goods_info.promotion_price:goods_info.price}}
             </view>
-                    <view wx:if='{{sum==1}}' class="span sos" id="priceTitle" wx:if="{{goods_info.market_price - goods_info.price > 0}}">
-                        ￥{{goods_info.market_price}}
-                    </view>
+            <view wx:if='{{sum==1}}' class="span sos" id="priceTitle" wx:if="{{goods_info.market_price - goods_info.price > 0}}">
+              ￥{{goods_info.market_price}}
+            </view> 
+            </block>
+            <block wx:else>
+              <view class="span price"  wx:if='{{goods_info.sale_type==1}}'>
+                ￥{{Min_ori}}-{{Max_ori}}
+            </view>
+            <view wx:if='{{sum==1}}' class="span sos" id="priceTitle" wx:if="{{goods_info.market_price - goods_info.price > 0}}">
+               ￥{{ Min_bazaar}}-{{ Max_bazaar}}
+            </view>  
+            </block>
+              
+              
+          
                 <!-- <block wx:if='{{goods_info.point_exchange_type == 1}}'>
                 <view class='span point'>+{{goods_info.point_exchange}}积分</view>
               </block> -->
@@ -211,11 +226,13 @@
       </view>
     </view> -->
     <!-- 满减送 -->
-    <block wx:if='{{goods_info.mansong_name != "" && goods_info.mansong_name != undefined && goods_info.mansong_name != null}}'>
+    <block wx:if='{{goods_info.mansong_name != ""  &&  goods_info.mansong_name != undefined && goods_info.mansong_name != null}}'>
         <view class="price_postage" catchtap='cancleMan'>
-            <view class="span price_postage_tit js-reduced-send {{Man?'single':''}}''">
+        <!-- word-break: break-all -->
+        <!-- white-space: pre-wrap; -->
+            <view class="span price_postage_tit js-reduced-send ''" style='word-break: keep-all '>
                 <view class='i goods_tab'>满减</view>
-                {{goods_info.mansong_name}}
+                    {{goods_info.mansong_name}}
             </view>
         </view>
         <hr class="hr with-margin-l" />
@@ -579,23 +596,6 @@
     <view class="hr divider-line"></view>
     </block>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <!-- 商品属性 -->
     <block wx:if="{{goods_info.goods_attribute_list[0]!=undefined}}">
         <view class="tab-module-title">商品属性</view>
@@ -618,44 +618,37 @@
         <view class="tab-module-title" style='padding:0 20rpx;'>商品详情</view>
         <view class="hr with-margin-l" style='margin:0 20rpx;'></view>
             <block wx:if='{{goods_info.goods_video_address != "" && goods_info.goods_video_address != undefined }}'>
-                <!-- <video src='{{goods_info.goods_video_address}}'  poster="https://static.bonnieclyde.cn/list.jpg" 
-              autoplay="{{false}}" objectFit='fill'></video> -->
+                    <!-- algologie -->
               <block wx:if="{{point==0 && (brand_id==11 || brand_id==12 || brand_id==2)}}">
                    <block wx:if='{{goods_info.goods_video_address != "" && goods_info.goods_video_address != undefined && brand_id ==11}}'>
                 <view class="video" data-id="{{goods_info.brand_id}}" bindtap="videoPlay">
-                    <video wx:if="{{curr_id == goods_info.brand_id && point==0}}" controls="false"  id='myVideo' src="{{goods_info.goods_video_address}}" poster='https://static.bonnieclyde.cn/algologie.jpg' objectFit='fill'></video>
-                    <view wx:else>
-                        <image class="model-img" mode="aspectFill" src='https://static.bonnieclyde.cn/algologie.jpg' style="width:100%;height:225px"></image>
-                        <view class="model-btn">
-                            <view class="play-icon"></view>
-                        </view>
-                    </view>
+                    <video  controls="false"  id='myVideo' src="{{goods_info.goods_video_address}}" poster='https://static.bonnieclyde.cn/algologie.jpg' objectFit='fill'></video>
                 </view>
-                <!-- <video src='{{goods_info.goods_video_address}}'  poster='https://static.bonnieclyde.cn/algologie.jpg'
-              autoplay="{{false}}" objectFit='fill'></video> -->
+            
             </block>
             <block wx:if='{{goods_info.goods_video_address != "" && goods_info.goods_video_address != undefined && brand_id ==12}}'>
                 <!-- <video src='{{goods_info.goods_video_address}}'  poster="https://static.bonnieclyde.cn/list.jpg" 
               autoplay="{{false}}" objectFit='fill'></video> -->
                 <view class="video" data-id="{{goods_info.brand_id}}" bindtap="videoPlay">
-                    <video wx:if="{{curr_id == goods_info.brand_id && point==0}}" controls="false"  bindpause='dex' id='myVideo' src="{{goods_info.goods_video_address}}" poster="https://static.bonnieclyde.cn/list.jpg" objectFit='fill'></video>
-                    <view wx:else>
-                        <image class="model-img" mode="aspectFill" src="https://static.bonnieclyde.cn/list.jpg" style="width:100%;height:225px"></image>
+                    <!-- wx:if="{{curr_id == goods_info.brand_id && point==0}}"  -->
+                    <video    id='myVideo'    src="{{goods_info.goods_video_address}}" poster="https://static.bonnieclyde.cn/list.jpg" objectFit='fill'></video>
+                    <!-- <view wx:else catchtap='Theplay'>
+                        <image class="model-img" mode="aspectFill"  src="https://static.bonnieclyde.cn/list.jpg" style="width:100%;height:225px"></image>
                         <view class="model-btn">
-                            <view class="play-icon"></view>
+                            <view class="play-icon" ></view>
                         </view>
-                    </view>
+                    </view> -->
                 </view>
             </block>
             <block wx:if='{{goods_info.goods_video_address != "" && goods_info.goods_video_address != undefined && brand_id ==2}}'>
-                <video src='{{goods_info.goods_video_address}}' controls="false"  poster="https://static.bonnieclyde.cn/chunyan.jpg" autoplay="{{false}}" objectFit='contain'></video>
+                <video src='{{goods_info.goods_video_address}}'  poster="https://static.bonnieclyde.cn/chunyan.jpg" autoplay="{{false}}" objectFit='contain'></video>
             </block>
 
 
               </block>
               <block wx:if="{{brand_id!=11 && brand_id!=12 && brand_id!=2}}">
              <view class="video" data-id="{{goods_info.brand_id}}" bindtap="videoPlay">
-                      <video wx:if='{{goods_info.brand_id!=12 && goods_info.brand_id!=11 && goods_info.brand_id!=2 }}' controls="false" id='myVideo' src="{{goods_info.goods_video_address}}" objectFit='fill'></video>
+                      <video wx:if='{{goods_info.brand_id!=12 && goods_info.brand_id!=11 && goods_info.brand_id!=2 }}' id='myVideo' src="{{goods_info.goods_video_address}}" objectFit='cover'></video>
                    </view>
               </block>
                 
@@ -700,7 +693,7 @@
             <view class="li s-buy-pro">
                 <view class="span pro-img">
                     <!-- 商品SKU图片 -->
-                    <image src='{{mo_imgs}}'    class="js-thumbnail"></image>
+                      <image src='{{mo_imgs.spec_value_data}}' class="js-thumbnail" catchtap='skuPreivewImg' data-urls='{{mo_imgs}}'></image>
                 </view>
                 <view class="pro-info">
                     <!-- {{buyButtonStatus==3||buyButtonStatus==4?goods_info.goods_pintuan.tuangou_money:member_price}} -->
@@ -728,12 +721,13 @@
                     <view class="left">{{spec.spec_name}}：</view>
                     <view class="right" name="specvals">
                         <block wx:for='{{spec.value}}' wx:for-item='sku' wx:for-index='k' wx:key=''>
-                            <view class="span select {{sku.status==1?'current':''}} " catchtap='skuSelect'  data-key="{{key}}" data-k='{{k}}' data-picture-id="0">
-                              <view  wx:if="{{sku.spec_show_type==2}}" class="sku_color" style=' background: {{sku.spec_value_data}};'></view>
-                              <image src='{{sku.spec_value_data}}'   wx:if='{{sku.spec_show_type==3}}'        class="sku_img"></image>
+                             <view class="flex" catchtap='skuSelect'  data-key="{{key}}" data-k='{{k}}' data-type="{{sku.spec_show_type}}" data-picture-id="0">
+                                <view  wx:if="{{sku.spec_show_type==2}}" class="sku_color" style=' background: {{sku.spec_value_data}};'></view>
+                              <image src='{{sku.spec_value_src.pic_cover_mid}}'   wx:if='{{sku.spec_show_type==3 && sku.spec_value_src.length!=0}}'        class="sku_img"></image>
+                                <view class="span select {{sku.status==1?'current':''}} " >
                                 {{sku.spec_value_name}}
                             </view>
-
+                             </view>
                         </block>
                     </view>
 
@@ -938,9 +932,6 @@
                               <block wx:if='{{goods_info.sale_type == 2 && sale_timer_array.end==1}}'>
                               <button class="commodity" disabled>预售已结束</button>
                               </block>
-
-
-
                         </view>
                     </block>
                     <block wx:if='{{flys==1}}'>
@@ -989,7 +980,5 @@
         
    </view>
   </view>  
-
-
 
 </scroll-view>

@@ -1,0 +1,34 @@
+ <scroll-view>
+    <button class="default"  catchtap='subscribe'>  预约活动 </button>
+    <!-- 弹框- -->
+  <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModel}}"></view> 
+ <view class="modal-dialog" wx:if="{{showModel}}">
+  <view class="modal-title"><span>预约活动确定</span></view>
+  <view class="modal-middle">
+    <view class="go_title">你确定预约本次活动吗? </view>
+   <view class="go_title">地点： Bonnie&Clyde（长宁来福士店）</view>
+    <view class="go_title">时间：2019年06月08日 12:00:00 </view>
+  </view>
+  <view class="modal-footer">
+    <view class="btn-cancel" bindtap="onChoice" data-status="cancel">取消</view>
+    <view class="btn-finish" bindtap="onChoice" data-status="confirm">确定   </view>
+  </view> 
+</view>
+
+
+  <!-- 弹框二 -->
+  <!-- style='background: #fff;' -->
+  <view class="modal-dialog" wx:if="{{showAppoint}}" >
+  <view class="modal-head"></view>
+  <view class="bide-title">预约成功</view>
+  
+  <view class="bide-arch" data-status='arch' catchtap='goLeap'>查看电子券</view>
+  <view class="bide-more" data-status='more' catchtap='goLeap'>发现更多活动</view>
+
+ </view>
+
+
+
+
+ </scroll-view>
+   

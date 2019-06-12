@@ -125,19 +125,21 @@
                   <image class="shop_src" src="{{goods.picture.pic_cover_small==''?0:goods.picture.pic_cover_small}}" binderror='errorImg' data-index='{{index}}' data-key='{{key}}'></image>
                   <view class="shop_name">
                     <view class="shop-title">{{goods.goods_name}}</view>
-                    <text class="j_e">X{{goods.num}}</text>
-                    <view class="sta">状态:{{order.status_name}}</view>
+                    <view wx:if='{{goods.sku_name!=""}}' >{{goods.sku_name}}</view>
+                     <view class="number">￥{{goods.goods_money}}</view>
                   </view>
-                  <view class="number">￥{{goods.goods_money}}</view>
+                  <view class="j_e">    x {{goods.num}}</view>
                 </view>
                  <view class="num">
-                    <view class="run">分润比例  {{goods.fraction}}</view>
-                  </view>
-                    <view class="num">
-                    <view class="runs">直接分润金额 ￥{{goods.direct_separation}}</view>
-                  </view>
-                <view class="num">
-                  <block wx:if="{{order.order_status==4}}">
+                   <view class="part-status" >
+                    <view class="sta" style='font-size: 16px;color:#ca9d53;'>{{order.status_name}}</view>
+                   </view>
+                   <view class="gather">
+                   <view class="fill-run">
+                      <view class="runs">分润￥{{goods.direct_separation}}</view>
+                      <view class="run">(分润比例  {{goods.fraction}})</view>
+                   </view>
+                    <block wx:if="{{order.order_status==4}}">
                     <view class="sta">分润已入账</view>
                   </block>
                   <block wx:if="{{order.order_status==2||order.order_status==3}}">
@@ -145,12 +147,15 @@
                   </block>
                   <block wx:else>
                     <view class="sta"></view>
-                  </block>
-
-                 
-                </view>
+                  </block> 
+                   </view>
+                  </view>
               </view>
             </block>
+            <view class="use-info" >
+              <image class="use-heading" src="{{order.headimg}}"  />
+               <view class="use-name" style='margin-left:20rpx;'>{{order.buyer_name}}</view> 
+            </view>
           </view>
         </view>
       </block>

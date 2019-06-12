@@ -52,7 +52,7 @@ Page({
       var title = data.title;
     }
    
-    let is_vip = app.globalData.is_vip
+    let is_vip = app.globalData.is_vip;
     // 专题页标题
     wx.setNavigationBarTitle({
       title: title,

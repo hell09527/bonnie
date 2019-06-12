@@ -170,6 +170,9 @@ border: 1px solid #9b9b9b;
   width: 33.3%;
   margin-left:180rpx;
 }
+.moneyBox{
+  padding:0 30rpx;
+}
 .xuans{
   display: flex;
   justify-content: space-between;
@@ -198,7 +201,4 @@ border: 1px solid #9b9b9b;
   width:36rpx;
   height:36rpx;
 
-}
-.moneyBox{
-  padding:0 30rpx;
 }

@@ -180,11 +180,13 @@
                </view> -->
              <!-- 抵消定位区域 -->
         <view class=" {{swperStatu==1?'so_l':'bai'}}  " ></view>
-
-
           <!-- 公众号 -->
           <official-account ></official-account>
 
+           <!-- Banner视频 -->
+           <!-- <view class="touch" wx:if="{{video_index.video_address}}"> </view> -->
+              <video id="myVideo"  wx:if="{{video_index.video_address}}" src="{{video_index.video_address}}" object-fit='cover' controls></video>
+          
           
                 <!-- 品牌标题 -->
         <image   lazy-load="true" src="https://static.bonnieclyde.cn/brnds.png" mode='widthFix' style='margin:60rpx 0rpx;width:100%;'></image>

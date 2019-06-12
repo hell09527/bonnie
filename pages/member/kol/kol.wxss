@@ -393,13 +393,13 @@ margin-left: 72%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  border-bottom: 1px solid #bbb;
+  border-bottom: 1px solid #e5e5e5;
   padding: 10px 0;
 }
 .shop_detail{
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  /* justify-content: space-between; */
+  /* align-items: center; */
 }
 .particulars:last-child{
   border-bottom: none;
@@ -424,8 +424,9 @@ margin-left: 72%;
   overflow: hidden;
 text-overflow: ellipsis;
 display: -webkit-box;
--webkit-line-clamp: 1;
+-webkit-line-clamp: 2;
 -webkit-box-orient: vertical;
+text-align: left;
 }
 .R_f{
   display: flex;
@@ -441,18 +442,21 @@ display: -webkit-box;
 }
 .sta{
   font-size: 12px;
+ text-align: right;
 }
 .num{
    width: 100%;
    display: flex;
    justify-content: space-between;
-   align-items: flex-end;
+   align-items: center;
+   margin-top: 20rpx;
 }
 .number{
 font-size: 14px;
 color:#8f8f8f;
 width: 15%;
 text-align: right;
+margin-top: 10rpx;
 }
 .run{
   font-size: 12px;
@@ -460,7 +464,7 @@ text-align: right;
   line-height:60px;
 }
 .runs{
-  font-size:14px;
+  font-size:16px;
   color:#ca9d53;
 }
 .lenght{
@@ -501,7 +505,7 @@ font-size: 12px;
 }
 .run{
   color:#808080;
-  font-size:14px;
+  font-size:12px;
   line-height:20px;
   text-align: center;
 }
@@ -789,3 +793,24 @@ top:65rpx;
   background: #f1f1f1;
   font-weight:900;
 }
+
+.fill-run{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.use-heading{
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+
+}
+.use-info{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  /* width: 60px; */
+  height: 60px;
+}
+
+

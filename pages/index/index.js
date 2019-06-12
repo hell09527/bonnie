@@ -74,11 +74,8 @@ Page({
   },
 
   UC: function () {
-    // wx.navigateTo({
-    //   url: '/pages/goods/shareRepertoire/shareRepertoire?share_li=90:1:0.01,89:1:0.01&tag=2&store=0',
-    // })
     wx.navigateTo({
-      url: "/pages/index/discount/discount",
+      url: "/pages/goods/lineParticulars/lineParticulars",
       // url:  "/pages/member/supportCenter/supportCenter",
     //  url:    "/pages/goods/goodsclassificationlist/goodsclassificationlist",
     })
@@ -128,12 +125,17 @@ Page({
       console.log('u', options.uid);
     }
     if (options.scene) {
-      // 扫码进入
-      var scene = decodeURIComponent(options.scene);
-      console.log("scene ", scene);
-      let kol_id = scene.split('&')[0];
-      app.globalData.kol_id = kol_id;
-      console.log("********kol_id", kol_id);
+     
+           // 扫码进入
+           var scene = decodeURIComponent(options.scene);
+           console.log("scene ", scene);
+           let kol_id = scene.split('&')[0];
+           let store_id = scene.split('&')[1];
+           app.globalData.store_id = store_id;
+           app.globalData.kol_id = kol_id;
+           console.log("********内详情页store_id", store_id);
+           console.log("********kol_id", kol_id);
+
     }
     //  极选师扫码12小时内有分销来源
     // let timestamp = Date.parse(new Date);
@@ -360,6 +362,9 @@ Page({
   onShow: function () {
     let that = this;
  
+  //     wx.navigateTo({
+  //   url: "/pages/member/kolApply/kolApply"
+  // })
     //  极选师扫码12小时内有分销来源
     // if (app.globalData.distributor_type != 0) {
 
@@ -380,7 +385,7 @@ Page({
     //   }
     // }
     let updata = app.globalData.unregistered;
-    console.log(updata,'updata');
+    // console.log(updata,'updata');
     that.setData({
       unregistered:updata 
     })
@@ -882,6 +887,7 @@ Page({
 
           // let index_goods_list = data.index_goods_list;
           let new_pro = data.new_pro;
+          let video_index=data.adv_list.video_index;
           let small_sample_list = data.small_sample_list;
           let exponent = "";
 
@@ -939,6 +945,7 @@ Page({
             // top_list: top_list,  //Top10
             // index_goods_list: index_goods_list,   //商品列表
             new_pro: new_pro,   //新品推荐
+            video_index
             // topShopsIcon: data.icon,
             // coupon_list: data.coupon_list,
             // discount_list: discount_list,
@@ -1066,8 +1073,8 @@ Page({
    */
   onReady: function () {
      let that=this;
-     console.log(that.data.unregistered,'结束打印')
-     console.log(that.data.tel,'电话结束打印')
+    //  console.log(that.data.unregistered,'结束打印')
+    //  console.log(that.data.tel,'电话结束打印')
   },
 
   /**

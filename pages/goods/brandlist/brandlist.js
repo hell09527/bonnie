@@ -58,12 +58,15 @@ Page({
     } else if (options.scene) {
       console.log(2222)
       var scene = decodeURIComponent(options.scene);
-      let brind_id = scene.split('&')[0];
-      let kol_id= scene.split('&')[1];
-      console.log("********品牌id", brind_id);
-      console.log("********kol_id", kol_id);
+      let brind_id= scene.split('&')[0];
+      let kol_id = scene.split('&')[1];
+      let store_id = scene.split('&')[2];
+      app.globalData.store_id = store_id;
       app.globalData.kol_id = kol_id;
-   
+      console.log("********内详情页store_id", store_id);
+      console.log("********详情页id", brind_id);
+      console.log("********内详情页kol_id", kol_id);
+
 
       if (app.globalData.token && app.globalData.token != '') {
         //判断是否是付费会员的接口
@@ -289,24 +292,36 @@ PP_reuse:function(){
         let data = res.data;
         if (code == 0) {
           let goods_list = data.data;
-          let brand_name = data.brand_name
+          let brand_name = data.brand_name;
+          let  brand_video_address=data.brand_video_address;
           let brand_pic = data.brand_pic;
           console.log(brand_pic)
           wx.setNavigationBarTitle({
             title:brand_name
           })
-
-
+        
           for(let index in goods_list){
             let img = goods_list[index].pic_cover_small;
             goods_list[index].pic_cover_small = app.IMG(img);
+                //  品牌列表显示规格最小的sku的价格
+            for (let i = 0; i < goods_list[index].sku_list.length; i++) {
+               goods_list[index].lowest=[];
+              goods_list[index].lowest.push(goods_list[index].sku_list[i].promote_price); 
+              console.log(Math.min(...goods_list[index].lowest).toFixed(2));
+              
+              if( parseInt(goods_list[index].promotion_price).toFixed(2)>Math.min(...goods_list[index].lowest)){
+                goods_list[index].promotion_price=Math.min(...goods_list[index].lowest).toFixed(2);
+                console.log(Math.min(...goods_list[index].lowest).toFixed(2));
+              }
+          }
           }
 
           that.setData({
             page: 2,
             goods_list: goods_list,
             brand_name: brand_name,
-            brand_pic
+            brand_pic,
+            brand_video_address
           })
         }
         // console.log(res);
