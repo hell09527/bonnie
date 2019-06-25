@@ -267,3 +267,6 @@ overflow: hidden;
 .rur{
 width:100%;
 }
+#myVideo{
+  height: 420rpx;
+}

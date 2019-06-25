@@ -847,6 +847,7 @@ sale_timing: function (that, Send_array,sale_tms) {
      */
     goodsDetail: function (e) {
         let goods_id = e.currentTarget.dataset.id;
+      console.log(goods_id)
 
         wx.navigateTo({
             url: '/pages/goods/goodsdetail/goodsdetail?goods_id=' + goods_id,

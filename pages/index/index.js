@@ -46,24 +46,12 @@ Page({
     myTime:null,
     isHide:0,
     currentTab: 0, //预设当前项的值
-    smock:[
-      {src:'https://static.bonnieclyde.cn/fadeIn.png'},
-      {src:'https://static.bonnieclyde.cn/ce12.jpg'},
-    ],
-    IMGm:[
-      {src:'https://static.bonnieclyde.cn/ce12.jpg'},
-      {src:'https://static.bonnieclyde.cn/ce13.jpg'},
-      {src:'https://static.bonnieclyde.cn/ce14.jpg'},
-      {src:'https://static.bonnieclyde.cn/ce15.jpg'},
-      {src:'https://static.bonnieclyde.cn/ce16.jpg'},
-      {src:'https://static.bonnieclyde.cn/ce17.jpg'},
-      {src:'https://static.bonnieclyde.cn/ce18.jpg'},
-      {src:'https://static.bonnieclyde.cn/ce19.jpg'},
-    ],
+  
     swperStatu:1,   //判断几张轮播图
     j:1,
     page_index:1,
     floorstatus: false, //回到顶部按钮
+    isInput:1
 
   },
   //事件处理函数
@@ -75,7 +63,7 @@ Page({
 
   UC: function () {
     wx.navigateTo({
-      url: "/pages/goods/lineParticulars/lineParticulars",
+      url: "/pages/member/kolApply/kolApply",
       // url:  "/pages/member/supportCenter/supportCenter",
     //  url:    "/pages/goods/goodsclassificationlist/goodsclassificationlist",
     })
@@ -171,39 +159,15 @@ Page({
         // app.showBox(that, '登陆成功');
         that.SY_reuse();
         console.log('登陆成功')
-        // that.setData({
-        //   is_login: 1,  //加载。。。。
-        //   maskStatus: 0
-        // })
         clearInterval(load_timer);
       } else if (times == 15) {
         console.log('登录超时...')
         // app.showBox(that, '登录超时...');
-
-        // that.setData({
-        //   maskStatus: 0,
-        //   is_login: 1,
-        // })
         clearInterval(load_timer);
         return;
       }
     }, 1000);
-    // console.log('2121212')
-
-    // console.log(app.globalData.token)
-    // if (app.globalData.token && app.globalData.token != '') {
-    //   //判断是否是付费会员的接口
-    //   console.log('111')
-    //   that.SY_reuse();
-    // } else {
-    //   app.employIdCallback = employId => {
-    //     if (employId != '') {
-    //       console.log('222')
-    //       //判断是否是付费会员的接口
-    //       that.SY_reuse();
-    //     }
-    //   }
-    // }
+  
     // that.webSiteInfo();
 
     //  获取往期话题
@@ -259,13 +223,13 @@ Page({
     app.sendRequest({
       url: "index.php?s=/api/index/getindeximglist",
       data: {},
-      success: function (res) {
-        for (let index in shop) {
-          let img = shop[index].imgUrl;
-          shop[index].imgUrl = app.IMG(img);
-        }
-        shop = res;
-        // console.log(shop )
+      success: res=> {
+        let shop=res.map(item=>{
+          let img = item.imgUrl;
+          item.imgUrl = app.IMG(img);
+          return item;
+        })
+        console.log(shop )
         that.setData({
           shop,
         })
@@ -736,12 +700,13 @@ Page({
     app.sendRequest({
       url: "index.php?s=/api/index/getindeximglist",
       data: {},
-      success: function (res) {
-        for (let index in shop) {
-          let img = shop[index].imgUrl;
-          shop[index].imgUrl = app.IMG(img);
-        }
-        shop = res;
+      success: res=> {
+        let shop=res.map(item=>{
+          let img = item.imgUrl;
+          item.imgUrl = app.IMG(img);
+          return item;
+        })
+        console.log(shop )
         that.setData({
           shop,
         })
@@ -761,21 +726,7 @@ Page({
         }
       });
     
-    let shop;//新品推荐
-    app.sendRequest({
-      url: "index.php?s=/api/index/getindeximglist",
-      data: {},
-      success: function (res) {
-        for (let index in shop) {
-          let img = shop[index].imgUrl;
-          shop[index].imgUrl = app.IMG(img);
-        }
-        shop = res;
-        that.setData({
-          shop,
-        })
-      }
-    });
+   
   
 
     let base = app.globalData.siteBaseUrl;

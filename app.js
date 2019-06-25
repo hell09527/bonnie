@@ -53,7 +53,6 @@ App({
     if (options.referrerInfo.extraData){
        that.globalData.traffic_acquisition_source = options.referrerInfo.extraData.traffic_acquisition_source;
        that.yielding(that.globalData.traffic_acquisition_source)
-    
     }
 
     const updateManager = wx.getUpdateManager()
@@ -75,23 +74,12 @@ App({
     updateManager.onUpdateFailed(function () {
       // 新的版本下载失败
     })
-   
-    wx.getUserInfo({
-      success: res => {
-        console.log('获取用户信息成功', res);
-        let unregistered = 0;
-        that.setRegister(unregistered)
-        console.log(that.globalData.unregistered)
-        this.app_login();
-      },
-      fail(res) {
-        console.log('获取用户信息失败', res);
-        let unregistered = 1;
-        that.setRegister(unregistered)
-        that.unregisteredCallback(unregistered)
-        console.log(that.globalData.unregistered)
-      }
-    })
+
+      that.unregisteredCallback().then((result) => {
+          console.log(result)
+          that.globalData.unregistered = result
+      })
+
     that.defaultImg();
     that.webSiteInfo();
     that.copyRightIsLoad();
@@ -118,10 +106,6 @@ App({
         success: res => {
           let modelmes = res.model;
           console.log(res.system,'手机');
-          // console.log(modelmes,res.screenHeight);
-          // console.log(modelmes,res.windowHeight );
-          // console.log(modelmes,res.statusBarHeight );
-          // console.log(res.screenHeight - res.windowHeight - res.statusBarHeight - 46 );
        if(res.model.indexOf("iPhone X")!=-1){
         that.globalData.isIphoneX = 1;
        }else if(res.system.indexOf("Android")!=-1){
@@ -129,14 +113,6 @@ App({
        }else{
         that.globalData.isIphoneX = 3;
        }
-          // if (res.screenHeight - res.windowHeight - res.statusBarHeight - 46 > 70) {
-          //   　　　　　　　　　　//  处理相关逻辑
-          //   console.log('jinlai')
-          //    that.globalData.isIphoneX = true;
-          // }else{
-          //   console.log('宁不是')
-          // }
-  
         }
       })
   
@@ -154,6 +130,7 @@ App({
     });
   },
 
+    //微信登录(静默授权)
   getwechatUserInfo: function () {
     let that = this;
     // 查看是否授权
@@ -178,6 +155,7 @@ App({
       }
     })
   },
+    //微信登录(按钮)
   wechatLogin: function () {
     let that = this;
     let code = that.globalData.code;
@@ -409,10 +387,26 @@ App({
 
     }
   },
-  unregisteredCallback: function (unregistered) {
-    if (unregistered != '') {
+  unregisteredCallback: function () {
+    let that=this;
 
-    }
+    return new Promise(function (resolve, reject) {
+        wx.getUserInfo({
+            success: res => {
+                console.log('获取用户信息成功', res);
+                let unregistered = 0;
+                resolve(unregistered)
+                that.app_login();
+            },
+            fail(res) {
+                console.log('获取用户信息失败', res);
+                let unregistered = 1;
+                resolve(unregistered)
+            }
+        })
+
+    })
+
   },
   // setSessionKey:function(session_key){
   //   this.globalData.session_key = session_key;

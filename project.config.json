@@ -20,7 +20,7 @@
 		"enhance": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.7.1",
+	"libVersion": "2.7.2",
 	"appid": "wxd145d8a6e951dd1b",
 	"projectname": "BC",
 	"isGameTourist": false,
@@ -44,7 +44,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 5,
+			"current": 7,
 			"list": [
 				{
 					"id": -1,
@@ -84,6 +84,21 @@
 					"id": -1,
 					"name": "门店活动详情页",
 					"pathName": "pages/goods/lineParticulars/lineParticulars",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "3333",
+					"pathName": "pages/goods/goodsdetail/goodsdetail",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "申请成为极选师",
+					"pathName": "pages/member/kolApply/kolApply",
+					"query": "",
 					"scene": null
 				}
 			]

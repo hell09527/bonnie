@@ -29,6 +29,21 @@
           <image class="top_img" src="https://static.bonnieclyde.cn/bc.png" mode="widthFix" lazy-load="true" >
         </image>
         </view>
+
+
+           <!-- 搜索框动画 -->
+           <!-- <view class='search-box'>
+          <image src='/images/goods/search_icon_2.png' class="search-button" catchtap='toSearch' />
+          <view wx:if='{{isInput==1}}' catchtap='toInput' style='width:100%;color:#cccdd0;font-size:14px;'>
+            按照商品关键字搜索
+          </view>
+          <input type="text" class="search-input" bindinput='searchInput' placeholder="" bindconfirm='toSearch' focus='{{true}}' value='{{search_text}}' wx:else />
+         </view>
+        <view class="seach" ><image class="" style="width:100%;"  src="https://static.bonnieclyde.cn/shousun.png" mode="widthFix" lazy-load="false" binderror="" bindload="">
+        </image></view> -->
+         <!-- 搜索框动画 -->
+
+
     <!-- <block wx:if='{{is_login == 0}}'>
     <image class='load_img' src='https://static.bonnieclyde.cn/icon01.gif'></image>
   </block> -->

@@ -7,8 +7,9 @@ Page({
   data: {
     jump: 1,
     TistData: [
+      { "code": "分润", "text": "极选师推广订单完成后，商品销售价格按比例返还给极选师的金额" },
       { "code": "分润待结算状态", "text": "订单付款后，订单获得的分润" },
-      { "code": "分润审核期", "text": "订单已收货后15天内的维权期" },
+      { "code": "分润审核期", "text": "订单已发货15天内的维权期" },
       { "code": "待入账金额", "text": "订单获得的分润处于审核期" },
       { "code": "可提现金额", "text": "订单获得的分润已入账到极选师账户，等待提现" },
       { "code": "考核期", "text": "每个季度为一个考核期" },
@@ -18,6 +19,14 @@ Page({
       { star: '二星级', standard: '150000', proportion: '7%' },
       { star: '三星级', standard: '210000', proportion: '10%' },
     ],
+    course:[
+      { forward:' https://static.bonnieclyde.cn/course01.jpg'},
+      { forward:' https://static.bonnieclyde.cn/course02.jpg'},
+      { forward:' https://static.bonnieclyde.cn/course03.jpg'},
+      { forward:' https://static.bonnieclyde.cn/course04.jpg'},
+      { forward:' https://static.bonnieclyde.cn/course05.jpg'},
+    ]
+   
   },
 
   /**
@@ -29,12 +38,12 @@ Page({
     if (options.stu == 1) {
       jump = 1;
       wx.setNavigationBarTitle({
-        title: "极选师帮助中心",
+        title: "极选师赚钱指南",
       })
     } else {
       jump = 2;
       wx.setNavigationBarTitle({
-        title: "极选师规格说明",
+        title: "极选师规则说明",
       })
     }
 

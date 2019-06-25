@@ -729,10 +729,10 @@ Page({
     let k = event.currentTarget.dataset.key;
     let id = event.currentTarget.dataset.id;
     let cart_list = that.data.cart_list;
-        //  判断修改num拿到是对应的商品的num
+        //  判断修改num拿到是对应的商品的num;
     let num=that.data.Xu_id==id?that.data.Xu_num:event.detail.value;
     let total_price = that.data.total_price;
-    console.log(num )
+    console.log(num)
 
     app.sendRequest({
       url: 'api.php?s=goods/cart',
@@ -844,7 +844,7 @@ Page({
     for (let index in cart_list) {
       for (let key in cart_list[index]) {
         if(key==k){
-          cart_list[index][k].isInput=0
+          cart_list[index][k].isInput=0;
         }
       }
     }
@@ -894,12 +894,11 @@ Page({
 
                 for (let index in cart_list) {
                   for (let key in cart_list[index]) {
-
                     if(cart_list[index][key].sale_type==2){ //预售时间提示
                       cart_list[index][key].send_sale = sale_time.formatTime(cart_list[index][key].sale_end_time, 'Y年M月D日h:s')+'预售结束';
                     }
 
-
+                    
                     cart_list[index][key].status = 0;
                     cart_list[index][key].isInput = 1;
                     let promotion_price = parseFloat(cart_list[index][key].promotion_price);

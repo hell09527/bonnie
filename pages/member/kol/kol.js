@@ -144,6 +144,17 @@ Page({
     })
 
   },
+  toRulePage:function(e){
+    let that=this;
+    let type=   e.currentTarget.dataset.type;
+    let Num =type=='x'? 1:2;
+    wx.navigateTo({
+      url: '/pages/member/supportCenter/supportCenter?stu='+ Num
+    })
+   
+
+
+  },
    /**
    * 顶部导航选中
    */

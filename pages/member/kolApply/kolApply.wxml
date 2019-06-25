@@ -1,113 +1,27 @@
-<!--pages/member/kolApply/kolApply.wxml-->
 <scroll-view wx:if='{{isKol==2}}'>
   <view class='article'>
     <view class="pay-block">
 			<image src='https://static.bonnieclyde.cn/W56.png' mode='widthFix'/>
 		</view>
         <view class='p' >{{kolText}}</view>
-       <button catchtap='toIndex'>返回首页</button>
+       <button catchtap='toIndex' >返回首页</button>
   </view>
 </scroll-view>
 
-<scroll-view wx:if='{{isKol==1}}'>
-
-  <view class="motify {{prompt==''?'hide':''}}">
-    <icon class="i show_type warning" type='warn' size='25'color='#fff' ></icon>
-    <view class="motify-inner">{{prompt}}</view>
+<scroll-view  wx:if='{{isKol==1}}'>
+  <view wx:for="{{shop}}" wx:for-item='item' wx:for-index='index'>
+      <image class="" src="{{item.src}}" mode="widthFix"  style='width:750rpx;'/>
   </view>
+  <view style='width:100%;height:100px;' > </view>
+    
+ 
 
-  <!-- 标题 -->
-  <!-- <view class='title-nav'>
-    <view class='nav-text'>
-      <block wx:for='{{navList}}' wx:item='{{item}}' wx:key=''>
-        <view class="nav-text-item {{item.select?'nav-text-active':''}}">{{item.name}}</view>
-      </block>
-    </view>
-    <view class='nav-circle'>
-      <block wx:for='{{navList}}' wx:item='{{item}}' wx:key=''>
-        <view class="nav-circle-item {{item.select?'nav-circle-active':''}} "></view> 
-      </block>
-    </view>
-  </view> -->
-
-  <!-- 基本资料 -->
-  <view class='basic-infor' wx:if='{{isShow==1}}'>
-     <view class='hobby' >
-      <view class='table' >
-      <view>
-         <view class="span color-red">*</view>
-        <view class='table-text'>姓名</view>
-        <input type='text' class='table-input'  value='{{listData.name}}'  bindinput='nameValue'  bindblur='nameWrok' ></input>
-      </view> 
-      <!-- <view> -->
-       <!-- <view class="span color-red">*</view>
-        <view class='table-text'>性别</view>
-        <radio-group class="radio-group" bindchange="radioChange" style='flex: 1;'>
-          <label class="radio" wx:for="{{sexList}}" wx:key=''>
-            <radio value="{{item.name}}"  color="#000" checked="{{item.checked}}"/>{{item.name}}
-          </label>
-        </radio-group> -->
-      <!-- </view>  -->
-      <!-- <view>
-       <view class="span color-red">*</view>
-        <view class='table-text'>出生日期</view>
-        <view class="section table-input">
-          <view style='height:1.4rem'>{{listData.birthday}}</view>
-          <picker mode="date" value="{{listData.birthday}}" start="1900-01-01" end="{{mydate}}" bindchange="bindDateChange">
-            <view class="picker">···</view>
-          </picker>
-        </view>
-      </view>  -->
-      <view>
-       <view class="span color-red">*</view>
-        <view class='table-text'>所在地</view>
-        <view class="table-input section" style='flex:1;'>
-          <picker bindchange="bindProvincChange" mode='selector' value="{{provinceIndex}}" range="{{provinceArray}}" data-id='{{provinceArray[provinceIndex].province_id}}' range-key="province_name" class='addressText'>
-              {{provinceArray[provinceIndex].province_name}}
-          </picker>
-          <text>/</text>
-          <picker bindchange="bindCityChange" mode='selector' value="{{cityIndex}}" range="{{cityArray}}" data-id='{{cityArray[cityIndex].city_id}}' range-key="city_name" class='addressText'>
-              {{cityArray[cityIndex].city_name}}
-          </picker>
-          <!-- <text>/</text>
-          <picker bindchange="bindDistrictChange" mode='selector' value="{{districtIndex}}" range="{{districtArray}}" data-id='{{districtArray[districtIndex].district_id}}' range-key="district_name" class='addressText'>
-              {{districtArray[districtIndex].district_name}}
-          </picker> -->
-        </view>
-      </view> 
-      <!-- <view style='height:80rpx;'>
-       <view class="span color-red">*</view>
-        <view class='table-text'>详细住址</view>
-        <!-- placeholder='详细住址' -->
-        <!-- <input type='text'  placeholder='请填写您的详细地址' class='table-input' bindinput='addressValue' bindblur='addressWrok'    value='{{listData.Naddress}}'></input>
-      </view>  --> 
-      <view>
-       <view class="span color-red">*</view>
-        <view class='table-text'>手机号码</view>
-        <input type='text' placeholder='请填写您的手机号码' class='table-input' value='{{listData.tel}}' bindinput='phoneValue'></input>
-      </view> 
-      <!-- <view> -->
-       <!-- <view class="span color-red" style='color:#333'>*</view> -->
-        <!-- <view class='table-text' style='margin-left:26rpx;'>EMAIL</view> -->
-
-        <!-- <input type='text' placeholder='请填写您的电子邮箱' class='table-input' bindinput='emailValue' value='{{listData.email}}'></input> -->
-      <!-- </view>  -->
-      <view>
-      <view class="span color-red">*</view>
-        <view class='table-text'>{{showTitle}}</view>
-        <view class='table-input'>{{recommend}}</view>
-      </view> 
-         <form bindsubmit="toApply" report-submit="true">
-            <button class='next-btn'  formType="submit">提交申请</button>
-        </form>
-    </view>
-  </view>
-  </view>
-
-
-
-
-  
+<view class="local" >
+    <block wx:if='{{unregistered==1}}' >
+       <button class='but' catchtap='Crossdetails' >立即赚钱</button>
+    </block>
+     <block wx:if='{{unregistered==0 }}' >
+         <button class='but' catchtap='toApply' >立即赚钱</button>
+    </block>
+</view>
 </scroll-view>
-
-

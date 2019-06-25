@@ -596,7 +596,7 @@ image{
   height:240px;
 }
 .slick{
-  margin-bottom: 30rpx;
+  margin-bottom: 15rpx;
 }
 
 .body{
@@ -627,5 +627,6 @@ image{
   width: 100%;
   height: 420rpx;
   vertical-align: middle;
+   margin-bottom: 15rpx;
  
 }

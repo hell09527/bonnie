@@ -96,9 +96,7 @@ if (app.globalData.token && app.globalData.token != '') {
                     // console.log(order_list[index].order_item_list[key].delivery_end_time);
                     // console.log(order_list[index].order_item_list[key].sale_end_time);
                     order_list[index].order_item_list[key].send_sale =  that.sale_timing(that,order_list[index].order_item_list[key].delivery_end_time,order_list[index].order_item_list[key].sale_end_time);
-             
                  }
-
 
           }
         }

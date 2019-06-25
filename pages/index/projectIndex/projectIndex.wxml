@@ -31,7 +31,7 @@
         <image  class='sss' wx:if='{{acticities.pic_pro}}' src="{{acticities.pic_pro}}" mode='widthFix' style='width:680rpx;margin:0 auto;'></image>
         <image  class='lll' wx:if='{{acticities.pic}}' src="{{acticities.pic}}" mode='widthFix' style='width:100%'></image>
                <!-- 先添加的video -->
-          <!-- <video id="myVideo" wx:if='{{acticities.movie_show==1}}' src="{{acticities.movie_link}}" objectFit='cover' controls style='width:100%'></video> -->
+          <video id="myVideo" wx:if='{{acticities.movie_show==1}}' src="{{acticities.movie_link}}" objectFit='cover' controls style='width:100%;display:block;'></video>
       </view>
 
 
@@ -85,7 +85,6 @@
  </view> 
 
  <!--轮播  -->
-
 <view wx:if="{{actList[0] == undefined}}" style="margin-top:400px;" class='index-xi' >
   <block wx:for='{{activities}}' wx:key='' wx:for-item='shops' wx:for-index='index'>
     <!-- style="height:292rpx;width:520rpx;" -->

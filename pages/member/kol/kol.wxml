@@ -66,6 +66,30 @@
         <view class='namey'>累计销售额</view>
         <view class='namey'>累计订单数</view>
       </view>
+          <view class='moneyBox'>
+        <view class='xuans'>
+          <view class='c_money'>
+            <image src='/images/member/additionalMonay.png' mode='widthFix'/>  
+            <view>极选师赚钱指南</view>
+          </view>
+          <view class='edu' data-type="x" catchtap='toRulePage'>
+            <text>查看详情</text>
+            <image class="direction" src='https://static.bonnieclyde.cn/WechatIMG240.png'></image> 
+            <!-- <image class="direction {{temp?'rotate':''}}" src='https://static.bonnieclyde.cn/WechatIMG240.png'></image>  -->
+          </view>
+        </view>
+        <view class='xuans'>
+          <view class='c_money'>
+            <image src='/images/member/additionalMonay.png' mode='widthFix'/>  
+            <view>极选师规则说明</view>
+          </view>
+          <view class='edu' data-type="z" catchtap='toRulePage'>
+          <!-- <view class='edu' catchtap='open'> -->
+            <text>查看详情</text>
+            <image class="direction" src='https://static.bonnieclyde.cn/WechatIMG240.png'></image> 
+          </view>
+        </view>
+      </view>
       </view> 
     </block>
         <!-- 分润规则说明  end -->
@@ -97,6 +121,10 @@
         </view>
       </block>
           </view>
+
+
+                    
+  
       
 
   </view>

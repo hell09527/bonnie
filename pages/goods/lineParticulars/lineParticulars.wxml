@@ -1,5 +1,26 @@
  <scroll-view>
-    <button class="default"  catchtap='subscribe'>  预约活动 </button>
+   <block wx:for='{{actList}}' wx:key='' wx:for-item='acticities' wx:for-index='index'> 
+    <view>
+    
+   
+
+      <!--图片  -->
+      <view class='project-image'    data-src='{{acticities.index_pic}}' data-id="{{acticities.id}}"    data-url="{{acticities.pic_link}}"  catchtap='toLink'>
+          <image  class='lll' wx:if='{{acticities.index_pic}}' src="{{acticities.index_pic}}" mode='widthFix' style='width:100%'></image>
+          <!-- 先添加的video -->   <video id="myVideo" wx:if='{{acticities.index_video}}' src="{{acticities.index_video}}" objectFit='cover' controls style='width:100%;display:block;' poster="{{acticities.video_pic}}"></video>
+              <form bindsubmit="payOrder" report-submit="true" wx:if='{{acticities.appointment_pic}}'  catchtap="Appoint"  data-sub='{{acticities.appointment_pic}}'  data-id="{{acticities.id}}" >
+                 <image  class='lll'  src="{{acticities.appointment_pic}}" mode='widthFix' style='width:100%'></image>
+               </form>
+      </view>
+      </view> 
+    <!-- </view> -->
+
+
+ </block> 
+
+
+
+    <!-- <button class="default"  catchtap='subscribe'>  预约活动 </button> -->
     <!-- 弹框- -->
   <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModel}}"></view> 
  <view class="modal-dialog" wx:if="{{showModel}}">
@@ -7,7 +28,7 @@
   <view class="modal-middle">
     <view class="go_title">你确定预约本次活动吗? </view>
    <view class="go_title">地点： Bonnie&Clyde（长宁来福士店）</view>
-    <view class="go_title">时间：2019年06月08日 12:00:00 </view>
+    <view class="go_title">时间：{{start_time}} </view>
   </view>
   <view class="modal-footer">
     <view class="btn-cancel" bindtap="onChoice" data-status="cancel">取消</view>
@@ -26,9 +47,5 @@
   <view class="bide-more" data-status='more' catchtap='goLeap'>发现更多活动</view>
 
  </view>
-
-
-
-
  </scroll-view>
    

@@ -41,6 +41,8 @@
     "pages/goods/combopackagelist/combopackagelist",
     "pages/goods/promotionzone/promotionzone",
     "pages/goods/spellinggroupzone/spellinggroupzone",
+    "pages/member/belowArch/belowArch",
+    "pages/member/upgrade/upgrade",
     "pages/member/newmypath/newmypath",
     "pages/member/updateaccount/updateaccount",
     "pages/member/personaldata/personaldata",

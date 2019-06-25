@@ -1,2 +1,10 @@
 <!--pages/goods/lineActivity/lineActivity.wxml-->
-<text>pages/goods/lineActivity/lineActivity.wxml</text>
+<block wx:for='{{activities}}' wx:key='' wx:for-item='shops' wx:for-index='index'>
+<view style='position: relative;z-index:10;box-shadow:4px 5px 10px rgba(0,0,0,0.7);' catchtap='toDetail' data-id="{{shops.id}}" data-title="{{shops.activity_name}}">
+  <image src="{{shops.pic}}" mode='widthFix' style='width:100%;display:block;'></image>
+  <!-- <view class='lase-shuffing-mask' style='padding:0 30rpx;'>
+    <text>{{shops.title}}</text>  
+    <image src='/images/index/right.png'></image>
+  </view> -->
+ </view>
+ </block>

@@ -523,7 +523,7 @@
                       <view class="span nickname">{{comment.member_name}}</view>
                   </view>
     <!-- 初次评价 -->
-    <view class="evaluation-content">{{comment.content}}</view> 
+    <text  decode="{{true}}" class="evaluation-content">{{comment.content}}</text> 
                 </view>
     <!-- 评价图片 -->
     <view class="ul evaluation-pics" wx:if="{{comment.image[0]}}">

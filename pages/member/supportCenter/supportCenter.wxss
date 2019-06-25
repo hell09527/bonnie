@@ -219,8 +219,10 @@
        display: flex;
        width: 100%;
        height: 80rpx;
+       flex-direction: column;
        align-items: center;
-       padding:10rpx 30rpx;
+       line-height: 80rpx;
+      
 
     } 
     .Star_table .td:last-child{

@@ -225,12 +225,12 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    this.VideoContext = wx.createVideoContext('myVideo')
+    // this.VideoContext = wx.createVideoContext('myVideo')
   },
   dex:function(){
     let that=this;
     // setTimeout(function(){ },9000)
-      this.VideoContext.pause()
+      // this.VideoContext.pause()
    
   },
   videoPlay(e) {
@@ -238,7 +238,7 @@ Page({
     this.setData({
       curr_id: e.currentTarget.dataset.id,
     })
-    console.log(this.VideoContext)
+    // console.log(this.VideoContext)
   },
   XXS_reuse:function(){
     let that = this;
@@ -535,7 +535,7 @@ if (app.globalData.token && app.globalData.token != '') {
               time_array.end_time = data.promotion_detail.end_time;
               that.timing(that, time_array,1);
             };
-  
+           
              //预售时间计时
              if (data.sale_type == 2 && data.sale_end_time!= ''){
               let time_array = {};
@@ -1575,6 +1575,9 @@ Examine: function (event) {
         if (code == 0) {
           if (data.code > 0) {
             app.showBox(that, '加入购物车成功')
+            goods_info.cart_count += count;
+            that.setData({ goods_info });
+
             purchase_num = parseInt(purchase_num) + parseInt(count);
             let d = {};
             let parm = "goods_info." + purchase_num;
@@ -2317,7 +2320,8 @@ sale_timing: function (that, Send_array) {
        // 介绍语
        let infoText = that.data.goods_info.introduction;
        let infoWidth = parseInt(parseInt(that.data.windowWidth) - (F01w*2));
-       console.log(infoWidth)
+           console.log(infoWidth);
+
  
        // 合成BC基础商品首图02---->
        wx.getImageInfo({
@@ -2354,7 +2358,10 @@ sale_timing: function (that, Send_array) {
                 ctx.drawImage(res.path, W, All, HOS, HOS);
                  // 合成BC商品说明文字04---->
                 let text = that.data.goods_info.goods_name;
-                let price = '￥' + that.data.goods_info.price;
+                // goods_info.price
+               let scale =that.data.scale;  //区分是否存在商品为多规格
+               let price =  scale==1?'￥' +that.data.goods_info.price:'￥' + that.data.Min_ori; //海报制作显示价格最低的规格
+               
                 let UrlH = All + HOS + 10;
                 let textWidth = parseInt(parseInt(orign) - 10 - parseInt(HOS));
 

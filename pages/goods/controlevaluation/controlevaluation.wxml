@@ -52,7 +52,9 @@
                 <view class="evaluation-time" style='color:#FF0036;margin-right:10rpx;'>{{evaluates.is_first==1?"精选评论":""}}</view>
               </view>
               <!-- 初次评价 -->
-              <view class="evaluation-content">{{evaluates.content}}</view>
+                  <text  decode="{{true}}" class="evaluation-content">
+                  {{evaluates.content}}</text> 
+
               <!-- 店家回复 -->
               <block wx:if="{{evaluates.explain_first != ''}}">
                 <view class="evaluation-reply">店家回复:{{evaluates.explain_first}}</view>
@@ -71,7 +73,7 @@
                   追加评价
                   <view class="time review-time">{{evaluates.again_addtime}}</view>
                 </view>
-                <view class="evaluation-content review">{{evaluates.again_content}}</view>
+                <text decode="{{true}}"  class="evaluation-content review">{{evaluates.again_content}}</text>
               </block>
               <!-- 追评店家回复 -->
               <block wx:if="{{evaluates.again_explain != ''}}">

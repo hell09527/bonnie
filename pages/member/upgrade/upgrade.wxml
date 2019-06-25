@@ -1,0 +1,53 @@
+<!--pages/member/upgrade/upgrade.wxml-->
+<scroll-view>
+  <view class="motify {{prompt==''?'hide':''}}">
+    <icon class="i show_type warning" type='warn' size='25' color='#fff'></icon>
+    <view class="motify-inner">{{prompt}}</view>
+  </view>
+  <!-- 基本资料 -->
+  <view class='basic-infor' wx:if='{{isShow==1}}'>
+  <view class="base_img" > </view>
+     <view class='hobby'>
+      <view class='table'>
+        <view>
+          <view class="span color-red">*</view>
+          <view class='table-text'>姓名</view>
+          <input type='text' class='table-input' placeholder='请输入您的姓名' value='{{listData.name}}' bindinput='nameValue' bindblur='nameWrok'></input>
+        </view>
+        <view>
+          <view class="span color-red">*</view>
+          <view class='table-text'>所在地</view>
+          <view class="table-input section" style='flex:1;'>
+            <picker bindchange="bindProvincChange" mode='selector' value="{{provinceIndex}}" range="{{provinceArray}}" data-id='{{provinceArray[provinceIndex].province_id}}' range-key="province_name" class='addressText'>
+              {{provinceArray[provinceIndex].province_name}}
+            </picker>
+            <text style="text-align:center;width:60rpx;color:#666;">/</text>
+            <picker bindchange="bindCityChange" mode='selector' value="{{cityIndex}}" range="{{cityArray}}" data-id='{{cityArray[cityIndex].city_id}}' range-key="city_name" class='addressText'>
+              {{cityArray[cityIndex].city_name}}
+            </picker>
+          </view>
+        </view>
+        <view>
+          <view class="span color-red">*</view>
+          <view class='table-text'>手机号码</view>
+          <input type='text' placeholder='请填写您的手机号码' class='table-input' value='{{listData.tel}}' bindinput='phoneValue'></input>
+        </view>
+        <view>
+          <view class="span color-red">*</view>
+          <view class='table-text'>{{showTitle}}</view>
+          <view class='table-input'>{{kol_name}}</view>
+        </view>
+        <!-- 我有邀请码，直接成为极选师 > -->
+         <view class="invite"></view>
+      </view>
+    </view>
+      <form bindsubmit="toApply" report-submit="true">
+          <button class='next-btn' formType="submit">提交申请</button>
+      </form>
+      <view class="middle_txt">极选师申请成功后，平台将在48小时内审核信息</view>
+ 
+
+  
+   
+  </view>
+</scroll-view>
