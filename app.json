@@ -44,6 +44,7 @@
     "pages/member/belowArch/belowArch",
     "pages/member/upgrade/upgrade",
     "pages/member/newmypath/newmypath",
+    "pages/member/electronic/electronic",
     "pages/member/updateaccount/updateaccount",
     "pages/member/personaldata/personaldata",
     "pages/member/memberaddress/memberaddress",

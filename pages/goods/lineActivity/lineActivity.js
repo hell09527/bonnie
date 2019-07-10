@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    activities: '',    //活动列表
+    activity: '',    //活动列表
   },
 
   /**
@@ -14,16 +14,11 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-
-    if (options.uid) {
-      console.log(options.uid)
-      app.globalData.identifying = options.uid;
-    }
+    console.log('whjbjhvbjhjbwvhjbebwhjvbhjbvh');
     //  获取活动列表
     app.sendRequest({
-      url: "api.php?s=/activity/storeActivityList ",
+      url: "api.php?s=/activity/storeActivityList",
       data: {},
-      method: 'GET',
       success: function (res) {
         for (let index in res.data) {
           let img = res.data[index].pic;
@@ -31,29 +26,36 @@ Page({
         }
 
         that.setData({
-          activities: res.data
+          activity: res.data
         })
       }
     });
+
   },
 
   AA: function () {
+    console.log('xxxxxxxx');
     var that = this;
+
     app.sendRequest({
-      url: "api.php?s=/Activity/activityList",
+      url: "api.php?s=/activity/storeActivityList",
       data: {},
-      method: 'GET',
       success: function (res) {
+        console.log('yyyyyyy');
         for (let index in res.data) {
           let img = res.data[index].pic;
           res.data[index].pic = app.IMG(img);
         }
-
+        console.log(res.data, 'res.data')
         that.setData({
-          activities: res.data
+          activity: res.data
         })
       }
     });
+
+
+
+
   },
   TWO_reeuse: function () {
     let that = this;
@@ -181,7 +183,7 @@ Page({
     let data = this.data.data;
     let uid = app.globalData.uid;
     let projectData = that.data.projectData;
-    let TWO_share_url = '/pages/index/topicList/topicList?data=' + JSON.stringify(projectData)
+    let TWO_share_url = '/pages/goods/lineActivity/lineActivity?data=' + JSON.stringify(projectData)
     console.log(data);
     if (that.data.distributor_type == 0) {
       return {

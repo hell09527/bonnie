@@ -43,13 +43,14 @@
   display: block;
   height: 35px;
   line-height: 35px;
-  background: #F15353;
+  background: #000;
   text-align: center;
   color: #fff;
   width: 85%;
   border: 0;
   font-size: 15px;
   margin: auto;
-  border-radius: 5px;
+  border-radius: 0px;
+   margin-top: 20px;
   margin-bottom: 20px;
 }

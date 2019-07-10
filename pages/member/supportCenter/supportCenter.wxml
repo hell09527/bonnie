@@ -1,11 +1,14 @@
 <!-- pages/member/supportCenter/supportCenter.wxml -->
 <scroll-view>
   <view class='Als' wx:if='{{jump==1}}'>
-  <block wx:for="{{course}}" wx:for-item='our'>
-    <image  src="{{our.forward}}" mode="widthFix" style='width:100%' />
-  </block>
-    
-   
+    <block wx:for="{{course}}" wx:for-item='our' wx:for-index="index">
+      <block wx:if="{{distributor_type==0 }}">
+        <image wx:if="{{index>1}}" src="{{our.forward}}" mode="widthFix" style='width:100%' />
+      </block>
+      <block wx:else>
+        <image src="{{our.forward}}" mode="widthFix" style='width:100%' />
+      </block>
+    </block>
   </view>
   <view class="Als" wx:if='{{jump==2}}'>
     <!-- 极选师规则 -->
@@ -44,7 +47,7 @@
         </view>
         <view class='head_text'>考核期内，极选师的累计商品成交金额达到当前星级的升星额度，则自动上升一个星级。</view>
         <view class='head_text'>考核结算时，不同星级的极选师将会获得星级额外奖励。</view>
-        <view class=" tables  Star_table ">
+        <!-- <view class=" tables  Star_table ">
           <view class="tb bg-w">
             <view class="th">极选师星级</view>
             <view class="th">升星标准(元)</view>
@@ -57,16 +60,18 @@
               <view class="td">{{item. proportion}}</view>
             </view>
           </block>
-        </view>
+        </view> -->
       </view>
       <!-- 极选师星级制 end -->
       <!-- 星级奖励计算规则 start -->
       <view class='regulation'>
         <view class='headline'>星级奖励计算规则</view>
         <view class='head_text'>(超出升级标准的部分金额 - 星级升级标准金额) * 星级奖励比例 = 星级额外奖励最终金额</view>
-        <view class='head_text'>假设极选师升到了一星级需要30000元销售额，一星级的星级奖励比例为5%，而极选师在考核期内完
-成了45000元销售业绩，则考核日，极选师获得星级奖励金额</view>
- <view class='head_text'>（45000 - 30000）* 5% = 750（元）</view>
+        <view class='head_text'>
+          假设极选师升到了一星级需要30000元销售额，一星级的星级奖励比例为5%，而极选师在考核期内完
+成了45000元销售业绩，则考核日，极选师获得星级奖励金额
+        </view>
+        <view class='head_text'>（45000 - 30000）* 5% = 750（元）</view>
       </view>
       <!-- 星级奖励计算规则 end -->
       <!-- 极选师推荐制 start -->

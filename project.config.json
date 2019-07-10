@@ -3,9 +3,11 @@
 	"setting": {
 		"urlCheck": true,
 		"es6": true,
+		"enhance": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
+		"coverView": true,
 		"nodeModules": true,
 		"autoAudits": false,
 		"uglifyFileName": true,
@@ -16,11 +18,10 @@
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
-		},
-		"enhance": true
+		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.7.2",
+	"libVersion": "2.6.6",
 	"appid": "wxd145d8a6e951dd1b",
 	"projectname": "BC",
 	"isGameTourist": false,
@@ -44,34 +45,14 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 7,
+			"current": 0,
 			"list": [
 				{
-					"id": -1,
-					"name": "1",
-					"pathName": "pages/member/supportCenter/supportCenter",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "2",
-					"pathName": "pages/member/kolApply/kolApply",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 2,
+					"id": 0,
 					"name": "商品详情",
-					"pathName": "pages/goods/goodsdetail/goodsdetail",
-					"query": "goods_id=910"
-				},
-				{
-					"id": -1,
-					"name": "扫二维码进入",
-					"pathName": "pages/index/index",
+					"pathName": "pages/goods/goodsdetail/goodsdetail?goods_id=1126",
 					"query": "",
-					"scene": "1011"
+					"scene": null
 				},
 				{
 					"id": -1,
@@ -89,15 +70,15 @@
 				},
 				{
 					"id": -1,
-					"name": "3333",
-					"pathName": "pages/goods/goodsdetail/goodsdetail",
+					"name": "申请成为极选师",
+					"pathName": "pages/member/kolApply/kolApply",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "申请成为极选师",
-					"pathName": "pages/member/kolApply/kolApply",
+					"name": "卡券",
+					"pathName": "pages/member/electronic/electronic",
 					"query": "",
 					"scene": null
 				}

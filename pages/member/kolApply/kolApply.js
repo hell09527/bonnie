@@ -1,17 +1,17 @@
 // pages/member/kolApply/kolApply.js
 const app = new getApp();
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
     isKol: 1,
+    isCK:1,
     listData: {
     },    //全数据
     recommend: '',   //推荐人
     shop: [
-      {src: "https://static.bonnieclyde.cn/law01.jpg"},
+      {src: "https://static.bonnieclyde.cn/feier.jpeg"},
       {src: "https://static.bonnieclyde.cn/law02.jpg"},
       {src: "https://static.bonnieclyde.cn/law03.jpg"},
       {src: "https://static.bonnieclyde.cn/law04.jpg"},
@@ -22,22 +22,30 @@ Page({
     swiperIndex: 0,//这里不写第一次启动展示的时候会有问题
     tel: '',
     kolText: '',    //文本
+    pylon:1
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
     var that = this;
     var listData = this.data.listData;
-    
-    console.log(options.scene, options.uid);
-    let updata = app.globalData.unregistered;
+    this.tions=options;
+  
+
+  setTimeout(function(){
+    let  updata = app.globalData.unregistered;
+    let isIphoneX = app.globalData.isIphoneX;
+    console.log(isIphoneX)
+  
     console.log(updata)
     that.setData({
-      unregistered: updata
+      unregistered:updata,
+      isIphoneX
     })
+    },420)
+
 
 
     // 扫码进入
@@ -66,6 +74,7 @@ Page({
         })
       }
       console.log(Uid, 'uid')
+
       if (Uid) {
         console.log('进来了')
         app.sendRequest({
@@ -85,17 +94,31 @@ Page({
           }
         })
       }
-
       console.log(uid)
-
-
     } else if (options.uid) {
       var uid = options.uid;
-      listData.uid = uid;
-      console.log(uid,"转发近")
-      that.setData({
-        listData,
-      })
+      console.log('wwww',options.uid)
+       
+        app.sendRequest({
+          url: 'api.php?s=Distributor/applyUserName',
+          data: { uid: uid},
+          success: function (res) {
+            console.log(res);
+            if (res.code == 1) {
+              listData.recommend_user= uid;
+              uid = app.globalData.recommendUser;
+              var recommend_user = res.data;
+              console.log('zhuanfaa')
+              listData.kol_name=res.data;
+              console.log(listData.kol_name)
+              that.setData({
+                recommend: recommend_user,
+                listData,
+              })
+            }
+          }
+        })
+      
 
 
     } else if (this.data.uid) {
@@ -123,11 +146,10 @@ Page({
       })
     }
 
-    // app.unregisteredCallback = unregistered => {
-    //   console.log(app.globalData.unregistered);
-    //   app.isLogin(app.globalData.unregistered);
-    // }
 
+
+
+  
 
 
 
@@ -141,7 +163,6 @@ Page({
 
   XXS_reuse: function () {
     let that = this;
-
     app.sendRequest({
       url: "api.php?s=member/getMemberDetail",
       success: function (res) {
@@ -182,34 +203,51 @@ Page({
 
   // 申请极选师
   toApply: function (event) {
+
     var that = this;
+    let isKol=that.data.isKol;
+    let isCK=that.data.isCK;
+    console.log(that.data.pylon)
+    if(isKol==2){
+      isCK=isKol;
+      that.setData({
+        isCK
+      })
+    }
+    else{
+      var listData = JSON.stringify(this.data.listData);
+      console.log(listData );
+      wx.navigateTo({
+        url: '/pages/member/upgrade/upgrade?listData=' + listData
+      })
+    }
    
-    var listData = JSON.stringify(this.data.listData);
-    
+  
+   
+
+  },
+  makemony:function(){
     wx.navigateTo({
-      url: '/pages/member/upgrade/upgrade?listData=' + listData
+      url: '/pages/member/supportCenter/supportCenter?stu=1'
     })
-   
 
   },
 
-  toIndex: function () {
-    wx.switchTab({
-      url: '/pages/index/index',
-    })
-  },
+
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function (options) {
     var that = this;
     var listData = this.data.listData;
     console.log(app.globalData.unregistered);
+    that.onLoad(that.tions);
+ 
 
+    // listData.recommend_user = app.globalData.recommendUser;//更新手机号登陆bug
 
-
-
+    app.globalData.recommendUser
     wx.getSystemInfo({
       success(res) {
         let windowWidth = (res.windowWidth / 1.4);//当前手机屏幕的宽度
@@ -231,6 +269,7 @@ Page({
     if (app.globalData.token && app.globalData.token != '') {
       //判断是否是付费会员的接口
       that.XXS_reuse();
+
       app.sendRequest({
         url: "api.php?s=member/getMemberDetail",
         success: function (res) {
@@ -238,13 +277,8 @@ Page({
           if (res.code == 0) {
             let tel = data.user_info.user_tel;
             let uid = data.user_info.uid;
-
-            if (tel == '') {
-              wx.navigateTo({
-                url: '/pages/member/resgin/resgin',
-              })
-            } else {
-
+            listData.tel=tel;
+            console.log("listData.tel",listData.tel)
               // 判断是否是极选师
               app.sendRequest({
                 url: 'api.php?s=distributor/checkApply',
@@ -256,11 +290,13 @@ Page({
                   if (res.code == 2) {
                     that.setData({
                       isKol: 2,
-                      kolText: '你已经是惠选师',
+                      pylon:2,
+                      kolText: '你已经是极选师',
                     })
                   } else if (res.code == 3) {
                     that.setData({
                       isKol: 2,
+                      pylon:1,
                       kolText: '资料正在审核中 请耐心等待',
                     })
                   } else {
@@ -274,7 +310,7 @@ Page({
               that.setData({
                 listData,
               })
-            }
+            
           }
         }
       })
@@ -290,11 +326,10 @@ Page({
               if (res.code == 0) {
                 let tel = data.user_info.user_tel;
                 let uid = data.user_info.uid;
-                if (tel == '') {
-                  wx.navigateTo({
-                    url: '/pages/member/resgin/resgin',
-                  })
-                } else {
+                listData.tel=tel;
+                
+                console.log("listData.tel",listData.tel)
+         
 
                   // 判断是否是极选师
                   app.sendRequest({
@@ -307,11 +342,14 @@ Page({
                       if (res.code == 2) {
                         that.setData({
                           isKol: 2,
+                          pylon:2,
                           kolText: '你已经是极选师',
                         })
+                        console.log(that.data.pylon)
                       } else if (res.code == 3) {
                         that.setData({
                           isKol: 2,
+                          pylon:1,
                           kolText: '资料正在审核中 请耐心等待',
                         })
                       } else {
@@ -326,7 +364,7 @@ Page({
                   that.setData({
                     listData,
                   })
-                }
+                
               }
             }
           })
@@ -336,29 +374,15 @@ Page({
       }
     }
 
+   
+      
+     
+   
+    
+   
 
 
-    // app.sendRequest({
-    //   url: "api.php?s=distributor/kolImg",
-    //   success: function (res) {
-    //     let data = res.data
-    //     console.log(data)
-    //     if (res.code == 0) {
-    //       let img_data_1 = data.img_data_1;
-    //       let img_data_2 = data.img_data_2;
-    //       let img_data_3 = data.img_data_3;
-    //       console.log(img_data_1)
-    //       that.setData({
-    //         img_data_1,
-    //         img_data_2,
-    //         img_data_3,
-    //       })
-
-
-
-    //     }
-    //   }
-    // })
+   
 
 
 
@@ -366,6 +390,22 @@ Page({
 
 
   },
+  ToIndex: function () {
+    let that =this;
+    let pylon =this.data.pylon;
+    console.log(this.data.pylon)
+    if(pylon==1){
+      wx.switchTab({
+        url: '/pages/index/index',
+      })
+    }else{
+      wx.navigateTo({
+        url: '/pages/member/kol/kol'
+      })
+    }
+      
+     
+    },
   bindchange(e) {
     console.log(e.detail.current)
     this.setData({
@@ -407,6 +447,8 @@ Page({
   onShareAppMessage: function () {
 
     let uid = app.globalData.uid;
+    console.log(app.globalData.uid,'uid')
+    console.log(app.globalData.distributor_type,'distributor_type')
     if (app.globalData.distributor_type == 0) {
       return {
         title: 'BonnieClyde',

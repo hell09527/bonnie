@@ -23,7 +23,6 @@ Page({
     app.sendRequest({
       url: "api.php?s=/Activity/activityList",
       data: {},
-      method: 'GET',
       success: function (res) {
         for (let index in res.data) {
           let img = res.data[index].pic;
@@ -42,13 +41,12 @@ Page({
     app.sendRequest({
       url: "api.php?s=/Activity/activityList",
       data: {},
-      method: 'GET',
       success: function (res) {
         for (let index in res.data) {
           let img = res.data[index].pic;
           res.data[index].pic = app.IMG(img);
         }
-
+       
         that.setData({
           activities: res.data
         })

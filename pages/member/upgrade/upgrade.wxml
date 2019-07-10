@@ -38,16 +38,34 @@
           <view class='table-input'>{{kol_name}}</view>
         </view>
         <!-- 我有邀请码，直接成为极选师 > -->
-         <view class="invite"></view>
+         <view class="invite" catch:tap='switcher' data-ma='2'>我有邀请码，直接成为极选师 > </view>
       </view>
     </view>
       <form bindsubmit="toApply" report-submit="true">
           <button class='next-btn' formType="submit">提交申请</button>
       </form>
       <view class="middle_txt">极选师申请成功后，平台将在48小时内审核信息</view>
- 
-
-  
-   
   </view>
+   <view class='basic-infor' wx:if='{{isShow==2}}'>
+  <view class="base_img" > </view>
+     <view class='hobby'>
+      <view class='table'>
+        <view class="gd" style='justify-content: flex-start;'>
+          <view class="span color-red" style='font-size:18px;'>*</view>
+          <view class='table-text' style='font-size:18px;'>激活码</view>
+        </view>
+          <!-- <input type='text' class='table-input' placeholder='请输入您的姓名' value='{{listData.name}}' bindinput='nameValue' bindblur='nameWrok'></input> -->
+          <input    class="release"    type="number"   placeholder="请输入激活码" placeholder-style="color:rgb(153,153,153);" ></input> 
+        <!-- 我有邀请码，直接成为极选师 > -->
+         <view class="invite" catch:tap='switcher' data-ma='1'>没有邀请码，申请成为极选师 > </view>
+      </view>
+    </view>
+      <form bindsubmit="toBecome" report-submit="true">
+          <button class='next-btn' formType="submit">成为极选师</button>
+      </form>
+      <view class="middle_txt">通过激活码直接成为极选师，无须经过平台审核</view>
+  </view>
+
+
+
 </scroll-view>

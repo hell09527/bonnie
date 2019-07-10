@@ -22,6 +22,7 @@
     z-index: 9999;
     background: #f9f9f9;
     margin: auto;
+   
     /* border-radius: 20rpx; */
   }
   .modal-title {
@@ -29,6 +30,7 @@
     font-size: 36rpx;
     color: #030303;
     text-align: center;
+    
   }
   .modal-title-desc{
     font-size:24rpx;
@@ -50,6 +52,7 @@
     border: 2rpx solid #ddd;
     border-radius: 4rpx;
     font-size: 28rpx;
+   
   }
   
   
@@ -125,4 +128,8 @@ border: 1px solid rgba(187, 187, 187, 1); text-align: center;
  margin-bottom: 40rpx;
  border: 1px solid #000;
      
+  }
+  button{
+height: 84rpx;
+line-height: 84rpx;
   }

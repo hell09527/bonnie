@@ -1,4 +1,5 @@
 var aldstat = require("./utils/ald-stat.js");
+var SERVERS = require('./utils/servers.js')
 App({
   /**
  /a/dsa sadaswqwqewqkhhjhjhqqweqwewqewe  * 全局变量
@@ -43,23 +44,55 @@ App({
     },
     projectData: {},    //二级页参数
     unregistered: '',
-    recommendUser:'',   //极选师推荐人
+    recommendUser: '',   //极选师推荐人
     traffic_acquisition_source: '' //引流来源
   },
   //app初始化函数
   onLaunch: function (options) {
     let that = this;
-   
-    if (options.referrerInfo.extraData){
-       that.globalData.traffic_acquisition_source = options.referrerInfo.extraData.traffic_acquisition_source;
-       that.yielding(that.globalData.traffic_acquisition_source)
+    SERVERS.init(false)
+    if (options.referrerInfo.extraData) {    //接受友商小程序跳转到我们小程序  
+      that.globalData.traffic_acquisition_source = options.referrerInfo.extraData.traffic_acquisition_source; //记录字段
+      that.yielding(that.globalData.traffic_acquisition_source);
     }
 
-    const updateManager = wx.getUpdateManager()
-    updateManager.onCheckForUpdate(function (res) {
+    that.unregisteredCallback().then((result) => {
+      console.log(result)
+      that.globalData.unregistered = result
+    })
+    that.UndateVersions(); // 更新版本
+    that.defaultImg();  // 默认数据
+    that.webSiteInfo(); //基础配置
+    that.copyRightIsLoad(); //底部加载（目前已基本废弃）
+  },
 
+  onShow: function () {
+    let that = this;
+    that.isIphoneX();   //全局判断全面屏
+  },
+  //全局判断全面屏
+  isIphoneX: function () {
+    let that = this;
+    wx.getSystemInfo({
+      success: res => {
+        let modelmes = res.model;
+        console.log(res.system, '手机');
+        if (res.model.indexOf("iPhone X") != -1) {
+          that.globalData.isIphoneX = 1;
+        } else if (res.system.indexOf("Android") != -1) {
+          that.globalData.isIphoneX = 2;
+        } else {
+          that.globalData.isIphoneX = 3;
+        }
+      }
     })
 
+  },
+  // 更新版本
+  UndateVersions: function () {
+    //  发布新版小程序自动更新
+    const updateManager = wx.getUpdateManager();
+    updateManager.onCheckForUpdate(function (res) { });
     updateManager.onUpdateReady(function () {
       wx.showModal({
         title: '更新提示',
@@ -74,50 +107,16 @@ App({
     updateManager.onUpdateFailed(function () {
       // 新的版本下载失败
     })
-
-      that.unregisteredCallback().then((result) => {
-          console.log(result)
-          that.globalData.unregistered = result
-      })
-
-    that.defaultImg();
-    that.webSiteInfo();
-    that.copyRightIsLoad();
   },
-
   // 判断是否登录
-  isLogin: function (unregistered){
+  isLogin: function (unregistered) {
     console.log(unregistered)
-    if (unregistered == 1){
+    if (unregistered == 1) {
       wx.navigateTo({
         url: '/pages/member/resgin/resgin',
       })
     }
   },
-
-
-  onShow: function () {
-    let that = this;
-    that.isIphoneX()
-  },
-  isIphoneX:function(){
-    let that = this;
-      wx.getSystemInfo({
-        success: res => {
-          let modelmes = res.model;
-          console.log(res.system,'手机');
-       if(res.model.indexOf("iPhone X")!=-1){
-        that.globalData.isIphoneX = 1;
-       }else if(res.system.indexOf("Android")!=-1){
-        that.globalData.isIphoneX = 2;
-       }else{
-        that.globalData.isIphoneX = 3;
-       }
-        }
-      })
-  
-  },
-
   //app登录
   app_login: function () {
     let that = this;
@@ -130,7 +129,7 @@ App({
     });
   },
 
-    //微信登录(静默授权)
+  //微信登录(静默授权)
   getwechatUserInfo: function () {
     let that = this;
     // 查看是否授权
@@ -155,14 +154,13 @@ App({
       }
     })
   },
-    //微信登录(按钮)
+  //微信登录(按钮)
   wechatLogin: function () {
     let that = this;
     let code = that.globalData.code;
     // 引流来源
     let traffic_acquisition_source = that.globalData.traffic_acquisition_source;
-    // console.log('进来了')
-    // console.log('引流来源', traffic_acquisition_source)
+   
     let store_id = that.globalData.store_id;
     let wx_info = that.globalData.wx_info;
     let encryptedData = that.globalData.encryptedData;
@@ -170,31 +168,27 @@ App({
     if (encryptedData == undefined || iv == undefined) {
       return false;
     }
-
-    that.sendRequest({
-      url: "api.php?s=Login/getWechatEncryptInfo",
-      data: {
-        code: code,
-        encryptedData: encryptedData,   //微信信息
-        iv: iv,
-        store_id,
-        traffic_acquisition_source
-      },
-      success: function (res) {
-        let code = res.code;
-        if (code == 0 || code == 10) {
-          // that.setOpenid(res.data);
-          that.setOpenid(res.data.openid)
-          that.globalData.token = res.data.token;
-          if (that.employIdCallback) {
-            that.employIdCallback(res.data.token)
-          } 
-          that.setToken(res.data.token);
-          
+   
+    SERVERS.LOGIN.getWechatEncryptInfo.post({
+      code: code,
+      encryptedData: encryptedData,   //微信信息
+      iv: iv,
+      store_id,
+      traffic_acquisition_source
+    }).then(res=>{
+      let code = res.code;
+      if (code == 0 || code == 10) {
+        that.setOpenid(res.data.openid)
+        that.globalData.token = res.data.token;
+        if (that.employIdCallback) {
+          that.employIdCallback(res.data.token)
         }
-        // console.log(res)
+        that.setToken(res.data.token);
+
       }
-    });
+
+    }).catch(e => console.log(e));
+
   },
 
   /**
@@ -388,22 +382,21 @@ App({
     }
   },
   unregisteredCallback: function () {
-    let that=this;
-
+    let that = this;
     return new Promise(function (resolve, reject) {
-        wx.getUserInfo({
-            success: res => {
-                console.log('获取用户信息成功', res);
-                let unregistered = 0;
-                resolve(unregistered)
-                that.app_login();
-            },
-            fail(res) {
-                console.log('获取用户信息失败', res);
-                let unregistered = 1;
-                resolve(unregistered)
-            }
-        })
+      wx.getUserInfo({
+        success: res => {
+          console.log('获取用户信息成功', res);
+          let unregistered = 0;
+          resolve(unregistered)
+          that.app_login();
+        },
+        fail(res) {
+          console.log('获取用户信息失败', res);
+          let unregistered = 1;
+          resolve(unregistered)
+        }
+      })
 
     })
 
@@ -426,7 +419,7 @@ App({
   setIv: function (iv) {
     this.globalData.iv = iv;
   },
-  yielding:function(lo){
+  yielding: function (lo) {
     this.globalData.lo = lo;
   },
   setToken: function (token) {

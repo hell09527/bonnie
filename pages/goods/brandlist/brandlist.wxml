@@ -28,7 +28,7 @@
             <image lazy-load="true" src="{{brand_pic}}" bindload='imgLoad' mode='widthFix' class="fde" />
           </view>
           <!-- 先添加的Banner视频 -->
-          <view class="touch" wx:if="{{brand_video_address}}"></view>
+          <view  wx:if="{{brand_video_address}}"></view>
           <video id="myVideo" wx:if="{{brand_video_address}}" src="{{brand_video_address}}" objectFit='cover' controls></video>
           <block wx:for='{{goods_list}}' wx:key='' wx:for-item='goods' wx:for-index='index'>
             <template is="goodsItemTemplate" data="{{...goods}}" />

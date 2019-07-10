@@ -50,8 +50,8 @@
   <!-- style="margin-top:68rpx" -->
     <view class="com-content" style="margin-top:{{isIphoneX==3?'64':'72'}}px">
                     <!-- 测试数据 -->
-      <!-- <button catchtap='UC'>这是流客</button> -->
-      <!-- <button catchtap='skip'>赠送记录</button> -->
+    <button catchtap='UC'>门店活动列表页</button>
+      <!-- <button catchtap='skip'>卡券</button>  -->
       <!-- 公告 -->
       <view class="hot {{index_notice[0]==undefined?'hide':''}}">
         <view class="notice-img">

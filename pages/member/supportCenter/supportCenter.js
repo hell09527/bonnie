@@ -1,4 +1,5 @@
 // pages/member/supportCenter/supportCenter.js
+const app = new getApp();
 Page({
 
   /**
@@ -14,11 +15,11 @@ Page({
       { "code": "可提现金额", "text": "订单获得的分润已入账到极选师账户，等待提现" },
       { "code": "考核期", "text": "每个季度为一个考核期" },
     ],
-    CistData: [
-      { star: '一星级', standard: '90000', proportion: '5%' },
-      { star: '二星级', standard: '150000', proportion: '7%' },
-      { star: '三星级', standard: '210000', proportion: '10%' },
-    ],
+    // CistData: [
+    //   { star: '一星级', standard: '90000', proportion: '5%' },
+    //   { star: '二星级', standard: '150000', proportion: '7%' },
+    //   { star: '三星级', standard: '210000', proportion: '10%' },
+    // ],
     course:[
       { forward:' https://static.bonnieclyde.cn/course01.jpg'},
       { forward:' https://static.bonnieclyde.cn/course02.jpg'},
@@ -42,6 +43,7 @@ Page({
       })
     } else {
       jump = 2;
+      wx.hideShareMenu();
       wx.setNavigationBarTitle({
         title: "极选师规则说明",
       })
@@ -64,7 +66,61 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let that = this;
+    if (app.globalData.token && app.globalData.token != '') {
+      //判断是否是付费会员的接口
+      that.XXS_reuse();
+    } else {
+      app.employIdCallback = employId => {
+        if (employId != '') {
+          //判断是否是付费会员的接口
+          that.XXS_reuse();
 
+        }
+
+      }
+    }
+
+  },
+  XXS_reuse: function () {
+    let that = this;
+    app.sendRequest({
+      url: "api.php?s=member/getMemberDetail",
+      success: function (res) {
+        let data = res.data
+        if (res.code == 0) {
+          let is_vip = data.is_vip;
+          app.globalData.is_vip = data.is_vip;
+          app.globalData.distributor_type = data.distributor_type;
+          let distributor_type = data.distributor_type;
+          console.log(distributor_type ,'distributor_type')
+          app.globalData.uid = data.uid;
+          app.globalData.vip_gift = data.vip_gift;
+          app.globalData.vip_goods = data.vip_goods;
+          let tel = data.user_info.user_tel;
+          if (tel !== null || tel !== undefined || tel !== '') {
+            console.log(111)
+          } else if (tel == '') {
+            console.log(223)
+          }
+
+          let updata = that.data.unregistered;
+          updata = app.globalData.unregistered;
+          console.log(updata, 'updata', '134', data.is_employee);
+          // console.log(app.globalData.is_vip)
+          that.setData({
+            is_vip: is_vip,
+            tel: tel,
+            distributor_type,
+            unregistered: updata,
+            is_employee: data.is_employee,
+          })
+
+
+
+        }
+      }
+    })
   },
 
   /**
@@ -99,6 +155,17 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    let that=this;
+    let jump=that.data.jump;
+    return {
+      title: 'BonnieClyde',
+      path: '/pages/member/supportCenter/supportCenter?stu=' + jump,
+      success: function (res) {
+        app.showBox(that, '分享成功');
+      },
+      fail: function (res) {
+        app.showBox(that, '分享失败');
+      }
+    }
   }
 })

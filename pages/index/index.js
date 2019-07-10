@@ -14,7 +14,7 @@ Page({
     timer_array: {},  //限时折扣计时
     search_text: '',  //搜索内容
     mei_alls: '',  //某一个品牌的商品
-    swiperCurrent:0,
+    swiperCurrent: 0,
     // webSiteInfo: {},//小程序基本配置
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     //轮播图属性
@@ -43,15 +43,15 @@ Page({
     swiperIndex: 0,//这里不写第一次启动展示的时候会有问题
     title: '',//页面名
     tel: '',//手机号码
-    myTime:null,
-    isHide:0,
+    myTime: null,
+    isHide: 0,
     currentTab: 0, //预设当前项的值
-  
-    swperStatu:1,   //判断几张轮播图
-    j:1,
-    page_index:1,
+
+    swperStatu: 1,   //判断几张轮播图
+    j: 1,
+    page_index: 1,
     floorstatus: false, //回到顶部按钮
-    isInput:1
+    isInput: 1
 
   },
   //事件处理函数
@@ -63,47 +63,46 @@ Page({
 
   UC: function () {
     wx.navigateTo({
-      url: "/pages/member/kolApply/kolApply",
+      url: "/pages/member/upgrade/upgrade",
       // url:  "/pages/member/supportCenter/supportCenter",
-    //  url:    "/pages/goods/goodsclassificationlist/goodsclassificationlist",
+      //  url:    "/pages/goods/goodsclassificationlist/goodsclassificationlist",
     })
 
   },
-    //获取会员所有信息
-    SY_reuse: function () {
-      let that = this;
-      app.sendRequest({
-        url: "api.php?s=member/getMemberDetail",
-        success: function (res) {
-          let data = res.data
-          if (res.code == 0) {
-            let is_vip = data.is_vip;
-            app.globalData.is_vip = data.is_vip;
-            app.globalData.distributor_type = data.distributor_type;
-            app.globalData.uid = data.uid;
-            app.globalData.vip_gift = data.vip_gift;
-            app.globalData.vip_goods = data.vip_goods;
-            app.globalData.vip_overdue_time = data.vip_overdue_time;
-            console.log(data.user_info.user_tel)
-            app.globalData.user_tel = data.user_info.user_tel;
-            //  console.log(app.globalData.is_vip)
-            that.setData({
-              tel:data.user_info.user_tel,
-              is_vip
-            })
-          }
+
+  //获取会员所有信息
+  SY_reuse: function () {
+    let that = this;
+    app.sendRequest({
+      url: "api.php?s=member/getMemberDetail",
+      success: function (res) {
+        let data = res.data
+        if (res.code == 0) {
+          let is_vip = data.is_vip;
+          app.globalData.is_vip = data.is_vip;
+          app.globalData.distributor_type = data.distributor_type;
+          app.globalData.uid = data.uid;
+          app.globalData.vip_gift = data.vip_gift;
+          app.globalData.vip_goods = data.vip_goods;
+          app.globalData.vip_overdue_time = data.vip_overdue_time;
+          console.log(data.user_info.user_tel)
+          app.globalData.user_tel = data.user_info.user_tel;
+          //  console.log(app.globalData.is_vip)
+          that.setData({
+            tel: data.user_info.user_tel,
+            is_vip
+          })
         }
-      })
-    },
+      }
+    })
+  },
   onLoad: function (options) {
     let that = this;
-    let  activities; //往期话题数据 
-    let   activities_list; //最新话题数据下的商品
-    let  lastOne;//最新话题数据
+    let activities; //往期话题数据 
+    let activities_list; //最新话题数据下的商品
+    let lastOne;//最新话题数据
     let shop;//新品推荐
-  
 
-  
 
     if (options.uid) {
       // 这个字段是转发过后承载uid     identifying
@@ -113,16 +112,16 @@ Page({
       console.log('u', options.uid);
     }
     if (options.scene) {
-     
-           // 扫码进入
-           var scene = decodeURIComponent(options.scene);
-           console.log("scene ", scene);
-           let kol_id = scene.split('&')[0];
-           let store_id = scene.split('&')[1];
-           app.globalData.store_id = store_id;
-           app.globalData.kol_id = kol_id;
-           console.log("********内详情页store_id", store_id);
-           console.log("********kol_id", kol_id);
+
+      // 扫码进入
+      var scene = decodeURIComponent(options.scene);
+      console.log("scene ", scene);
+      let kol_id = scene.split('&')[0];
+      let store_id = scene.split('&')[1];
+      app.globalData.store_id = store_id;
+      app.globalData.kol_id = kol_id;
+      console.log("********内详情页store_id", store_id);
+      console.log("********kol_id", kol_id);
 
     }
     //  极选师扫码12小时内有分销来源
@@ -144,7 +143,7 @@ Page({
       isIphoneX: isIphoneX
     })
 
-    
+
     let category_alias = "";
     wx.setNavigationBarTitle({
       title: category_alias,
@@ -167,7 +166,7 @@ Page({
         return;
       }
     }, 1000);
-  
+
     // that.webSiteInfo();
 
     //  获取往期话题
@@ -177,85 +176,85 @@ Page({
       method: 'POST',
       success: function (res) {
         console.log(res.data.data);
-       activities=res.data.data; 
-       that.setData({
-        activities,
-      })
-      
+        activities = res.data.data;
+        that.setData({
+          activities,
+        })
+
       }
     });
 
-//  获取最新话题
-   app.sendRequest({
-  url: "api.php?s=/activity/hotTopic",
-  data: { limit: 1 },
-  method: 'POST',
-  success: function (res) {
-    console.log(res.data);
-    lastOne=res.data.data;
-  
-    // 获取最新话题下面商品
+    //  获取最新话题
     app.sendRequest({
-      url: "api.php?s=/Activity/activityInfo",
-      data: { master_id: res.data.data.id },
+      url: "api.php?s=/activity/hotTopic",
+      data: { limit: 1 },
+      method: 'POST',
       success: function (res) {
+        console.log(res.data);
+        lastOne = res.data.data;
 
-        var new_actList = [];
-        var actList = res.data.data
-        for (var i = 0; i < actList.length; i++) {
-          if (actList[i].goods_info) {
-            new_actList.push(actList[i]);
+        // 获取最新话题下面商品
+        app.sendRequest({
+          url: "api.php?s=/Activity/activityInfo",
+          data: { master_id: res.data.data.id },
+          success: function (res) {
+
+            var new_actList = [];
+            var actList = res.data.data
+            for (var i = 0; i < actList.length; i++) {
+              if (actList[i].goods_info) {
+                new_actList.push(actList[i]);
+              }
+            }
+            activities_list = new_actList;
+            that.setData({
+              activities_list,
+            })
+
           }
-        }
-       activities_list= new_actList;
-       that.setData({
-        activities_list,
-      })
-      
+        });
+        that.setData({
+          lastOne,
+        })
       }
     });
-    that.setData({
-      lastOne,
-    })
-  }
-});
 
     app.sendRequest({
       url: "index.php?s=/api/index/getindeximglist",
       data: {},
-      success: res=> {
-        let shop=res.map(item=>{
+      success: res => {
+        let shop = res.map(item => {
           let img = item.imgUrl;
           item.imgUrl = app.IMG(img);
           return item;
         })
-        console.log(shop )
+        console.log(shop)
         that.setData({
           shop,
         })
       }
     });
-       // 品牌获取
-       app.sendRequest({
-        url: "api.php?s=/index/getGoodsBrandListRecommend",
-        data: {},
-        method: 'POST',
-        success: function (res) {
-          let brand = res.data
-          console.log(res.data)
-          that.setData({
-            brand: brand
-          })
-        }
-      });
-    
+    // 品牌获取
+    app.sendRequest({
+      url: "api.php?s=/index/getGoodsBrandListRecommend",
+      data: {},
+      method: 'POST',
+      success: function (res) {
+        let brand = res.data
+        console.log(res.data)
+        that.setData({
+          brand: brand
+        })
+      }
+    });
 
-      
-     
 
- 
 
-  
+
+
+
+
+
 
     app.sendRequest({
       url: "api.php?s=goods/getDefaultImages",
@@ -271,33 +270,33 @@ Page({
     });
 
     // that.copyRightIsLoad();
-    that.data.myTime= setTimeout(function () {
-      that.setData({
-        activities,
-        lastOne,
-        shop,
-        
-      })
-    }, 1500);
+    // that.data.myTime = setTimeout(function () {
+    //   that.setData({
+    //     activities,
+    //     lastOne,
+    //     shop,
+
+    //   })
+    // }, 1500);
 
   },
 
-     /**触发*/
-     Cross: function () {
-      let _that = this;
-      console.log('Cross')
-      let Tel=_that.data.tel;
-      if (app.globalData.unregistered == 1 || Tel=='') {
-        wx.navigateTo({
-          url: '/pages/member/resgin/resgin',
-        })
-        }
-    },
+  /**触发*/
+  Cross: function () {
+    let _that = this;
+    console.log('Cross')
+    let Tel = _that.data.tel;
+    if (app.globalData.unregistered == 1 || Tel == '') {
+      wx.navigateTo({
+        url: '/pages/member/resgin/resgin',
+      })
+    }
+  },
 
-  onUnload () {
+  onUnload() {
     //  关闭但页面清除单前页面的定时器
-  clearInterval(this.data.myTime);
-},
+    clearInterval(this.data.myTime);
+  },
 
 
 
@@ -325,10 +324,10 @@ Page({
 
   onShow: function () {
     let that = this;
- 
-  //     wx.navigateTo({
-  //   url: "/pages/member/kolApply/kolApply"
-  // })
+
+    //     wx.navigateTo({
+    //   url: "/pages/member/kolApply/kolApply"
+    // })
     //  极选师扫码12小时内有分销来源
     // if (app.globalData.distributor_type != 0) {
 
@@ -351,9 +350,9 @@ Page({
     let updata = app.globalData.unregistered;
     // console.log(updata,'updata');
     that.setData({
-      unregistered:updata 
+      unregistered: updata
     })
- 
+
 
     that.TC_reuse();
 
@@ -363,14 +362,18 @@ Page({
   },
   // 小程序之间的跳转和携带参数；eg
   skip: function () {
-    wx.navigateToMiniProgram({
-      appId: 'wxd145d8a6e951dd1b',
-      path: 'pages/goods/brandlist/brandlist?id=22',
-      envVersion: 'trial',
-      extraData: {
-        traffic_acquisition_source : '小红书'
-      },
+    wx.navigateTo({
+      url: '/pages/member/electronic/electronic',
     })
+
+    // wx.navigateToMiniProgram({
+    //   appId: 'wxd145d8a6e951dd1b',
+    //   path: 'pages/goods/brandlist/brandlist?id=22',
+    //   envVersion: 'trial',
+    //   extraData: {
+    //     traffic_acquisition_source : '小红书'
+    //   },
+    // })
   },
 
   /**
@@ -463,18 +466,18 @@ Page({
     let that = this;
     let url = event.currentTarget.dataset.url;
     let title = event.currentTarget.dataset.title;
-    let spc=0;
-    console.log(title )
-    if(title!=undefined){
-      if(title.indexOf("&")!=-1){
-        spc=-1;
+    let spc = 0;
+    console.log(title)
+    if (title != undefined) {
+      if (title.indexOf("&") != -1) {
+        spc = -1;
       }
     }
-  
-    
+
+
     // title.replace("&", "%26")
     // console.log(title.replace("&", "%26"));
-    
+
     let hasTarget = event.currentTarget.dataset.has;
     let x = event.currentTarget.dataset.x;
     // let goodsId = event.currentTarget.dataset.goodsid;
@@ -485,10 +488,10 @@ Page({
       title: event.currentTarget.dataset.title,
     }
     let listClickFlag = that.data.listClickFlag;
-    console.log(x,hasTarget);
+    console.log(x, hasTarget);
 
     //特殊点 跳转到黑科技商品
-    if (x==0) {
+    if (x == 0) {
       console.log('首页黑科技商品点击', {
         "商品标题": title,
         "商品类型": types,
@@ -502,7 +505,7 @@ Page({
       wx.navigateTo({
         url: '/pages' + url,
       })
-    } else if(x == 1) {
+    } else if (x == 1) {
       console.log('首页新品推荐点击', {
         "商品标题": title,
         "商品类型": types,
@@ -516,33 +519,33 @@ Page({
       wx.navigateTo({
         url: '/pages' + url,
       })
-    }else if (projectData.id) {
-      if(spc==-1){
+    } else if (projectData.id) {
+      if (spc == -1) {
         console.log('111')
-        projectData=JSON.stringify(projectData);
+        projectData = JSON.stringify(projectData);
 
-            // 跳转活动详情页
-      app.aldstat.sendEvent('首页活动点击', {
-        "活动名称":title
-      });
-      wx.navigateTo({
-        url: '/pages/index/projectIndex/projectIndex?data=' + encodeURIComponent(projectData),
-      })
-      }else{
+        // 跳转活动详情页
+        app.aldstat.sendEvent('首页活动点击', {
+          "活动名称": title
+        });
+        wx.navigateTo({
+          url: '/pages/index/projectIndex/projectIndex?data=' + encodeURIComponent(projectData),
+        })
+      } else {
         console.log('222')
-           // 跳转活动详情页
-      app.aldstat.sendEvent('首页活动点击', {
-        "活动名称":title
-      });
-      wx.navigateTo({
-        url: '/pages/index/projectIndex/projectIndex?data=' + JSON.stringify(projectData),
-      })
+        // 跳转活动详情页
+        app.aldstat.sendEvent('首页活动点击', {
+          "活动名称": title
+        });
+        wx.navigateTo({
+          url: '/pages/index/projectIndex/projectIndex?data=' + JSON.stringify(projectData),
+        })
       }
 
-  
 
 
-    }else if (hasTarget == 0) {
+
+    } else if (hasTarget == 0) {
       //判断这个图片是否跳转
       return false;
     } else if (listClickFlag == 1) {
@@ -700,39 +703,39 @@ Page({
     app.sendRequest({
       url: "index.php?s=/api/index/getindeximglist",
       data: {},
-      success: res=> {
-        let shop=res.map(item=>{
+      success: res => {
+        let shop = res.map(item => {
           let img = item.imgUrl;
           item.imgUrl = app.IMG(img);
           return item;
         })
-        console.log(shop )
+        console.log(shop)
         that.setData({
           shop,
         })
       }
     });
-       // 品牌获取
-       app.sendRequest({
-        url: "api.php?s=/index/getGoodsBrandListRecommend",
-        data: {},
-        method: 'POST',
-        success: function (res) {
-          let brand = res.data
-          console.log(res.data)
-          that.setData({
-            brand: brand
-          })
-        }
-      });
-    
-   
-  
+    // 品牌获取
+    app.sendRequest({
+      url: "api.php?s=/index/getGoodsBrandListRecommend",
+      data: {},
+      method: 'POST',
+      success: function (res) {
+        let brand = res.data
+        console.log(res.data)
+        that.setData({
+          brand: brand
+        })
+      }
+    });
+
+
+
 
     let base = app.globalData.siteBaseUrl;
     let timeArray = {};
 
-   
+
 
     if (app.globalData.token && app.globalData.token != '') {
       //判断是否是付费会员的接口
@@ -745,12 +748,12 @@ Page({
         }
       }
     }
-  
-    
+
+
   },
 
-  TC_reuse:function(){
-    let that=this;
+  TC_reuse: function () {
+    let that = this;
     let timeArray = {};
     app.sendRequest({
       url: 'api.php?s=index/getIndexData',
@@ -764,7 +767,7 @@ Page({
           let data = res.data;
           //当前时间初始化
           let current_time = data.current_time;
-          var assist={};
+          var assist = {};
           // that.setData({
           //   current_time: current_time
           // })
@@ -785,21 +788,21 @@ Page({
             } else {
               adv_list = [];
             }
-            console.log(adv_list.length );
+            console.log(adv_list.length);
             // 首页轮播图为一张的时候
-            if(adv_list.length==1){
+            if (adv_list.length == 1) {
               console.log(adv_list[0].adv_image);
               console.log(adv_list[0].adv_url);
               console.log(adv_list[0].adv_title);
               that.setData({
                 Derimgs: adv_list[0].adv_image,
-                Der_url:adv_list[0].adv_url,
-                advs_title:adv_list[0].adv_title,
+                Der_url: adv_list[0].adv_url,
+                advs_title: adv_list[0].adv_title,
               })
               // adv_list[0].adv_image= adv_list;
-            }else{
+            } else {
               that.setData({
-                swperStatu:2
+                swperStatu: 2
               })
             }
             assist.adv_image = data.adv_list.adv_index_two.adv_list[0].adv_image
@@ -838,7 +841,7 @@ Page({
 
           // let index_goods_list = data.index_goods_list;
           let new_pro = data.new_pro;
-          let video_index=data.adv_list.video_index;
+          let video_index = data.adv_list.video_index;
           let small_sample_list = data.small_sample_list;
           let exponent = "";
 
@@ -877,16 +880,16 @@ Page({
           // }
           // let sqk_alls = data.block_list[0];
           console.log(data.goods_category_first);
-          
+
           //(某一个品牌的商品)
           // let mei_alls = data.block_list[2].goods_list;
 
-             console.log(data.adv_list.adv_index_two.adv_list);   
+          console.log(data.adv_list.adv_index_two.adv_list);
           that.setData({
             // Base: base,
-            adv_category:data.adv_list.adv_category,// 首页手机分类广告位
-            adv_index_two:data.adv_list.adv_index_two.adv_list, //首页轮播副图
-            goods_category_first:data.goods_category_first,//首页分类列表
+            adv_category: data.adv_list.adv_category,// 首页手机分类广告位
+            adv_index_two: data.adv_list.adv_index_two.adv_list, //首页轮播副图
+            goods_category_first: data.goods_category_first,//首页分类列表
             indicatorDots: indicatorDots,
             index_notice: data.notice.data,
             // goods_platform_list: data.goods_platform_list,
@@ -908,9 +911,9 @@ Page({
       }
     })
 
- 
 
-    let page_index=that.data.page_index;
+
+    let page_index = that.data.page_index;
 
     app.sendRequest({
       url: "api.php?s=index/getIndexPro",
@@ -921,25 +924,25 @@ Page({
         console.log(res)
         let code = res.code;
         let index_goods_list = res.data;
-        
+
         page_index++;
         if (code == 0) {
           that.setData({
-             index_goods_list: index_goods_list,   //商品列表
-             page_index
+            index_goods_list: index_goods_list,   //商品列表
+            page_index
           })
         }
         // console.log(res);
       }
     })
- 
+
 
 
 
   },
 
-  All_shop:function(page_index){
-    let that=this;
+  All_shop: function (page_index) {
+    let that = this;
     // let index_goods_list=that.data.index_goods_list;
     app.sendRequest({
       url: "api.php?s=index/getIndexPro",
@@ -951,12 +954,12 @@ Page({
         let code = res.code;
         let index_goods_list = res.data;
         // if (new_index_goods_list[0] != undefined) { }
-          page_index++;
+        page_index++;
         // index_goods_list=index_goods_list.concat(new_index_goods_list)
         if (code == 0) {
           that.setData({
-             index_goods_list: index_goods_list,   //商品列表
-             page_index
+            index_goods_list: index_goods_list,   //商品列表
+            page_index
           })
         }
         // console.log(res);
@@ -964,7 +967,7 @@ Page({
     })
   },
 
- 
+
 
 
 
@@ -1019,11 +1022,11 @@ Page({
     })
   },
 
-    /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
+  /**
+ * 生命周期函数--监听页面初次渲染完成
+ */
   onReady: function () {
-     let that=this;
+    let that = this;
     //  console.log(that.data.unregistered,'结束打印')
     //  console.log(that.data.tel,'电话结束打印')
   },
@@ -1067,7 +1070,7 @@ Page({
   //     }
   //   })
   // },
-  
+
   // 获取滚动条当前位置
   onPageScroll: function (e) {
     // console.log(e.scrollTop)
@@ -1075,19 +1078,19 @@ Page({
       this.setData({
         floorstatus: true
       });
-    } else{ 
+    } else {
       this.setData({
         floorstatus: false
       });
     }
   },
-/* 
-    回到顶部
- */
-  goTop:function(){
-    let  that=this;
-    let  floorstatus=that.data.floorstatus;
-    if(floorstatus){
+  /* 
+      回到顶部
+   */
+  goTop: function () {
+    let that = this;
+    let floorstatus = that.data.floorstatus;
+    if (floorstatus) {
       wx.pageScrollTo({
         scrollTop: 0
       })
@@ -1099,19 +1102,19 @@ Page({
   /* 
    首页轮播图跳转以及阿拉丁统计
   */
-  toGood: function(e) {
+  toGood: function (e) {
     var that = this;
     var id = e.currentTarget.dataset.id;
-    var fob= e.currentTarget.dataset.x;
-    var title= e.currentTarget.dataset.title;
+    var fob = e.currentTarget.dataset.x;
+    var title = e.currentTarget.dataset.title;
     var url = e.currentTarget.dataset.url;
-    let assist=that.data.assist;
+    let assist = that.data.assist;
 
-    if(fob=='x'){
+    if (fob == 'x') {
       if (url) {
         console.log('首页轮播图商品点击', {
           "商品标题": title,
-     
+
         });
         app.aldstat.sendEvent('首页轮播图商品点击', {
           "商品标题": title,
@@ -1124,43 +1127,43 @@ Page({
           url: '/pages/goods/goodsdetail/goodsdetail?goods_id=' + id,
         })
       }
-    }else if(fob=='y'){
-      
-      if(that.data.swperStatu==1){
-        let Der_url=that.data.Der_url;
+    } else if (fob == 'y') {
+
+      if (that.data.swperStatu == 1) {
+        let Der_url = that.data.Der_url;
         wx.navigateTo({
           url: '/' + Der_url,
         })
-      }else{
+      } else {
         console.log(assist.url)
         wx.navigateTo({
           url: '/' + assist.url,
         })
       }
-     
-      
+
+
     }
-  
+
   },
 
-   /**
-   * 收藏
-   */
-  collect: function(e){
+  /**
+  * 收藏
+  */
+  collect: function (e) {
     let that = this;
     let id = e.currentTarget.dataset.id;
-    let page_index=that.data.page_index;
+    let page_index = that.data.page_index;
     console.log('老师傅');
     console.log(id)
-    let index_goods_list= that.data.index_goods_list;
-     console.log(index_goods_list)
-     let goods_name;
-     let is_fav ;
-     
-    for(let i in index_goods_list){
-      if(index_goods_list[i].goods_id==id ){
-       is_fav = index_goods_list[i].is_member_fav_goods;
-        goods_name=index_goods_list[i].goods_name;
+    let index_goods_list = that.data.index_goods_list;
+    console.log(index_goods_list)
+    let goods_name;
+    let is_fav;
+
+    for (let i in index_goods_list) {
+      if (index_goods_list[i].goods_id == id) {
+        is_fav = index_goods_list[i].is_member_fav_goods;
+        goods_name = index_goods_list[i].goods_name;
       }
     }
     let method = is_fav == 0 ? 'FavoritesGoodsorshop' : 'cancelFavorites';
@@ -1170,7 +1173,7 @@ Page({
     app.sendRequest({
       url: 'api.php?s=member/' + method,
       data: {
-        fav_id: id ,
+        fav_id: id,
         fav_type: 'goods',
         log_msg: goods_name
       },
@@ -1178,14 +1181,14 @@ Page({
         let code = res.code;
         let data = res.data;
         if (code == 0) {
-          if(data > 0){
+          if (data > 0) {
             app.showBox(that, message + '成功');
             that.All_shop(page_index)
             // that.indexInit(that)
             that.setData({
               index_goods_list
             })
-          }else{
+          } else {
             app.showBox(that, message + '失败');
           }
         }
@@ -1215,64 +1218,64 @@ Page({
 
 
   swiperChange: function (e) {
-      var that = this;
-      let assist={};
-     let  imgUrls=that.data.imgUrls;
-      let E=e.detail.current;
-      // console.log(E)
-      let data=  that.data.adv_index_two;
-      for (let index in data) {
-        assist.adv_image=data[index].adv_image;
-        assist.url=imgUrls[E].adv_url;
-              if( E==index){
-                 that.setData({
-                  assist,
-                  swperStatu:2,
-              })
-            }
+    var that = this;
+    let assist = {};
+    let imgUrls = that.data.imgUrls;
+    let E = e.detail.current;
+    // console.log(E)
+    let data = that.data.adv_index_two;
+    for (let index in data) {
+      assist.adv_image = data[index].adv_image;
+      assist.url = imgUrls[E].adv_url;
+      if (E == index) {
+        that.setData({
+          assist,
+          swperStatu: 2,
+        })
       }
- 
-      that.setData({
+    }
+
+    that.setData({
       swiperCurrent: e.detail.current
     })
   },
-    // 页面滚动事件//滑动开始事件
-    handletouchtart: function (event) {
-      var touchMove = this.data.touchMove;
-      touchMove = event.touches[0].pageY;
-      // console.log(event.touches[0])
+  // 页面滚动事件//滑动开始事件
+  handletouchtart: function (event) {
+    var touchMove = this.data.touchMove;
+    touchMove = event.touches[0].pageY;
+    // console.log(event.touches[0])
+    this.setData({
+      isHide: 1,
+      touchMove
+    })
+  },
+  // 滑动移动事件
+  handletouchmove: function (event) {
+    var touchMove = this.data.touchMove;
+    console.log(touchMove, event.touches[0].clientY)
+    if (touchMove - event.touches[0].clientY < 0) {
+      // console.log("向下滑了");
       this.setData({
-        isHide: 1,
-        touchMove
+        isFix: 0,
       })
-    },
-    // 滑动移动事件
-    handletouchmove: function (event) {
-      var touchMove = this.data.touchMove;
-      console.log(touchMove,event.touches[0].clientY)
-      if (touchMove - event.touches[0].clientY<0){
-        // console.log("向下滑了");
-        this.setData({
-          isFix: 0,
-        })
-      } else {
-        this.setData({
-          isFix: 1,
-        })
-      }
-      touchMove = event.touches[0].clientY;
+    } else {
       this.setData({
-        isHide: 1,
-        touchMove
+        isFix: 1,
       })
-    },
-    //滑动结束事件
-    handletouchend: function (event) {
-      this.setData({
-        isHide: 0
-      })
-    },
-     // 跳转品牌专区
+    }
+    touchMove = event.touches[0].clientY;
+    this.setData({
+      isHide: 1,
+      touchMove
+    })
+  },
+  //滑动结束事件
+  handletouchend: function (event) {
+    this.setData({
+      isHide: 0
+    })
+  },
+  // 跳转品牌专区
   toBrand(e) {
     "use strict";
     let is_show = e.currentTarget.dataset.show
@@ -1280,11 +1283,11 @@ Page({
     let title = e.currentTarget.dataset.title
     console.log(is_show)
     console.log(id)
-   
-   
+
+
     if (is_show == 0) {
-      app.aldstat.sendEvent('品牌点击事件',{
-        "品牌名称":title
+      app.aldstat.sendEvent('品牌点击事件', {
+        "品牌名称": title
       });
       wx.navigateTo({
         url: '/pages/goods/brandlist/brandlist?id=' + id,   //+'&store_id=1'
@@ -1293,45 +1296,45 @@ Page({
       return false;
     }
   },
-  toList(e){
-    let that=this;
+  toList(e) {
+    let that = this;
     let id = e.currentTarget.dataset.id;
     console.log(id)
 
     wx.navigateTo({
-      url: '/pages/index/Categorylist/Categorylist?id=' + id ,
+      url: '/pages/index/Categorylist/Categorylist?id=' + id,
     })
 
-    
+
   },
- 
-  onPullDownRefresh:function(){
-    var that=this;
+
+  onPullDownRefresh: function () {
+    var that = this;
     this.indexInit(that);
     that.TC_reuse();
     wx.stopPullDownRefresh()
     // if(this.data.currentTab>1){
-     
+
     // }
-    
-  
-  
-  
+
+
+
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    let that=this;
-   let page_index=that.data.page_index;
-   that.All_shop(page_index)
+    let that = this;
+    let page_index = that.data.page_index;
+    that.All_shop(page_index)
     wx.showNavigationBarLoading();
     // that.Ashop();
     wx.stopPullDownRefresh;
   },
-     //渐入，渐出实现 
-  show : function(that,param,opacity){
+  //渐入，渐出实现 
+  show: function (that, param, opacity) {
     var animation = wx.createAnimation({
       //持续时间800ms
       duration: 800,
@@ -1339,7 +1342,7 @@ Page({
     });
     //var animation = this.animation
     animation.opacity(opacity).step(
-    
+
     )
     //将param转换为key
     var json = '{"' + param + '":""}'
@@ -1350,10 +1353,10 @@ Page({
     //设置动画
     that.setData(json)
   },
-  Fadein:function(){
+  Fadein: function () {
     this.show(this, 'slide_up1', 0)
   },
 
-  
+
 
 })

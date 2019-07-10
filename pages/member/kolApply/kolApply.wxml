@@ -1,27 +1,29 @@
-<scroll-view wx:if='{{isKol==2}}'>
+<scroll-view wx:if='{{isCK==2}}'>
   <view class='article'>
     <view class="pay-block">
-			<image src='https://static.bonnieclyde.cn/W56.png' mode='widthFix'/>
-		</view>
-        <view class='p' >{{kolText}}</view>
-       <button catchtap='toIndex' >返回首页</button>
+      <image src='https://static.bonnieclyde.cn/W56.png' mode='widthFix' />
+    </view>
+    <view class='p'>{{kolText}}</view>
+    <button catchtap='ToIndex'>{{pylon==1?'返回首页':'查看我的收入'}}</button>
   </view>
 </scroll-view>
-
-<scroll-view  wx:if='{{isKol==1}}'>
-  <view wx:for="{{shop}}" wx:for-item='item' wx:for-index='index'>
-      <image class="" src="{{item.src}}" mode="widthFix"  style='width:750rpx;'/>
-  </view>
-  <view style='width:100%;height:100px;' > </view>
-    
- 
-
-<view class="local" >
-    <block wx:if='{{unregistered==1}}' >
-       <button class='but' catchtap='Crossdetails' >立即赚钱</button>
-    </block>
-     <block wx:if='{{unregistered==0 }}' >
-         <button class='but' catchtap='toApply' >立即赚钱</button>
-    </block>
+<scroll-view wx:if='{{isCK==1}}'>
+<view class="wavk" catchtap="makemony">
+<view class="wavk_title ">赚钱指南</view>
+<image class="wavk_img" src="https://static.bonnieclyde.cn/WechatIMG757.png" mode="widthFix" />
 </view>
+  <view wx:for="{{shop}}" wx:for-item='item' wx:for-index='index'>
+    <image class="" src="{{item.src}}" mode="widthFix" style='width:750rpx;' />
+  </view>
+  <view style='width:100%;height:50px;'></view>
+  <view class="local but ">
+    <block wx:if='{{unregistered==1 || tel ==""}}'>
+      <button style='background: #000;color: #eeb85b;' catchtap='Crossdetails'>立即赚钱</button>
+      <view class="s '{{isIphoneX==1?'L-ise':''}}' "></view>
+    </block>
+    <block wx:if='{{unregistered==0 && tel !="" }}'>
+      <button catchtap='toApply' style='background: #000;color: #eeb85b;'>立即赚钱</button>
+      <view class="s '{{isIphoneX==1?'L-ise':''}}' "></view>
+    </block>
+  </view>
 </scroll-view>

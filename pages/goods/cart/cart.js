@@ -187,9 +187,7 @@ Page({
   onReady: function () {
     let that = this;
     let siteBaseUrl = app.globalData.siteBaseUrl;
-    wx.showShareMenu({
-      withShareTicket: true
-    })
+ 
   },
 
   GWC_reuse: function () {
@@ -228,16 +226,18 @@ Page({
    */
   onShow: function () {
     let that = this;
-    let isFoll;
-    let siteBaseUrl = app.globalData.siteBaseUrl;
-    //判断是否是付费会员
-    let is_vip = app.globalData.is_vip;
-    let distributor_type = app.globalData.distributor_type;
-    let uid = app.globalData.uid;
-    let isIphoneX = app.globalData.isIphoneX;
+   
+    wx.showShareMenu({
+      withShareTicket: true     // ios转发后不在能被转发
+    })
+    let isFoll;  // 关于控制删除购物车商品页面是否上下抖动
+    let siteBaseUrl = app.globalData.siteBaseUrl;  //基础服务器url
+    let is_vip = app.globalData.is_vip;//判断是否是付费会员
+    let distributor_type = app.globalData.distributor_type; //判断你的身份角色(0:普通用户,1:超级极选师,2-4:普通极选师)
+    let uid = app.globalData.uid;  //用户uid
+    let isIphoneX = app.globalData.isIphoneX;  //判断用户机型并修改ui
     let  cart_list=that.data.cart_list
-  
-    let updata = app.globalData.unregistered;
+    let updata = app.globalData.unregistered;    //判断用户是否已经登陆小程序
     console.log(updata)
     console.log(distributor_type, uid);
 
@@ -271,7 +271,7 @@ Page({
               } else {
                 data[index][key].status = 1;
               }
-              console.log(data)
+              console.log(data);
            
               let num = parseInt(data[index][key].num);
               if (data[index][key].status == 1) {
@@ -295,7 +295,7 @@ Page({
             }
           }
 
-          if( data.length  == undefined) isFoll =true; else  isFoll =false;
+          if( data.length  == undefined) isFoll =true; else  isFoll =false; //判断是否滑动
           // console.log(data[0])
           console.log(data)
           that.setData({
