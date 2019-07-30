@@ -14,6 +14,9 @@ scroll-view{
   padding-bottom:35px;
 
 }
+.top_base{
+  background: url('https://static.bonnieclyde.cn/%E8%83%8C%E6%99%AF2.jpg') no-repeat;
+}
 .signin {
   border-radius: 3px;
   font-size: 12px;

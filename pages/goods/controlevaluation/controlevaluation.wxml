@@ -10,7 +10,7 @@
         </swiper-item>
       </block>
     </swiper>
-    <image src="https://static.bonnieclyde.cn/WechatIMG3.png" mode="aspectFill" class="close" catchtap='toHideSwiper' ></image>
+    <!-- <image src="https://static.bonnieclyde.cn/WechatIMG3.png" mode="aspectFill" class="close" catchtap='toHideSwiper' ></image> -->
     </view>
 
 		<view class="evaluation-container" wx:else>

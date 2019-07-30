@@ -1,5 +1,5 @@
 const app = new getApp();
-// var time = require("../../../utils/util.js");
+const SERVERS = require('../../../utils/servers.js');
 var sale_time = require("../../../utils/util.js");
 Page({
   /**
@@ -193,44 +193,123 @@ Page({
   GWC_reuse: function () {
     let that = this;
     let siteBaseUrl = app.globalData.siteBaseUrl;
-   
+    let isFoll;  // 关于控制删除购物车商品页面是否上下抖动
 
-
-    app.sendRequest({
-      url: "api.php?s=member/getMemberDetail",
-      success: function (res) {
+    SERVERS.CART.cart.post().then(res => {
+      let code = res.code;
+      let total_price = 0.00;
+      if (code == 0) {
         let data = res.data;
-        console.log(res);
-        if (res.code == 0) {
-          let is_vip = data.is_vip;
-          app.globalData.is_vip = data.is_vip;
-          app.globalData.distributor_type = data.distributor_type;
-          let distributor_type = data.distributor_type;
-          app.globalData.uid = data.uid;
-          app.globalData.vip_gift = data.vip_gift;
-          app.globalData.vip_goods = data.vip_goods;
-          app.globalData.vip_overdue_time = data.vip_overdue_time;
-          let tel = data.user_info.user_tel;
-          console.log(tel)
-          that.setData({
-            is_vip: is_vip,
-            tel: tel,
-            distributor_type
-          })
+        console.log(data)
+        for (let index in data) {
+          for (let key in data[index]) {
+            data[index][key].isTouchMove = false //默认全隐藏删除
+            data[index][key].isInput = 1; //解决ipx input的bug
+      
+
+            if(data[index][key].sale_type==2){ //预售时间提示
+              data[index][key].send_sale = sale_time.formatTime(data[index][key].sale_end_time, 'Y年M月D日h:s')+'预售结束';
+            }
+
+            // 测试代码
+            // data[index][key].Move=0;
+
+            if (that.in_array(data[index][key].cart_id, that.data.unselected_list)) {
+              data[index][key].status = 0;
+              that.setData({
+                check_all: 0,
+              });
+            } else {
+              data[index][key].status = 1;
+            }
+            console.log(data)
+         
+            let num = parseInt(data[index][key].num);
+            if (data[index][key].status == 1) {
+              let promotion_price ;
+              if(data[index][key].is_inside== 0){
+                promotion_price = parseFloat(data[index][key].promotion_price);
+              }else{
+                promotion_price = parseFloat(data[index][key].interior_price);
+              }
+              total_price = parseFloat(total_price) + parseFloat(promotion_price * num);
+            }
+             
+            //图片处理
+            if (data[index][key].picture_info != undefined && data[index][key].picture_info != null) {
+              let img = data[index][key].picture_info.pic_cover_small;
+              data[index][key].picture_info.pic_cover_small = app.IMG(img);
+            } else {
+              data[index][key].picture_info = {};
+              data[index][key].picture_info.pic_cover_small = '';
+            }
+          }
         }
+
+        if( data.length  == undefined) isFoll =true; else  isFoll =false;
+        // console.log(data[0])
+        console.log(data)
+        that.setData({
+          Base: siteBaseUrl,
+          cart_list: data,
+          total_price: total_price.toFixed(2),
+          isFoll,
+          //check_all: 1,
+          edit: 0,
+          is_checked: 1
+        });
+      }
+    }).catch(e => console.log(e));
+
+
+   
+   
+    SERVERS.MEMBER.getMemberDetail.post().then(res => {
+      let data = res.data;
+      console.log(res);
+      if (res.code == 0) {
+        let is_vip = data.is_vip;
+        app.globalData.is_vip = data.is_vip;
+        app.globalData.distributor_type = data.distributor_type;
+        let distributor_type = data.distributor_type;
+        app.globalData.uid = data.uid;
+        app.globalData.vip_gift = data.vip_gift;
+        app.globalData.vip_goods = data.vip_goods;
+        app.globalData.vip_overdue_time = data.vip_overdue_time;
+        let tel = data.user_info.user_tel;
+        let unregistered= app.globalData.unregistered;  
+        console.log(tel)
+        that.setData({
+          is_vip: is_vip,
+          tel: tel,
+          distributor_type,
+          unregistered
+        })
       }
     })
+
+   
   },
+    onPageScroll:function(e){
+    console.log(e);
+
+  },
+ 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
     let that = this;
+
+    // wx.pageScrollTo({
+    //   scrollTop: 0     //重新回到顶部
+    // })
+
    
     wx.showShareMenu({
       withShareTicket: true     // ios转发后不在能被转发
     })
-    let isFoll;  // 关于控制删除购物车商品页面是否上下抖动
+   
     let siteBaseUrl = app.globalData.siteBaseUrl;  //基础服务器url
     let is_vip = app.globalData.is_vip;//判断是否是付费会员
     let distributor_type = app.globalData.distributor_type; //判断你的身份角色(0:普通用户,1:超级极选师,2-4:普通极选师)
@@ -241,76 +320,7 @@ Page({
     console.log(updata)
     console.log(distributor_type, uid);
 
-    app.sendRequest({
-      url: 'api.php?s=goods/cart',
-      data: {},
-      success: function (res) {
-        let code = res.code;
-        let total_price = 0.00;
-        if (code == 0) {
-          let data = res.data;
-          console.log(data)
-          for (let index in data) {
-            for (let key in data[index]) {
-              data[index][key].isTouchMove = false //默认全隐藏删除
-              data[index][key].isInput = 1; //解决ipx input的bug
-        
-
-              if(data[index][key].sale_type==2){ //预售时间提示
-                data[index][key].send_sale = sale_time.formatTime(data[index][key].sale_end_time, 'Y年M月D日h:s')+'预售结束';
-              }
-
-              // 测试代码
-              // data[index][key].Move=0;
-
-              if (that.in_array(data[index][key].cart_id, that.data.unselected_list)) {
-                data[index][key].status = 0;
-                that.setData({
-                  check_all: 0,
-                });
-              } else {
-                data[index][key].status = 1;
-              }
-              console.log(data);
-           
-              let num = parseInt(data[index][key].num);
-              if (data[index][key].status == 1) {
-                let promotion_price ;
-                if(data[index][key].is_inside== 0){
-                  promotion_price = parseFloat(data[index][key].promotion_price);
-                }else{
-                  promotion_price = parseFloat(data[index][key].interior_price);
-                }
-                total_price = parseFloat(total_price) + parseFloat(promotion_price * num);
-              }
-               
-              //图片处理
-              if (data[index][key].picture_info != undefined && data[index][key].picture_info != null) {
-                let img = data[index][key].picture_info.pic_cover_small;
-                data[index][key].picture_info.pic_cover_small = app.IMG(img);
-              } else {
-                data[index][key].picture_info = {};
-                data[index][key].picture_info.pic_cover_small = '';
-              }
-            }
-          }
-
-          if( data.length  == undefined) isFoll =true; else  isFoll =false; //判断是否滑动
-          // console.log(data[0])
-          console.log(data)
-          that.setData({
-            Base: siteBaseUrl,
-            cart_list: data,
-            total_price: total_price.toFixed(2),
-            isFoll,
-            //check_all: 1,
-            edit: 0,
-            is_checked: 1
-          });
-        }
-        // console.log(res);
-      }
-    })
+  
    
 
    
@@ -367,6 +377,8 @@ Page({
       }
     }
   },
+
+    
   /**
    * 生命周期函数--监听页面隐藏
    */

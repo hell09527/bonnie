@@ -1,4 +1,5 @@
 <scroll-view>
+<button catch:tap="gogo">gogo</button>
   <block wx:for='{{actList}}' wx:key='' wx:for-item='acticities' wx:for-index='index'>
     <!-- <view> </view> -->
     <!-- 图片 -->
@@ -23,22 +24,20 @@
   <!-- 弹框- -->
   <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModel}}"></view>
   <view class="modal-dialog" wx:if="{{showModel}}">
+    <image class="slip" src="https://static.bonnieclyde.cn/slip.png" bindtap="hideModal" />
     <view class="modal-title">
-      <span>预约活动确定</span>
+      <view class="mhrd">活动地址：上海市-上海市-长宁区-长宁路1123号 长宁来福士广场 (E) 01-09/10室 Bonnie&Clyde</view>
+      <view class="go_title">活动时间：{{start_time}}</view>
     </view>
     <view class="modal-middle">
-      <view class="go_title">你确定预约本次活动吗?</view>
-      <view class="go_title">地点： Bonnie&Clyde（长宁来福士店）</view>
-      <view class="go_title">时间：{{start_time}}</view>
+      <input type="text" placeholder="{{isfou==1?'您的姓名':'请输入您的名字'}}" bindinput="Youname" placeholder-class="{{isfou==1?'':'isfou'}}" />
+      <input type="number"  placeholder="{{isphone==1?'您的手机号码':'请输入正确的手机号'}}"  placeholder-class="{{isphone==1?'':'isfou'}}" bindinput="Youphone" />
+      <view class="isfou" wx:if="{{isphone!=1}}">请输入正确的手机号</view>
+      <textarea class="" value="" placeholder="您最想了解什么产品？是否与好友同行（选填）" placeholder-style="" placeholder-class="" bindinput=""></textarea>
     </view>
     <view class="modal-footer">
-      <form bindsubmit="onChoice" data-status="cancel" report-submit="true" class="btn-finish">
-        <button formType="submit">取消</button>
-      </form>
       <form bindsubmit="onChoice" data-status="confirm" report-submit="true" class="btn-finish">
-        <button formType="submit" style="color: #62b900;  border-left:1rpx solid #ccc; border-radius: 0;">
-          确定
-        </button>
+        <button formType="submit" class="apply">报名</button>
       </form>
     </view>
   </view>

@@ -1,12 +1,12 @@
-const app = getApp()
+const app = getApp();
+const core = require('../../utils/core.js');
+const SERVERS = require('../../utils/servers.js');
 Page({
   data: {
     prompt: '',
     Base: '',  //库路径
     defaultImg: {},
     index_notice: {},  //公告ist.goods_list
-    // goods_platform_list: {},  //标签板块
-    // block_list: {},  //楼层板块
     top10_list: {},  //top10
     coupon_list: {},  //优惠券
     discount_list: {},  //限时折扣
@@ -46,12 +46,14 @@ Page({
     myTime: null,
     isHide: 0,
     currentTab: 0, //预设当前项的值
-
     swperStatu: 1,   //判断几张轮播图
     j: 1,
     page_index: 1,
     floorstatus: false, //回到顶部按钮
-    isInput: 1
+    isInput: 1,
+  
+      
+    
 
   },
   //事件处理函数
@@ -60,59 +62,29 @@ Page({
       url: '../logs/logs'
     })
   },
-
+ //测试数据
   UC: function () {
-    wx.navigateTo({
-      url: "/pages/member/upgrade/upgrade",
-      // url:  "/pages/member/supportCenter/supportCenter",
-      //  url:    "/pages/goods/goodsclassificationlist/goodsclassificationlist",
-    })
-
+    // wx.scanCode({ // });  //扫描二维码；
+    wx.navigateTo({ url: "/pages/member/Verification/Verification", })
+    // /pages/index/discount/discount
+   
   },
 
-  //获取会员所有信息
-  SY_reuse: function () {
-    let that = this;
-    app.sendRequest({
-      url: "api.php?s=member/getMemberDetail",
-      success: function (res) {
-        let data = res.data
-        if (res.code == 0) {
-          let is_vip = data.is_vip;
-          app.globalData.is_vip = data.is_vip;
-          app.globalData.distributor_type = data.distributor_type;
-          app.globalData.uid = data.uid;
-          app.globalData.vip_gift = data.vip_gift;
-          app.globalData.vip_goods = data.vip_goods;
-          app.globalData.vip_overdue_time = data.vip_overdue_time;
-          console.log(data.user_info.user_tel)
-          app.globalData.user_tel = data.user_info.user_tel;
-          //  console.log(app.globalData.is_vip)
-          that.setData({
-            tel: data.user_info.user_tel,
-            is_vip
-          })
-        }
-      }
-    })
-  },
   onLoad: function (options) {
     let that = this;
-    let activities; //往期话题数据 
-    let activities_list; //最新话题数据下的商品
-    let lastOne;//最新话题数据
-    let shop;//新品推荐
-
-
+    wx.showLoading({
+      title: '加载中...',
+      mask: true
+    });
+      // 极选师分润
     if (options.uid) {
       // 这个字段是转发过后承载uid     identifying
       app.globalData.identifying = options.uid;
       app.globalData.breakpoint = options.breakpoint;
-      console.log('ui', options.breakpoint);
-      console.log('u', options.uid);
+      console.log('breakpoint', options.breakpoint);
+      console.log('uid', options.uid);
     }
     if (options.scene) {
-
       // 扫码进入
       var scene = decodeURIComponent(options.scene);
       console.log("scene ", scene);
@@ -138,9 +110,12 @@ Page({
     // }
 
     // IphoneX齐刘海
+    
+    let netWorkType  = app.globalData.netWorkType ;
     let isIphoneX = app.globalData.isIphoneX;
     this.setData({
-      isIphoneX: isIphoneX
+      isIphoneX: isIphoneX,
+      netWorkType 
     })
 
 
@@ -167,117 +142,7 @@ Page({
       }
     }, 1000);
 
-    // that.webSiteInfo();
-
-    //  获取往期话题
-    app.sendRequest({
-      url: "api.php?s=/activity/hotTopic",
-      data: { limit: 3 },
-      method: 'POST',
-      success: function (res) {
-        console.log(res.data.data);
-        activities = res.data.data;
-        that.setData({
-          activities,
-        })
-
-      }
-    });
-
-    //  获取最新话题
-    app.sendRequest({
-      url: "api.php?s=/activity/hotTopic",
-      data: { limit: 1 },
-      method: 'POST',
-      success: function (res) {
-        console.log(res.data);
-        lastOne = res.data.data;
-
-        // 获取最新话题下面商品
-        app.sendRequest({
-          url: "api.php?s=/Activity/activityInfo",
-          data: { master_id: res.data.data.id },
-          success: function (res) {
-
-            var new_actList = [];
-            var actList = res.data.data
-            for (var i = 0; i < actList.length; i++) {
-              if (actList[i].goods_info) {
-                new_actList.push(actList[i]);
-              }
-            }
-            activities_list = new_actList;
-            that.setData({
-              activities_list,
-            })
-
-          }
-        });
-        that.setData({
-          lastOne,
-        })
-      }
-    });
-
-    app.sendRequest({
-      url: "index.php?s=/api/index/getindeximglist",
-      data: {},
-      success: res => {
-        let shop = res.map(item => {
-          let img = item.imgUrl;
-          item.imgUrl = app.IMG(img);
-          return item;
-        })
-        console.log(shop)
-        that.setData({
-          shop,
-        })
-      }
-    });
-    // 品牌获取
-    app.sendRequest({
-      url: "api.php?s=/index/getGoodsBrandListRecommend",
-      data: {},
-      method: 'POST',
-      success: function (res) {
-        let brand = res.data
-        console.log(res.data)
-        that.setData({
-          brand: brand
-        })
-      }
-    });
-
-
-
-
-
-
-
-
-
-    app.sendRequest({
-      url: "api.php?s=goods/getDefaultImages",
-      data: {},
-      success: function (res) {
-        let code = res.code;
-        let data = res.data;
-        if (code == 0) {
-          that.data.defaultImg = data;
-          that.indexInit(that);
-        }
-      }
-    });
-
-    // that.copyRightIsLoad();
-    // that.data.myTime = setTimeout(function () {
-    //   that.setData({
-    //     activities,
-    //     lastOne,
-    //     shop,
-
-    //   })
-    // }, 1500);
+  
 
   },
 
@@ -298,21 +163,7 @@ Page({
     clearInterval(this.data.myTime);
   },
 
-
-
-  // 跳转top10页面
-  toTopic: function () {
-    wx.navigateTo({
-      url: '/pages/index/topicCollection/topicCollection',
-    })
-  },
-
-  // 跳转话题列表页
-  toTopicList: function () {
-    wx.navigateTo({
-      url: '/pages/index/topicList/topicList',
-    })
-  },
+ 
 
   // 首页轮播跳转
   toSwiperDetail: function (event) {
@@ -324,56 +175,103 @@ Page({
 
   onShow: function () {
     let that = this;
+    SERVERS.HOME.getindeximglist.post(res=>{
 
-    //     wx.navigateTo({
-    //   url: "/pages/member/kolApply/kolApply"
-    // })
-    //  极选师扫码12小时内有分销来源
-    // if (app.globalData.distributor_type != 0) {
+    }).then(res=>{
+      let shop = res.map(item => {
+        let img = item.imgUrl;
+        item.imgUrl = app.IMG(img);
+        return item;
+      })
+      console.log(shop)
+      that.setData({
+        shop,
+      })
+    }).catch(e=>console.log(e));
+  
+    // 品牌获取
+    app.sendRequest({
+      url: "api.php?s=/index/getGoodsBrandListRecommend",
+      data: {},
+      method: 'POST',
+      success: function (res) {
+        let brand = res.data
+        console.log(res.data);
+        let  Indexdata= 
+        {
+          topsrc:'https://static.bonnieclyde.cn/bc.png',
+          kesrc:'https://static.bonnieclyde.cn/icon111.jpg',
+          top1:'https://static.bonnieclyde.cn/brnds.png',
+          top2:'https://static.bonnieclyde.cn/%20class.png',
+          top3:'https://static.bonnieclyde.cn/newtop10.png',
+          
+      
+      }
+      let isIphoneX = app.globalData.isIphoneX;
+        that.setData({
+          brand: brand,
+          Indexdata,
+          isIphoneX 
+        })
+      }
+    });
+    app.sendRequest({
+      url: "api.php?s=goods/getDefaultImages",
+      data: {},
+      success: function (res) {
+        let code = res.code;
+        let data = res.data;
+        if (code == 0) {
+          that.data.defaultImg = data;
+          that.indexInit(that);
+        }
+      }
+    });
 
-    // } else {
-    //   let timestamp = Date.parse(new Date);
-    //   let scanCodes = wx.getStorageSync('scanCode');
-    //   console.log(scanCodes, 'scanCode')
-    //   let kol_ids = wx.getStorageSync('kol_id')
-    //   console.log(kol_ids, 'kol_id')
-    //   let overtimes = wx.getStorageSync('overtime');
-    //   if (timestamp < overtimes) {
-    //     console.log(211111)
-    //     app.globalData.kol_id= uids;
-    //     app.globalData.scanCode = scanCode;
-    //   } else {
-    //     console.log(333333);
 
-    //   }
-    // }
+  
+  
+
     let updata = app.globalData.unregistered;
-    // console.log(updata,'updata');
+  
     that.setData({
-      unregistered: updata
+      unregistered: updata,
+     
     })
 
 
     that.TC_reuse();
-
     app.restStatus(that, 'listClickFlag');
     app.restStatus(that, 'noticeContentFlag');
 
   },
-  // 小程序之间的跳转和携带参数；eg
+    //获取会员所有信息
+    SY_reuse: function () {
+      let that = this;
+      SERVERS.MEMBER.getMemberDetail.post().then(res => {
+        let data = res.data
+        if (res.code == 0) {
+          let is_vip = data.is_vip;
+          app.globalData.is_vip = data.is_vip;
+          app.globalData.distributor_type = data.distributor_type;
+          app.globalData.uid = data.uid;
+          app.globalData.vip_gift = data.vip_gift;
+          app.globalData.vip_goods = data.vip_goods;
+          app.globalData.vip_overdue_time = data.vip_overdue_time;
+          // console.log(data.user_info.user_tel)
+          app.globalData.user_tel = data.user_info.user_tel;
+          //  console.log(app.globalData.is_vip)
+          that.setData({
+            is_vip,
+            tel: data.user_info.user_tel,
+            is_login: 0
+          })
+        }
+      }).catch(e => console.log(e));
+    },
+  // 测试数据   小程序之间的跳转和携带参数；eg
   skip: function () {
-    wx.navigateTo({
-      url: '/pages/member/electronic/electronic',
-    })
-
-    // wx.navigateToMiniProgram({
-    //   appId: 'wxd145d8a6e951dd1b',
-    //   path: 'pages/goods/brandlist/brandlist?id=22',
-    //   envVersion: 'trial',
-    //   extraData: {
-    //     traffic_acquisition_source : '小红书'
-    //   },
-    // })
+    wx.navigateTo({ url: '/pages/member/electronic/electronic', })
   },
 
   /**
@@ -885,6 +783,9 @@ Page({
           // let mei_alls = data.block_list[2].goods_list;
 
           console.log(data.adv_list.adv_index_two.adv_list);
+          console.log(video_index, 'video_index')
+
+
           that.setData({
             // Base: base,
             adv_category: data.adv_list.adv_category,// 首页手机分类广告位
@@ -1027,8 +928,6 @@ Page({
  */
   onReady: function () {
     let that = this;
-    //  console.log(that.data.unregistered,'结束打印')
-    //  console.log(that.data.tel,'电话结束打印')
   },
 
   /**
@@ -1073,7 +972,6 @@ Page({
 
   // 获取滚动条当前位置
   onPageScroll: function (e) {
-    // console.log(e.scrollTop)
     if (e.scrollTop > 1900) {
       this.setData({
         floorstatus: true
@@ -1084,14 +982,31 @@ Page({
       });
     }
   },
+  all_error: function () {
+    console.log('视频播放出错时触发');
+
+  },
+  all_waiting: function () {
+    console.log('视频出现缓冲时触发');
+
+  },
+  all_pause: function () {
+    console.log('当暂停播放时触发 pause 事件');
+
+  },
+  all_ded: function () {
+
+    console.log('当播放到末尾时触发 ended 事件');
+
+  },
   /* 
       回到顶部
    */
   goTop: function () {
     let that = this;
-    let floorstatus = that.data.floorstatus;
+    let scrollTop = that.data.floorstatus;
     if (floorstatus) {
-      wx.pageScrollTo({
+      wx.scrollTop({
         scrollTop: 0
       })
 

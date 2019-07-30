@@ -480,9 +480,9 @@ Page({
 
             // 是否是内购商品
             let is_inside_sell = goods_info.sku_list[0].is_inside_sell;
-            console.log(is_inside_sell)
+            console.log(is_inside_sell);
 
-            console.log(goods_info)
+            console.log(goods_info);
 
             goods_info.img_list[0].pic_cover_micro = app.IMG(goods_info.img_list[0].pic_cover_micro);
             goods_info.picture_detail.pic_cover_micro = app.IMG(goods_info.picture_detail.pic_cover_micro);
@@ -525,11 +525,6 @@ Page({
               goodsDetailImg,
               //极选师推荐图片
             });
-
-
-
-
-
 
 
 
@@ -1347,7 +1342,6 @@ Page({
         console.log(sku_let)
         let Lei_price = goods_info.sku_list[i].inside_price;
         let is_inside_sell = goods_info.sku_list[i].is_inside_sell;
-        // let market_price = goods_info.sku_list[i].market_price;
 
 
 
@@ -1364,7 +1358,6 @@ Page({
         }
 
         if (is_inside_sell == 0) {
-          // goods_info.market_price = market_price;
           goods_info.promote_price = sku_promote;
           goods_info.price = sku_price;
         } else {
@@ -1581,6 +1574,7 @@ Page({
         if (code == 0) {
           if (data.code > 0) {
             app.showBox(that, '加入购物车成功')
+            
             goods_info.cart_count += count;
             that.setData({ goods_info });
 

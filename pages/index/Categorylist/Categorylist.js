@@ -41,6 +41,46 @@ Page({
         }
       }
     }
+    let id = that.data.id;
+    let page = that.data.page;
+
+    app.sendRequest({
+      url: "api.php?s=/index/branchPro",
+      data: {
+        category_id: id,
+        page_index: 1,
+      },
+      method: 'POST',
+      success: function (res) {
+        let category_goods = res.data.pro.data;
+        // let new_category_goods = res.data.pro.data;
+        if (category_goods[0] != undefined) {
+          page++;
+        }
+        let category_pic = res.data.category_pic;
+        let category_name = res.data.category_name;
+
+        // category_goods=category_goods.concat(new_category_goods)
+        // console.log(category_goods)
+
+        // 专题页标题
+        wx.setNavigationBarTitle({
+          title: res.data.category_name,
+        })
+        that.setData({
+          category_goods: category_goods,
+          category_name: category_name,
+          category_pic: category_pic,
+          page: page,
+        })
+
+
+      }
+    });
+
+
+
+
 
   },
 
@@ -83,45 +123,12 @@ Page({
    */
   onShow: function () {
     let that=this;
-    let id=that.data.id;
-    let page=that.data.page;
+  
 
 
 
     // this.toGoods(id, 1)
-    app.sendRequest({
-      url: "api.php?s=/index/branchPro",
-      data: {
-        category_id: id,
-        page_index:1,
-      },
-      method: 'POST',
-      success: function (res) {
-        let category_goods = res.data.pro.data;
-        // let new_category_goods = res.data.pro.data;
-        if (category_goods[0] != undefined) {
-          page++;
-        }
-        let category_pic = res.data.category_pic;
-        let category_name= res.data.category_name;
-        
-        // category_goods=category_goods.concat(new_category_goods)
-        // console.log(category_goods)
-
-              // 专题页标题
-        wx.setNavigationBarTitle({
-         title: res.data.category_name,
-        })
-        that.setData({
-          category_goods: category_goods,
-          category_name:category_name,
-          category_pic: category_pic,
-          page:page,
-        })
-
-        
-      }
-    });
+  
 
 
  

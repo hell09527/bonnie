@@ -55,7 +55,7 @@
           <view class='table-text' style='font-size:18px;'>激活码</view>
         </view>
           <!-- <input type='text' class='table-input' placeholder='请输入您的姓名' value='{{listData.name}}' bindinput='nameValue' bindblur='nameWrok'></input> -->
-          <input    class="release"    type="number"   placeholder="请输入激活码" placeholder-style="color:rgb(153,153,153);" ></input> 
+          <input    class="release"    type='text' value="{{activation_code}}"   placeholder="请输入激活码" placeholder-style="color:rgb(153,153,153);" bindinput='activationcode'></input> 
         <!-- 我有邀请码，直接成为极选师 > -->
          <view class="invite" catch:tap='switcher' data-ma='1'>没有邀请码，申请成为极选师 > </view>
       </view>

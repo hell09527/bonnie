@@ -4,7 +4,7 @@
     <icon class="i show_type warning" type='warn' size='25' color='#FFF'></icon>
     <view class="motify-inner">{{prompt}}</view>
   </view>
-  <view class='member_top'>
+  <view class='member_top {{base_img==1?"top_base":""}}'  >
 
     <view class='member_head'>
       <view class="member_info_head">
@@ -38,11 +38,11 @@
       </view> 
       <view class="member-name" wx:if='{{unregistered==1 || tel==""}}'>
         <button class="level" catchtap='Crossroad'>点击头像登录</button>
-         <image  lazy-load="true" src="https://static.bonnieclyde.cn/48-48.png" style="width:48rpx;height:48rpx;display:block;" wx:if="{{is_vip==1}}"></image> 
+         <image  lazy-load="true" src="{{memData.heder}}" style="width:48rpx;height:48rpx;display:block;" wx:if="{{is_vip==1}}"></image> 
       </view>
           <view class="member-ns" wx:if='{{unregistered==0 && tel!=""}}'>
         <view class="level">{{wx_name?wx_name:member_info.member_name}}</view>
-         <image lazy-load="true" src="https://static.bonnieclyde.cn/48-48.png" style="width:48rpx;height:48rpx;display:block;" wx:if="{{is_vip==1}}"></image> 
+         <image lazy-load="true" src="{{memData.heder}}" style="width:48rpx;height:48rpx;display:block;" wx:if="{{is_vip==1}}"></image> 
       </view>
        <view  data-url="member/integralwater/integralwater">
        <!-- catchtap='listClick' -->
@@ -199,7 +199,7 @@
       </view>
            <view class='li'>
         <view class="a member_list_item" catchtap='listClick' data-url="member/givingRecords/givingRecords">
-          <image lazy-load="true" src='https://static.bonnieclyde.cn/WechatIMG73.png'/>
+          <image lazy-load="true" src='{{memData.gift}}'/>
           <view wx:if="{{unregistered==0 && tel!=''}}">
           <view class="list {{giftGiveOrder>0?'':'hide'}}"></view>
           </view>
@@ -209,7 +209,7 @@
 
            <view class='li' >
           <view class="a member_list_item" catchtap='listClick'     data-url="member/posterList/posterList">
-            <image lazy-load="true" src='https://static.bonnieclyde.cn/icon21.png' />
+            <image lazy-load="true" src='{{memData.post_img}}' />
             <view class='span'>海报制作</view>
           </view>
         </view>
@@ -237,15 +237,23 @@
       <block wx:if='{{(distributor_type!=0 &&distributor_type!=1)}}'>
         <view class='li'>
       <view class="a member_list_item" catchtap='listClick' data-url="member/kol/kol">
-          <image lazy-load="true"  src='https://static.bonnieclyde.cn/WechatIMG463-min.png' />
+          <image lazy-load="true"  src='{{memData.vip}}' />
           <view class='span'>极选师</view>
+        </view>
+        </view>
+      </block>
+         <block wx:if='{{(distributor_type!=0 &&distributor_type!=1)}}'>
+        <view class='li'>
+      <view class="a member_list_item" catchtap='listClick' data-url="member/kolApply/kolApply">
+          <image lazy-load="true"  src='{{memData.invite}}' />
+          <view class='span'>邀请好友</view>
         </view>
         </view>
       </block>
       <block>
         <view class='li' wx:if='{{distributor_type==1}}'>
         <view class="a member_list_item" catchtap='listClick' data-url="index/coupon/coupon">
-          <image lazy-load="true" src='https://static.bonnieclyde.cn/WechatIMG1.png'/>
+          <image lazy-load="true" src='{{memData.discounts}}'/>
           <view class='span'>优惠券分享</view>
         </view> 
         </view> 

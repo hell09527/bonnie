@@ -42,7 +42,7 @@ Page({
     provinceIndex: 0,
     cityIndex: 0,
     districtIndex: 0,
-    isShow: 1,    //显示模块
+    isShow: 2,    //显示模块
     isModel: false,   //模态框
     prompt: '',  //提示语
     listData: {
@@ -53,7 +53,8 @@ Page({
     recommend: '',   //推荐人
     showTitle: '', //展示文本
     showTitle: '推荐人',
-    Naddress: ''
+    Naddress: '',
+    activation_code:''
   },
 
   /**
@@ -301,6 +302,17 @@ Page({
     })
   },
 
+    // 激活码号码修改
+    activationcode: function (e) {
+      var  activation_code = e.detail.value;
+      console.log(activation_code);
+      activation_code =  activation_code.toUpperCase() ;
+     
+      this.setData({
+        activation_code
+      })
+    },
+
 
   // 申请极选师
   toApply: function (event) {
@@ -400,14 +412,40 @@ Page({
   switcher: function (e) {
     let that=this;
     let status = e.currentTarget.dataset.ma;
-    that.setData({isShow:status })
-  
-     
-    
+    that.setData({isShow:status });
 
   },
-  //成为极选师
-  toBecome:function(){
+  //用激活码成为极选师
+  toBecome:function(event){
+    let that=this;
+    let  activation_code = that.data.activation_code;
+    let listData= that.data.listData;
+    let  recommend_user = listData.recommend_user;
+    // console.log(app.globalData.openid,"openid");
+    // console.log(event.detail.formId,'formId');
+
+    app.sendRequest({
+      url: 'api.php?s=Distributor/codeApplyDistributor',
+      data: {
+        open_id: app.globalData.openid,
+        form_id: event.detail.formId,
+        activation_code,
+        recommend_user,
+      },
+      success: function (res) {
+        console.log(res);
+        if (res.code == 1) {
+          console.log('jinlail');
+
+          wx.navigateTo({
+            url: '/pages/member/kol/kol'
+          });
+
+        }
+   
+
+      }
+    });
 
   },
 

@@ -258,6 +258,23 @@ PP_reuse:function(){
               // parm[parm_key] = new_goods_list[index];
             }
             goods_list = goods_list.concat(new_goods_list);
+
+
+            for(let index in goods_list){
+              let img = goods_list[index].pic_cover_small;
+              goods_list[index].pic_cover_small = app.IMG(img);
+                  //  品牌列表显示规格最小的sku的价格
+              for (let i = 0; i < goods_list[index].sku_list.length; i++) {
+                 goods_list[index].lowest=[];
+                goods_list[index].lowest.push(goods_list[index].sku_list[i].promote_price); 
+                console.log(Math.min(...goods_list[index].lowest).toFixed(2));
+                if( parseInt(goods_list[index].promotion_price).toFixed(2)>Math.min(...goods_list[index].lowest)){
+                  goods_list[index].promotion_price=Math.min(...goods_list[index].lowest).toFixed(2);
+                  console.log(Math.min(...goods_list[index].lowest).toFixed(2));
+                }
+            }
+            }
+            
             
             that.setData({
               goods_list,
@@ -308,7 +325,6 @@ PP_reuse:function(){
                goods_list[index].lowest=[];
               goods_list[index].lowest.push(goods_list[index].sku_list[i].promote_price); 
               console.log(Math.min(...goods_list[index].lowest).toFixed(2));
-              
               if( parseInt(goods_list[index].promotion_price).toFixed(2)>Math.min(...goods_list[index].lowest)){
                 goods_list[index].promotion_price=Math.min(...goods_list[index].lowest).toFixed(2);
                 console.log(Math.min(...goods_list[index].lowest).toFixed(2));

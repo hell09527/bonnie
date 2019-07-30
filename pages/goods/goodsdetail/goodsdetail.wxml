@@ -59,7 +59,7 @@
                         <!-- <view class='span'>￥</view> -->
                         <view class="i js-goods-price price">￥{{goods_info.promotion_price}}</view>
                         <view class="span price-title js-price-title {{timer_array.end==1?'gray':''}}">
-                            限时体验
+                            限时折扣
                         </view>
                     </view>
                     <!-- <view class='em' class="original-price">{{goods_info.price}}</view> -->
@@ -93,7 +93,7 @@
                     </view>
                     <view class="lostkol">
                         <view wx:if='{{scale==1}}' class="js-li " style=' text-align: left; font-size: 18px;font-weight: 700;'>
-                             ￥{{parseInt(goods_info.promotion_price)< parseInt(goods_info.price)?goods_info.promotion_price:goods_info.price}}
+                            ￥{{parseInt(goods_info.promotion_price)< parseInt(goods_info.price)?goods_info.promotion_price:goods_info.price}}
                         </view>
                         <view wx:else class="js-li " style=' text-align: left; font-size: 18px;font-weight: 700;'>
                             ￥{{Min_ori}}-{{Max_ori}}
@@ -143,10 +143,10 @@
                         <i class="goods_tab">{{vo.group_name}}</i>
                     </block>
                     <text decode="true">{{goods_info.goods_name}}</text>
+                    <text decode="true" wx:if="{{goods_info.introduction!=''}}" class="p goods-introduction">
+                        {{goods_info.introduction}}
+                    </text>
                 </view>
-                <text decode="true" wx:if="{{goods_info.introduction!=''}}" class="p goods-introduction">
-                    {{goods_info.introduction}}
-                </text>
                 <button class="span give-the-thumbs-up" catchtap="proChoose">
                     <image src='/images/goods/icon_share.png' class="i fa fa-thumbs-up" mode='scaleToFill'></image>
                     分享
@@ -227,9 +227,19 @@
             <view class="price_postage" catchtap='cancleMan'>
                 <!-- word-break: break-all -->
                 <!-- white-space: pre-wrap; -->
-                <view class="span price_postage_tit js-reduced-send  {{Man?'single':''}}''" style='word-break: keep-all '>
+                <!-- style='word-break: keep-all ' -->
+                <!-- {{Man?'single':''}} -->
+                <view class="span price_postage_tit js-reduced-send  {{Man?'single':''}} ''">
                     <view class='i goods_tab'>满减</view>
-                    {{goods_info.mansong_name}}
+                    <block wx:if="{{Man}}">{{goods_info.mansong_name_array[0]}}...</block>
+                    <block wx:else>
+                        <view class="k" style=' display: inline-block;margin-bottom: 20rpx;'>
+                            {{goods_info.mansong_name_array[0]}}
+                        </view>
+                        <block wx:for="{{goods_info.mansong_name_array}}" wx:key='' wx:for-item='item' wx:for-index='index'>
+                            <view class="full" wx:if="{{index>1}}">{{item}}</view>
+                        </block>
+                    </block>
                 </view>
             </view>
             <hr class="hr with-margin-l" />

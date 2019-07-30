@@ -9,6 +9,10 @@ Page({
   data: {
     showModel: false,
     showAppoint: false,
+    y_phone: '',
+    y_name: '',
+    isfou: 1,
+    isphone: 1
   },
 
   /**
@@ -66,13 +70,13 @@ Page({
       url: "api.php?s=/activity/storeActivityInfo",
       data: { master_id: id },
       success: function (res) {
-        var actList = res.data.data;
-        console.log(actList,'actList')
+        var actList = res.data;
+        console.log(actList, 'actList')
         that.setData({
           actList: actList,
         })
-      },fail(res){
-        console.log(res,'res')
+      }, fail(res) {
+        console.log(res, 'res')
 
       }
     });
@@ -118,6 +122,8 @@ Page({
         }
       }
       that.setData({
+        isfou: 1,
+        isphone: 1,
         showModel: true,
       });
     }
@@ -140,7 +146,7 @@ Page({
           app.globalData.vip_overdue_time = data.vip_overdue_time;
           let updata = that.data.unregistered;
           updata = app.globalData.unregistered;
-          
+
 
           // console.log(app.globalData.is_vip)
           that.setData({
@@ -196,6 +202,26 @@ Page({
     }
 
   },
+  //填写您的姓名
+  Youname: function (e) {
+    let that = this;
+    let y_name = e.detail.value;
+    console.log('cdknvi')
+    that.setData({
+      y_name
+    });
+
+
+  },
+  //填写您的手机号码
+  Youphone: function (e) {
+    let that = this;
+    let y_phone = e.detail.value;
+    that.setData({
+      y_phone
+    });
+
+  },
   /**
   * 预约时间
   */
@@ -222,6 +248,42 @@ Page({
     let showTo = status == "cancel" ? false : true;
     console.log(showTo)
     let click_id = that.data.click_id;
+    let y_name = that.data.y_name;
+    let y_phone = that.data.y_phone;
+
+
+
+    if (y_name == '') {
+      console.log('请输入您的名字')
+      that.setData({ isfou: 2 });
+      return;
+    }
+
+
+    if (y_phone == '') {
+      that.setData({ isphone: 2 });
+      return;
+    }
+
+
+
+    if (y_phone != '') {
+      let myreg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
+      if (y_phone.length != 11 || !myreg.test(y_phone)) {
+        console.log('kkkkk');
+        app.showBox(that, '请输入正确的手机号');
+        that.setData({ isphone: 2 });
+        return;
+      }
+    }
+
+
+
+
+
+
+
+
 
     let uid = app.globalData.uid;
     if (showTo) {
@@ -258,8 +320,8 @@ Page({
           }
 
 
-        },fail(e){
-          console.log(e,'eeee')
+        }, fail(e) {
+          console.log(e, 'eeee')
 
         }
       });
@@ -281,6 +343,11 @@ Page({
 
 
 
+  },
+  gogo:function(){
+    wx.navigateTo({
+      url: '/pages/member/electronic/electronic'
+    })
   },
   goLeap: function (e) {
     let that = this;

@@ -1,0 +1,11 @@
+<!--pages/member/Verification/Verification.wxml-->
+<scroll-view >
+<view  class='Verification'>
+<view class="invite">
+<view class="header"></view>
+<view class="millder"></view>
+<view class="footer"></view>
+
+</view>
+</view>
+</scroll-view>

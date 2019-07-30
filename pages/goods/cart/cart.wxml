@@ -28,6 +28,7 @@
           </block>
         </view>
       </view>
+      <view class="hr" style='width:100%;height:40px;'></view>
 
       <!-- 选择分享分销者  start -->
       <!-- <view class='Lise'>
@@ -173,15 +174,15 @@
     </view>
   </block>
   <block wx:else>
-    <view wx:if='{{unregistered==0 && tel!=""}}'>
-      <view class="cart-none" id="cart-none" style="">
+   
+      <view class="cart-none" id="cart-none" style="" wx:if='{{unregistered==0 && tel!=""}}'>
         <view class="i cart-big">
           <image src='/images/goods/cart-big.png' mode='widthFix'></image>
         </view>
         <view class="p text">您的购物车还没有商品！</view>
         <view class="a btn" catchtap="aIndex" data-url='/pages/index/index'>发现更多惊喜</view>
       </view>
-    </view>
+   
     <view wx:if='{{unregistered==1 || tel==""}}'>
       <view class="Login" catchtap="aIndex" data-url='/pages/member/member/member'>
         <view class="wz">使用购物车请先登录！前往登录 >>></view>

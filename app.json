@@ -45,6 +45,7 @@
     "pages/member/upgrade/upgrade",
     "pages/member/newmypath/newmypath",
     "pages/member/electronic/electronic",
+    "pages/member/Verification/Verification",
     "pages/member/updateaccount/updateaccount",
     "pages/member/personaldata/personaldata",
     "pages/member/memberaddress/memberaddress",
@@ -128,7 +129,16 @@
         "selectedIconPath": "images/bottom/user_uncheck.png",
         "pagePath": "pages/member/member/member",
         "text": "个人中心"
+      },
+      {
+        "iconPath": "images/bottom/32-1-min.png",
+        "selectedIconPath": "images/bottom/31-2-min.png",
+        "pagePath": "pages/goods/lineActivity/lineActivity",
+        "text": "门店活动"
       }
+
+
+   
     ]
   },
   "window": {

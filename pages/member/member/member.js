@@ -37,8 +37,24 @@ Page({
       success: function (res) {
         let code = res.code;
         let data = res.data;
+
+         let  base_img=1
+        let  memData=   {
+          backdrop:'https://static.bonnieclyde.cn/%E8%83%8C%E6%99%AF2.jpg',
+           heder:'https://static.bonnieclyde.cn/48-48.png',
+          post_img:'https://static.bonnieclyde.cn/icon21.png',
+          gift:'https://static.bonnieclyde.cn/WechatIMG73.png',
+          vip:'https://static.bonnieclyde.cn/WechatIMG463-min.png',
+          invite:'https://static.bonnieclyde.cn/WechatIMG228.jpg',
+          discounts:'https://static.bonnieclyde.cn/WechatIMG1.png',
+      }
+
+      let unregistered = app.globalData.unregistered;
+
         if (code == 0) {
           that.setData({
+            base_img,
+            memData,
             unpaidOrder: data.unpaidOrder,
             shipmentPendingOrder: data.shipmentPendingOrder,
             goodsNotReceivedOrder: data.goodsNotReceivedOrder,
@@ -48,6 +64,7 @@ Page({
             isSign: data.isSign,
             is_verification: data.is_verification,
             is_open_virtual_goods: data.is_open_virtual_goods,
+            unregistered
           })
         }
         // console.log(res)

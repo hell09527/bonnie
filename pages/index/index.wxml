@@ -16,17 +16,17 @@
       <view class="motify-inner">{{prompt}}</view>
     </view>
        <view class="top_title"  wx:if="{{isIphoneX==2}}">
-          <image class="top_img" src="https://static.bonnieclyde.cn/bc.png" mode="widthFix" lazy-load="true" >
+          <image class="top_img" src="{{Indexdata.topsrc}}" mode="widthFix" lazy-load="true" >
         </image>
         </view>
 
          <view class="top_P"  wx:if="{{isIphoneX==3}}">
-          <image class="top_img" src="https://static.bonnieclyde.cn/bc.png" mode="widthFix" lazy-load="true" >
+       <image class="top_img" src="{{Indexdata.topsrc}}" mode="widthFix" lazy-load="true" >
         </image>
         </view>
 
           <view class="top_X"  wx:if="{{isIphoneX==1}}">
-          <image class="top_img" src="https://static.bonnieclyde.cn/bc.png" mode="widthFix" lazy-load="true" >
+           <image class="top_img" src="{{Indexdata.topsrc}}" mode="widthFix" lazy-load="true" >
         </image>
         </view>
 
@@ -50,7 +50,7 @@
   <!-- style="margin-top:68rpx" -->
     <view class="com-content" style="margin-top:{{isIphoneX==3?'64':'72'}}px">
                     <!-- 测试数据 -->
-    <button catchtap='UC'>门店活动列表页</button>
+      <button catchtap='UC'>邀请码</button>
       <!-- <button catchtap='skip'>卡券</button>  -->
       <!-- 公告 -->
       <view class="hot {{index_notice[0]==undefined?'hide':''}}">
@@ -200,11 +200,11 @@
 
            <!-- Banner视频 -->
            <!-- <view class="touch" wx:if="{{video_index.video_address}}"> </view> -->
-              <video id="myVideo"  wx:if="{{video_index.video_address}}" src="{{video_index.video_address}}" object-fit='cover' controls></video>
+           <video id="myVideo"  wx:if="{{video_index.video_address}}" src="{{video_index.video_address}}"  bindended='all_ded' bindpause='all_pause'    bindwaiting='all_waiting'  binderror='all_error'   object-fit='cover' controls show-center-play-btn></video>
           
           
                 <!-- 品牌标题 -->
-        <image   lazy-load="true" src="https://static.bonnieclyde.cn/brnds.png" mode='widthFix' style='margin:60rpx 0rpx;width:100%;'></image>
+        <image   lazy-load="true" src="{{Indexdata.top1}}" mode='widthFix' style='margin:60rpx 0rpx;width:100%;'></image>
                  <!-- 品牌列表 -->
        <view class='brand-detail'>
         <block wx:for='{{brand.data}}' wx:key='' wx:for-item='brands' wx:for-index='index'>
@@ -215,7 +215,7 @@
         </block>
        </view>
        <!-- 品类标题 -->
-      <image   lazy-load="true" src="https://static.bonnieclyde.cn/%20class.png" mode='widthFix' style='margin:120rpx 0rpx 60rpx 0;width:100%;'></image>
+      <image   lazy-load="true" src="{{Indexdata.top2}}" mode='widthFix' style='margin:120rpx 0rpx 60rpx 0;width:100%;'></image>
        <!-- 品类展示图 -->
       <!-- <image   lazy-load="true" src="{{adv_category.default_content}}" mode='widthFix' style='margin:10rpx 0rpx;width:100%;'></image> -->
        <!-- 品类 -->
@@ -227,7 +227,7 @@
          </block>
        </view>
         <!-- top标题 -->
-      <image   lazy-load="true" src="https://static.bonnieclyde.cn/newtop10.png" mode='widthFix'  style='margin:120rpx 0rpx 60rpx 0;width:100%;'></image>
+      <image   lazy-load="true" src="{{Indexdata.top3}}" mode='widthFix'  style='margin:120rpx 0rpx 60rpx 0;width:100%;'></image>
    
        
         <view wx:if='{{shop}}'>
@@ -325,7 +325,7 @@
     <!-- <image lazy-load="true" src="http://3gimg.qq.com/BabytingWeb/micpro/play.gif" mode='widthFix' style='margin:100rpx auto;display:block;width:300rpx;position: relative;'></image> -->
    <!-- 定位客服 -->
  <button class="a new-btn buy-cart" open-type="contact" session-from="weapp" class="{{isHide==0?'yuan':'hide-kf'}}" >
-     <view><image src="https://static.bonnieclyde.cn/icon111.jpg"  mode='widthFix' ></image></view>
+     <view><image src="{{Indexdata.kesrc}}"  mode='widthFix' ></image></view>
    </button>
 
       <!-- 定位回到顶部 -->

@@ -162,10 +162,19 @@ Page({
     that.AA();
     wx.stopPullDownRefresh();
 
+  },
+   /**
+   * 图片预览
+   */
+  preivewImg: function (e) {
+    let imgUrls = 'https://static.bonnieclyde.cn/goInfo.png';
+    let urls = [];
 
-
-
-
+    urls.push(imgUrls);
+    wx.previewImage({
+      current: urls[0],
+      urls: urls,
+    })
   },
 
   /**
@@ -187,7 +196,7 @@ Page({
     console.log(data);
     if (that.data.distributor_type == 0) {
       return {
-        title: 'BonnieClyde',
+        title: 'BonnieClyde门店活动预约',
         path: TWO_share_url,
         success: function (res) {
           app.showBox(that, '分享成功');
@@ -199,7 +208,7 @@ Page({
     }
     else {
       return {
-        title: 'BonnieClyde',
+        title: 'BonnieClyde门店活动预约',
         path: TWO_share_url + '&uid=' + uid,
         success: function (res) {
           app.showBox(that, '分享成功');

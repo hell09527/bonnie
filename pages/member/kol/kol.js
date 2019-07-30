@@ -297,7 +297,7 @@ Page({
     that.setData({
       scrollTop: e.scrollTop
     })
-    // console.log(e.scrollTop)//获取滚动条当前位置的值
+    console.log(e.scrollTop)//获取滚动条当前位置的值
   },
 
   topNav: function (event) {

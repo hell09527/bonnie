@@ -6,25 +6,28 @@
   }
 
   .top_shop{
-    width: 50%;
+    width: 33.3%;
     text-align: center;
     margin-top: 5px;
     font-size: 14px;
     /* font-weight: 700; */
-    color:#999;
+    color:#333 ;
     line-height: 72rpx;
-     border-top: 1px solid #ccc;
-     border-bottom: 1px solid #ccc;
+     /* border-top: 1px solid #ccc; */
+    
      /* box-shadow: 0  2px 3px  #ccc; */
-     box-shadow: 0  -2px 3px  rgba(92, 92, 92, 0.10),0  2px 3px  rgba(92, 92, 92, 0.10);
+     /* box-shadow: 0  -2px 3px  rgba(92, 92, 92, 0.10),0  2px 3px  rgba(92, 92, 92, 0.10); */
    
     
   }
   .top_shop_click{
-    background: #000;
+     border-bottom: 1px solid #1890FF ;
+      color: #1890FF;
   
   }
   .ex_img{
       overflow: hidden;
       height: auto;
+      margin-top: 40rpx;
+
   }

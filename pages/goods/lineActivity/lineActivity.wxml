@@ -1,7 +1,21 @@
 <!--pages/goods/lineActivity/lineActivity.wxml-->
 <scroll-view >
-  <block wx:for='{{activity}}' wx:key='' wx:for-item='shops' wx:for-index='index'>
-  <image catchtap='toDetail' data-id="{{shops.id}}" data-title="{{shops.activity_name}}" src="{{shops.pic}}" mode='widthFix' style='width:100%;'></image>
+<view class="station">
+    <view class="shop" >
+  <image  class="csc" src="https://static.bonnieclyde.cn/%20store.png" ></image>
+</view>
+<view class="local">上海市-长宁区-长宁路1123号 长宁来福士广场 (E) 01-09/10室 Bonnie&Clyde</view>
+
+ 
+
+</view>
+  <view class="goSeven">
+   <block wx:for='{{activity}}' wx:key='' wx:for-item='shops' wx:for-index='index'>
+    <image catchtap='toDetail' data-id="{{shops.id}}" data-title="{{shops.activity_name}}" src="{{shops.pic}}" mode='widthFix' style='width:100%;'></image>
  </block>
+  </view>
+  
+
+ <!-- <image  src="https://static.bonnieclyde.cn/goInfo.png" mode="widthFix" catchtap='preivewImg'  style='width:100%;'/> -->
 </scroll-view>
 

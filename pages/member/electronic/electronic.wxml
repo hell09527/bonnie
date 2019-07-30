@@ -2,11 +2,15 @@
 <scroll-view>
     <view class='top_shop_box'>
         <view class="top_shop {{isCode==1?'top_shop_click':''}}" catchtap='isCode' data-index='1'>
-            可用
+            未使用
         </view>
         <view class="top_shop {{isCode==2?'top_shop_click':''}}" catchtap='isCode' data-index='2'>
+           已过期
+        </view>
+           <view class="top_shop {{isCode==3?'top_shop_click':''}}" catchtap='isCode' data-index='3'>
             已结束
         </view>
+        
     </view>
     <view wx:if='{{isCode==1}}'>
         <block wx:for="{{excoupon}}" wx:for-item="coupon" wx:for-index="index" wx:key="id">
@@ -23,5 +27,8 @@
         </view> -->
             <image class="ex_img" src="{{coupon.coupon_pic}}" mode="widthFix"  style="width:100%;filter: grayscale(100%)"></image>
         </block>
+    </view>
+     <view wx:if='{{isCode==3}}'>
+      <view class="uk">4345554</view>
     </view>
 </scroll-view>

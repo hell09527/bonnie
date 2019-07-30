@@ -13,11 +13,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let that=this;
+    let that = this;
     // setTimeout(function(){ },2000)
-      that.Letme(1);
-   
-   
+    that.Letme(1);
+
+
   },
 
 
@@ -34,61 +34,53 @@ Page({
    */
   onShow: function () {
     let that = this;
-    
-   
+
+
 
   },
- // 卡券
- isCode: function (e) {
-   let that = this;
-  let index = e.currentTarget.dataset.index;
-  that.Letme(index);
+  // 卡券
+  isCode: function (e) {
+    let that = this;
+    let index = e.currentTarget.dataset.index;
+    that.Letme(index);
+    this.setData({ isCode: index });
 
-  if (index == 2) {
-    this.setData({
-      isCode: 2
-    })
-  } else {
-    this.setData({
-      isCode: 1
-    })
-  }
-},
-Letme:function(status){
-  let that = this;
-  app.sendRequest({
-    url: "api.php?s=/activity/storeCardShow",
-    data: {status},
-    success: function (res) {
-      var excoupon = res.data;
+  },
+  Letme: function (status) {
+    let that = this;
+    app.sendRequest({
+      url: "api.php?s=/activity/storeCardShow",
+      data: { status },
+      success: function (res) {
+        var excoupon = res.data;
 
-      if (typeof res.data === 'string'){
-         var data = JSON.parse(res.data.trim());
-      } 
-     
-      console.log(data,'kol');
-    
-      for(let i in excoupon){
-        console.log(excoupon[i].coupon_pic,'66');
-        console.log(encodeURI(excoupon[i].coupon_pic),'77');
+        if (typeof res.data === 'string') {
+          var data = JSON.parse(res.data.trim());
+        }
+
+        console.log(data, 'kol');
+
+        for (let i in excoupon) {
+          console.log(excoupon[i].coupon_pic, '66');
+          console.log(encodeURI(excoupon[i].coupon_pic), '77');
+        }
+        console.log(res, 'ooo')
+        console.log(status, 'hhhssh')
+        console.log(excoupon, 'hhhh')
+        that.setData({
+          excoupon,
+        })
+      }, fail(res) {
+        console.log(res, 'res')
       }
-      console.log(res,'ooo')
-      console.log(status,'hhhssh')
-      console.log(excoupon,'hhhh')
-      that.setData({
-        excoupon,
-      })
-    },fail(res){
-      console.log(res,'res')
-    }
-  });
+    });
 
-},
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-   
+
   },
 
   /**

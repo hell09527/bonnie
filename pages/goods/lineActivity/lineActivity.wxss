@@ -41,3 +41,47 @@ page{
   width:18rpx;
   height:34rpx;
 }
+.center{
+  font-size: 14px;
+  margin: 0 15px;
+  margin-bottom: 100rpx;
+  
+}
+.bc{
+  margin: 0 auto;
+  text-align: center;
+
+}
+.goSeven{
+  margin-top: 90rpx;
+
+}
+.local{
+  display: block;
+ float: left;
+ width: 90%;
+}
+
+.station{
+  position: fixed;
+  display: block;
+  top:0;
+  right: 0;
+  width: 100%;
+  height: 90rpx;
+ background:#ccc;
+}
+.csc{
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.shop{
+  float: left;
+  display: block;
+  width: 10%;
+  text-align: center;
+line-height: 90rpx;
+
+
+}
