@@ -54,7 +54,7 @@ App({
   onLaunch: function (options) {
     let that = this;
 
-    SERVERS.init(true);
+    SERVERS.init(false);
 
     // 请求初始化(默认开发模式)
     if (options.referrerInfo.extraData) {    //接受友商小程序跳转到我们小程序  
@@ -124,27 +124,16 @@ App({
 
   Baserefresh: function () {
     let that = this;
-
     that.userDeviceDetect();
-
     // 更新检查
     that.updateCheck();
 
-
-
-    // 默认数据
     that.defaultImg();
     // that.webSiteInfo();//被注释原因未知
     that.copyRightIsLoad();
     that.loadTask();
-
     return that.getwechatUserInfo();// 自动登录(如果已授权)
-
     // 用户设备检测(统计)
-
-
-
-
 
   },
   debounce(fn, wait) {
@@ -157,10 +146,8 @@ App({
       }, wait);
     }
   },
-
   Closure() {
     let that = this;
-
     let pages = getCurrentPages();
     console.log(pages.map(p => p.route))
     let stackTop = pages[pages.length - 1];
@@ -176,10 +163,7 @@ App({
       stackTop.onLoad(stackTop.options);
       stackTop.onShow();
     }
-
   },
-
-
 
   // 用户网络监测
   netListener() {

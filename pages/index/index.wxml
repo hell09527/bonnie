@@ -44,14 +44,14 @@
          <!-- 搜索框动画 -->
 
 
-    <!-- <block wx:if='{{is_login == 0}}'>
+ <!-- <block wx:if='{{is_login == 0}}'>
     <image class='load_img' src='https://static.bonnieclyde.cn/icon01.gif'></image>
   </block> -->
   <!-- style="margin-top:68rpx" -->
     <view class="com-content" style="margin-top:{{isIphoneX==3?'64':'72'}}px">
                     <!-- 测试数据 -->
-      <button catchtap='UC'>邀请码</button>
-      <!-- <button catchtap='skip'>卡券</button>  -->
+      <!-- <button catchtap='UC'>邀请</button>
+      <button catchtap='UK'>0元购</button>  -->
       <!-- 公告 -->
       <view class="hot {{index_notice[0]==undefined?'hide':''}}">
         <view class="notice-img">

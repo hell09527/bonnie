@@ -31,8 +31,8 @@
     </view>
     <view class="modal-middle">
       <input type="text" placeholder="{{isfou==1?'您的姓名':'请输入您的名字'}}" bindinput="Youname" placeholder-class="{{isfou==1?'':'isfou'}}" />
-      <input type="number"  placeholder="{{isphone==1?'您的手机号码':'请输入正确的手机号'}}"  placeholder-class="{{isphone==1?'':'isfou'}}" bindinput="Youphone" />
-      <view class="isfou" wx:if="{{isphone!=1}}">请输入正确的手机号</view>
+      <input type="number"  placeholder="{{isphone==1?'您的手机号码':'请输入您的手机号码'}}"  placeholder-class="{{isphone==1?'':'isfou'}}" bindinput="Youphone" />
+      <view class="isfou" wx:if="{{isphone==3}}">请输入正确的手机号</view>
       <textarea class="" value="" placeholder="您最想了解什么产品？是否与好友同行（选填）" placeholder-style="" placeholder-class="" bindinput=""></textarea>
     </view>
     <view class="modal-footer">

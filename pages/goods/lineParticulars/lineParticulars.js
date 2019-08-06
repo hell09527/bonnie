@@ -34,12 +34,17 @@ Page({
 
     if (options.id) {
       var id = options.id;
+      let title=options.data.activity_name;
+      console.log(title);
+      
+      
+      
 
-      var title = "门店活动";
-      var data = {
-        id: id,
-        title: title
-      };
+      // var title = "门店活动";
+      // var data = {
+      //   id: id,
+      //   title: title
+      // };
       that.setData({
         id: id,
         title: title
@@ -67,13 +72,16 @@ Page({
 
     // 获取门店活动详情
     app.sendRequest({
-      url: "api.php?s=/activity/storeActivityInfo",
+      url: "api.php?s=/activity/storeActivityDetail",
       data: { master_id: id },
       success: function (res) {
-        var actList = res.data;
+        let actList = res.data.slaver;
+        let appointment = res.data.appointment;
+        
         console.log(actList, 'actList')
         that.setData({
           actList: actList,
+          appointment
         })
       }, fail(res) {
         console.log(res, 'res')
@@ -108,6 +116,11 @@ Page({
     let actList = that.data.actList;
     let click_id = e.currentTarget.dataset.id;
     let appointment_pic = e.currentTarget.dataset.sub;
+    let appointment=that.data.appointment;
+    // if(appointment==null)return;
+
+   console.log('qewrtyutrewqert')
+
     if (appointment_pic) {
       let id = e.currentTarget.dataset.id;
       for (let i in actList) {
@@ -217,6 +230,12 @@ Page({
   Youphone: function (e) {
     let that = this;
     let y_phone = e.detail.value;
+   if (y_phone != '') {
+      let myreg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
+      if (y_phone.length == 11 && myreg.test(y_phone)) {
+        that.setData({ isphone: 1 });
+      }
+    }
     that.setData({
       y_phone
     });
@@ -252,27 +271,21 @@ Page({
     let y_phone = that.data.y_phone;
 
 
-
     if (y_name == '') {
-      console.log('请输入您的名字')
       that.setData({ isfou: 2 });
       return;
     }
 
-
     if (y_phone == '') {
       that.setData({ isphone: 2 });
       return;
-    }
+    }else if (y_phone != '') {
 
-
-
-    if (y_phone != '') {
       let myreg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
       if (y_phone.length != 11 || !myreg.test(y_phone)) {
         console.log('kkkkk');
-        app.showBox(that, '请输入正确的手机号');
-        that.setData({ isphone: 2 });
+        // app.showBox(that, '请输入正确的手机号');
+        that.setData({ isphone: 3 });
         return;
       }
     }
@@ -396,9 +409,28 @@ Page({
   },
 
   /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
+  * 用户点击右上角分享
+  */
+ onShareAppMessage: function () {
+  let that = this;
+  let data = this.data.data;
+  let uid = app.globalData.uid;
+  let id= that.data.id;
+  let title= that.data.title;
+  
+  let TWO_share_url = '/pages/goods/lineParticulars/lineParticulars?id=' + id;
 
-  }
+  let  BackPath= that.data.distributor_type==0?TWO_share_url:TWO_share_url + '&uid=' + uid;
+    return {
+      title: 'BonnieClyde门店活动预约',
+      path: BackPath,
+      success: function (res) {
+        app.showBox(that, '分享成功');
+      },
+      fail: function (res) {
+        app.showBox(that, '分享失败');
+      }
+    }
+
+},
 })

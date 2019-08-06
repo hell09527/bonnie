@@ -192,12 +192,12 @@ Page({
     let data = this.data.data;
     let uid = app.globalData.uid;
     let projectData = that.data.projectData;
-    let TWO_share_url = '/pages/goods/lineActivity/lineActivity?data=' + JSON.stringify(projectData)
-    console.log(data);
-    if (that.data.distributor_type == 0) {
+    let TWO_share_url = '/pages/goods/lineActivity/lineActivity?data=' + JSON.stringify(projectData);
+
+    let  BackPath= that.data.distributor_type==0?TWO_share_url:TWO_share_url + '&uid=' + uid;
       return {
         title: 'BonnieClyde门店活动预约',
-        path: TWO_share_url,
+        path: BackPath,
         success: function (res) {
           app.showBox(that, '分享成功');
         },
@@ -205,23 +205,6 @@ Page({
           app.showBox(that, '分享失败');
         }
       }
-    }
-    else {
-      return {
-        title: 'BonnieClyde门店活动预约',
-        path: TWO_share_url + '&uid=' + uid,
-        success: function (res) {
-          app.showBox(that, '分享成功');
-        },
-        fail: function (res) {
-          app.showBox(that, '分享失败');
-        }
-      }
-    }
-
-
-
-
 
   },
 })

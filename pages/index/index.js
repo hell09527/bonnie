@@ -65,10 +65,18 @@ Page({
  //测试数据
   UC: function () {
     // wx.scanCode({ // });  //扫描二维码；
-    wx.navigateTo({ url: "/pages/member/Verification/Verification", })
+    wx.navigateTo({ url: "/pages/goods/particulars/particulars" })
     // /pages/index/discount/discount
    
   },
+  UK:function(){
+    wx.navigateTo({ url: "/pages/goods/getYouth/getYouth?id=12" })
+    // /pages/index/discount/discount
+   
+  },
+   
+
+ 
 
   onLoad: function (options) {
     let that = this;

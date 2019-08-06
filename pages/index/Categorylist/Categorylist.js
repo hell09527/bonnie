@@ -123,19 +123,7 @@ Page({
    */
   onShow: function () {
     let that=this;
-  
-
-
-
     // this.toGoods(id, 1)
-  
-
-
- 
-
-
-
-
   },
   toGoods:function(id,page){
     var that = this;
