@@ -36,7 +36,7 @@
      
         <!-- <view class='goods-title'>NB</view> -->
         <!-- <block wx:if='{{goods_list[0] == undefined && goods_list }}'>
-        <view class="nothing-data" align="center">
+              <view class="nothing-data" align="center">
           <image src="/images/goods/wap_nodata.png" mode='widthFix'/>
           <view class='hit'>正在为您寻找商品</view>
         </view>

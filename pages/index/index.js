@@ -70,7 +70,7 @@ Page({
    
   },
   UK:function(){
-    wx.navigateTo({ url: "/pages/goods/getYouth/getYouth?id=12" })
+    wx.navigateTo({ url: "/pages/goods/getYouth/getYouth" })
     // /pages/index/discount/discount
    
   },

@@ -1,5 +1,6 @@
 var wxParse = require('../../../wxParse/wxParse.js');
 var time = require("../../../utils/util.js");
+var core = require("../../../utils/core.js");
 const app = getApp();
 
 Page({
@@ -81,6 +82,7 @@ Page({
     Man: true,
     sale_end_time: '',//预售截止时间
     category_show: 0,    //品牌所属分类是否显示
+    product: {},
 
   },
 
@@ -174,7 +176,7 @@ Page({
     }
 
     that.detailsPort().then((resolve) => {
-      if(resolve!=0){
+      if (resolve != 0) {
         app.sendRequest({
           url: 'api.php?s=goods/getBrandGoodsList',
           data: {
@@ -187,7 +189,7 @@ Page({
             if (code == 0) {
               let brand_name = data.brand_name
               let brand_ads = data.brand_other_ads;
-  
+
               that.setData({
                 brand_name: brand_name,
                 brand_ads: brand_ads
@@ -198,7 +200,7 @@ Page({
         });
       }
 
-  
+
 
     })
 
@@ -510,6 +512,8 @@ Page({
             resolve(brand_id)
             console.log(brand_id)
             console.log(brand_id, goods_info.promotion_price, goods_info.inside_price)
+
+            that.initProduct(goods_info);
             that.setData({
               goods_info: goods_info,
               detail_id: detail_id,
@@ -639,6 +643,7 @@ Page({
             console.log(Min_ori, Max_ori);
             console.log(stock, 'stock');
             console.log(mo_imgs);
+
             that.setData({
               spec_list: data.spec_list,
               sku_id: sku_id,
@@ -1574,7 +1579,7 @@ Page({
         if (code == 0) {
           if (data.code > 0) {
             app.showBox(that, '加入购物车成功')
-            
+
             goods_info.cart_count += count;
             that.setData({ goods_info });
 
@@ -2478,6 +2483,46 @@ Page({
     that.setData({
       exchange: false,
     })
+  },
+  // 好物圈分享数据
+  initProduct(goodsInfo) {
+    let url = '/pages/goods/goodsdetail/goodsdetail?';
+    let share = {
+      goods_id: goodsInfo.goods_id
+    }
+    if (this.data.isAssemble) {
+      share.isAssemble = true;
+      share.pt_goods_id = this.options.pt_goods_id;
+    }
+    let product = {
+      item_code: goodsInfo.goods_id.toString(),
+      title: goodsInfo.goods_name,
+      desc: goodsInfo.introduction || goodsInfo.goods_name,
+      category_list: goodsInfo.category_name.split('>').map(i => i.trim()).filter(i => i != ''),
+      image_list: goodsInfo.img_list.map(i => i.pic_cover_big),
+      src_mini_program_path: url + core.serilize(share),
+      sku_list: goodsInfo.sku_list.map(sku => {
+        let state = 1; //在售
+        if (goodsInfo.state == 0) { //下架
+          state = 2;
+        } else if (sku.stock == 0) { //卖完
+          state = 3;
+        }
+        return {
+          sku_id: sku.sku_id,
+          price: sku.promote_price,
+          original_price: sku.price,
+          state
+        }
+      }),
+      brand_info: {
+        name: 'BonnieClyde'
+      }
+    }
+    this.setData({ product });
+  },
+  // 好物圈分享失败
+  hwError(e) {
+    console.log(e);
   }
-
 })

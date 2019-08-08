@@ -45,7 +45,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 5,
 			"list": [
 				{
 					"id": 0,
@@ -80,6 +80,12 @@
 					"name": "卡券",
 					"pathName": "pages/member/electronic/electronic",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/member/inpurchasing/inpurchasing",
+					"pathName": "pages/member/inpurchasing/inpurchasing",
 					"scene": null
 				}
 			]

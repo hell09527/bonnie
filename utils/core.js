@@ -116,6 +116,10 @@ const core = {
         let config = Object.assign({}, defaultConfig, param);
         return this.wxApi('showModal',config);
     },
+    // 类型判断(type => Object)
+	assert(o, type) {
+		return type.split("|").map(i => `[object ${i}]`).indexOf(Object.prototype.toString.call(o)) != -1;
+	},
     /**
     * @description 页面跳转
     * @param {string} url  跳转路由
@@ -136,7 +140,23 @@ const core = {
         } else {
             throw '非对象空检测';
         }
-    }
+    },
+    // 序列化
+	serilize(data = {}) {
+		let query = "";
+		for (let key in data) {
+			if (this.assert(data[key],'Array|Object')) {
+				for (let i in data[key]) {
+					let obj = {};
+					obj[encodeURIComponent(key) + '[' + encodeURIComponent(i) + ']'] = data[key][i];
+					query += serilize(obj) + '&';
+				}
+			} else {
+				query += `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}&`;
+			}
+		}
+		return query.slice(0, query.length - 1);
+	}
 }
 
 module.exports = core;

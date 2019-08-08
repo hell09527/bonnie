@@ -1,0 +1,17 @@
+.all_rule{
+    margin-bottom: 30rpx;
+  }
+  .headline{
+    font-size:16px;
+   color:#000;
+   text-align:center;
+   font-weight:700;
+   margin: 30rpx;
+   }
+   .head_text{
+     text-align:left;
+     margin:15rpx 0px;
+     color: #666;
+     margin-left: 2em;
+   }
+  

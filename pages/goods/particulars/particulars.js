@@ -81,7 +81,7 @@ Page({
     Man: true,
     sale_end_time: '',//预售截止时间
     category_show: 0,    //品牌所属分类是否显示
-    bc:1
+    is_demo:true
 
   },
 
@@ -402,15 +402,18 @@ Page({
 
     return new Promise((resolve, reject) => {
       app.sendRequest({
-        url: 'api.php?s=goods/goodsDetail',
+        url: 'api.php?s=goods/demoGoodsDetail',
         data: {
           goods_id: goods_id,
+          is_demo: true
         },
         success: function (res) {
           let code = res.code;
           let data = res.data;
           if (code == 0) {
             let vip_price = data.vip_price;
+            let is_demo=data.is_demo;
+            console.log(is_demo,'is_demo');
             var recommended_goods = data.goodsList.similarOne;
             let goodsDetailImg = data.goodsDetailImg;
 
@@ -508,6 +511,7 @@ Page({
             console.log(brand_id, goods_info.promotion_price, goods_info.inside_price)
             that.setData({
               goods_info: goods_info,
+              is_demo,
               detail_id: detail_id,
               imgUrls: data.img_list,
               current_time: data.current_time,
@@ -525,33 +529,30 @@ Page({
 
 
             //限时折扣计时
-            if (data.promotion_type == 2 && data.promotion_detail != '') {
-              let time_array = {};
-              time_array.end = 0;
-              time_array.end_time = data.promotion_detail.end_time;
-              that.timing(that, time_array, 1);
-            };
+            // if (data.promotion_type == 2 && data.promotion_detail != '') {
+            //   let time_array = {};
+            //   time_array.end = 0;
+            //   time_array.end_time = data.promotion_detail.end_time;
+            //   that.timing(that, time_array, 1);
+            // };
 
             //预售时间计时
-            if (data.sale_type == 2 && data.sale_end_time != '') {
-              let time_array = {};
-              let Send_array = {};
+            // if (data.sale_type == 2 && data.sale_end_time != '') {
+            //   let time_array = {};
+            //   let Send_array = {};
 
-              time_array.end = 0;
-              time_array.end_time = data.sale_end_time;
-              Send_array.end = 0;
-              console.log(data.sale_end_time);
-              console.log(data.delivery_end_time);
-              Send_array.end_time = data.delivery_end_time;
-              that.timing(that, time_array, 2);
-              that.setData({
-                sale_end_time: data.sale_end_time
-              })
-              that.sale_timing(that, Send_array);
-
-
-
-            }
+            //   time_array.end = 0;
+            //   time_array.end_time = data.sale_end_time;
+            //   Send_array.end = 0;
+            //   console.log(data.sale_end_time);
+            //   console.log(data.delivery_end_time);
+            //   Send_array.end_time = data.delivery_end_time;
+            //   that.timing(that, time_array, 2);
+            //   that.setData({
+            //     sale_end_time: data.sale_end_time
+            //   })
+            //   that.sale_timing(that, Send_array);
+            // }
 
 
 
@@ -575,7 +576,7 @@ Page({
                   // 判断默认的sku是否有图片如果没有的话显示主图
 
 
-                  console.log(data.spec_list[i].value[l].spec_value_src.length)
+                  // console.log(data.spec_list[i].value[l].spec_value_src.length)
 
                   if (data.spec_list[i].value[l].spec_value_src.length == 0) {
                     mo_imgs = {
@@ -1465,6 +1466,12 @@ Page({
       goodsNum: num,
     })
   },
+  goRule:function(){
+    wx.navigateTo({
+      url:'/pages/goods/demoRule/demoRule'
+    })
+
+  },
   /**
    * 到货通知
    */
@@ -1789,15 +1796,12 @@ Page({
     console.log(sku_list, goods_type, source_type)
     console.log(is_inside);
 
-    if (that.data.flys == 0) {
+  
       wx.navigateTo({
-        url: '/pages/order/paymentorder/paymentorder?tag=' + 1 + '&sku=' + sku_list + '&goods_type=' + goods_type + '&source_type=' + source_type + '&order_type=0' + '&is_inside=' + is_inside,
+        url: '/pages/order/paymentorder/paymentorder?tag=' + 1 + '&sku=' + sku_list + '&goods_type=' + goods_type + '&source_type=' + source_type + '&order_type=0' + '&is_inside=' + is_inside +'&is_demo=1',
       })
-    } else {
-      wx.navigateTo({
-        url: '/pages/order/farewell/farewell?tag=' + 1 + '&sku=' + sku_list + '&goods_type=' + goods_type + '&source_type=' + source_type,
-      })
-    }
+ 
+  
 
   },
 

@@ -136,6 +136,7 @@ Page({
         let pay_money = that.data.pay_money
         let out_trade_no = that.data.out_trade_no;
         let openid = app.globalData.openid;
+      console.log(event,'event')
             console.log(openid,'135')
         let payOrderFlag = that.data.payOrderFlag;
         console.log(that.data.ty)

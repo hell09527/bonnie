@@ -434,6 +434,7 @@ Page({
     let reason_index = that.data.reason_index;
     let refund_reason = that.data.refund_reason;
     let refund_type = require_array[require_index].id;
+    console.log(event)
 
     if (refundFlag == 1){
       return false;
@@ -470,7 +471,11 @@ Page({
         refund_type: refund_type,
         refund_require_money: refund_require_money,
         refund_reason: refund_reason,
-        refund_require_num :refund_require_num 
+        refund_require_num :refund_require_num ,
+        open_id: app.globalData.openid,
+        form_id: event.detail.formId,
+        
+        
       },
       success: function (res) {
         let code = res.code;
@@ -623,23 +628,23 @@ Page({
     });
   },
    // 页面滚动事件//滑动开始事件
-   handletouchtart: function (event) {
-    this.setData({
-      isHide: 1
-    })
-  },
+  //  handletouchtart: function (event) {
+  //   this.setData({
+  //     isHide: 1
+  //   })
+  // },
   // 滑动移动事件
-  handletouchmove: function () {
-    this.setData({
-      isHide: 1
-    })
-  },
+  // handletouchmove: function () {
+  //   this.setData({
+  //     isHide: 1
+  //   })
+  // },
   //滑动结束事件
-  handletouchend: function (event) {
-    console.log(event, 222222)
-    this.setData({
-      isHide: 0
-    })
-  },
+  // handletouchend: function (event) {
+  //   console.log(event, 222222)
+  //   this.setData({
+  //     isHide: 0
+  //   })
+  // },
 
 })

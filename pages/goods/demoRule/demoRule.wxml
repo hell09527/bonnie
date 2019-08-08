@@ -1,0 +1,11 @@
+<!-- pages/goods/demoRule/demoRule.wxml -->
+<scroll-view>
+    <view class="headline">小样申领规则</view>
+    <view class="all_rule">
+        <view class="head_text">1. 所有已注册会员均可领取小样；</view>
+        <view class="head_text">2. 同一会员ID仅限领取一份小样；</view>
+        <view class="head_text">3. 小样全部免费领取；</view>
+        <view class="head_text">4. 选择快递寄送小样方式的会员需要支付快递费用；</view>
+        <view class="head_text">5. 活动最终解释权归Bonnie&Clyde所有。</view>
+    </view>
+</scroll-view>

@@ -1,5 +1,5 @@
 <scroll-view>
-<button catch:tap="gogo">gogo</button>
+<button catch:tap="gogo">卡券</button>
   <block wx:for='{{actList}}' wx:key='' wx:for-item='acticities' wx:for-index='index'>
     <!-- <view> </view> -->
     <!-- 图片 -->

@@ -96,6 +96,7 @@
     "pages/verification/virtualgoodsshare/virtualgoodsshare",
     "pages/goods/getYouth/getYouth",
     "pages/goods/particulars/particulars",
+    "pages/goods/demoRule/demoRule",
     "pages/goods/integralzone/integralzone",
     "pages/index/coverindex/coverindex",
     "pages/index/coupon/coupon",
@@ -141,6 +142,12 @@
 
    
     ]
+  },
+  "plugins": {
+    "goodsSharePlugin": {
+      "version": "3.2.0",
+      "provider": "wx56c8f077de74b07c"
+    }
   },
   "window": {
     "backgroundTextStyle": "dark",

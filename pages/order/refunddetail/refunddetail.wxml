@@ -1,4 +1,4 @@
-<scroll-view bindtap="handletap" bindtouchstart="handletouchtart" bindtouchend="handletouchend" bindtouchmove="handletouchmove">
+<scroll-view  >
   <view class="motify {{prompt==''?'hide':''}}">
     <icon class="i show_type warning" type='warn' size='25' color='#FFF'></icon>
     <view class="motify-inner">{{prompt}}</view>
@@ -93,7 +93,11 @@
           </view>
           <textarea rows="5" bindinput='refundReason' id="description" placeholder="请输入退款说明"></textarea>
         </view>
-        <view class="a button" catchtap='refund'>提交退款申请</view>
+        <form  bindsubmit="refund" report-submit="true"  >
+          <button formType='submit'  class="a button" >提交退款申请</button>
+        </form>
+          
+       
       </view>
     </block>
     <block wx:if='{{(refund_his.length > 0 && refund_info.refund_status!=5 && refund_info.refund_status!=-3 && refund_info.refund_status!=-1 && refund_info.refund_status!=-2) || (refund_require_num ==0 &&refund_info.refund_status!=3 )  }}'>
@@ -214,7 +218,6 @@
       <view>
         <image src="https://static.bonnieclyde.cn/tt.png" mode='widthFix'></image>
       </view>
-      <!-- <text class="ke_fu">客服</text> -->
     </button>
   </view>
   

@@ -49,8 +49,8 @@
             <view class="price_wrap">
                 <!-- 常规商品价格 -->
                 <view class='gl' >
-                        <view class="span price" wx:if='{{goods_info.sale_type==1}}'>
-                            ￥{{parseInt(goods_info.promotion_price)< parseInt(goods_info.price)?goods_info.promotion_price:goods_info.price}}
+                        <view class="span price" >
+                            ￥{{goods_info.promotion_price}}
                         </view>
                         <view wx:if='{{sum==1}}' class="span sos" id="priceTitle" wx:if="{{goods_info.market_price - goods_info.price > 0}}">
                             ￥{{goods_info.market_price}}
@@ -109,6 +109,30 @@
                 </view>
             </view>
         </block>
+         <view class="tab-module-title">领取规则</view> 
+         <view class="rules">
+         <view class="b-box">领取小样</view> 
+         <view class="li-o">-></view>
+          <view class="b-box"> 填写信息</view> 
+         <view class="li-o">-></view>
+          <view class="b-box">提交订单</view> 
+         <view class="li-o">-></view>
+          <view class="b-box">安排发货</view> 
+         <!-- <view class="li-o">-></view> -->
+        <view class="skie" catchtap='goRule'>详细规则 ▶</view>
+         </view> 
+  
+        
+         
+         
+
+
+
+
+
+     
+
+
         <!-- 春节物流通告 -->
         <!-- <image class="expressage" style='height:260rpx;' src='https://static.bonnieclyde.cn/20190129-%E5%8F%91%E8%B4%A7%E9%80%9A%E7%9F%A5.jpg' mode='widthFix' ></image> -->
         <!-- 商家服务 -->
@@ -152,7 +176,7 @@
         </view>
     
         <!-- 商品评价 -->
-        <block wx:if="{{comments_list[0]!=undefined}}">
+        <!-- <block wx:if="{{comments_list[0]!=undefined}}">
             <view class="evaluation-container">
                 <view class="tab-module-title">商品评价</view>
                 <view class="hr with-margin-l"></view>
@@ -161,35 +185,35 @@
                         <view class="evaluation-comments" catchtap='moreEvaluation' data-type='0'>
                             <view class="evaluation-info-box">
                                 <!-- 评价人信息 -->
-                                <view class="evaluation-userinfo">
+                                <!-- <view class="evaluation-userinfo">
                                     <image src="{{comment.user_img}}" class="headimg" lazy-load='true' binderror='errorHeadImg' data-index='0'></image>
                                     <view class="span nickname">{{comment.member_name}}</view>
-                                </view>
+                                </view> -->
                                 <!-- 初次评价 -->
-                                <text decode="{{true}}" class="evaluation-content">
+                                <!-- <text decode="{{true}}" class="evaluation-content">
                                     {{comment.content}}
                                 </text>
-                            </view>
+                            </view> -->
                             <!-- 评价图片 -->
-                            <view class="ul evaluation-pics" wx:if="{{comment.image[0]}}">
+                            <!-- <view class="ul evaluation-pics" wx:if="{{comment.image[0]}}">
                                 <view class="comment-imgAll">{{comment.image.length}}张</view>
                                 <view class='li'>
                                     <image mode="aspectFill" src="{{comment.image[0]}}" class="comment-pic" />
                                 </view>
                             </view>
                         </view>
-                    </block>
+                    </block> -->
                     <!-- wx:if='{{ts_list>1}}' -->
-                    <view class="comment-more" catchtap='moreEvaluation' data-type='0'>
+                    <!-- <view class="comment-more" catchtap='moreEvaluation' data-type='0'>
                         <text>更多评论</text>
                         <hr />
                         <text>See more</text>
                     </view>
-                </scroll-view>
+                </scroll-view> -->
                 <!-- <view class="check-more">
                 <button catchtap='moreEvaluation' data-type='0'>查看更多评价</button>
             </view> -->
-            </view>
+            <!-- </view>
         </block>
         <block wx:else>
             <view class="evaluation-container">
@@ -200,7 +224,7 @@
                 </view>
             </view>
         </block>
-        <view class="hr divider-line"></view>
+        <view class="hr divider-line"></view> --> 
     
         
         <!-- 商品属性 -->
@@ -286,15 +310,6 @@
                     <image src="/images/goods/kefux.png" mode='scaleToFill'></image>
                     <view class="span desc">客服</view>
                 </button>
-                    <block wx:if='{{goods_info.goods_pintuan == undefined}}'>
-                        <view id="global-cart" class="a new-btn buy-cart" catchtap='tapSwitch' data-url='/goods/cart/cart'>
-                            <image src='/images/goods/cart_uncheck.png' mode='scaleToFill'></image>
-                            <view wx:if='{{unregistered==0 && tel!="" && goods_info.cart_count>0}}' class="tips">
-                                {{goods_info.cart_count>99?"99":goods_info.cart_count}}
-                            </view>
-                            <view class="span desc">购物车</view>
-                        </view>
-                    </block>
          
                 <view class="big-btn-2-1">
                           <!-- 判断库存是否为零 -->
@@ -312,10 +327,10 @@
                             <view wx:if='{{unregistered==0 && tel!="" }}'>
                                 <!-- 区分是否是预售商品sale_type == 2是预售商品 -->
                                 <!-- <block wx:if='{{goods_info.sale_type == 1 || sale_timer_array.end==0}}'> </block> -->
-                                    <view  wx:if="{{bc==1}}" class="commodity" catchtap='buyNext' id="buyBtn1" data-type='buy'>
+                                    <view  wx:if="{{is_demo}}" class="commodity" catchtap='buyNext' id="buyBtn1" data-type='buy'>
                                        立即领取
                                     </view>
-                                    <button  wx:if="{{bc!=1}}" class="commodity" disabled>您已领取</button>
+                                    <button  wx:if="{{!is_demo}}" class="commodity" disabled>您已领取</button>
                             </view>
                      
                     </block>

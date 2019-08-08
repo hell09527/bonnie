@@ -34,63 +34,53 @@ Page({
    */
   onLoad: function (options) {
     let that = this;
-    let brind_id = options.id;
+
     if (options.uid) {
       app.globalData.identifying = options.uid;
       app.globalData.breakpoint = options.breakpoint;
       console.log(options.breakpoint);
     }
- 
-    let base = app.globalData.siteBaseUrl;
-    let defaultImg = app.globalData.defaultImg;
-    console.log(options.id);
-    if (options.id){
-          console.log(11111);
-      let brind_id = options.id;
-      that.setData({
-        Base: base,
-        defaultImg: defaultImg,
-        brind_id: brind_id,
-        //  brind_image,
-        //  title,
-      })
-      that.getBrandGoodsList(that, brind_id);
-    } else if (options.scene) {
-      console.log(2222)
-      var scene = decodeURIComponent(options.scene);
-      let brind_id= scene.split('&')[0];
-      let kol_id = scene.split('&')[1];
-      let store_id = scene.split('&')[2];
-      app.globalData.store_id = store_id;
-      app.globalData.kol_id = kol_id;
-      console.log("********内详情页store_id", store_id);
-      console.log("********详情页id", brind_id);
-      console.log("********内详情页kol_id", kol_id);
 
+    app.sendRequest({
+      url: 'api.php?s=/goods/demoGoodsList',
+      success: function (res) {
+        let code = res.code;
+        let data = res.data;
+        if (code == 0) {
+          let goods_list = data.data;
+          console.log(res);
+          console.log(goods_list);
 
-      if (app.globalData.token && app.globalData.token != '') {
-        //判断是否是付费会员的接口
-        that.PP_reuse();
-      } else {
-        app.employIdCallback = employId => {
-          if (employId != '') {
-            //判断是否是付费会员的接口
-            that.PP_reuse();
-          }
-        }
+          let brand_name = data.brand_name;
+          let  brand_video_address=data.brand_video_address;
+          let brand_pic = data.brand_pic;
+          // console.log(brand_pic)
+          // wx.setNavigationBarTitle({
+          //   title:brand_name
+          // })
         
+          for(let index in goods_list){
+            let img = goods_list[index].pic_cover_small;
+            goods_list[index].pic_cover_small = app.IMG(img);
+                //  品牌列表显示规格最小的sku的价格
+            for (let i = 0; i < goods_list[index].sku_list.length; i++) {
+               goods_list[index].lowest=[];
+              goods_list[index].lowest.push(goods_list[index].sku_list[i].promote_price); 
+              console.log(Math.min(...goods_list[index].lowest).toFixed(2));
+          }
+          }
+
+          that.setData({
+            page: 2,
+            goods_list: goods_list,
+            // brand_name: brand_name,
+            // brand_pic,
+            // brand_video_address
+          })
+        }
+        // console.log(res);
       }
-
-      that.setData({
-        Base: base,
-        defaultImg: defaultImg,
-        brind_id: brind_id,
-        //  brind_image,
-        //  title,
-      })
-      that.getBrandGoodsList(that, brind_id);
-    } 
-
+    });
     if (app.globalData.token && app.globalData.token != '') {
       //判断是否是付费会员的接口
       that.PP_reuse();
@@ -140,9 +130,7 @@ PP_reuse:function(){
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    // wx.showShareMenu({
-    //   withShareTicket: true
-    // })
+ 
     let that = this;
     if (app.globalData.token && app.globalData.token != '') {
       //判断是否是付费会员的接口
@@ -172,23 +160,13 @@ PP_reuse:function(){
  */
   onShareAppMessage: function () {
     let that=this;
-    let brand_name =that.data.brand_name;
-    let id = that.data.brind_id;
-    console.log(brand_name);
-    console.log(id);
-    
-    // let data = {
-    //   id: this.data.brind_id,
-    //   pic: this.data.brind_image,
-    //   title: this.data.title
-    // }
    
     let uid = app.globalData.uid
     console.log(uid)
-    let PP_share_url = '/pages/goods/getYouth/getYouth?id=' + id;
+    let PP_share_url = '/pages/goods/getYouth/getYouth';
     if (app.globalData.distributor_type == 0){
       return {
-        title: brand_name,
+        title: '小样申领',
         path: PP_share_url,
         // imageUrl: imgUrl,
         success: function (res) {
@@ -202,7 +180,7 @@ PP_reuse:function(){
     } 
     else {
       return {
-        title: brand_name,
+        title: '小样申领',
         path: PP_share_url + '&uid=' + uid,
         // imageUrl: imgUrl,
         success: function (res) {
@@ -217,153 +195,9 @@ PP_reuse:function(){
 
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-    let that = this;
-    let brand_id = that.data.brind_id;
-    let goods_list = that.data.goods_list;
-    let page = that.data.page;
-    let new_brand_id = brand_id
-
-    app.sendRequest({
-      url: 'api.php?s=goods/getBrandGoodsList',
-      data: {
-        brand_id: new_brand_id,
-        page: page
-      },
-      success: function (res) {
-        let code = res.code;
-        let data = res.data;
-        if (code == 0) {
-          let parm = {};
-          let parm_key = '';
-          let new_goods_list = data.data;
-
-          if (new_goods_list[0] != undefined){
-            page++;
-            for (let index in new_goods_list){
-              let key = parseInt(goods_list.length) + parseInt(index);
-              let img = new_goods_list[index].pic_cover_small;
-              new_goods_list[index].pic_cover_small = app.IMG(img);
-              // parm_key = 'goods_list[' + key + ']';
-              // parm[parm_key] = new_goods_list[index];
-            }
-            goods_list = goods_list.concat(new_goods_list);
+ 
 
 
-            for(let index in goods_list){
-              let img = goods_list[index].pic_cover_small;
-              goods_list[index].pic_cover_small = app.IMG(img);
-                  //  品牌列表显示规格最小的sku的价格
-              for (let i = 0; i < goods_list[index].sku_list.length; i++) {
-                 goods_list[index].lowest=[];
-                goods_list[index].lowest.push(goods_list[index].sku_list[i].promote_price); 
-                console.log(Math.min(...goods_list[index].lowest).toFixed(2));
-                if( parseInt(goods_list[index].promotion_price).toFixed(2)>Math.min(...goods_list[index].lowest)){
-                  goods_list[index].promotion_price=Math.min(...goods_list[index].lowest).toFixed(2);
-                  console.log(Math.min(...goods_list[index].lowest).toFixed(2));
-                }
-            }
-            }
-            
-            
-            that.setData({
-              goods_list,
-            });
-          }
-
-          that.setData({
-            page: page,
-          })
-        }
-        console.log(res);
-      }
-    });
-  },
-
-  /**
-   * 获取品牌商品
-   */
-  getBrandGoodsList: function (that, new_brand_id) {
-  
-    let brand_id = that.data.brind_id;
-    console.log(brand_id)
-   
-    app.sendRequest({
-      url: 'api.php?s=goods/getBrandGoodsList',
-      data: {
-        brand_id: brand_id,
-        page: 1
-      },
-      success: function (res) {
-        let code = res.code;
-        let data = res.data;
-        if (code == 0) {
-          let goods_list = data.data;
-          let brand_name = data.brand_name;
-          let  brand_video_address=data.brand_video_address;
-          let brand_pic = data.brand_pic;
-          console.log(brand_pic)
-          wx.setNavigationBarTitle({
-            title:brand_name
-          })
-        
-          for(let index in goods_list){
-            let img = goods_list[index].pic_cover_small;
-            goods_list[index].pic_cover_small = app.IMG(img);
-                //  品牌列表显示规格最小的sku的价格
-            for (let i = 0; i < goods_list[index].sku_list.length; i++) {
-               goods_list[index].lowest=[];
-              goods_list[index].lowest.push(goods_list[index].sku_list[i].promote_price); 
-              console.log(Math.min(...goods_list[index].lowest).toFixed(2));
-              // if( parseInt(goods_list[index].promotion_price).toFixed(2)>Math.min(...goods_list[index].lowest)){
-              //   goods_list[index].promotion_price=Math.min(...goods_list[index].lowest).toFixed(2);
-              //   console.log(Math.min(...goods_list[index].lowest).toFixed(2));
-              // }
-          }
-          }
-
-          that.setData({
-            page: 2,
-            goods_list: goods_list,
-            brand_name: brand_name,
-            brand_pic,
-            brand_video_address
-          })
-        }
-        // console.log(res);
-      }
-    });
-  },
-
-  /**
-   * 选择品牌
-   */
-  // selectBrind: function(event) {
-  //   let that = this;
-  //   // console.log(that.brind_id )
-    
-  //   let brind_id = event.currentTarget.dataset.id;
-
-  //   let index = event.currentTarget.dataset.index;
-    
-  //   that.setData({
-  //     page: 1,
-  //     brind_id: brind_id,
-  //     brand_select_index: index
-  //   })
-
-  //   that.getBrandGoodsList(that, brind_id);
-  // },
 
   /**
    * 图片加载获取高度
@@ -415,8 +249,9 @@ PP_reuse:function(){
     let title = event.currentTarget.dataset.title;
     let types = event.currentTarget.dataset.types == 1 ? '大贸' : '跨境';
     let code = event.currentTarget.dataset.code;
-    let goodId= 134;
-    // event.currentTarget.dataset.goodId;
+    let goodId= event.currentTarget.dataset.good;
+    console.log(goodId)
+    
     
 
     if (aClickFlag == 1) {

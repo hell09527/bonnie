@@ -1,5 +1,5 @@
 <template name="goodsItemTemplate">
-  <view  class='goods_all' catchtap='listClick' data-title='{{goods_name}}'  data-goodId='{{goods_id}}'   data-url='/goods/goodsdetail/goodsdetail?goods_id={{goods_id}}&&goods_name={{goods_name}}'>
+  <view  class='goods_all' catchtap='listClick' data-title='{{goods_name}}'  data-good='{{goods_id}}'   data-url='/goods/goodsdetail/goodsdetail?goods_id={{goods_id}}&&goods_name={{goods_name}}'>
     <view class="all-box">
       <image src="{{pic_cover_small}}" mode="widthFix"></image>
       <view class="shop-detail">

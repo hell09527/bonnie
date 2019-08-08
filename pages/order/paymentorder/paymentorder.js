@@ -83,6 +83,8 @@ Page({
         buffer_card_no:'',    // 编辑未保存 暂存身份证信息
         card_fouce: false,     // 失败聚焦
         uid: 0,    //获取会员的uid
+        is_demo:''
+        
     },
 
     /**
@@ -102,6 +104,11 @@ Page({
         let share_last = options.share_last;
         let is_inside = options.is_inside;
         console.log(is_inside);
+
+      if (options.is_demo){
+        that.setData({is_demo:true})
+       }
+         
       
         let base = app.globalData.siteBaseUrl;
         let defaultImg = app.globalData.defaultImg;
@@ -486,8 +493,9 @@ Page({
             })
             return false;
         }
-
-      console.log(parm)
+        let is_demo= that.data.is_demo;
+         parm.is_demo = is_demo;
+         console.log(parm)
         app.sendRequest({
             url: 'api.php?s=order/getOrderData',
             data: parm,
@@ -1650,6 +1658,7 @@ sale_timing: function (that, Send_array,sale_tms) {
         app.sendRequest({
             url: url,
             data: {
+              is_demo:that.data.is_demo,
                 is_use_card: is_use_card,
                 card_id: card_id,
                 card_token: card_token,
